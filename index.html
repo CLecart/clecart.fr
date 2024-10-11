@@ -16,13 +16,13 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #121212; /* Dark background */
+            color: #f4f4f4; /* Light text */
         }
 
         a {
             text-decoration: none;
-            color: #333;
+            color: #f4f4f4; /* Light link color */
         }
 
         /* Layout */
@@ -33,8 +33,8 @@
         }
 
         header {
-            background: #333;
-            color: white;
+            background: #0d47a1; /* Dark blue */
+            color: #ffeb3b; /* Bright yellow */
             padding: 20px 0;
             text-align: center;
         }
@@ -61,12 +61,25 @@
 
         section {
             margin: 50px 0;
+            padding: 20px;
+            background: #1e1e1e; /* Darker background for sections */
+            border-radius: 10px;
+        }
+
+        /* Profile Image */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+            border: 5px solid #ffeb3b; /* Yellow border */
         }
 
         /* Contact Section */
         .contact {
-            background-color: #333;
-            color: white;
+            background-color: #0d47a1; /* Dark blue */
+            color: #ffeb3b; /* Bright yellow */
             padding: 40px;
             border-radius: 10px;
             text-align: center;
@@ -77,8 +90,19 @@
         }
 
         .contact a {
-            color: #28a745;
+            color: #ffeb3b; /* Bright yellow */
             margin: 0 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #0d47a1; /* Dark blue */
+            color: #ffeb3b; /* Bright yellow */
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -100,6 +124,7 @@
     <!-- About Section -->
     <section id="about" class="container">
         <h2>About Me</h2>
+        <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-img"> <!-- Placeholder for your photo -->
         <p>I am a passionate developer focused on web and mobile application development. I hold a level 6 diploma in Web & Mobile Application Development, with expertise in building solutions using modern technologies.</p>
     </section>
 

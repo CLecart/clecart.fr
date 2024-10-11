@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Portfolio</title>
+    <title>Portfolio - Christophe Lecart</title>
     <style>
         /* Base styles */
         * {
@@ -63,79 +63,7 @@
             margin: 50px 0;
         }
 
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #007BFF;
-            color: white;
-            padding: 50px;
-            border-radius: 10px;
-        }
-
-        .hero img {
-            max-width: 300px;
-            border-radius: 50%;
-        }
-
-        .hero-text {
-            max-width: 50%;
-        }
-
-        .hero-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #218838;
-        }
-
-        /* Projects section */
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .project-item {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .project-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-item img {
-            width: 100%;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .project-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        /* Contact section */
+        /* Contact Section */
         .contact {
             background-color: #333;
             color: white;
@@ -148,30 +76,9 @@
             margin-bottom: 20px;
         }
 
-        .contact form input, .contact form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .contact form button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .contact form button:hover {
-            background-color: #218838;
-        }
-
-        footer {
-            text-align: center;
-            margin: 20px 0;
+        .contact a {
+            color: #28a745;
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -183,20 +90,37 @@
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-text">
-            <h2>Hello, I’m Christophe Lecart</h2>
-            <p>I am a passionate developer focused on [technology]. Check out my projects below and feel free to contact me for any collaboration or opportunities.</p>
-            <a href="#projects" class="btn">View My Projects</a>
-        </div>
-        <img src="https://via.placeholder.com/300" alt="Profile Picture">
+    <!-- About Section -->
+    <section id="about" class="container">
+        <h2>About Me</h2>
+        <p>I am a passionate developer focused on web and mobile application development. I hold a level 6 diploma in Web & Mobile Application Development, with expertise in building solutions using modern technologies.</p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="container">
+        <h2>Skills</h2>
+        <ul>
+            <li>Imperative Programming</li>
+            <li>Structured Programming</li>
+            <li>Algorithms (basics, intermediate, advanced)</li>
+            <li>Go Language Development</li>
+            <li>Event-Driven Programming</li>
+            <li>Web Architecture and Tech: HTML, CSS</li>
+            <li>JavaScript & Node.js</li>
+            <li>Backend Programming in Go & JS</li>
+            <li>Network Architecture Design</li>
+            <li>Rust Language Programming</li>
+            <li>Infrastructure: System Administration, Network, Security (basics, intermediate, confirmed)</li>
+            <li>Software Security (basics, intermediate)</li>
+            <li>Object-Oriented Programming and Software Architecture (confirmed)</li>
+        </ul>
     </section>
 
     <!-- Projects Section -->
@@ -224,12 +148,10 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <h2>Contact</h2>
-        <form action="#">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
+        <p>If you want to get in touch, feel free to reach out via:</p>
+        <a href="mailto:your.email@example.com">Email</a> |
+        <a href="https://github.com/yourgithub">GitHub</a> |
+        <a href="https://www.linkedin.com/in/yourlinkedin">LinkedIn</a>
     </section>
 
     <!-- Footer -->

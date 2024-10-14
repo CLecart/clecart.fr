@@ -22,36 +22,27 @@
 
         a {
             text-decoration: none;
-            color: #f4f4f4; /* Light link color */
-        }
-
-        /* Layout */
-        .container {
-            width: 80%;
-            max-width: 1200px;
-            margin: 0 auto;
+            color: #f4f4f4;
         }
 
         header {
-            background: #01257D; /* Dark blue */
-            color: #ffeb3b; /* Bright yellow */
-            padding: 20px 0;
-            text-align: center;
+            background: #0d47a1; /* Dark blue */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header h1 {
-            font-size: 3rem;
+        /* Name style */
+        .logo {
+            font-size: 1.8rem;
             font-weight: bold;
-        }
-
-        nav {
-            margin-top: 15px;
+            color: #ffeb3b; /* Bright yellow */
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            justify-content: center;
             gap: 15px;
         }
 
@@ -62,47 +53,32 @@
         section {
             margin: 50px 0;
             padding: 20px;
-            background: #1e1e1e; /* Darker background for sections */
+            background: #1e1e1e;
             border-radius: 10px;
         }
 
-        /* Profile Image */
         .profile-img {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             margin: 20px auto;
             display: block;
-            border: 5px solid #ffeb3b; /* Yellow border */
+            border: 5px solid #ffeb3b;
         }
 
-        /* Contact Section */
         .contact {
-            background-color: #01257D; /* Dark blue */
-            color: #ffeb3b; /* Bright yellow */
+            background-color: #0d47a1;
+            color: #ffeb3b;
             padding: 40px;
             border-radius: 10px;
             text-align: center;
         }
 
-        .contact h2 {
-            margin-bottom: 20px;
-        }
-
-        .contact a {
-            color: #ffeb3b; /* Bright yellow */
-            margin: 0 10px;
-        }
-
-        /* Footer */
         footer {
             text-align: center;
             padding: 20px 0;
-            background-color: #01257D; /* Dark blue */
-            color: #ffeb3b; /* Bright yellow */
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            background-color: #0d47a1;
+            color: #ffeb3b;
         }
     </style>
 </head>
@@ -110,7 +86,7 @@
 
     <!-- Header -->
     <header>
-        <h1>My Portfolio</h1>
+        <div class="logo">Christophe Lecart</div> <!-- Highlighted Name -->
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
@@ -124,7 +100,7 @@
     <!-- About Section -->
     <section id="about" class="container">
         <h2>About Me</h2>
-        <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-img"> <!-- Placeholder for your photo -->
+        <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-img">
         <p>I am a passionate developer focused on web and mobile application development. I hold a level 6 diploma in Web & Mobile Application Development, with expertise in building solutions using modern technologies.</p>
     </section>
 

@@ -69,17 +69,19 @@
         .project-item {
             width: 100%;
             max-width: 400px;
-            height: 300px; /* Hauteur fixe ou ajustable selon votre design */
+            aspect-ratio: 16 / 9; /* Assure un ratio harmonieux (ajuste selon tes besoins) */
             border-radius: 10px;
             overflow: hidden;
             background-color: #1e1e1e;
             margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .project-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
             display: block;
         }
         .contact {

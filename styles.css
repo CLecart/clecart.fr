@@ -1,77 +1,85 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
     color: #333;
+    line-height: 1.6;
 }
 
+/* Header Styles */
 header {
     background: #333;
     color: #fff;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-section {
-    padding: 2rem;
-    margin: 1rem 0;
-}
-
-h2 {
-    color: #4CAF50;
-}
-
-.projects {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.project-item {
-    background: #fff;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 300px;
+    padding: 1rem 2rem;
     text-align: center;
 }
 
-.project-img {
-    max-width: 100%;
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
 }
 
+header a:hover {
+    background: #fff;
+    color: #333;
+}
+
+/* Main Content */
+main {
+    padding: 2rem;
+}
+
+.content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.content p {
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background: #4CAF50;
+    background: #007BFF;
     color: #fff;
     text-decoration: none;
+    padding: 0.5rem 1.5rem;
     border-radius: 5px;
-    margin-top: 1rem;
+    font-size: 1rem;
 }
 
 .btn:hover {
-    background: #45a049;
+    background: #0056b3;
+}
+
+.back-btn {
+    margin: 1rem auto;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+    margin-top: 2rem;
 }

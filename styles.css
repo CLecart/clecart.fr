@@ -59,6 +59,7 @@ section {
     margin: 20px auto;
     display: block;
     border: 5px solid #ffeb3b;
+    object-fit: cover;
 }
 
 .contact {

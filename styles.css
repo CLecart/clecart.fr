@@ -1,82 +1,85 @@
-/* Base styles */
-* {
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #121212;
-    color: #f4f4f4;
+    background-color: #f4f4f9;
+    color: #333;
     line-height: 1.6;
 }
 
-a {
-    text-decoration: none;
-    color: #ffeb3b;
-}
-
+/* Header Styles */
 header {
-    background: #01257D;
-    padding: 40px;
+    background: #333;
+    color: #fff;
+    padding: 1rem 2rem;
     text-align: center;
 }
 
-.logo {
+header h1 {
+    margin: 0;
     font-size: 2.5rem;
-    font-weight: bold;
-    color: #ffeb3b;
 }
 
-nav {
-    margin-top: 15px;
+header a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+header a:hover {
+    background: #fff;
+    color: #333;
 }
 
-nav ul li {
-    padding: 10px;
+/* Main Content */
+main {
+    padding: 2rem;
 }
 
-section {
-    margin: 50px 0;
-    padding: 20px;
-    background: #1e1e1e;
-    border-radius: 10px;
-}
-
-.profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 20px auto;
-    display: block;
-    border: 5px solid #ffeb3b;
-    object-fit: cover;
-}
-
-.contact {
-    background-color: #01257D;
-    color: #ffeb3b;
-    padding: 40px;
-    border-radius: 10px;
+.content {
     text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.Project-1 {
-    width: 100%;
-    height: auto;
+.content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
 }
 
+.content p {
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+.back-btn {
+    margin: 1rem auto;
+}
+
+/* Footer Styles */
 footer {
     text-align: center;
-    padding: 20px 0;
-    background-color: #01257D;
-    color: #ffeb3b;
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+    margin-top: 2rem;
 }

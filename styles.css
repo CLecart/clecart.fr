@@ -75,6 +75,20 @@ section {
     height: auto;
 }
 
+.project-btn {
+    background-color: #01257D;
+    color: #ffeb3b;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.project-btn:hover {
+    background-color: #ffeb3b;
+    color: #01257D;
+}
+
 footer {
     text-align: center;
     padding: 20px 0;

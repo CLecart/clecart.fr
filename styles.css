@@ -17,13 +17,13 @@ a {
     color: #ffeb3b;
 }
 
+/* Header */
 header {
     background: #01257D;
     padding: 40px;
     text-align: center;
 }
 
-/* Name styling */
 .logo {
     font-size: 2.5rem;
     font-weight: bold;
@@ -45,6 +45,7 @@ nav ul li {
     padding: 10px;
 }
 
+/* Sections */
 section {
     margin: 50px 0;
     padding: 20px;
@@ -52,6 +53,7 @@ section {
     border-radius: 10px;
 }
 
+/* About Section */
 .profile-img {
     width: 150px;
     height: 150px;
@@ -62,19 +64,38 @@ section {
     object-fit: cover;
 }
 
-.contact {
-    background-color: #01257D;
-    color: #ffeb3b;
-    padding: 40px;
+/* Skills Section */
+#skills ul {
+    list-style: none;
+    padding: 0;
+}
+
+#skills ul li {
+    margin-bottom: 10px;
+}
+
+/* Projects Section */
+.Project-1 {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.project-item {
+    margin-bottom: 30px;
     text-align: center;
 }
 
-.Project-1 {
-    width: 100%;
-    height: auto;
+.project-item video {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Project Buttons */
 .project-btn {
     background-color: #01257D;
     color: #ffeb3b;
@@ -89,6 +110,16 @@ section {
     color: #01257D;
 }
 
+/* Contact Section */
+.contact {
+    background-color: #01257D;
+    color: #ffeb3b;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 20px 0;

@@ -5,77 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
     <header>
-        <div class="logo">Christophe Lecart</div>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container header-content">
+            <div class="logo">Christophe Lecart</div>
+            <button class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </header>
 
+    <section id="hero">
+        <div class="container hero-content">
+            <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
+            <p class="slide-left">I'm a <span id="typewriter">Web Developer</span></p>
+            <div class="fade-in">
+                <a href="#projects" class="btn">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
     <section id="about">
-        <h2>About Me</h2>
-        <img src="/PICTURES/profile.jpg" alt="Profile Image" class="profile-img">
-        <p>I am a passionate developer currently studying web and mobile application development. I am pursuing a level 6 diploma in this field, with expertise in building solutions using modern technologies.</p>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="slide-right">
+                    <img src="/PICTURES/profile.jpg" alt="Profile Image" class="profile-img">
+                </div>
+                <div class="about-text slide-left">
+                    <p>I am a passionate developer currently studying web and mobile application development. I am pursuing a level 6 diploma in this field, with expertise in building solutions using modern technologies.</p>
+                    <p>With a focus on creating intuitive and high-performing applications, I combine technical skills with creative problem-solving to deliver exceptional digital experiences.</p>
+                    <a href="#contact" class="btn">Get In Touch</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="skills">
-        <h2>Skills</h2>
-        <ul>
-            <li>Imperative Programming</li>
-            <li>Structured Programming</li>
-            <li>Algorithms (basics, intermediate, advanced)</li>
-            <li>Go Language Development</li>
-            <li>Event-Driven Programming</li>
-            <li>Web Architecture: HTML, CSS, JavaScript</li>
-            <li>Backend Programming: Go & Node.js</li>
-            <li>Network Architecture Design</li>
-            <li>Rust Language Programming</li>
-            <li>System Administration & Security</li>
-            <li>Software Security (intermediate)</li>
-            <li>Object-Oriented Programming</li>
-        </ul>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Skills & Expertise</h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-card fade-in">
+                    <i class="fas fa-code skill-icon"></i>
+                    <h3 class="skill-name">Web Development</h3>
+                    <p>HTML, CSS, JavaScript, and modern frameworks to create responsive web applications.</p>
+                    <div class="skill-level" data-level="90"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-mobile-alt skill-icon"></i>
+                    <h3 class="skill-name">Mobile Development</h3>
+                    <p>Building native and cross-platform mobile applications for iOS and Android.</p>
+                    <div class="skill-level" data-level="85"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-server skill-icon"></i>
+                    <h3 class="skill-name">Backend Development</h3>
+                    <p>Go & Node.js for creating robust server-side applications and APIs.</p>
+                    <div class="skill-level" data-level="88"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3 class="skill-name">Algorithm Design</h3>
+                    <p>Creating efficient algorithms for complex problem-solving scenarios.</p>
+                    <div class="skill-level" data-level="80"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-shield-alt skill-icon"></i>
+                    <h3 class="skill-name">Security</h3>
+                    <p>Implementing secure coding practices and system security fundamentals.</p>
+                    <div class="skill-level" data-level="75"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-network-wired skill-icon"></i>
+                    <h3 class="skill-name">Network Architecture</h3>
+                    <p>Designing and implementing efficient network solutions.</p>
+                    <div class="skill-level" data-level="78"></div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="projects">
-        <h2>Projects</h2>
-        <div class="project-item">
-            <h3>Groupie-Tracker</h3>
-            <video class="Project-1" autoplay loop muted>
-                <source src="PICTURES/Groupie-Tracker.mp4" type="video/mp4">
-            </video>
-            <p>This project allowed me to strengthen my backend development skills with Go, as well as my frontend development skills with HTML and CSS.</p>
-            <br>
-            <a href="description project 1.html" class="btn project-btn">View Project Details</a>
-        </div>
-
-        <div class="project-item">
-            <h3>BombermanDX</h3>
-            <video class="Project-1" autoplay loop muted>
-                <source src="PICTURES/BombermanDX.mp4" type="video/mp4">
-            </video>
-            <p>This project challenged me to focus on performance optimization while building a simple yet engaging game using JavaScript, DOM, and HTML.</p>
-            <br>
-            <a href="description project 2.html" class="btn project-btn">View Project Details</a>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Featured Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-thumb">
+                        <!-- Ajout de l'attribut controls pour afficher les contrôles natifs du navigateur -->
+                        <video autoplay loop muted controls>
+                            <source src="PICTURES/Groupie-Tracker.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3>Groupie-Tracker</h3>
+                        <p>A comprehensive web application developed in Go that visualizes data from a RESTful API about music artists and bands.</p>
+                        <a href="description project 1.html" class="project-btn">View Details</a>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in">
+                    <div class="project-thumb">
+                        <!-- Ajout de l'attribut controls pour afficher les contrôles natifs du navigateur -->
+                        <video autoplay loop muted controls>
+                            <source src="PICTURES/BombermanDX.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="project-content">
+                        <h3>BombermanDX</h3>
+                        <p>A browser-based game developed with JavaScript and DOM manipulation, focused on performance optimization.</p>
+                        <a href="description project 2.html" class="project-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
-        <h2>Contact</h2>
-        <p>If you want to get in touch, feel free to reach out via:</p>
-        <a href="mailto:djlike@hotmail.fr">Email</a> |
-        <a href="https://github.com/CLecart">GitHub</a> |
-        <a href="https://www.linkedin.com/in/christophe-lecart-cl15121981/">LinkedIn</a>
+    <section id="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info slide-right">
+                    <h3>Contact Information</h3>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>GitHub</h4>
+                            <a href="https://github.com/CLecart" target="_blank">github.com/CLecart</a>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/christophe-lecart-cl15121981/" target="_blank">linkedin.com/in/christophe-lecart</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form slide-left">
+                    <h3>Send Me a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

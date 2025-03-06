@@ -6,9 +6,8 @@
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <!-- Mise à jour vers la dernière version d'EmailJS avec import correct -->
-    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <!-- Utiliser un seul import EmailJS, le plus récent -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js"></script>
 </head>
 <body>
     <header>
@@ -201,7 +200,7 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <!-- Ajout du champ caché pour le destinataire -->
+                        <!-- Champs cachés pour correspondre au template EmailJS -->
                         <input type="hidden" name="to_name" value="Christophe">
                         <button type="submit" class="btn">Send Message</button>
                         <div id="form-status" class="form-status"></div>

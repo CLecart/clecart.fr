@@ -593,7 +593,7 @@ nav ul li a:hover::after {
   margin-top: 15px;
   padding: 10px;
   border-radius: 5px;
-  display: none;
+  display: none; /* Par défaut caché */
   text-align: center;
 }
 

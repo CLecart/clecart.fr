@@ -588,6 +588,36 @@ nav ul li a:hover::after {
   margin-top: 20px; /* Add margin to move the button down */
 }
 
+/* Styles pour les messages de statut du formulaire */
+.form-status {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  text-align: center;
+}
+
+.form-status.success {
+  display: block;
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  border: 1px solid #4CAF50;
+}
+
+.form-status.error {
+  display: block;
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #F44336;
+  border: 1px solid #F44336;
+}
+
+.form-status.sending {
+  display: block;
+  background-color: rgba(3, 169, 244, 0.1);
+  color: #03A9F4;
+  border: 1px solid #03A9F4;
+}
+
 /* Footer */
 footer {
   background: var(--dark);

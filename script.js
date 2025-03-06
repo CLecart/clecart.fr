@@ -164,28 +164,69 @@ document.addEventListener("DOMContentLoaded", () => {
   updateModeClasses();
   updateToggleIcon();
 
-  // Initialize EmailJS
-  emailjs.init("YOUR_USER_ID");
+  // Initialisation de EmailJS si disponible
+  if (window.emailjs) {
+    try {
+      // Votre clé publique EmailJS
+      emailjs.init("wCnIBsLz_IoHaoFDx");
+    } catch (e) {
+      console.warn("EmailJS initialization failed:", e);
+    }
+  }
 
-  // Handle form submission
-  const contactForm = document.getElementById("contactForm");
-  contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(contactForm);
-    const formObject = Object.fromEntries(formData.entries());
-
-    emailjs
-      .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formObject)
-      .then((response) => {
-        alert("Message sent successfully!");
-        contactForm.reset();
-      })
-      .catch((error) => {
-        alert("Failed to send message. Please try again later.");
-        console.error("EmailJS error:", error);
-      });
-  });
+  // Gestion du formulaire de contact
+  handleFormSubmission();
 
   // Remove the video toggle functionality - we'll keep the selector but make it a no-op
 });
+
+// Amélioration du système d'envoi d'emails
+const handleFormSubmission = () => {
+  const contactForm = document.getElementById("contactForm");
+  const formStatus = document.getElementById("form-status");
+
+  if (!contactForm) return;
+
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // Afficher message d'envoi en cours
+    formStatus.textContent = "Sending your message...";
+    formStatus.className = "form-status sending";
+
+    // Récupération des données du formulaire
+    const formData = new FormData(contactForm);
+    const formObject = Object.fromEntries(formData.entries());
+
+    // Utiliser EmailJS
+    if (window.emailjs) {
+      try {
+        // Vos identifiants EmailJS
+        const serviceID = "service_lokewrs";
+        const templateID = "template_2ov9l9i"; // Remplacez par votre ID de template
+
+        emailjs
+          .send(serviceID, templateID, formObject)
+          .then(() => {
+            formStatus.textContent = "Message sent successfully!";
+            formStatus.className = "form-status success";
+            contactForm.reset();
+          })
+          .catch((err) => {
+            console.error("EmailJS error:", err);
+            formStatus.textContent =
+              "Failed to send message. Please try again or contact me directly.";
+            formStatus.className = "form-status error";
+          });
+      } catch (e) {
+        formStatus.textContent =
+          "Email service error. Please contact me directly.";
+        formStatus.className = "form-status error";
+      }
+    } else {
+      formStatus.innerHTML =
+        "Email service is not available. Please contact me directly at <a href='mailto:djlike@hotmail.fr'>djlike@hotmail.fr</a>";
+      formStatus.className = "form-status error";
+    }
+  });
+};

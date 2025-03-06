@@ -164,64 +164,72 @@ document.addEventListener("DOMContentLoaded", () => {
   updateModeClasses();
   updateToggleIcon();
 
-  // Initialisation unique d'EmailJS
-  if (window.emailjs) {
-    try {
-      emailjs.init("wCnIBsLz_IoHaoFDx");
-      console.log("EmailJS initialized successfully");
-    } catch (e) {
-      console.error("EmailJS initialization failed:", e);
+  // Implement more robust email handling with fallback
+
+  function setupContactForm() {
+    const contactForm = document.getElementById("contactForm");
+    const formStatus = document.getElementById("form-status");
+
+    if (!contactForm) return;
+
+    // Check if EmailJS is available and set status message
+    const emailJsAvailable = typeof window.emailjs !== "undefined";
+    const directEmailMsg = document.getElementById("direct-email-msg");
+
+    // Show appropriate message based on EmailJS availability
+    if (directEmailMsg) {
+      if (emailJsAvailable) {
+        directEmailMsg.style.display = "none";
+      } else {
+        directEmailMsg.style.display = "block";
+        console.warn("EmailJS not available, showing direct email message");
+      }
     }
-  } else {
-    console.error("EmailJS not available");
-  }
 
-  // Gestion du formulaire de contact - code simplifié et robuste
-  const contactForm = document.getElementById("contactForm");
-  const formStatus = document.getElementById("form-status");
-
-  if (contactForm) {
     contactForm.addEventListener("submit", function (event) {
       event.preventDefault();
 
-      // Afficher message d'envoi en cours
+      // Show sending status
       if (formStatus) {
         formStatus.textContent = "Sending your message...";
         formStatus.className = "form-status sending";
         formStatus.style.display = "block";
       }
 
-      // Vérifier que EmailJS est disponible
-      if (!window.emailjs) {
-        console.error("EmailJS not loaded");
-        if (formStatus) {
-          formStatus.innerHTML =
-            "Email service unavailable. Please contact me directly at <a href='mailto:djlike@hotmail.fr'>djlike@hotmail.fr</a>";
-          formStatus.className = "form-status error";
-        }
-        return;
-      }
-
-      // Envoi du formulaire
-      emailjs
-        .sendForm("service_lokewrs", "template_2ov9l9i", contactForm)
-        .then(function (response) {
-          console.log("SUCCESS!", response.status, response.text);
-          if (formStatus) {
+      // If EmailJS is available, attempt to send email
+      if (emailJsAvailable) {
+        emailjs
+          .sendForm("service_lokewrs", "template_2ov9l9i", contactForm)
+          .then(function (response) {
+            console.log("SUCCESS", response);
             formStatus.textContent = "Message sent successfully!";
             formStatus.className = "form-status success";
-          }
-          contactForm.reset();
-        })
-        .catch(function (error) {
-          console.error("FAILED...", error);
-          if (formStatus) {
-            formStatus.innerHTML = `Failed to send message (${error.status}). Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
+            contactForm.reset();
+          })
+          .catch(function (error) {
+            console.error("FAILED", error);
+            formStatus.innerHTML = `Message could not be sent. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
             formStatus.className = "form-status error";
-          }
-        });
+          });
+      } else {
+        // Fallback if EmailJS is not available
+        console.error("EmailJS not loaded");
+        const formData = new FormData(contactForm);
+        const name = formData.get("from_name") || "Not provided";
+        const email = formData.get("email") || "Not provided";
+        const message = formData.get("message") || "No message content";
+
+        // Open user's email client as fallback
+        const mailtoLink = `mailto:djlike@hotmail.fr?subject=Contact from ${name}&body=From: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
+
+        window.open(mailtoLink);
+
+        formStatus.innerHTML = `The email form is currently unavailable. Your default email client should have opened. If not, please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
+        formStatus.className = "form-status error";
+      }
     });
   }
 
-  // Remove the video toggle functionality - we'll keep the selector but make it a no-op
+  // Run the contact form setup
+  setupContactForm();
 });

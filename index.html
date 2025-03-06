@@ -6,8 +6,18 @@
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Utiliser un seul import EmailJS, le plus récent -->
-    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js"></script>
+    <!-- Try alternative EmailJS source -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            try {
+                emailjs.init("wCnIBsLz_IoHaoFDx");
+                console.log("EmailJS initialized successfully");
+            } catch (e) {
+                console.error("EmailJS init error:", e);
+            }
+        })();
+    </script>
 </head>
 <body>
     <header>
@@ -185,9 +195,15 @@
                     </div>
                 </div>
                 
-                <!-- Vérifier que le formulaire est correctement structuré -->
                 <div class="contact-form slide-left">
                     <h3>Send Me a Message</h3>
+                    
+                    <!-- Message that appears when EmailJS isn't available -->
+                    <div id="direct-email-msg">
+                        <p>The contact form may not be working properly at this time.</p>
+                        <p>Feel free to email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a></p>
+                    </div>
+                    
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="from_name">Your Name</label>
@@ -201,7 +217,6 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <!-- Assurez-vous que ce champ est correct pour votre template -->
                         <input type="hidden" name="to_name" value="Christophe">
                         <button type="submit" class="btn">Send Message</button>
                         <div id="form-status" class="form-status"></div>

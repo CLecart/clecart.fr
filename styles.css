@@ -400,6 +400,11 @@ nav ul li a:hover::after {
   }
 }
 
+/* Fix: décalage du trait sous Network Architecture */
+.skill-card:last-child .skill-level {
+  margin-top: 10px; /* Ajustement par rapport aux 15px par défaut */
+}
+
 /* Projects Section */
 #projects {
   padding: 100px 0;
@@ -428,6 +433,7 @@ nav ul li a:hover::after {
   position: relative;
   overflow: hidden;
   height: 200px;
+  cursor: pointer;
 }
 
 .project-thumb video {
@@ -438,6 +444,18 @@ nav ul li a:hover::after {
 }
 
 .project-card:hover .project-thumb video {
+  transform: scale(1.05);
+}
+
+/* Add CSS for project thumbnails with images */
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.project-card:hover .project-thumb img {
   transform: scale(1.05);
 }
 
@@ -454,6 +472,11 @@ nav ul li a:hover::after {
 .project-content p {
   margin-bottom: 20px;
   color: #6c757d;
+  height: 48px; /* Adjust this value as needed to match your layout */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .project-btn {
@@ -662,12 +685,16 @@ footer.dark-mode {
 
 /* Project Description Page */
 .back-btn {
-  padding: 10px 20px;
+  padding: 8px 20px;
   background: var(--primary);
   color: white;
   border-radius: 50px;
   display: inline-block;
-  margin: 20px;
+  position: absolute; /* Positionnement absolu */
+  top: 10px;
+  right: 20px;
+  margin: 0;
+  font-size: 0.9rem;
   transition: var(--transition);
 }
 
@@ -679,11 +706,50 @@ footer.dark-mode {
 
 .description {
   max-width: 900px;
-  margin: 30px auto;
+  margin: 80px auto 30px; /* Réduit la marge du haut */
   background: white;
-  padding: 40px;
+  padding: 30px 40px;
   border-radius: 15px;
   box-shadow: var(--card-shadow);
+}
+
+/* Correction de l'affichage des pages détail projet */
+
+/* Augmenter la marge du haut de manière significative pour éviter le chevauchement */
+.description {
+  margin-top: 120px !important; /* Force une marge plus grande */
+  padding-top: 30px;
+}
+
+/* Rendre le header des pages détail plus compact */
+body > header {
+  height: auto !important;
+  min-height: 50px;
+  padding: 8px 0 !important;
+}
+
+/* Ajuster le bouton de retour */
+.back-btn {
+  top: 8px !important;
+  right: 15px !important;
+  padding: 5px 15px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Support du mode sombre pour les pages détail */
+body.dark-mode .description {
+  background-color: var(--dark) !important;
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary) !important;
+}
+
+/* Fix pour le trait sous Network Architecture */
+#skills .skill-card:last-child .skill-level {
+  margin-top: 10px !important;
 }
 
 .description h2 {
@@ -704,6 +770,47 @@ footer.dark-mode {
 
 .description ul li {
   margin-bottom: 10px;
+}
+
+/* Add padding to project detail page headers */
+body > header {
+  background: var(--gradient-1);
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  height: auto;
+}
+
+/* Add specific styles for project detail page headers */
+body > header h1 {
+  color: white;
+  margin: 0;
+  padding: 0 20px;
+  font-size: 1.6rem;
+}
+
+/* Assurer que le contenu principal commence avec assez d'espace */
+main {
+  padding-top: 60px;
+}
+
+/* Styles pour les pages de détail en mode sombre */
+body.dark-mode .description {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary);
+}
+
+body.dark-mode footer {
+  background: var(--primary-dark);
 }
 
 /* Responsive Design */
@@ -799,5 +906,108 @@ footer.dark-mode {
 /* Make sure section headers in dark sections always have good contrast */
 body.dark-mode .section-header h2,
 body.dark-mode #skills .section-header h2 {
+  color: var(--text-dark);
+}
+
+/* Styles pour la modal d'image */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 90vh;
+  animation: zoom 0.3s;
+}
+
+@keyframes zoom {
+  from {transform: scale(0.1)} 
+  to {transform: scale(1)}
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Styles pour rendre l'image cliquable */
+.project-thumb {
+  cursor: pointer;
+  position: relative;
+}
+
+.project-thumb:hover::before {
+  content: "\f00e"; /* Icône loupe de FontAwesome */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  z-index: 100;
+}
+
+/* Correction de l'alignement du formulaire de contact */
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+}
+
+/* Styles ajoutés pour le formulaire en mode sombre */
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+  background-color: #2a2a3a;
+  border-color: #444;
+  color: var(--text-dark);
+}
+
+body.dark-mode .form-group label {
   color: var(--text-dark);
 }

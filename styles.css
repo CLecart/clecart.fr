@@ -528,9 +528,51 @@ nav ul li a:hover::after {
   display: none;
 }
 
+/* Correction pour les cartes de compétences - les faire ressortir du fond */
+#skills .skill-card {
+  /* Mode clair: fond blanc avec ombre et bordure légère */
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Renforcer l'effet de survol */
+#skills .skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+/* Mode sombre: fond plus foncé que l'arrière-plan principal */
+body.dark-mode #skills {
+  background-color: #14141e; /* Plus sombre que le var(--dark) standard */
+}
+
+body.dark-mode #skills .skill-card {
+  background-color: #2a2a42; /* Plus clair que l'arrière-plan pour un contraste */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #skills .skill-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  border-color: rgba(108, 99, 255, 0.3);
+}
+
+/* Renforcer la lisibilité des textes */
+#skills .skill-name {
+  font-weight: 700; /* Plus gras pour un meilleur contraste */
+}
+
+#skills .skill-icon {
+  font-size: 2.8rem; /* Plus grand pour plus de visibilité */
+  margin-bottom: 18px;
+}
+
 /* Projects Section */
 #projects {
   padding: 100px 0;
+  background-color: #f9f9ff;
 }
 
 .projects-grid {
@@ -2182,4 +2224,136 @@ body.dark-mode .language-card {
   #languages .section-header {
     margin-bottom: 20px; /* Encore moins d'espace sur mobile */
   }
+}
+
+/* Uniformiser le style des cartes dans toutes les sections */
+
+/* 1. Cards pour la section Projects */
+#projects {
+  /* Fond légèrement différent pour la section */
+  background-color: #f9f9ff;
+  padding: 100px 0;
+}
+
+#projects .project-card {
+  /* Mode clair: fond blanc avec ombre et bordure légère */
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+#projects .project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+/* Mode sombre pour la section Projects */
+body.dark-mode #projects {
+  background-color: #14141e; /* Plus sombre que le var(--dark) standard */
+}
+
+body.dark-mode #projects .project-card {
+  background-color: #2a2a42; /* Plus clair que l'arrière-plan pour un contraste */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #projects .project-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  border-color: rgba(108, 99, 255, 0.3);
+}
+
+/* 2. Cards pour la section Contact */
+#contact {
+  background: linear-gradient(135deg, #f9f9ff, #f0f0ff);
+  padding: 100px 0;
+}
+
+#contact .contact-info,
+#contact .contact-form {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: var(--transition);
+}
+
+#contact .contact-info:hover,
+#contact .contact-form:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Mode sombre pour la section Contact */
+body.dark-mode #contact {
+  background: linear-gradient(135deg, #14141e, #1a1a2e);
+}
+
+body.dark-mode #contact .contact-info,
+body.dark-mode #contact .contact-form {
+  background-color: #2a2a42;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
+}
+
+body.dark-mode #contact .contact-info h3,
+body.dark-mode #contact .contact-form h3 {
+  color: var(--primary);
+}
+
+/* 3. Cards pour la section Languages */
+#languages {
+  background-color: white;
+  padding: 30px 0 50px;
+}
+
+#languages .language-card {
+  background-color: #f9f9ff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: var(--transition);
+}
+
+#languages .language-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+/* Mode sombre pour la section Languages */
+body.dark-mode #languages {
+  background-color: #1a1a2e;
+}
+
+body.dark-mode #languages .language-card {
+  background-color: #2a2a42;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode #languages .language-card:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+  border-color: rgba(108, 99, 255, 0.3);
+}
+
+/* 4. Page de Description des projets */
+.description {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .description {
+  background-color: #2a2a42;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Uniformiser les entêtes des sections */
+.section-header h2 {
+  color: var(--primary-dark);
+}
+
+body.dark-mode .section-header h2 {
+  color: var(--primary);
 }

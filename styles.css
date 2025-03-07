@@ -2336,6 +2336,31 @@ body.dark-mode #languages .language-card:hover {
   border-color: rgba(108, 99, 255, 0.3);
 }
 
+/* Adapter le fond de l'icône au fond de la carte */
+#languages .language-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #f9f9ff; /* Même couleur que la carte */
+}
+
+#languages .language-icon img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0;
+  background-color: transparent; /* Fond transparent pour l'image */
+  transition: transform 0.3s ease;
+}
+
+/* Adapter également le fond de l'icône en mode sombre */
+body.dark-mode #languages .language-icon {
+  background-color: #2a2a42; /* Même couleur que la carte en mode sombre */
+}
+
 /* 4. Page de Description des projets */
 .description {
   background-color: white;

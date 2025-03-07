@@ -1,0 +1,263 @@
+/* Styles dédiés au bouton de mode sombre et ses effets */
+/* Version finale nettoyée - aucun !important */
+
+/* Variables pour les couleurs */
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #5a52d9;
+  --dark: #1a1a2e;
+  --light: #f8f9fa;
+  --text-dark: #f4f4f4;
+}
+
+/* Styles de base pour le bouton dark mode */
+.dark-mode-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: 20px;
+  transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Mode sombre - utiliser des sélecteurs spécifiques */
+body.dark-mode {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+/* Spécificité accrue pour les sélecteurs en mode sombre */
+body.dark-mode header {
+  background: var(--dark);
+}
+
+body.dark-mode #projects .project-card {
+  background-color: var(--dark);
+}
+
+body.dark-mode #projects .project-content p {
+  color: #d1d1d1;
+}
+
+body.dark-mode #projects .project-content h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode #skills .skill-card {
+  background: var(--dark);
+  color: var(--text-dark);
+}
+
+/* Autres styles mode sombre sans !important */
+
+/* Styles pour les pages détail */
+body:not(.homepage) .dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 80px;
+}
+
+/* Support mobile pour le bouton dark mode */
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    margin-left: 15px;
+  }
+  
+  body:not(.homepage) .dark-mode-toggle {
+    right: 60px;
+  }
+}
+
+/* Styles additionnels pour éliminer tous les éléments blancs en mode sombre */
+
+/* Fond global et éléments principaux */
+body.dark-mode {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+/* Header et navigation */
+body.dark-mode header {
+  background: var(--dark);
+}
+
+body.dark-mode nav ul {
+  background: var(--dark);
+}
+
+/* Sections de contenus */
+body.dark-mode #hero,
+body.dark-mode #about,
+body.dark-mode #skills,
+body.dark-mode #projects,
+body.dark-mode #contact {
+  background-color: var(--dark);
+}
+
+/* Correction pour la section Hero en mode sombre */
+body.dark-mode #hero {
+  background-color: transparent;
+}
+
+body.dark-mode #hero .container,
+body.dark-mode #hero .hero-content,
+body.dark-mode .hero-content {
+  background-color: transparent !important;
+  box-shadow: none;
+}
+
+body.dark-mode .hero-content h1,
+body.dark-mode .hero-content p {
+  color: var(--text-dark);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Améliorer la lisibilité */
+}
+
+body.dark-mode .hero-content h1 span {
+  color: var(--primary); /* Conserver la couleur du nom */
+}
+
+/* Ajuster le SVG d'arrière-plan en mode sombre */
+body.dark-mode #hero {
+  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+}
+
+/* Fonds spéciaux */
+body.dark-mode #contact {
+  background: linear-gradient(135deg, #1a1a2e10, #1a1a2e20);
+}
+
+/* Cards et conteneurs */
+body.dark-mode .project-card,
+body.dark-mode .skill-card,
+body.dark-mode .contact-info,
+body.dark-mode .contact-form,
+body.dark-mode .modal-content,
+body.dark-mode .description {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+/* Formulaires et inputs */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode button {
+  background-color: #2a2a3a;
+  border-color: #444;
+  color: var(--text-dark);
+}
+
+/* Modal et popups */
+body.dark-mode .modal {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Images et médias */
+body.dark-mode .project-thumb {
+  background-color: #000;
+}
+
+/* Pour les pages de détail de projet */
+body.dark-mode .description {
+  background-color: var(--dark);
+}
+
+/* Style pour tous les liens et textes */
+body.dark-mode a,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode label {
+  color: var(--text-dark);
+}
+
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: var(--primary);
+}
+
+/* Animation et transitions spécifiques */
+body.dark-mode .fade-in,
+body.dark-mode .slide-left,
+body.dark-mode .slide-right {
+  color: var(--text-dark);
+}
+
+/* Couleurs de statut du formulaire ajustées */
+body.dark-mode .form-status.success {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+body.dark-mode .form-status.error {
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+body.dark-mode .form-status.sending {
+  background-color: rgba(3, 169, 244, 0.2);
+}
+
+/* CORRECTION URGENTE: Éléments blancs en mode sombre */
+
+/* 1. Correction de la section Skills & Expertise */
+body.dark-mode #skills {
+  background-color: var(--dark);
+}
+
+body.dark-mode #skills.section {
+  background-color: var(--dark);
+}
+
+body.dark-mode #skills .container {
+  background-color: var(--dark);
+}
+
+body.dark-mode #skills .skill-card {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+/* 2. Correction des fenêtres de contact */
+body.dark-mode #contact {
+  background-color: var(--dark);
+}
+
+body.dark-mode #contact .contact-info,
+body.dark-mode #contact .contact-form {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+/* S'assurer que tous les formulaires sont en sombre */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #2a2a3a;
+  border-color: #444;
+  color: var(--text-dark);
+}
+
+/* 3. Force le mode sombre partout */
+body.dark-mode section,
+body.dark-mode div,
+body.dark-mode article {
+  background-color: var(--dark);
+}
+
+/* Exception pour les boutons et éléments qui doivent rester colorés */
+body.dark-mode .btn,
+body.dark-mode button,
+body.dark-mode .skill-icon,
+body.dark-mode .contact-icon {
+  background-color: initial;
+}

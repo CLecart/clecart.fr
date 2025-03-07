@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Try alternative EmailJS source -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
@@ -23,22 +23,24 @@
 <body>
     <header>
         <div class="container header-content">
-            <div class="logo">Christophe Lecart</div>
-            <button class="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <button class="dark-mode-toggle">
-                <i class="fas fa-moon"></i>
-            </button>
+            <a href="#" class="logo">Christophe Lecart</a>
+            <div class="right-content">
+                <nav>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -117,6 +119,20 @@
                     <h3 class="skill-name">Network Architecture</h3>
                     <p>Designing and implementing efficient network solutions.</p>
                     <div class="skill-level" data-level="78"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3 class="skill-name">Database Management</h3>
+                    <p>Conception, optimisation et gestion de bases de données relationnelles (PostgreSQL, MySQL) et NoSQL (MongoDB).</p>
+                    <div class="skill-level" data-level="82"></div>
+                </div>
+                
+                <div class="skill-card fade-in">
+                    <i class="fas fa-cloud skill-icon"></i>
+                    <h3 class="skill-name">DevOps & CI/CD</h3>
+                    <p>Mise en place de pipelines avec Docker, Kubernetes, GitHub Actions ou GitLab CI/CD pour un déploiement continu.</p>
+                    <div class="skill-level" data-level="80"></div>
                 </div>
             </div>
         </div>

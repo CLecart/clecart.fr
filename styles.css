@@ -1,3 +1,5 @@
+/* NETTOYAGE COMPLET - SUPPRESSION DE TOUS LES !IMPORTANT */
+
 /* Modern Base styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -97,6 +99,12 @@ header.scrolled.dark-mode {
 .header-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.right-content {
+  display: flex;
   align-items: center;
 }
 
@@ -333,6 +341,43 @@ nav ul li a:hover::after {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
+  margin: 0 auto;
+}
+
+/* Correction de l'alignement des barres de compétence */
+.skill-card {
+  height: 380px; /* Augmenté à 380px pour accommoder tous les textes longs */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  overflow: visible;
+}
+
+.skill-card p {
+  height: auto;
+  min-height: 0; /* Supprimer la hauteur minimale pour permettre un ajustement naturel */
+  max-height: none; /* Suppression de la limite de hauteur qui cause la troncation */
+  margin-bottom: 70px; /* Beaucoup plus d'espace avant la barre */
+  overflow: visible; /* Permettre au texte de s'afficher entièrement */
+  text-overflow: initial;
+  display: block;
+  white-space: normal; /* Permettre le retour à la ligne */
+  line-height: 1.5;
+}
+
+.skill-level {
+  width: calc(100% - 50px); /* Largeur ajustée pour ne pas déborder */
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 10px;
+  margin-top: auto; /* Place la barre en bas de la carte */
+  position: absolute;
+  left: 25px;
+  right: 25px;
+  bottom: 25px; /* Maintenir fixe en bas */
+  overflow: hidden;
+  margin: 0;
 }
 
 .skill-card {
@@ -405,6 +450,11 @@ nav ul li a:hover::after {
   margin-top: 10px; /* Ajustement par rapport aux 15px par défaut */
 }
 
+/* Correction de l'épaisseur de la barre pour Backend Development */
+.skill-level {
+  height: 6px; /* Force la même hauteur pour toutes les barres */
+}
+
 /* Projects Section */
 #projects {
   padding: 100px 0;
@@ -414,6 +464,7 @@ nav ul li a:hover::after {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 40px;
+  align-items: stretch; /* Ensure all cards stretch to same height */
 }
 
 .project-card {
@@ -422,6 +473,9 @@ nav ul li a:hover::after {
   overflow: hidden;
   box-shadow: var(--card-shadow);
   transition: var(--transition);
+  height: auto; /* Hauteur automatique basée sur le contenu */
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card:hover {
@@ -434,12 +488,23 @@ nav ul li a:hover::after {
   overflow: hidden;
   height: 200px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5; /* Fond léger pour les zones sans contenu */
 }
 
 .project-thumb video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Préserver le contenu entier */
+  transition: var(--transition);
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Préserver le contenu entier */
   transition: var(--transition);
 }
 
@@ -448,19 +513,17 @@ nav ul li a:hover::after {
 }
 
 /* Add CSS for project thumbnails with images */
-.project-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition);
-}
-
 .project-card:hover .project-thumb img {
   transform: scale(1.05);
 }
 
 .project-content {
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between; /* This will push content to the edges */
+  height: 100%;
 }
 
 .project-content h3 {
@@ -469,30 +532,128 @@ nav ul li a:hover::after {
   color: var(--text);
 }
 
+/* Clean fix for project descriptions */
+
+/* First, remove the conflicting styles by overriding them */
 .project-content p {
-  margin-bottom: 20px;
-  color: #6c757d;
-  height: 48px; /* Adjust this value as needed to match your layout */
+  /* Reset all previous properties */
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  overflow: visible;
+  display: block; /* Override webkit box display */
+  -webkit-line-clamp: initial;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+/* Make sure project cards have consistent height */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between; /* This will push content to the edges */
+  height: 100%;
+}
+
+/* Fix button positioning */
+.project-btn {
+  align-self: flex-start; /* Left align */
+  margin-top: auto; /* Push to bottom */
+}
+
+/* Make all project cards the same height */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  align-items: stretch; /* Ensure all cards stretch to same height */
+}
+
+/* Force all descriptions to be exactly 2 lines with proper truncation */
+.project-content p {
   overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  height: 3em; /* Exactly 2 lines at 1.5 line height */
+  margin-bottom: 15px;
 }
 
+/* Correction des couleurs et visibilité des textes dans les projets */
+
+/* Assurer que les cartes de projet ont une couleur de fond différente en mode sombre */
+body.dark-mode .project-card {
+  background-color: var(--dark);
+}
+
+/* Corriger la couleur du texte dans les cartes de projet */
+.project-content p {
+  color: #6c757d; /* Gris foncé pour le mode clair */
+}
+
+body.dark-mode .project-content p {
+  color: #d1d1d1; /* Gris clair pour le mode sombre */
+}
+
+body.dark-mode .project-content h3 {
+  color: var(--text-dark);
+}
+
+/* S'assurer que les paragraphes sont visibles */
+.project-content p {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* S'assurer que la hauteur des cartes est suffisante */
+.project-card {
+  min-height: 400px;
+}
+
+/* Ajuster l'espacement du contenu */
+.project-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Uniformiser les boutons project-btn avec les autres boutons */
 .project-btn {
-  background: var(--primary);
+  background: var(--gradient-1); /* Utiliser le même dégradé que les autres boutons */
   color: white;
   padding: 10px 20px;
   border-radius: 50px;
   font-weight: 500;
   display: inline-block;
   transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+  text-decoration: none;
 }
 
 .project-btn:hover {
-  background: var(--primary-dark);
+  background: var(--primary-dark); /* Même comportement au survol */
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(108, 99, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+  color: white;
+}
+
+/* Support pour le mode sombre */
+body.dark-mode .project-btn {
+  background: var(--primary-dark);
+}
+
+body.dark-mode .project-btn:hover {
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
 }
 
 /* Contact Section */
@@ -717,39 +878,39 @@ footer.dark-mode {
 
 /* Augmenter la marge du haut de manière significative pour éviter le chevauchement */
 .description {
-  margin-top: 120px !important; /* Force une marge plus grande */
+  margin-top: 120px; /* Force une marge plus grande */
   padding-top: 30px;
 }
 
 /* Rendre le header des pages détail plus compact */
 body > header {
-  height: auto !important;
+  height: auto;
   min-height: 50px;
-  padding: 8px 0 !important;
+  padding: 8px 0;
 }
 
 /* Ajuster le bouton de retour */
 .back-btn {
-  top: 8px !important;
-  right: 15px !important;
-  padding: 5px 15px !important;
-  font-size: 0.8rem !important;
+  top: 8px;
+  right: 15px;
+  padding: 5px 15px;
+  font-size: 0.8rem;
 }
 
 /* Support du mode sombre pour les pages détail */
 body.dark-mode .description {
-  background-color: var(--dark) !important;
-  color: var(--text-dark) !important;
+  background-color: var(--dark);
+  color: var(--text-dark);
 }
 
 body.dark-mode .description h2,
 body.dark-mode .description h3 {
-  color: var(--primary) !important;
+  color: var(--primary);
 }
 
 /* Fix pour le trait sous Network Architecture */
 #skills .skill-card:last-child .skill-level {
-  margin-top: 10px !important;
+  margin-top: 10px;
 }
 
 .description h2 {
@@ -855,7 +1016,7 @@ body.dark-mode footer {
   }
   
   nav ul li a {
-    color: var(--text) !important; /* Force la couleur du texte pour être visible */
+    color: var(--text); /* Force la couleur du texte pour être visible */
     display: block;
     padding: 10px;
   }
@@ -866,7 +1027,7 @@ body.dark-mode footer {
   }
   
   body.dark-mode nav ul li a {
-    color: var(--text-dark) !important;
+    color: var(--text-dark);
   }
 }
 
@@ -874,23 +1035,6 @@ body.dark-mode footer {
   .hero-content h1 {
     font-size: 2.5rem;
   }
-}
-
-.dark-mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.dark-mode-toggle:hover {
-  background: var(--primary-dark);
 }
 
 /* Remove styles for video toggle buttons */
@@ -920,14 +1064,20 @@ body.dark-mode #skills .section-header h2 {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   overflow: auto;
+  padding: 0; /* Supprimez le padding qui pourrait causer un décalage */
 }
 
 .modal-content {
   margin: auto;
   display: block;
-  max-width: 90%;
-  max-height: 90vh;
+  max-width: 95%; 
+  max-height: 95vh;
+  object-fit: contain; /* Garantit que l'image entière est visible */
   animation: zoom 0.3s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes zoom {
@@ -1010,4 +1160,463 @@ body.dark-mode .form-group textarea {
 
 body.dark-mode .form-group label {
   color: var(--text-dark);
+}
+
+/* Ajustement des cartes de compétences si nécessaire */
+.skill-card p {
+  height: auto; /* Permettre au texte de s'étendre si nécessaire */
+  min-height: 60px; /* Garder une hauteur minimale */
+}
+
+/* Solution intégrée pour les cartes de compétences - ajoutez à la fin du fichier */
+
+/* Reset des styles problématiques */
+.skill-card {
+  height: 250px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.skill-card p {
+  height: auto;
+  max-height: 4.8em; /* Exactement 3-4 lignes */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 15px;
+  flex-grow: 0;
+}
+
+.skill-level {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
+  height: 6px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Assurer que tous les traits ont la même apparence */
+.skill-card:last-child .skill-level,
+#skills .skill-card:last-child .skill-level,
+.skills-container .skill-card:nth-child(3) .skill-level {
+  position: absolute;
+  bottom: 25px;
+  height: 6px;
+}
+
+/* Amélioration de l'affichage des images */
+
+/* Correction de la taille des images dans la modal */
+.modal-content {
+  max-width: 90%; /* Étendre la largeur maximale */
+  max-height: 90vh; /* Maintenir une hauteur maximale par rapport à la fenêtre */
+  object-fit: contain; /* Conserver les proportions sans déformation */
+  margin: auto;
+  display: block;
+}
+
+/* Centrage amélioré de la modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 30px;
+  text-align: center;
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+/* S'assurer que l'animation de zoom fonctionne bien */
+@keyframes zoom {
+  from {transform: scale(0.1)}
+  to {transform: scale(1)}
+}
+
+/* Améliorer l'aperçu des images dans les cards */
+.project-thumb img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Couvre la zone sans déformer l'image */
+  transition: transform 0.3s ease;
+}
+
+/* Animation plus fluide au survol */
+.project-card:hover .project-thumb img {
+  transform: scale(1.05);
+}
+
+/* FIX COMPLET POUR LES THUMBNAILS ET MODALS */
+
+/* Reset des styles problématiques pour les thumbnails */
+.project-thumb {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+/* Style simple pour les vidéos */
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+
+/* Style simple pour les images */
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: white;
+}
+
+/* Style de base pour la modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+/* Style simple pour le contenu de la modal */
+.modal-content {
+  max-width: 90%;
+  max-height: 90vh;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+}
+
+/* Style pour le bouton de fermeture */
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Correction de la taille des conteneurs de vidéos et images */
+
+/* Ajustement du conteneur des thumbnails */
+.project-thumb {
+  position: relative;
+  height: 220px; /* Augmenter légèrement la hauteur */
+  width: 100%;
+  overflow: hidden;
+  background-color: transparent; /* Fond transparent */
+  display: block; /* Changer à block au lieu de flex */
+  text-align: center;
+}
+
+/* Style pour les vidéos */
+.project-thumb video {
+  width: auto; 
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Conserver le ratio d'origine */
+  background-color: #000; /* Fond noir pour les vidéos */
+  display: inline-block;
+}
+
+/* Style pour les images */
+.project-thumb img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background-color: transparent;
+  display: inline-block;
+}
+
+/* S'assurer que les contrôles de vidéo sont bien visibles */
+.project-thumb video::-webkit-media-controls {
+  display: flex;
+  opacity: 1;
+}
+
+/* Correction pour que les médias soient entièrement visibles */
+
+/* Augmenter significativement la hauteur du conteneur */
+.project-thumb {
+  position: relative;
+  height: 300px; /* Augmenté de 220px à 300px */
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ajustement des vidéos pour qu'elles soient visibles entièrement */
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 'contain' pour voir la vidéo entière */
+  max-height: 100%;
+  background-color: #000;
+}
+
+/* Ajustement des images pour qu'elles soient visibles entièrement */
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 'contain' pour voir l'image entière */
+  max-height: 100%;
+  background-color: #000;
+}
+
+/* Ajuster la taille minimale des cartes de projet pour compenser */
+.project-card {
+  min-height: 450px; /* Augmenter pour accommoder la plus grande hauteur des médias */
+}
+
+/* Correction pour que les médias prennent toute la largeur de la boîte */
+
+/* Réinitialisation complète du conteneur thumbnail */
+.project-thumb {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000; /* Fond noir pour un meilleur contraste */
+  text-align: center;
+  display: block;
+}
+
+/* Style pour les vidéos - remplir la largeur */
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplir toute la zone */
+  object-position: center center; /* Centrer le contenu */
+  background-color: #000;
+}
+
+/* Style pour les images - remplir la largeur */
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplir toute la zone */
+  object-position: center center; /* Centrer le contenu */
+  background-color: #000;
+}
+
+/* S'assurer que les contrôles de vidéo sont visibles */
+.project-thumb video::-webkit-media-controls {
+  display: flex;
+  opacity: 1;
+  background: rgba(0,0,0,0.5);
+}
+
+/* Correction majeure pour les conteneurs de média - beaucoup plus de hauteur */
+
+/* Augmenter la hauteur des vignettes */
+.project-thumb {
+  position: relative;
+  height: 400px; /* Hauteur très augmentée pour éviter toute coupure */
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+/* Ajustement des vidéos pour qu'elles soient entièrement visibles */
+.project-thumb video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background-color: #000;
+}
+
+/* Ajustement des images pour qu'elles soient entièrement visibles */
+.project-thumb img {
+  max-width: 100%; 
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background-color: #000;
+}
+
+/* Ajuster la carte pour accommoder la vignette plus grande */
+.project-card {
+  min-height: 550px; /* Augmenter pour accommoder la plus grande vignette */
+}
+
+/* Assurer une bonne visibilité des contrôles vidéo */
+.project-thumb video::-webkit-media-controls {
+  display: flex;
+  opacity: 1;
+  background: rgba(0,0,0,0.5);
+}
+
+/* Style simplifié pour la barre de navigation */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-content {
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  margin-right: 20px;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+}
+
+/* RÈGLES POUR LES BARRES DE COMPÉTENCE */
+/* Utiliser des sélecteurs plus spécifiques */
+#skills .skills-container .skill-card .skill-level {
+  height: 6px;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#skills .skill-card p {
+  height: auto;
+  max-height: 4.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 15px;
+  flex-grow: 0;
+}
+
+/* RÈGLES POUR LES PROJETS */
+#projects .project-card {
+  min-height: 450px;
+}
+
+#projects .project-thumb {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#projects .project-thumb img,
+#projects .project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #000;
+}
+
+#projects .project-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 3em;
+  margin-bottom: 15px;
+  color: #6c757d;
+}
+
+#projects .project-btn {
+  background: var(--gradient-1);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 500;
+  display: inline-block;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+  text-decoration: none;
+}
+
+#projects .project-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+  color: white;
+}
+
+/* CORRECTION FINALE: Très grande hauteur des cartes de compétences */
+#skills .skill-card {
+  height: 400px; /* Augmentation très significative de la hauteur */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  overflow: visible;
+}
+
+/* S'assurer que toutes les cartes ont la même hauteur */
+#skills .skills-container .skill-card {
+  height: 400px; /* Même hauteur partout */
+}
+
+/* Texte complètement visible avec beaucoup d'espace */
+#skills .skill-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 80px; /* Espace très important avant la barre */
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+  height: auto;
+  max-height: none; /* Aucune limitation de hauteur */
+}
+
+/* Barre fixée tout en bas */
+#skills .skill-card .skill-level {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
+  width: calc(100% - 50px);
+  height: 6px;
+  margin: 0;
+}
+
+/* Reset des conflits potentiels */
+#skills .skill-card {
+  min-height: 400px; /* Garantir la hauteur minimale */
+  max-height: none; /* Pas de limite maximale */
 }

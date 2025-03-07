@@ -104,65 +104,26 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
   }
 
-  // Dark mode toggle
+  // Code simplifié pour le dark mode toggle
   const darkModeToggle = document.querySelector(".dark-mode-toggle");
   darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    document.body.classList.toggle("light-mode");
-    updateModeClasses();
-    updateToggleIcon();
 
-    // Store preference in local storage
+    // Mettre à jour l'icône
     const isDarkMode = document.body.classList.contains("dark-mode");
+    darkModeToggle.innerHTML = isDarkMode
+      ? '<i class="fas fa-sun"></i>'
+      : '<i class="fas fa-moon"></i>';
+
+    // Sauvegarder la préférence
     localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
   });
 
-  const updateModeClasses = () => {
-    const isDarkMode = document.body.classList.contains("dark-mode");
-    const modeClass = isDarkMode ? "dark-mode" : "light-mode";
-
-    // Apply mode class to sections and other major containers
-    document
-      .querySelectorAll("#skills, #about, #projects, #contact")
-      .forEach((section) => {
-        section.classList.remove("dark-mode", "light-mode");
-        section.classList.add(modeClass);
-      });
-
-    // Apply mode class to individual elements - remove toggle-picture-btn from the list
-    document
-      .querySelectorAll(
-        "header, nav ul li a, .btn, .btn-secondary, .section-header h2, .skill-card, .contact-info, .contact-form, .contact-icon, .contact-text h4, footer"
-      )
-      .forEach((el) => {
-        el.classList.remove("dark-mode", "light-mode");
-        el.classList.add(modeClass);
-      });
-
-    // Mettre à jour le style du menu mobile si ouvert
-    const navMenu = document.querySelector("nav ul");
-    if (navMenu && navMenu.classList.contains("active")) {
-      const isDarkMode = document.body.classList.contains("dark-mode");
-      navMenu.style.background = isDarkMode ? "var(--dark)" : "white";
-    }
-  };
-
-  const updateToggleIcon = () => {
-    const isDarkMode = document.body.classList.contains("dark-mode");
-    const iconClass = isDarkMode ? "fas fa-sun" : "fas fa-moon";
-    darkModeToggle.innerHTML = `<i class="${iconClass}"></i>`;
-  };
-
-  // Initialize mode based on user preference
+  // Initialiser selon la préférence stockée
   if (localStorage.getItem("darkMode") === "enabled") {
     document.body.classList.add("dark-mode");
-    document.body.classList.remove("light-mode");
-  } else {
-    document.body.classList.add("light-mode");
-    document.body.classList.remove("dark-mode");
+    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
   }
-  updateModeClasses();
-  updateToggleIcon();
 
   // Implement more robust email handling with fallback
 

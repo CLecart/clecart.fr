@@ -224,6 +224,43 @@ nav ul li a:hover::after {
   color: var(--text);
 }
 
+/* Hero Section - Correction des tailles de texte */
+.hero-content h1 {
+  font-size: 3.5rem; /* S'assurer que le titre est grand */
+  margin-bottom: 20px;
+  font-weight: 700;
+  line-height: 1.2; /* Améliorer l'espacement des lignes */
+}
+
+.hero-content p {
+  font-size: 1.5rem; /* Augmenter la taille du texte pour "I'm a Mobile Developer" */
+  margin-bottom: 30px;
+  color: var(--text);
+}
+
+.hero-content .btn {
+  font-size: 1rem; /* Assurer une taille de texte lisible pour les boutons */
+  padding: 12px 28px;
+  margin: 10px 8px; /* Ajouter un peu d'espace entre les boutons */
+}
+
+#typewriter {
+  font-size: 1.5rem; /* Assurer que le texte qui change est assez grand */
+  font-weight: 600; /* Le rendre un peu plus en gras */
+  color: var(--primary); /* Utiliser la couleur primaire pour le mettre en valeur */
+}
+
+/* Ajustement responsive pour éviter que le texte soit trop petit sur mobile */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem; /* Légèrement plus petit sur mobile mais toujours visible */
+  }
+  
+  .hero-content p, #typewriter {
+    font-size: 1.3rem; /* Ajuster pour mobile */
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 12px 28px;

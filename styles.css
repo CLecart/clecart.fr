@@ -258,7 +258,7 @@ nav ul li a:hover::after {
 
 /* About Section */
 #about {
-  padding: 100px 0;
+  padding: 100px 0 30px; /* Réduire le padding du bas pour rapprocher la section suivante */
 }
 
 .section-header {
@@ -1842,4 +1842,225 @@ nav ul {
 #skills .skill-card {
   min-height: 310px;
   max-height: none;
+}
+
+/* Programming Languages Section - Taille encore plus grande */
+.languages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.language-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  width: 100px; /* Agrandir davantage la taille des cartes */
+  height: 100px; /* Agrandir davantage la hauteur des cartes */
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.language-icon img {
+  width: 50px; /* Agrandir davantage la taille des icônes */
+  height: 50px;
+  margin-bottom: 12px; /* Augmenter l'espace sous l'icône */
+  transition: transform 0.3s ease;
+}
+
+.language-card span {
+  font-weight: 600;
+  font-size: 0.8rem; /* Augmenter légèrement la taille du texte */
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Programming Languages Section - Ajustements */
+#languages {
+  padding: 30px 0 50px; /* Réduire le padding du haut pour rapprocher de la section précédente */
+}
+
+/* Placement des cartes de langage sur une seule ligne avec défilement horizontal si nécessaire */
+.languages-grid {
+  display: flex; /* Changer grid en flex pour affichage horizontal */
+  flex-wrap: nowrap; /* Empêcher le retour à la ligne */
+  overflow-x: auto; /* Permettre le défilement horizontal si nécessaire */
+  gap: 15px; /* Réduire l'espacement entre les cartes */
+  justify-content: flex-start; /* Alignement au début */
+  padding: 10px 0; /* Ajouter un peu de padding vertical */
+  margin: 20px 0;
+  scrollbar-width: thin; /* Style de scrollbar pour Firefox */
+}
+
+/* Style pour les scrollbars sur Chrome/Safari */
+.languages-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.languages-grid::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 20px;
+}
+
+.languages-grid::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+}
+
+/* Réduction de la taille des cartes pour qu'elles s'adaptent mieux sur une ligne */
+.language-card {
+  flex: 0 0 auto; /* Empêche les cartes de grandir/rétrécir */
+  width: 90px; /* Légèrement plus petit */
+  height: 90px;
+  padding: 15px 10px;
+  margin: 0 5px;
+  border-radius: 10px;
+}
+
+.language-icon img {
+  width: 40px; /* Réduire la taille des icônes */
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.language-card span {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* Programming Languages Section - Ajustements pour centrer */
+#languages {
+  padding: 30px 0 50px;
+}
+
+/* Centrage amélioré pour les cartes de langage - sans barre de défilement visible */
+.languages-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  margin: 20px auto;
+  max-width: 90%;
+  
+  /* Masquer la barre de défilement tout en gardant la fonctionnalité */
+  -ms-overflow-style: none;  /* Pour IE et Edge */
+  scrollbar-width: none;  /* Pour Firefox */
+}
+
+/* Masquer la barre de défilement pour Chrome, Safari et Opera */
+.languages-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Amélioration de l'affichage sur les appareils mobiles */
+@media (max-width: 768px) {
+  .languages-grid {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 10px;
+    justify-content: flex-start;
+  }
+}
+
+/* Programming Languages Section - Ajustements pour centrer */
+#languages {
+  padding: 30px 0 50px;
+}
+
+/* Centrage amélioré pour les cartes de langage */
+.languages-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 15px;
+  justify-content: center; /* Centre les éléments horizontalement */
+  align-items: center; /* Centre les éléments verticalement */
+  padding: 10px 0;
+  margin: 20px auto; /* Centre la barre elle-même sur la page */
+  max-width: 90%; /* Limite la largeur pour éviter qu'elle touche les bords */
+  scrollbar-width: thin;
+}
+
+/* Amélioration de l'affichage sur les appareils mobiles */
+@media (max-width: 768px) {
+  .languages-grid {
+    max-width: 100%;
+    padding-left: 20px; /* Ajoute un espace à gauche sur mobile */
+    padding-right: 10px; /* Laisse voir qu'il y a plus d'éléments à droite */
+    justify-content: flex-start; /* Commence par la gauche sur mobile */
+  }
+}
+
+/* Programming Languages Section - Corrections */
+#languages {
+  padding: 30px 0 50px;
+}
+
+/* Centrage des cartes de langage sans barre de défilement visible et sans espacement excessif */
+.languages-grid {
+  display: flex;
+  flex-wrap: wrap; /* Permettre le retour à la ligne au lieu du défilement */
+  gap: 20px; /* Espacement uniforme entre les cartes */
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  margin: 20px auto;
+  max-width: 90%;
+  overflow: visible; /* Éviter tout débordement qui pourrait causer la barre de défilement */
+}
+
+/* Supprimer les marges des cartes qui pourraient causer des problèmes d'alignement */
+.language-card {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 90px;
+  padding: 15px 10px;
+  margin: 0; /* Supprimer toutes les marges individuelles */
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none; /* Supprimer les bordures qui pouvaient causer le problème */
+}
+
+/* S'assurer que l'icône et le texte sont bien positionnés */
+.language-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.language-icon img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0; /* Supprimer la marge en bas de l'image */
+}
+
+.language-card span {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-align: center;
+  margin: 0; /* Supprimer la marge qui causait peut-être le problème */
+}
+
+/* Mode sombre pour les cartes de langage */
+body.dark-mode .language-card {
+  background-color: var(--dark);
+  color: var(--text-dark);
+  border: none;
 }

@@ -455,6 +455,32 @@ nav ul li a:hover::after {
   height: 6px; /* Force la même hauteur pour toutes les barres */
 }
 
+/* RÈGLES POUR LES BARRES DE COMPÉTENCE - Suppression des barres */
+#skills .skills-container .skill-card .skill-level {
+  display: none; /* Masquer complètement les barres de niveau */
+}
+
+/* Ajustement du padding pour compenser l'espace laissé par les barres */
+#skills .skill-card {
+  height: auto;
+  min-height: 250px;
+  padding-bottom: 25px; /* Réduire le padding du bas puisque les barres sont supprimées */
+}
+
+#skills .skill-card p {
+  margin-bottom: 0; /* Supprimer la marge en bas qui était prévue pour l'espace avant la barre */
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+/* Supprimer tous les éléments liés aux barres de niveau */
+.skill-level, 
+.skill-level::after,
+[data-level] {
+  display: none;
+}
+
 /* Projects Section */
 #projects {
   padding: 100px 0;

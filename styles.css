@@ -559,16 +559,18 @@ nav ul li a:hover::after {
 }
 
 /* Clean fix for project descriptions */
-
-/* First, remove the conflicting styles by overriding them */
 .project-content p {
   /* Reset all previous properties */
   height: auto;
   max-height: none;
   min-height: 0;
-  overflow: visible;
-  display: block; /* Override webkit box display */
-  -webkit-line-clamp: initial;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limiter à 2 lignes */
+  line-clamp: 2; /* Propriété standard */
+  -webkit-box-orient: vertical;
+  box-orient: vertical; /* Propriété standard */
   margin-bottom: 15px;
   line-height: 1.5;
 }
@@ -602,15 +604,20 @@ nav ul li a:hover::after {
   align-items: stretch; /* Ensure all cards stretch to same height */
 }
 
-/* Force all descriptions to be exactly 2 lines with proper truncation */
+/* Force all descriptions to be exactly 2 lines with proper truncation - version corrigée */
 .project-content p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  display: -ms-box; /* Pour IE */
+  display: box; /* Propriété standard */
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* Ajout de la propriété standard */
+  line-clamp: 2; /* Propriété standard */
   -webkit-box-orient: vertical;
-  height: 3em; /* Exactly 2 lines at 1.5 line height */
+  -ms-box-orient: vertical; /* Pour IE */
+  box-orient: vertical; /* Propriété standard */
+  max-height: 3em; /* Exactly 2 lines at 1.5 line height */
+  height: 3em;
 }
 
 /* Correction des couleurs et visibilité des textes dans les projets */
@@ -680,6 +687,23 @@ body.dark-mode .project-btn {
 
 body.dark-mode .project-btn:hover {
   box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* S'assurer que les paragraphes de projets ont un affichage cohérent partout */
+#projects .project-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  display: -ms-box; 
+  display: box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* Propriété standard */
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  height: 3em;
+  margin-bottom: 15px;
+  color: #6c757d;
 }
 
 /* Contact Section */
@@ -1811,8 +1835,11 @@ nav ul {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* Ajout de la propriété standard pour compatibilité future */
   -webkit-box-orient: vertical;
+  line-clamp: 2; /* Propriété standard */
+  display: -ms-box; /* Compatibilité IE */
+  display: box; /* Propriété standard */
+  box-orient: vertical; /* Propriété standard */
   height: 3em;
   margin-bottom: 15px;
   color: #6c757d;

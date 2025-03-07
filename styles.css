@@ -582,9 +582,9 @@ nav ul li a:hover::after {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2; /* Ajout de la propriété standard */
   -webkit-box-orient: vertical;
   height: 3em; /* Exactly 2 lines at 1.5 line height */
-  margin-bottom: 15px;
 }
 
 /* Correction des couleurs et visibilité des textes dans les projets */
@@ -1773,8 +1773,9 @@ nav ul {
 
 #projects .project-thumb img,
 #projects .project-thumb video {
-  width: 100%;
+  width: auto; /* Au lieu de 100% */
   height: 100%;
+  max-width: 100%;
   object-fit: contain;
   background-color: #000;
 }
@@ -1784,6 +1785,7 @@ nav ul {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2; /* Ajout de la propriété standard pour compatibilité future */
   -webkit-box-orient: vertical;
   height: 3em;
   margin-bottom: 15px;

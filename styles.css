@@ -258,7 +258,7 @@ nav ul li a:hover::after {
 
 /* About Section */
 #about {
-  padding: 100px 0 30px; /* Réduire le padding du bas pour rapprocher la section suivante */
+  padding: 100px 0 10px; /* Réduire le padding du bas de 30px à 10px */
 }
 
 .section-header {
@@ -1937,7 +1937,7 @@ nav ul {
 
 /* Programming Languages Section - Ajustements */
 #languages {
-  padding: 30px 0 50px; /* Réduire le padding du haut pour rapprocher de la section précédente */
+  padding: 10px 0 50px; /* Réduire le padding du haut de 30px à 10px */
 }
 
 /* Placement des cartes de langage sur une seule ligne avec défilement horizontal si nécessaire */
@@ -2116,4 +2116,23 @@ body.dark-mode .language-card {
   background-color: var(--dark);
   color: var(--text-dark);
   border: none;
+}
+
+#languages .section-header {
+  margin-bottom: 30px; /* Réduire de 60px à 30px */
+}
+
+/* Ajuster également l'espacement entre les deux sections en mode responsive */
+@media (max-width: 768px) {
+  #about {
+    padding-bottom: 0; /* Encore plus réduit sur mobile */
+  }
+  
+  #languages {
+    padding-top: 0; /* Encore plus réduit sur mobile */
+  }
+  
+  #languages .section-header {
+    margin-bottom: 20px; /* Encore moins d'espace sur mobile */
+  }
 }

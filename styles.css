@@ -1577,9 +1577,9 @@ nav ul {
   color: white;
 }
 
-/* CORRECTION FINALE: Très grande hauteur des cartes de compétences */
+/* CORRECTION FINALE: Hauteur réduite des cartes de compétences */
 #skills .skill-card {
-  height: 400px; /* Augmentation très significative de la hauteur */
+  height: 300px; /* Réduit de 400px à 300px (réduction de 1/4) */
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1589,34 +1589,23 @@ nav ul {
 
 /* S'assurer que toutes les cartes ont la même hauteur */
 #skills .skills-container .skill-card {
-  height: 400px; /* Même hauteur partout */
+  height: 300px; /* Même hauteur partout */
 }
 
-/* Texte complètement visible avec beaucoup d'espace */
+/* Texte complètement visible avec espace légèrement réduit */
 #skills .skill-card p {
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 80px; /* Espace très important avant la barre */
+  margin-bottom: 60px; /* Réduit de 80px à 60px */
   overflow: visible;
   text-overflow: initial;
   white-space: normal;
   height: auto;
-  max-height: none; /* Aucune limitation de hauteur */
-}
-
-/* Barre fixée tout en bas */
-#skills .skill-card .skill-level {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  right: 25px;
-  width: calc(100% - 50px);
-  height: 6px;
-  margin: 0;
+  max-height: none;
 }
 
 /* Reset des conflits potentiels */
 #skills .skill-card {
-  min-height: 400px; /* Garantir la hauteur minimale */
+  min-height: 300px; /* Garantir la hauteur minimale */
   max-height: none; /* Pas de limite maximale */
 }

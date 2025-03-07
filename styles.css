@@ -804,18 +804,135 @@ body.dark-mode .project-btn:hover {
 
 /* Footer */
 footer {
-  background: var(--dark);
+  background: transparent;
+  padding: 10px 0; /* Réduit de 20px à 10px */
+  color: var(--text);
+  text-align: center;
+  border-top: none;
+  box-shadow: none;
+  height: auto;
+  min-height: 30px; /* Réduit de 60px à 30px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles pour le footer en mode sombre - hauteur réduite */
+body.dark-mode footer {
+  background: transparent; 
+  padding: 10px 0; /* Réduit de 20px à 10px */
+  color: white;
+  min-height: 30px; /* Réduit de 60px à 30px */
+}
+
+/* Ajuster le conteneur du footer pour la hauteur réduite */
+footer .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  height: 100%;
+  padding: 0; /* Supprime le padding vertical du conteneur */
+  line-height: 1.4;
+}
+
+/* Correction spécifique pour le fond noir dans le footer en mode sombre */
+body.dark-mode footer {
+  background: transparent;
   padding: 40px 0;
   color: white;
-  text-align: center;
+  border-top: none;
+  box-shadow: none;
 }
 
-footer.light-mode {
-  background: var(--dark);
+body.dark-mode footer p {
+  color: white;
+  opacity: 0.9;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-footer.dark-mode {
+/* Utiliser des sélecteurs plus spécifiques pour augmenter la priorité */
+body.dark-mode .description + footer,
+body.dark-mode main + footer,
+body.dark-mode #contact + footer {
+  background-color: var(--primary-dark);
   background: var(--primary-dark);
+}
+
+body.dark-mode footer p {
+  color: white;
+  opacity: 0.9;
+}
+
+/* Réinitialiser toute règle qui pourrait venir d'ailleurs */
+footer, footer.dark-mode, #footer.dark-mode {
+  background-color: transparent;
+  background: transparent;
+}
+
+/* Amélioration du style du copyright dans le footer */
+footer p {
+  display: inline;
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--text);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  margin: 0 auto;
+  box-shadow: none;
+}
+
+body:not(.dark-mode) footer p {
+  background-color: transparent;
+  color: var(--text);
+}
+
+body.dark-mode footer p {
+  background-color: transparent;
+  color: white;
+}
+
+/* Ajuster la taille en responsive */
+@media (max-width: 576px) {
+  footer p {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Correction du problème de fond noir dans le container du footer */
+body.dark-mode footer .container,
+footer.dark-mode .container,
+body.dark-mode footer div,
+body.dark-mode #contact + footer .container {
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 20px 0;
+}
+
+/* Uniformiser le style du texte de copyright */
+footer .container p,
+footer p {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Reset des propriétés pour le paragraphe du footer */
+body.dark-mode footer p,
+body.light-mode footer p {
+  background-color: transparent;
+}
+
+/* Les autres éléments dans le footer doivent suivre le même style */
+footer .container * {
+  background-color: transparent;
 }
 
 /* Animations */
@@ -1102,22 +1219,8 @@ body.dark-mode #skills .section-header h2 {
 }
 
 .project-thumb:hover::before {
-  content: "\f00e"; /* Icône loupe de FontAwesome */
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  z-index: 100;
+  display: none;
+  content: none;
 }
 
 /* Correction de l'alignement du formulaire de contact */
@@ -1579,7 +1682,7 @@ nav ul {
 
 /* CORRECTION FINALE: Hauteur réduite des cartes de compétences */
 #skills .skill-card {
-  height: 300px; /* Réduit de 400px à 300px (réduction de 1/4) */
+  height: 310px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1589,14 +1692,14 @@ nav ul {
 
 /* S'assurer que toutes les cartes ont la même hauteur */
 #skills .skills-container .skill-card {
-  height: 300px; /* Même hauteur partout */
+  height: 310px;
 }
 
 /* Texte complètement visible avec espace légèrement réduit */
 #skills .skill-card p {
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 60px; /* Réduit de 80px à 60px */
+  margin-bottom: 60px;
   overflow: visible;
   text-overflow: initial;
   white-space: normal;
@@ -1606,6 +1709,6 @@ nav ul {
 
 /* Reset des conflits potentiels */
 #skills .skill-card {
-  min-height: 300px; /* Garantir la hauteur minimale */
-  max-height: none; /* Pas de limite maximale */
+  min-height: 310px;
+  max-height: none;
 }

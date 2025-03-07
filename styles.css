@@ -805,24 +805,24 @@ body.dark-mode .project-btn:hover {
 /* Footer */
 footer {
   background: transparent;
-  padding: 10px 0; /* Réduit de 20px à 10px */
+  padding: 5px 0; /* Réduit de 10px à 5px */
   color: var(--text);
   text-align: center;
   border-top: none;
   box-shadow: none;
   height: auto;
-  min-height: 30px; /* Réduit de 60px à 30px */
+  min-height: 20px; /* Réduit de 30px à 20px */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Styles pour le footer en mode sombre - hauteur réduite */
+/* Styles pour le footer en mode sombre - hauteur minimale */
 body.dark-mode footer {
   background: transparent; 
-  padding: 10px 0; /* Réduit de 20px à 10px */
+  padding: 5px 0; /* Valeur uniforme pour tous les modes */
   color: white;
-  min-height: 30px; /* Réduit de 60px à 30px */
+  min-height: 20px;
 }
 
 /* Ajuster le conteneur du footer pour la hauteur réduite */
@@ -857,11 +857,7 @@ body.dark-mode main + footer,
 body.dark-mode #contact + footer {
   background-color: var(--primary-dark);
   background: var(--primary-dark);
-}
-
-body.dark-mode footer p {
-  color: white;
-  opacity: 0.9;
+  padding: 5px 0; /* Forcer la même hauteur partout */
 }
 
 /* Réinitialiser toute règle qui pourrait venir d'ailleurs */
@@ -877,7 +873,7 @@ footer p {
   border-radius: 0;
   background-color: transparent;
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.75rem; /* Réduit de 0.85rem */
   letter-spacing: 0.5px;
   margin: 0 auto;
   box-shadow: none;
@@ -913,6 +909,54 @@ body.dark-mode #contact + footer .container {
   padding: 20px 0;
 }
 
+/* Uniformisation des footers pour toutes les pages, y compris les vues des projets */
+footer, 
+main + footer, 
+.description + footer {
+  background: transparent;
+  padding: 5px 0; /* Réduit à 5px de padding partout */
+  color: var(--text);
+  text-align: center;
+  border-top: none;
+  box-shadow: none;
+  height: auto;
+  min-height: 20px; /* Hauteur minimale réduite à 20px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Uniformité en mode sombre également */
+body.dark-mode footer, 
+body.dark-mode main + footer, 
+body.dark-mode .description + footer {
+  background: transparent;
+  padding: 5px 0;
+  color: white;
+  min-height: 20px;
+}
+
+/* Suppression de tout padding contradictoire */
+footer .container,
+main + footer .container,
+.description + footer .container {
+  padding: 0;
+  line-height: 1;
+}
+
+/* Garantir l'uniformité des textes de copyright */
+footer p {
+  font-size: 0.75rem;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* Correction du problème spécifique des pages de détail */
+body.dark-mode .description + footer p {
+  background-color: transparent;
+}
+
 /* Uniformiser le style du texte de copyright */
 footer .container p,
 footer p {
@@ -933,6 +977,91 @@ body.light-mode footer p {
 /* Les autres éléments dans le footer doivent suivre le même style */
 footer .container * {
   background-color: transparent;
+}
+
+/* SOLUTION PROPRE POUR UNIFORMISER LES FOOTERS - SANS !IMPORTANT */
+
+/* Réinitialisation complète pour tous les footers - utilisation de sélecteurs très spécifiques */
+html body footer,
+html body.dark-mode footer,
+html body.light-mode footer,
+html body main + footer, 
+html body .description + footer,
+html body.dark-mode main + footer,
+html body.light-mode main + footer,
+html body.dark-mode .description + footer,
+html body.light-mode .description + footer,
+html body.dark-mode #contact + footer,
+html body.light-mode #contact + footer {
+  background: transparent;
+  padding: 5px 0;
+  min-height: 20px;
+  height: auto;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Uniformiser tous les conteneurs de footer avec sélecteurs spécifiques */
+html body footer .container,
+html body.dark-mode footer .container,
+html body.light-mode footer .container,
+html body main + footer .container,
+html body .description + footer .container,
+html body.dark-mode #contact + footer .container {
+  background: transparent;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  line-height: 1;
+}
+
+/* Uniformiser tous les paragraphes dans les footers avec sélecteurs spécifiques */
+html body footer p,
+html body.dark-mode footer p,
+html body.light-mode footer p,
+html body main + footer p,
+html body .description + footer p,
+html body.dark-mode #contact + footer p,
+html body.dark-mode .description + footer p {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+/* Couleur du texte selon le mode - sélecteurs spécifiques */
+html body footer p,
+html body.light-mode footer p,
+html body main + footer p,
+html body.light-mode main + footer p {
+  color: var(--text);
+}
+
+html body.dark-mode footer p,
+html body.dark-mode main + footer p,
+html body.dark-mode .description + footer p,
+html body.dark-mode #contact + footer p {
+  color: white;
+  opacity: 0.9;
+}
+
+/* Surmonter la règle qui donne un arrière-plan coloré aux footers en mode sombre */
+html body.dark-mode #contact + footer,
+html body.dark-mode .description + footer,
+html body.dark-mode main + footer {
+  background: transparent;
 }
 
 /* Animations */

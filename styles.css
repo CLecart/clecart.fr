@@ -158,7 +158,23 @@ nav ul li a.dark-mode {
 }
 
 header.scrolled nav ul li a {
-  color: var(--text);
+  color: var(--primary);
+}
+
+header.scrolled.light-mode nav ul li a {
+  color: var(--primary);
+}
+
+header.scrolled.dark-mode nav ul li a {
+  color: var(--text-dark);
+}
+
+header.scrolled nav ul li a:hover {
+  color: var(--primary-dark);
+}
+
+header.scrolled.dark-mode nav ul li a:hover {
+  color: var(--primary);
 }
 
 nav ul li a::after {

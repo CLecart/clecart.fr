@@ -2581,10 +2581,36 @@ html body.dark-mode #skills .skills-container .skill-card p {
   color: var(--text-dark);
 }
 
+/* Ensure text in project cards is white in dark mode */
+body.dark-mode #projects .project-card h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode #projects .project-content h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode #projects .project-content p {
+  color: var(--text-dark);
+}
+
+/* Additional specificity for any nested elements */
+html body.dark-mode #projects .project-card * {
+  color: var(--text-dark);
+}
+
+/* Make sure all text in dark mode project cards is visible */
+body.dark-mode .project-card .project-content h3,
+body.dark-mode .project-card .project-content p,
+body.dark-mode #projects .project-card .project-content h3,
+body.dark-mode #projects .project-card .project-content p {
+  color: var(--text-dark);
+}
+
 /* Ensure headers have proper contrast in dark mode */
 html body.dark-mode #skills .section-header h2,
 html body.dark-mode #languages .section-header h2,
-html body.dark-mode #projects .section-header h2,
-html body.dark-mode #contact .section-header h2 {
+html body-dark-mode #projects .section-header h2,
+html body-dark-mode #contact .section-header h2 {
   color: var(--primary);
 }

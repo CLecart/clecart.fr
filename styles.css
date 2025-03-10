@@ -2540,3 +2540,51 @@ body.dark-mode #projects .project-btn {
 body.dark-mode #projects .project-btn:hover {
   background: var(--gradient-1);
 }
+
+/* Dark Mode Text Visibility Fixes */
+body.dark-mode #skills .skill-card p {
+  color: var(--text-dark);
+}
+
+body.dark-mode #skills .skill-card .skill-name {
+  color: var(--text-dark);
+}
+
+body.dark-mode #languages .language-card span {
+  color: var(--text-dark);
+}
+
+body.dark-mode .section-header h2 {
+  color: var(--text-dark);
+}
+
+body.dark-mode p, 
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode li, 
+body.dark-mode span {
+  color: var(--text-dark);
+}
+
+body.dark-mode .card,
+body.dark-mode .project-card,
+body.dark-mode .skill-card,
+body.dark-mode .language-card {
+  color: var(--text-dark);
+}
+
+/* Stronger specificity for skill cards in dark mode */
+html body.dark-mode #skills .skill-card p,
+html body.dark-mode #skills .skills-container .skill-card p {
+  color: var(--text-dark);
+}
+
+/* Ensure headers have proper contrast in dark mode */
+html body.dark-mode #skills .section-header h2,
+html body.dark-mode #languages .section-header h2,
+html body.dark-mode #projects .section-header h2,
+html body.dark-mode #contact .section-header h2 {
+  color: var(--primary);
+}

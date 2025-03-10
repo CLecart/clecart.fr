@@ -1,0 +1,166 @@
+/**
+ * Enhanced Dark Mode Contrast
+ * - Improves readability of text in dark mode
+ * - Ensures good contrast for links and text
+ * - Makes section titles consistent with blue color
+ * - All consolidated in one file
+ */
+
+/* Make all section headers in dark mode blue for consistency with very high specificity */
+html body.dark-mode .section-header h2,
+html body.dark-mode #about .section-header h2,
+html body.dark-mode #languages .section-header h2,
+html body.dark-mode #projects .section-header h2,
+html body.dark-mode #contact .section-header h2,
+html body.dark-mode #skills .section-header h2 {
+  color: var(--primary);
+}
+
+/* Triple specificity for Skills & Expertise title to ensure it's blue */
+html body.dark-mode #skills .section-header h2,
+html body.dark-mode section#skills .section-header h2,
+html body.dark-mode div#skills .section-header h2,
+html body.dark-mode main #skills .section-header h2,
+html body.dark-mode .container #skills .section-header h2 {
+  color: var(--primary);
+}
+
+/* Improved text contrast in dark mode */
+body.dark-mode {
+  color: #e0e0e0;
+}
+
+/* Make all paragraphs in dark mode more readable */
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode ul,
+body.dark-mode ol {
+  color: #e0e0e0;
+}
+
+/* Better contrast for skill cards in dark mode - Lighter background for better readability */
+body.dark-mode #skills .skill-card {
+  background-color: #2d2d45;
+  border: 1px solid #3d3d5c;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #skills .skill-card p {
+  color: #e0e0e0 !important;
+}
+
+/* Ensure skill card title is visible and prominent */
+body.dark-mode #skills .skill-card .skill-name {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Better contrast for project cards - Lighter background */
+body.dark-mode .project-card {
+  background-color: #2d2d45;
+  border: 1px solid #3d3d5c;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .project-content p {
+  color: #e0e0e0;
+}
+
+body.dark-mode .project-content h3 {
+  color: #ffffff;
+}
+
+/* All links should be light blue in dark mode for better visibility */
+body.dark-mode a:not(.btn):not(.back-btn):not(.project-btn):not(.nav-toggle) {
+  color: #a5a1ff;
+}
+
+body.dark-mode a:not(.btn):not(.back-btn):not(.project-btn):hover {
+  color: #c4c0ff;
+  text-decoration: underline;
+}
+
+/* Ensure contact info has good contrast with lighter backgrounds */
+body.dark-mode .contact-info,
+body.dark-mode .contact-form {
+  background-color: #2d2d45;
+  border: 1px solid #3d3d5c;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .contact-text h4 {
+  color: #ffffff;
+}
+
+/* Better form field contrast */
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #383852;
+  border: 1px solid #4a4a6a;
+  color: #e0e0e0;
+}
+
+body.dark-mode label {
+  color: #ffffff;
+}
+
+/* Project detail page specific improvements - lighter background */
+body.dark-mode .description {
+  background-color: #2d2d45;
+  border: 1px solid #3d3d5c;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  color: #e0e0e0;
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary);
+}
+
+body.dark-mode .description p,
+body.dark-mode .description li {
+  color: #e0e0e0;
+}
+
+/* Add hover effect to make cards more interactive in dark mode */
+body.dark-mode .project-card:hover,
+body.dark-mode .skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  border-color: #4d4d7c;
+}
+
+/* Improve icon visibility in dark mode */
+body.dark-mode .skill-icon {
+  color: var(--primary);
+}
+
+/* Additional specificity for dark mode buttons */
+body.dark-mode .btn,
+body.dark-mode .back-btn,
+body.dark-mode .project-btn {
+  color: white;
+}
+
+/* Back button style consistency */
+body.dark-mode header .back-btn {
+  background: var(--gradient-1);
+  color: white;
+}
+
+/* Keep button colors consistent in dark mode */
+html body.dark-mode .project-btn,
+html body.dark-mode a.project-btn,
+html body.dark-mode .btn,
+html body.dark-mode a.btn {
+  background: var(--gradient-1);
+  color: white;
+}
+
+/* Script-like fix for Skills section header */
+@media (max-width: 9999px) {
+  /* This rule will always apply but acts as a specificity boost */
+  html body.dark-mode #skills .section-header h2 {
+    color: var(--primary);
+  }
+}

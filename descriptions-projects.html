@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Christophe Lecart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive-darkmode.css">
+    <link rel="stylesheet" href="header-fix.css">
+    <link rel="stylesheet" href="dark-mode-contrast.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="responsive-darkmode.js"></script>
+    <script src="section-titles-fix.js"></script>
+    <style>
+        .project-navigation {
+            margin-bottom: 30px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .project-navigation h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 1.8rem;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-btn {
+            padding: 8px 16px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .project-container {
+            padding: 20px 0;
+        }
+        .project {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .project.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        body.dark-mode .project-navigation {
+            border-bottom: 1px solid #333;
+        }
+        body.dark-mode .nav-btn {
+            background: var(--gradient-1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Project Details</h1>
+        <a href="index.html" class="btn back-btn">Back</a>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="project-navigation">
+                <h1 id="project-title">Groupie Tracker</h1>
+                <div class="nav-buttons">
+                    <a href="#" class="nav-btn" onclick="showProject('project1'); return false;">Groupie Tracker</a>
+                    <a href="#" class="nav-btn" onclick="showProject('project2'); return false;">Bomberman</a>
+                    <a href="#" class="nav-btn" onclick="showProject('project3'); return false;">Forum</a>
+                </div>
+            </div>
+            
+            <div class="project-container">
+                <!-- PROJECT 1: Groupie Tracker -->
+                <section id="project1" class="project description active">
+                    <h2>Project Overview</h2>
+                    <p>The Groupie Tracker is a comprehensive web application developed in Go that consumes and visualizes data from a RESTful API about music artists and bands. It includes features to explore artist information, filter results, geolocate concert locations, search data dynamically, and display information using well-structured visualizations. This project emphasizes the creation of a user-friendly and interactive interface while ensuring robust backend performance and adherence to best practices.</p>
+
+                    <h3>Core Features:</h3>
+                    <ul>
+                        <li><strong>Artist Information:</strong> Display detailed data about artists and bands, including names, images, members, debut years, first album dates, and concert details.</li>
+                        <li><strong>Filters:</strong> 
+                            <ul>
+                                <li>Filter by creation date, first album date, number of members, and concert locations.</li>
+                                <li>Incorporates range filters (e.g., between two years) and checkbox filters (e.g., selecting multiple concert locations).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Geolocation of Concerts:</strong> Maps concert locations for each artist using geographic coordinates derived from addresses. Integrated with a Maps API to display markers for concerts globally.</li>
+                        <li><strong>Search Bar with Suggestions:</strong> Dynamic, case-insensitive search functionality for attributes such as artist/band names, members, locations, and dates. Provides typing suggestions with categorized results (e.g., "Phil Collins - member" or "Phil Collins - artist").</li>
+                        <li><strong>Data Visualizations:</strong> Implements Schneiderman's 8 Golden Rules of Interface Design to create intuitive, consistent, and accessible visualizations of data. Utilizes cards, tables, lists, graphs, and more to present information effectively.</li>
+                    </ul>
+
+                    <h3>Technical Details:</h3>
+                    <ul>
+                        <li><strong>Backend Development:</strong> Built entirely in Go, adhering to clean code principles and best practices.</li>
+                        <li><strong>Client-Server Architecture:</strong> Ensured reliable communication between client and server, handling errors gracefully (e.g., 404, 500).</li>
+                        <li><strong>Data Manipulation:</strong> Processed JSON data from the API to structure and display information dynamically.</li>
+                        <li><strong>Event Handling:</strong>
+                            <ul>
+                                <li>Created interactive events (e.g., click, hover) to enhance the user experience.</li>
+                                <li>Integrated asynchronous functionality using Go routines and channels.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Optional Features Explained:</h3>
+                    <ul>
+                        <li><strong>Filters:</strong> Users can refine results based on specific criteria, such as the year of creation or concert locations, allowing for a tailored browsing experience.</li>
+                        <li><strong>Geolocation:</strong> Visual representation of concerts on a map provides spatial context to the artists' tours, enhancing the usability and engagement.</li>
+                        <li><strong>Search Bar with Autocomplete:</strong> Simplifies navigation within the site and ensures quick access to the desired data while maintaining accuracy with categorized suggestions.</li>
+                        <li><strong>Advanced Visualizations:</strong> Data is presented using engaging and clear layouts, following the principles of good interface design, ensuring ease of navigation and reduced cognitive load.</li>
+                    </ul>
+
+                    <h3>Learning Outcomes and Skills Demonstrated:</h3>
+                    <ul>
+                        <li><strong>Backend Expertise:</strong> Deepened proficiency in Go by creating a robust server that handles diverse HTTP requests and ensures data integrity.</li>
+                        <li><strong>Data Processing:</strong> Enhanced skills in JSON handling, API integration, and manipulating large datasets for visualization.</li>
+                        <li><strong>Frontend Design:</strong>
+                            <ul>
+                                <li>Developed a responsive and visually appealing UI using HTML and CSS.</li>
+                                <li>Applied Schneiderman's design principles to ensure usability and accessibility.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Mapping and Geolocation:</strong> Gained hands-on experience with geocoding and displaying geospatial data using a Maps API.</li>
+                        <li><strong>Problem-Solving:</strong> Built efficient filtering and search mechanisms that handle edge cases and unexpected inputs.</li>
+                        <li><strong>Event-Driven Programming:</strong> Leveraged asynchronous processes to improve performance and interactivity.</li>
+                    </ul>
+
+                    <h3>Challenges Addressed:</h3>
+                    <ul>
+                        <li>Implementing advanced search functionality with categorized autocomplete suggestions.</li>
+                        <li>Designing a mapping feature that accurately converts addresses into geographic coordinates.</li>
+                        <li>Balancing data presentation with efficient API usage to optimize performance.</li>
+                    </ul>
+
+                    <h3>Why It Stands Out:</h3>
+                    <p>The Groupie Tracker project demonstrates expertise in both backend and frontend development, with a strong emphasis on user interaction and experience. The integration of advanced features such as filters, geolocation, and autocomplete showcases the ability to handle complex problems while delivering a polished product. This project reflects technical proficiency, creativity, and a commitment to delivering quality solutions.</p>
+                </section>
+
+                <!-- PROJECT 2: Bomberman -->
+                <section id="project2" class="project description">
+                    <h2>Project Overview</h2>
+                    <p>The goal of this project was to create a browser-based <strong>Bomberman</strong> game using only <strong>JavaScript</strong>, <strong>DOM</strong>, and <strong>HTML</strong>, with an emphasis on smooth performance and a 60 FPS target. The game runs smoothly without frame drops and includes key features such as smooth controls, dynamic score tracking, and a pause/restart functionality.</p>
+
+                    <h3>Core Features:</h3>
+                    <ul>
+                        <li><strong>60 FPS Consistency:</strong> The game ensures a smooth animation and consistent 60 FPS throughout the gameplay using the <code>requestAnimationFrame</code> API.</li>
+                        <li><strong>Controls:</strong>
+                            <ul>
+                                <li>Smooth, responsive keyboard controls that allow players to move and place bombs without delays or jank.</li>
+                                <li>Continuous actions when keys are held down and stopping immediately once the key is released.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Pause Menu:</strong> 
+                            <ul>
+                                <li>Users can pause the game at any time and have the option to resume or restart the game.</li>
+                                <li>The game continues to run at 60 FPS even when paused, without frame drops.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Scoreboard:</strong> 
+                            <ul>
+                                <li>Displays current score (XP or points) during gameplay.</li>
+                                <li>Shows the player's remaining lives and a countdown timer until the game ends.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Technical Details:</h3>
+                    <ul>
+                        <li><strong>Game Logic:</strong> Built using plain JavaScript to handle player movement, bomb placement, collision detection, and game state management.</li>
+                        <li><strong>Rendering Optimization:</strong> Focused on minimal layering to ensure the game runs smoothly at 60 FPS, avoiding unnecessary render layers that could affect performance.</li>
+                        <li><strong>Game Loop:</strong> Created an efficient game loop using <code>requestAnimationFrame</code> for smooth and consistent frame updates.</li>
+                        <li><strong>Performance Measurement:</strong> Used browser developer tools to monitor FPS and frame rendering times to ensure no frame drops during gameplay.</li>
+                    </ul>
+
+                    <h3>Learning Outcomes and Skills Demonstrated:</h3>
+                    <ul>
+                        <li><strong>JavaScript Proficiency:</strong> Enhanced my JavaScript skills by implementing the game engine, handling animations, and managing game state and interactions.</li>
+                        <li><strong>Performance Optimization:</strong> Learned how to optimize performance in JavaScript, ensuring consistent FPS and smooth gameplay by leveraging <code>requestAnimationFrame</code>.</li>
+                        <li><strong>Event-Driven Programming:</strong> Implemented asynchronous event handling for actions like keyboard inputs, game state transitions, and UI updates.</li>
+                        <li><strong>Game Design:</strong> Gained insights into game logic and mechanics, such as collision detection, player input handling, and implementing pause/resume functionality.</li>
+                        <li><strong>Browser Developer Tools:</strong> Used developer tools to analyze performance, monitor FPS, and identify bottlenecks in rendering.</li>
+                    </ul>
+
+                    <h3>Challenges Addressed:</h3>
+                    <ul>
+                        <li>Ensuring that the game maintained a steady 60 FPS without dropping frames, even during intense gameplay.</li>
+                        <li>Designing the pause menu so that it didn't impact performance and allowed for seamless resumption or restart.</li>
+                        <li>Managing smooth controls for player input, ensuring that key press events were registered without lag or jank.</li>
+                    </ul>
+
+                    <h3>Why It Stands Out:</h3>
+                    <p>The Bomberman game stands out for its smooth performance and polished user experience. The focus on maintaining a consistent 60 FPS while ensuring smooth and responsive controls showcases the ability to build performance-intensive applications using just JavaScript and DOM manipulation. The pause and restart features, along with the well-organized scoreboard, make this project both fun and functional.</p>
+                </section>
+
+                <!-- PROJECT 3: Forum -->
+                <section id="project3" class="project description">
+                    <h2>Project Overview</h2>
+                    <p>The Forum Platform is a comprehensive web application that creates a dynamic online community where users can engage in discussions, share ideas, and exchange knowledge. Built with a focus on scalability, security, and user experience, this platform provides features such as user authentication, thread management, category organization, and real-time interaction.</p>
+
+                    <h3>Core Features:</h3>
+                    <ul>
+                        <li><strong>User Authentication System:</strong>
+                            <ul>
+                                <li>Secure registration and login functionality with email verification</li>
+                                <li>Profile management with customizable avatars and user information</li>
+                                <li>Role-based access control (admin, moderator, user)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Thread Management:</strong>
+                            <ul>
+                                <li>Create, edit, and delete threads</li>
+                                <li>Rich text formatting for post content</li>
+                                <li>Thread categorization and tagging system</li>
+                            </ul>
+                        </li>
+                        <li><strong>Post Interaction:</strong>
+                            <ul>
+                                <li>Commenting system with nested replies</li>
+                                <li>Upvote/downvote functionality</li>
+                                <li>Post reaction options (like, laugh, agree, etc.)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Content Organization:</strong>
+                            <ul>
+                                <li>Hierarchical categories and subcategories</li>
+                                <li>Advanced search functionality with filters</li>
+                                <li>Tag-based filtering and content discovery</li>
+                            </ul>
+                        </li>
+                        <li><strong>Notifications System:</strong>
+                            <ul>
+                                <li>Real-time notifications for replies and mentions</li>
+                                <li>Email notifications for important updates</li>
+                                <li>Customizable notification preferences</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Technical Details:</h3>
+                    <ul>
+                        <li><strong>Backend Development:</strong>
+                            <ul>
+                                <li>RESTful API architecture for reliable data exchange</li>
+                                <li>Efficient database design optimized for scalability</li>
+                                <li>Authentication middleware with JWT tokens</li>
+                            </ul>
+                        </li>
+                        <li><strong>Frontend Implementation:</strong>
+                            <ul>
+                                <li>Responsive design that works across devices</li>
+                                <li>Modern UI with intuitive navigation and interaction patterns</li>
+                                <li>Progressive loading for improved performance</li>
+                            </ul>
+                        </li>
+                        <li><strong>Security Measures:</strong>
+                            <ul>
+                                <li>Protection against common web vulnerabilities (XSS, CSRF, SQL injection)</li>
+                                <li>Input validation and sanitization</li>
+                                <li>Rate limiting to prevent abuse</li>
+                            </ul>
+                        </li>
+                        <li><strong>Performance Optimization:</strong>
+                            <ul>
+                                <li>Caching strategies for frequently accessed content</li>
+                                <li>Pagination and lazy loading for large data sets</li>
+                                <li>Optimized database queries and indexing</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Learning Outcomes and Skills Demonstrated:</h3>
+                    <ul>
+                        <li><strong>Full-Stack Development:</strong> Designed and implemented both frontend and backend components, ensuring seamless integration.</li>
+                        <li><strong>Database Design:</strong> Created efficient schemas that support complex relationships between users, threads, posts, and categories.</li>
+                        <li><strong>Authentication & Authorization:</strong> Implemented secure user authentication and granular permission controls.</li>
+                        <li><strong>Real-Time Features:</strong> Integrated WebSockets for instant notifications and live updates.</li>
+                        <li><strong>UX Design:</strong> Focused on creating an intuitive and accessible user interface that enhances community engagement.</li>
+                    </ul>
+
+                    <h3>Challenges Addressed:</h3>
+                    <ul>
+                        <li>Building a scalable comment system that efficiently handles nested replies and pagination.</li>
+                        <li>Implementing real-time notifications while maintaining performance.</li>
+                        <li>Balancing feature richness with simplicity in the user interface.</li>
+                        <li>Ensuring content moderation capabilities to maintain community standards.</li>
+                    </ul>
+
+                    <h3>Why It Stands Out:</h3>
+                    <p>The Forum Platform stands out for its robust architecture that can support growing communities while maintaining performance. The attention to user experience details, such as intuitive navigation and real-time interactions, creates an engaging environment for users. The project demonstrates expertise in handling complex data relationships, user authentication flows, and real-time features – all critical aspects of modern web applications. By focusing on both technical excellence and user-centered design, this platform provides a solid foundation for online community building.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script to handle project switching
+        function showProject(projectId) {
+            // Hide all projects
+            document.querySelectorAll('.project').forEach(project => {
+                project.classList.remove('active');
+            });
+            
+            // Show selected project
+            document.getElementById(projectId).classList.add('active');
+            
+            // Update page title
+            const projectTitles = {
+                'project1': 'Groupie Tracker',
+                'project2': 'Bomberman',
+                'project3': 'Forum'
+            };
+            
+            document.getElementById('project-title').textContent = projectTitles[projectId];
+            
+            // Update URL without refreshing page
+            history.pushState(null, null, '#' + projectId);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Handle direct URL navigation with hash
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && ['project1', 'project2', 'project3'].includes(hash)) {
+                showProject(hash);
+            }
+        });
+    </script>
+</body>
+</html>

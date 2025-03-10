@@ -474,3 +474,59 @@ body.dark-mode .project-single-title {
   display: block;
   animation: fadeIn 0.5s;
 }
+
+/* Correction des liens de contact (LinkedIn, GitHub, Email) */
+body.dark-mode .contact-method .contact-text h4,
+body.dark-mode .contact-method .contact-text a {
+  color: white;
+}
+
+body.dark-mode .contact-method .contact-text a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* Correction des textes dans les boîtes de compétences */
+body.dark-mode #skills .skill-card h3,
+body.dark-mode #skills .skill-card p {
+  color: white;
+}
+
+/* Correction des textes dans les boîtes de projets */
+body.dark-mode .project-content h3,
+body.dark-mode .project-content p {
+  color: white;
+}
+
+/* Correction pour les sections de description de projet */
+body.dark-mode .description p,
+body.dark-mode .description li {
+  color: white;
+}
+
+/* Correction pour le texte dans le formulaire de contact */
+body.dark-mode .contact-form h3,
+body.dark-mode .contact-form label {
+  color: white;
+}
+
+/* Correction pour le texte dans les info de contact */
+body.dark-mode .contact-info h3 {
+  color: white;
+}
+
+/* Assurer que les titres principaux restent colorés */
+body.dark-mode .description h2,
+body.dark-mode .description h3,
+body.dark-mode h2,
+body.dark-mode .section-header h2 {
+  color: var(--primary);
+}
+
+/* Correction pour tout texte qui pourrait être oublié */
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode span,
+body.dark-mode label {
+  color: white;
+}

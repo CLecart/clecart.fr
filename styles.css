@@ -116,15 +116,15 @@ header.scrolled.dark-mode {
 }
 
 header.scrolled .logo {
-  color: var(--primary);
+  color: white;
 }
 
 header.scrolled .logo.light-mode {
-  color: var(--primary);
+  color: white;
 }
 
 header.scrolled .logo.dark-mode {
-  color: var(--text-dark);
+  color: white;
 }
 
 .nav-toggle {
@@ -158,15 +158,15 @@ nav ul li a.dark-mode {
 }
 
 header.scrolled nav ul li a {
-  color: var(--primary);
+  color: white;
 }
 
 header.scrolled.light-mode nav ul li a {
-  color: var(--primary);
+  color: white;
 }
 
 header.scrolled.dark-mode nav ul li a {
-  color: var(--text-dark);
+  color: white;
 }
 
 header.scrolled nav ul li a:hover {

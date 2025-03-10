@@ -808,7 +808,7 @@ body.dark-mode .project-btn:hover {
   line-clamp: 2; /* Propriété standard */
   -webkit-box-orient: vertical;
   -ms-box-orient: vertical;
-  box-orient: vertical;
+  box-orient: vertical; /* Propriété standard */
   height: 3em;
   margin-bottom: 15px;
   color: #6c757d;
@@ -2445,4 +2445,98 @@ body.dark-mode .description {
 
 body.dark-mode .section-header h2 {
   color: var(--primary);
+}
+
+/* Global button styles - base consistency */
+.btn,
+.project-btn,
+.back-btn,
+.contact-form button[type="submit"] {
+  display: inline-block;
+  padding: 12px 28px; /* Unified padding for all buttons */
+  border-radius: 50px;
+  font-weight: 500;
+  transition: var(--transition);
+  border: none; /* Remove all borders */
+  outline: none;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+}
+
+/* Primary buttons - restore the blue gradient */
+.btn:not(.btn-secondary),
+.project-btn,
+.back-btn,
+.contact-form button[type="submit"] {
+  background: var(--gradient-1);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+/* Secondary button - ensure it has the orange gradient and is "lit up" */
+.btn-secondary {
+  background: var(--gradient-2);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+/* All buttons get the same hover animation */
+.btn:hover,
+.project-btn:hover,
+.back-btn:hover,
+.contact-form button[type="submit"]:hover,
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  color: white;
+}
+
+/* Primary button hover effect - keep the gradient */
+.btn:not(.btn-secondary):hover,
+.project-btn:hover,
+.back-btn:hover,
+.contact-form button[type="submit"]:hover {
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* Secondary button hover effect */
+.btn-secondary:hover {
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Dark mode adjustments - maintain gradient appearance */
+body.dark-mode .btn:not(.btn-secondary),
+body.dark-mode .project-btn,
+body.dark-mode .back-btn,
+body.dark-mode .contact-form button[type="submit"] {
+  background: var(--gradient-1);
+}
+
+body.dark-mode .btn-secondary {
+  background: var(--gradient-2);
+}
+
+/* Specific adjustment for the back button due to its position */
+.back-btn {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  padding: 5px 15px; /* Keep the smaller padding for this special case */
+  font-size: 0.8rem; /* Keep the smaller font size for this special case */
+}
+
+/* Remove any specific overrides that might conflict with our unified gradient style */
+#projects .project-btn {
+  background: var(--gradient-1);
+}
+
+#projects .project-btn:hover {
+  background: var(--gradient-1);
+}
+
+body.dark-mode #projects .project-btn {
+  background: var(--gradient-1);
+}
+
+body.dark-mode #projects .project-btn:hover {
+  background: var(--gradient-1);
 }

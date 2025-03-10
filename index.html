@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="responsive-darkmode.css">
+    <link rel="stylesheet" href="header-fix.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -18,9 +19,11 @@
             }
         })();
     </script>
+    <script src="responsive-darkmode.js"></script>
     <script src="imageviewer.js"></script>
+    <script src="script.js"></script>
 </head>
-<body>
+<body class="homepage">
     <header>
         <div class="container header-content">
             <a href="#" class="logo">Christophe Lecart</a>
@@ -34,9 +37,7 @@
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
-                <button class="dark-mode-toggle">
-                    <i class="fas fa-moon"></i>
-                </button>
+                <!-- Dark mode toggle will be inserted by JavaScript -->
                 <button class="nav-toggle">
                     <i class="fas fa-bars"></i>
                 </button>

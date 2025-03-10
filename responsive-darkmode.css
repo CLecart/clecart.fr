@@ -1,0 +1,121 @@
+/**
+ * Enhanced Dark Mode Toggle Styling
+ * - Optimized for all device sizes
+ * - Ensures no overlap with navigation
+ * - Better positioning for mobile and desktop
+ * - Preserves original header styling
+ */
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Hover effect */
+.dark-mode-toggle:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Special positioning for homepage */
+.homepage .right-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure proper spacing in right-content */
+.homepage .right-content nav {
+  margin-right: 15px;
+}
+
+/* Container for header controls on detail pages */
+.header-controls {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Make back button and toggle appear correctly together */
+.header-controls .back-btn {
+  position: static;
+  margin-right: 10px;
+}
+
+/* Ensure header maintains original gradient */
+header {
+  background: var(--gradient-1);
+}
+
+/* Ensure dark mode doesn't change the header color */
+body.dark-mode header {
+  background: var(--gradient-1);
+}
+
+/* Ensure text in skill cards remains unchanged */
+#skills .skill-card p {
+  color: inherit;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+  line-height: 1.5;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  /* Adjust size for mobile */
+  .dark-mode-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+  
+  /* On homepage, ensure toggle is placed correctly relative to hamburger menu */
+  .homepage .right-content {
+    gap: 10px;
+  }
+  
+  /* Header controls on detail pages need less space on mobile */
+  .header-controls {
+    right: 10px;
+  }
+  
+  /* Smaller back button on mobile */
+  .header-controls .back-btn {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .dark-mode-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+    margin-left: 8px;
+  }
+  
+  .header-controls .back-btn {
+    padding: 3px 10px;
+    font-size: 0.75rem;
+  }
+}

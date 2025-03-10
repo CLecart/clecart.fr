@@ -1,0 +1,100 @@
+/**
+ * Enhanced Dark Mode Contrast
+ * - Improves readability of text in dark mode
+ * - Ensures good contrast for links and text
+ * - Makes section titles consistent with blue color
+ */
+
+/* Make all section headers in dark mode blue for consistency */
+body.dark-mode .section-header h2,
+body.dark-mode #skills .section-header h2,
+body.dark-mode #projects .section-header h2,
+body.dark-mode #about .section-header h2,
+body.dark-mode #languages .section-header h2,
+body.dark-mode #contact .section-header h2 {
+  color: var(--primary) !important;
+}
+
+/* Improved text contrast in dark mode */
+body.dark-mode {
+  color: #e0e0e0;
+}
+
+/* Make all paragraphs in dark mode more readable */
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode ul,
+body.dark-mode ol {
+  color: #e0e0e0;
+}
+
+/* Better contrast for skill cards in dark mode */
+body.dark-mode #skills .skill-card {
+  background-color: #2a2a42;
+}
+
+body.dark-mode #skills .skill-card p {
+  color: #e0e0e0 !important;
+}
+
+/* Ensure skill card title is visible */
+body.dark-mode #skills .skill-card .skill-name {
+  color: #ffffff;
+}
+
+/* Better contrast for project cards */
+body.dark-mode .project-card {
+  background-color: #2a2a42;
+}
+
+body.dark-mode .project-content p {
+  color: #e0e0e0;
+}
+
+/* All links should be light blue in dark mode for better visibility */
+body.dark-mode a:not(.btn):not(.back-btn):not(.project-btn):not(.nav-toggle) {
+  color: #a5a1ff;
+}
+
+body.dark-mode a:not(.btn):not(.back-btn):not(.project-btn):hover {
+  color: #c4c0ff;
+  text-decoration: underline;
+}
+
+/* Ensure contact info has good contrast */
+body.dark-mode .contact-info,
+body.dark-mode .contact-form {
+  background-color: #2a2a42;
+}
+
+body.dark-mode .contact-text h4 {
+  color: #ffffff;
+}
+
+/* Better form field contrast */
+body.dark-mode input,
+body.dark-mode textarea {
+  background-color: #353550;
+  border: 1px solid #4a4a6a;
+  color: #e0e0e0;
+}
+
+body.dark-mode label {
+  color: #ffffff;
+}
+
+/* Project detail page specific improvements */
+body.dark-mode .description {
+  background-color: #2a2a42;
+  color: #e0e0e0;
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary);
+}
+
+body.dark-mode .description p,
+body.dark-mode .description li {
+  color: #e0e0e0;
+}

@@ -1,0 +1,40 @@
+/**
+ * Fix for the header gradient and skill card text
+ * - This ensures the header always has the gradient background
+ * - Preserves skill card text in their original state
+ */
+
+/* Force header to have gradient no matter what */
+header,
+body header,
+body.dark-mode header,
+body.light-mode header {
+  background: var(--gradient-1) !important;
+}
+
+/* Ensure text in skill cards remains untouched */
+#skills .skill-card p {
+  color: inherit;
+  height: auto;
+  max-height: none !important;
+  overflow: visible !important;
+  text-overflow: initial !important;
+  white-space: normal !important;
+  line-height: 1.5;
+  text-transform: none !important;
+}
+
+/* Ensure light text color in dark mode */
+body.dark-mode #skills .skill-card {
+  color: var(--text-dark);
+}
+
+/* Dark mode text color for skill card paragraphs */
+body.dark-mode #skills .skill-card p {
+  color: var(--text-dark);
+}
+
+/* Light mode text color for skill card paragraphs */
+body:not(.dark-mode) #skills .skill-card p {
+  color: var(--text);
+}

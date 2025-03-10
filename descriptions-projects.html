@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Christophe Lecart</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="responsive-darkmode.css">
-    <link rel="stylesheet" href="header-fix.css">
-    <link rel="stylesheet" href="dark-mode-contrast.css">
+    <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="responsive-darkmode.js"></script>
-    <script src="section-titles-fix.js"></script>
     <style>
         .project-navigation {
             margin-bottom: 30px;
@@ -66,8 +62,13 @@
 </head>
 <body>
     <header>
-        <h1>Project Details</h1>
-        <a href="index.html" class="btn back-btn">Back</a>
+        <div class="container header-content">
+            <h1>Project Details</h1>
+            <a href="index.html" class="back-btn">Back</a>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </header>
 
     <main>
@@ -75,16 +76,16 @@
             <div class="project-navigation">
                 <h1 id="project-title">Groupie Tracker</h1>
                 <div class="nav-buttons">
-                    <a href="#" class="nav-btn" onclick="showProject('project1'); return false;">Groupie Tracker</a>
-                    <a href="#" class="nav-btn" onclick="showProject('project2'); return false;">Bomberman</a>
-                    <a href="#" class="nav-btn" onclick="showProject('project3'); return false;">Forum</a>
+                    <a href="#project1" class="nav-btn" onclick="showProject('project1'); return false;">Groupie Tracker</a>
+                    <a href="#project2" class="nav-btn" onclick="showProject('project2'); return false;">Bomberman</a>
+                    <a href="#project3" class="nav-btn" onclick="showProject('project3'); return false;">Forum</a>
                 </div>
             </div>
             
             <div class="project-container">
                 <!-- PROJECT 1: Groupie Tracker -->
                 <section id="project1" class="project description active">
-                    <h2>Project Overview</h2>
+                    <h2>Groupie Tracker - Project Overview</h2>
                     <p>The Groupie Tracker is a comprehensive web application developed in Go that consumes and visualizes data from a RESTful API about music artists and bands. It includes features to explore artist information, filter results, geolocate concert locations, search data dynamically, and display information using well-structured visualizations. This project emphasizes the creation of a user-friendly and interactive interface while ensuring robust backend performance and adherence to best practices.</p>
 
                     <h3>Core Features:</h3>
@@ -150,7 +151,7 @@
 
                 <!-- PROJECT 2: Bomberman -->
                 <section id="project2" class="project description">
-                    <h2>Project Overview</h2>
+                    <h2>BombermanDX - Project Overview</h2>
                     <p>The goal of this project was to create a browser-based <strong>Bomberman</strong> game using only <strong>JavaScript</strong>, <strong>DOM</strong>, and <strong>HTML</strong>, with an emphasis on smooth performance and a 60 FPS target. The game runs smoothly without frame drops and includes key features such as smooth controls, dynamic score tracking, and a pause/restart functionality.</p>
 
                     <h3>Core Features:</h3>
@@ -206,7 +207,7 @@
 
                 <!-- PROJECT 3: Forum -->
                 <section id="project3" class="project description">
-                    <h2>Project Overview</h2>
+                    <h2>Forum Platform - Project Overview</h2>
                     <p>The Forum Platform is a comprehensive web application that creates a dynamic online community where users can engage in discussions, share ideas, and exchange knowledge. Built with a focus on scalability, security, and user experience, this platform provides features such as user authentication, thread management, category organization, and real-time interaction.</p>
 
                     <h3>Core Features:</h3>
@@ -311,7 +312,67 @@
     </footer>
 
     <script>
-        // Script to handle project switching
+        // Fonction pour activer le mode sombre
+        document.addEventListener("DOMContentLoaded", function() {
+            // Récupérer le bouton de bascule du mode sombre
+            const darkModeToggle = document.querySelector(".dark-mode-toggle");
+            
+            // Vérifier la préférence stockée
+            const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+            
+            // Appliquer le mode sombre si activé
+            if (isDarkMode) {
+                document.body.classList.add("dark-mode");
+                if (darkModeToggle) {
+                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            }
+            
+            // Gérer le clic sur le bouton de bascule
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener("click", function() {
+                    document.body.classList.toggle("dark-mode");
+                    const newDarkMode = document.body.classList.contains("dark-mode");
+                    
+                    // Mettre à jour l'icône
+                    this.innerHTML = newDarkMode ? 
+                        '<i class="fas fa-sun"></i>' : 
+                        '<i class="fas fa-moon"></i>';
+                    
+                    // Sauvegarder la préférence
+                    localStorage.setItem("darkMode", newDarkMode ? "enabled" : "disabled");
+                });
+            }
+            
+            // Script pour gérer la navigation entre projets
+            function handleProjectNavigation() {
+                // Récupérer l'ancre dans l'URL
+                const hash = window.location.hash.substring(1);
+                
+                // Si une ancre existe et correspond à un projet, l'afficher
+                if (hash && ["project1", "project2", "project3"].includes(hash)) {
+                    showProject(hash);
+                }
+            }
+            
+            // Attacher la navigation aux liens
+            document.querySelectorAll(".nav-btn").forEach(button => {
+                button.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const projectId = this.getAttribute("href").substring(1);
+                    showProject(projectId);
+                    window.history.pushState(null, null, `#${projectId}`);
+                });
+            });
+            
+            // Gérer la navigation initiale
+            handleProjectNavigation();
+            
+            // Écouter les changements d'URL
+            window.addEventListener("hashchange", handleProjectNavigation);
+        });
+        
+        // Function to show the selected project
         function showProject(projectId) {
             // Hide all projects
             document.querySelectorAll('.project').forEach(project => {
@@ -319,30 +380,62 @@
             });
             
             // Show selected project
-            document.getElementById(projectId).classList.add('active');
-            
-            // Update page title
-            const projectTitles = {
-                'project1': 'Groupie Tracker',
-                'project2': 'Bomberman',
-                'project3': 'Forum'
-            };
-            
-            document.getElementById('project-title').textContent = projectTitles[projectId];
-            
-            // Update URL without refreshing page
-            history.pushState(null, null, '#' + projectId);
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        // Handle direct URL navigation with hash
-        document.addEventListener('DOMContentLoaded', function() {
-            const hash = window.location.hash.substring(1);
-            if (hash && ['project1', 'project2', 'project3'].includes(hash)) {
-                showProject(hash);
+            const selectedProject = document.getElementById(projectId);
+            if (selectedProject) {
+                selectedProject.classList.add('active');
+                
+                // Update page title
+                const projectTitles = {
+                    'project1': 'Groupie Tracker',
+                    'project2': 'Bomberman',
+                    'project3': 'Forum'
+                };
+                
+                const titleElement = document.getElementById('project-title');
+                if (titleElement && projectTitles[projectId]) {
+                    titleElement.textContent = projectTitles[projectId];
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
             }
+        }
+    </script>
+    
+    <!-- Create modal for image viewing -->
+    <div class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="expandedImg">
+    </div>
+    
+    <script>
+        // Image viewer functionality
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.querySelector(".modal");
+            const expandedImg = document.getElementById("expandedImg");
+            const closeBtn = document.querySelector(".modal .close");
+            
+            // Add event listeners to project images
+            document.querySelectorAll(".project-thumb img").forEach(img => {
+                img.addEventListener("click", function() {
+                    modal.style.display = "block";
+                    expandedImg.src = this.src;
+                });
+            });
+            
+            // Close modal when clicking X
+            if (closeBtn) {
+                closeBtn.onclick = function() {
+                    modal.style.display = "none";
+                };
+            }
+            
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
         });
     </script>
 </body>

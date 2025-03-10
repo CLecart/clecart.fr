@@ -106,27 +106,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Code simplifié pour le dark mode toggle
   const darkModeToggle = document.querySelector(".dark-mode-toggle");
-  darkModeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
 
-    // Mettre à jour l'icône
-    const isDarkMode = document.body.classList.contains("dark-mode");
-    darkModeToggle.innerHTML = isDarkMode
-      ? '<i class="fas fa-sun"></i>'
-      : '<i class="fas fa-moon"></i>';
+      // Mettre à jour l'icône
+      const isDarkMode = document.body.classList.contains("dark-mode");
+      darkModeToggle.innerHTML = isDarkMode
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
 
-    // Sauvegarder la préférence
-    localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
-  });
+      // Sauvegarder la préférence
+      localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
 
-  // Initialiser selon la préférence stockée
-  if (localStorage.getItem("darkMode") === "enabled") {
-    document.body.classList.add("dark-mode");
-    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      // Fix section title colors after dark mode toggle
+      fixSectionTitles();
+    });
+
+    // Initialiser selon la préférence stockée
+    if (localStorage.getItem("darkMode") === "enabled") {
+      document.body.classList.add("dark-mode");
+      darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
   }
 
-  // Implement more robust email handling with fallback
+  // Function to fix section title colors in dark mode - section-titles-fix.js
+  function fixSectionTitles() {
+    if (document.body.classList.contains("dark-mode")) {
+      // Select all section headers
+      document.querySelectorAll(".section-header h2").forEach((title) => {
+        title.style.color = "var(--primary)";
+      });
 
+      // Specifically target Skills section header
+      const skillsHeader = document.querySelector("#skills .section-header h2");
+      if (skillsHeader) {
+        skillsHeader.style.color = "var(--primary)";
+      }
+    }
+  }
+
+  // Run when page loads
+  fixSectionTitles();
+
+  // Implement more robust email handling with fallback
   function setupContactForm() {
     const contactForm = document.getElementById("contactForm");
     const formStatus = document.getElementById("form-status");

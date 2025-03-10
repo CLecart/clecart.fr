@@ -925,6 +925,39 @@ body.dark-mode .project-btn:hover {
 
 .contact-form .btn {
   margin-top: 20px; /* Add margin to move the button down */
+  border: none; /* Remove any default border */
+  outline: none; /* Remove outline */
+  cursor: pointer; /* Add pointer cursor */
+}
+
+/* Make all form buttons consistent with other site buttons */
+.contact-form button[type="submit"] {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--gradient-1);
+  color: white;
+  border: none; /* Remove border */
+  border-radius: 50px;
+  font-weight: 500;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+  cursor: pointer;
+}
+
+.contact-form button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+  background: var(--primary-dark);
+}
+
+/* Support for dark mode button */
+body.dark-mode .contact-form button[type="submit"] {
+  background: var(--primary-dark);
+  border: none;
+}
+
+body.dark-mode .contact-form button[type="submit"]:hover {
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
 }
 
 /* Styles pour les messages de statut du formulaire */

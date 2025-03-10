@@ -193,4 +193,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Run the contact form setup
   setupContactForm();
+
+  // Image Viewer functionality (merged from imageviewer.js)
+  // Create modal for image viewing
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+    <span class="close">&times;</span>
+    <img class="modal-content" id="expandedImg">
+  `;
+  document.body.appendChild(modal);
+
+  const expandedImg = document.getElementById("expandedImg");
+  const closeBtn = modal.querySelector(".close");
+
+  // Add event listeners to project images
+  document.querySelectorAll(".project-thumb img").forEach((img) => {
+    img.addEventListener("click", function () {
+      modal.style.display = "block";
+      expandedImg.src = this.src;
+    });
+  });
+
+  // Close modal when clicking X or outside the modal
+  closeBtn.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 });

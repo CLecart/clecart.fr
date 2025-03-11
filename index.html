@@ -23,6 +23,9 @@
     <!-- <script src="responsive-darkmode.js"></script> -->
     <script src="darkmode.js"></script>
     <script src="script.js"></script>
+    <!-- Ajout des fichiers CSS et JS pour le RGPD -->
+    <link rel="stylesheet" href="gdpr.css">
+    <script src="gdpr.js"></script>
 </head>
 <body class="homepage">
     <header>
@@ -315,9 +318,20 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
+            <p>&copy; 2025 Christophe Lecart. All rights reserved. | <a href="privacy-policy.html">Privacy Policy</a></p>
         </div>
     </footer>
+
+    <!-- Correction de la bannière RGPD en anglais -->
+    <div id="gdpr-banner" class="gdpr-banner">
+        <div class="gdpr-content">
+            <p>This site uses third-party services to process the contact form. By continuing, you accept our <a href="privacy-policy.html">privacy policy</a>.</p>
+            <div class="gdpr-buttons">
+                <button id="gdpr-accept" class="btn">Accept</button>
+                <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

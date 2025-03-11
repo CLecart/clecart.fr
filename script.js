@@ -98,6 +98,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Variable de verrouillage globale
     window.isProcessingEmail = false;
 
+    // Vérifier si l'utilisateur a refusé le RGPD
+    const gdprChoice = localStorage.getItem("gdpr-choice");
+    if (gdprChoice === "declined") {
+      contactForm.innerHTML =
+        '<p class="gdpr-message">Le formulaire de contact est désactivé car vous avez refusé notre politique de confidentialité. Vous pouvez me contacter directement par email à <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+      return; // Arrêter l'exécution si RGPD refusé
+    }
+
     // Un seul écouteur d'événement sur le formulaire
     contactForm.addEventListener("submit", handleFormSubmit);
 

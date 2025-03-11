@@ -12,23 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Improve hamburger menu functionality
-  const navToggle = document.querySelector(".nav-toggle");
-  const navMenu = document.querySelector("nav ul");
-
-  if (navToggle) {
-    navToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
-
-      // Ensure menu takes the right color based on mode
-      const isDarkMode = document.body.classList.contains("dark-mode");
-      if (isDarkMode) {
-        navMenu.classList.add("dark-mode");
-      } else {
-        navMenu.classList.remove("dark-mode");
-      }
-    });
-  }
+  // Supprimer le code du menu hamburger ici puisqu'il est maintenant dans mobile-menu.js
 
   // Close mobile menu when a link is clicked
   document.querySelectorAll("nav ul li a").forEach((link) => {

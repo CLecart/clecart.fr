@@ -32,8 +32,35 @@
 /* Styles pour les pages détail */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
-  top: 10px;
-  right: 80px;
+  top: 50%; /* Aligner verticalement au milieu du header */
+  transform: translateY(-50%); /* Ajustement précis du centrage vertical */
+  right: calc(65px + 15px); /* Exactement 15px à gauche du bouton Back (qui fait 65px) */
+  margin-left: 0; /* Annuler la marge gauche par défaut */
+}
+
+/* Style du bouton avec dimensions cohérentes par rapport au bouton "Back" */
+body:not(.homepage) .back-btn,
+body:not(.homepage) .dark-mode-toggle {
+  padding: 5px 15px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Assurer que l'icône est correctement positionnée */
+body:not(.homepage) .dark-mode-toggle i {
+  margin: 0;
+}
+
+/* Position fixe pour le bouton back, à exactement 15px du dark-mode-toggle */
+body:not(.homepage) .back-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px; /* Toujours à 15px du bord droit */
+  width: 65px; /* Largeur fixe pour le bouton Back */
+  justify-content: center;
 }
 
 /* Support mobile pour le bouton dark mode */
@@ -43,7 +70,67 @@ body:not(.homepage) .dark-mode-toggle {
   }
   
   body:not(.homepage) .dark-mode-toggle {
-    right: 60px;
+    right: 80px; /* Garder un bon espacement */
+  }
+  
+  body:not(.homepage) .back-btn {
+    right: 15px;
+  }
+}
+
+/* Responsive - ajuster l'espacement sur mobile */
+@media (max-width: 576px) {
+  body:not(.homepage) .dark-mode-toggle {
+    right: calc(65px + 10px); /* Réduire légèrement l'espace sur petit écran */
+    top: 50%; /* Aligner verticalement comme le bouton Back */
+    transform: translateY(-50%); /* Centrage vertical */
+    bottom: auto; /* Annuler le positionnement en bas */
+    /* Taille minimale fixe */
+    min-width: 32px;
+    min-height: 32px;
+  }
+  
+  body:not(.homepage) .back-btn {
+    top: 50%;
+    
+    transform: translateY(-50%);
+    right: 15px;
+    /* Taille minimale fixe */
+    min-width: 65px;
+    min-height: 32px;
+  }
+  
+  /* S'assurer que le header a suffisamment de hauteur */
+  body:not(.homepage) header {
+    min-height: 60px; /* Augmenter légèrement pour accommoder les deux boutons */
+    padding-bottom: 0; /* Espace pour le bouton en bas */
+  }
+  
+  body:not(.homepage) .back-btn,
+  body:not(.homepage) .dark-mode-toggle {
+    padding: 5px 10px; /* Padding uniforme */
+    font-size: 0.8rem; /* Garder une taille de texte plus lisible */
+    white-space: nowrap; /* Empêcher le texte de passer à la ligne */
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 360px) {
+  body:not(.homepage) .dark-mode-toggle {
+    right: calc(55px + 8px); /* Réduire encore l'espacement */
+  }
+  
+  body:not(.homepage) .dark-mode-toggle,
+  body:not(.homepage) .back-btn {
+    /* Conserver les mêmes dimensions minimales */
+    min-width: 32px;
+    min-height: 32px;
+    padding: 3px 8px; /* Padding réduit mais identique pour les deux boutons */
+    font-size: 0.7rem;
+  }
+  
+  body:not(.homepage) .back-btn {
+    width: 55px; /* Bouton Back légèrement plus petit */
   }
 }
 

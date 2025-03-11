@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="mobile-menu.css">
     <style>
         .project-navigation {
             margin-bottom: 30px;
@@ -59,9 +58,47 @@
         body.dark-mode .nav-btn {
             background: var(--gradient-1);
         }
+        
+        /* Correction du positionnement des pages de projet */
+        main {
+            padding-top: 60px; /* Espace pour le header fixe */
+        }
+        
+        /* Réduire la marge excessive entre le header et le contenu */
+        .description {
+            margin-top: 20px; /* Réduite considérablement */
+        }
+        
+        /* Garantir que le titre du projet est bien positionné */
+        .project-single-title {
+            margin-top: 0;
+        }
+        
+        /* Assurer que le header est bien positionné */
+        header {
+            height: auto;
+            min-height: 60px;
+        }
+        
+        /* Positionnement correct des boutons dans l'en-tête */
+        .dark-mode-toggle {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .back-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     </style>
+    <!-- Ajouter script pour le dark mode -->
     <script src="darkmode.js"></script>
-    <script src="mobile-menu.js"></script>
+    <!-- Ajouter script pour la navigation entre projets -->
+    <script src="project-navigation.js"></script>
 </head>
 <body>
     <header>
@@ -317,133 +354,5 @@
             <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        // Fonction pour activer le mode sombre
-        document.addEventListener("DOMContentLoaded", function() {
-            // Récupérer le bouton de bascule du mode sombre
-            const darkModeToggle = document.querySelector(".dark-mode-toggle");
-            
-            // Vérifier la préférence stockée
-            const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-            
-            // Appliquer le mode sombre si activé
-            if (isDarkMode) {
-                document.body.classList.add("dark-mode");
-                if (darkModeToggle) {
-                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                }
-            }
-            
-            // Gérer le clic sur le bouton de bascule
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener("click", function() {
-                    document.body.classList.toggle("dark-mode");
-                    const newDarkMode = document.body.classList.contains("dark-mode");
-                    
-                    // Mettre à jour l'icône
-                    this.innerHTML = newDarkMode ? 
-                        '<i class="fas fa-sun"></i>' : 
-                        '<i class="fas fa-moon"></i>';
-                    
-                    // Sauvegarder la préférence
-                    localStorage.setItem("darkMode", newDarkMode ? "enabled" : "disabled");
-                });
-            }
-            
-            // Script pour gérer la navigation entre projets
-            function handleProjectNavigation() {
-                // Récupérer l'ancre dans l'URL
-                const hash = window.location.hash.substring(1);
-                
-                // Si une ancre existe et correspond à un projet, l'afficher
-                if (hash && ["project1", "project2", "project3"].includes(hash)) {
-                    showProject(hash);
-                }
-            }
-            
-            // Attacher la navigation aux liens
-            document.querySelectorAll(".nav-btn").forEach(button => {
-                button.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const projectId = this.getAttribute("href").substring(1);
-                    showProject(projectId);
-                    window.history.pushState(null, null, `#${projectId}`);
-                });
-            });
-            
-            // Gérer la navigation initiale
-            handleProjectNavigation();
-            
-            // Écouter les changements d'URL
-            window.addEventListener("hashchange", handleProjectNavigation);
-        });
-        
-        // Function to show the selected project
-        function showProject(projectId) {
-            // Hide all projects
-            document.querySelectorAll('.project').forEach(project => {
-                project.classList.remove('active');
-            });
-            
-            // Show selected project
-            const selectedProject = document.getElementById(projectId);
-            if (selectedProject) {
-                selectedProject.classList.add('active');
-                
-                // Update page title
-                const projectTitles = {
-                    'project1': 'Groupie Tracker',
-                    'project2': 'Bomberman',
-                    'project3': 'Forum'
-                };
-                
-                const titleElement = document.getElementById('project-title');
-                if (titleElement && projectTitles[projectId]) {
-                    titleElement.textContent = projectTitles[projectId];
-                }
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-            }
-        }
-    </script>
-    
-    <!-- Create modal for image viewing -->
-    <div class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="expandedImg">
-    </div>
-    
-    <script>
-        // Image viewer functionality
-        document.addEventListener("DOMContentLoaded", function() {
-            const modal = document.querySelector(".modal");
-            const expandedImg = document.getElementById("expandedImg");
-            const closeBtn = document.querySelector(".modal .close");
-            
-            // Add event listeners to project images
-            document.querySelectorAll(".project-thumb img").forEach(img => {
-                img.addEventListener("click", function() {
-                    modal.style.display = "block";
-                    expandedImg.src = this.src;
-                });
-            });
-            
-            // Close modal when clicking X
-            if (closeBtn) {
-                closeBtn.onclick = function() {
-                    modal.style.display = "none";
-                };
-            }
-            
-            // Close modal when clicking outside
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            };
-        });
-    </script>
 </body>
 </html>

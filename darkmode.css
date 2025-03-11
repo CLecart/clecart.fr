@@ -1,10 +1,11 @@
-/* Styles unifiés pour le mode sombre - code nettoyé */
+/* Styles optimisés pour le mode sombre - suppression des doublons */
 
-/* Variables pour les couleurs */
 :root {
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
   --dark: #1a1a2e;
+  --darker: #14141e; /* Couleur encore plus sombre pour les contrastes */
+  --card-dark: #2a2a42; /* Couleur pour les cartes en mode sombre */
   --light: #f8f9fa;
   --text-dark: #f4f4f4;
 }
@@ -14,17 +15,12 @@
   background: var(--primary);
   color: white;
   border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  margin-left: 20px;
   transition: all 0.3s ease;
-  margin-left: 15px;
-  flex-shrink: 0;
 }
 
 .dark-mode-toggle:hover {
@@ -33,105 +29,65 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Positionnement spécial pour la page d'accueil */
-.homepage .right-content {
-  display: flex;
-  align-items: center;
+/* Styles pour les pages détail */
+body:not(.homepage) .dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 80px;
 }
 
-/* Mode sombre - styles de base */
+/* Support mobile pour le bouton dark mode */
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    margin-left: 15px;
+  }
+  
+  body:not(.homepage) .dark-mode-toggle {
+    right: 60px;
+  }
+}
+
+/* ===== RÈGLES UNIFIÉES POUR LE MODE SOMBRE ===== */
+
+/* Règles principales */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
 }
 
-/* Header et navigation - garder le dégradé bleu */
+/* Header et navigation */
 body.dark-mode header {
-  background: var(--gradient-1); /* Conserver le dégradé bleu du header */
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  background: var(--dark);
 }
 
-/* S'assurer que la navigation reste transparente pour prendre la couleur du header */
-body.dark-mode nav {
-  background: transparent;
+body.dark-mode nav ul {
+  background: var(--dark);
 }
 
-/* Ajuster uniquement le texte des liens de navigation */
-body.dark-mode nav ul li a {
-  color: white; /* Garder le texte des liens en blanc */
-}
-
-/* Spécifiquement pour le menu mobile en mode sombre */
-@media (max-width: 768px) {
-  body.dark-mode nav ul {
-    background: var(--dark);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  body.dark-mode nav ul.active {
-    background: var(--dark);
-  }
-  
-  body.dark-mode nav ul li a {
-    color: var(--text-dark);
-  }
-  
-  body.dark-mode nav ul li a:hover {
-    background-color: rgba(108, 99, 255, 0.2);
-    color: var(--primary);
-  }
-}
-
-/* Sections spécifiques */
+/* Sections de contenus */
 body.dark-mode #hero,
 body.dark-mode #about,
 body.dark-mode #skills,
 body.dark-mode #projects,
-body.dark-mode #contact {
+body.dark-mode #contact,
+body.dark-mode section,
+body.dark-mode div,
+body.dark-mode article {
   background-color: var(--dark);
 }
 
-/* Correction pour la section Hero en mode sombre */
-body.dark-mode #hero {
-  background-color: transparent;
-  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
-}
-
-body.dark-mode #hero .container,
-body.dark-mode #hero .hero-content {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-body.dark-mode .hero-content h1,
-body.dark-mode .hero-content p {
-  color: var(--text-dark);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-body.dark-mode .hero-content h1 span {
-  color: var(--primary);
-}
-
-/* Cards et conteneurs */
+/* Cartes et conteneurs */
 body.dark-mode .project-card,
 body.dark-mode .skill-card,
 body.dark-mode .contact-info,
 body.dark-mode .contact-form,
 body.dark-mode .description {
-  background-color: #2a2a42;
+  background-color: var(--card-dark);
   color: var(--text-dark);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Couleurs des textes */
-body.dark-mode h2,
-body.dark-mode h3 {
-  color: var(--primary);
-}
-
+/* Textes et titres */
 body.dark-mode a,
 body.dark-mode p,
 body.dark-mode h1,
@@ -140,7 +96,12 @@ body.dark-mode label {
   color: var(--text-dark);
 }
 
-/* Formulaires et inputs */
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: var(--primary);
+}
+
+/* Formulaires */
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
@@ -149,28 +110,81 @@ body.dark-mode select {
   color: var(--text-dark);
 }
 
-/* Ajustements pour les projets */
+/* Exceptions pour les éléments qui doivent conserver leur couleur */
+body.dark-mode .btn,
+body.dark-mode button,
+body.dark-mode .skill-icon,
+body.dark-mode .contact-icon {
+  background-color: initial;
+}
+
+/* Corrections spécifiques pour certaines sections */
+
+/* Hero */
+body.dark-mode #hero {
+  background-color: transparent;
+  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+}
+
+body.dark-mode #hero .container,
+body.dark-mode #hero .hero-content,
+body.dark-mode .hero-content {
+  background-color: transparent !important;
+  box-shadow: none;
+}
+
+/* Skills section */
+body.dark-mode #skills {
+  background-color: var(--darker);
+}
+
+body.dark-mode #skills .skill-card {
+  background-color: var(--card-dark);
+}
+
+/* Projects section */
+body.dark-mode #projects {
+  background-color: var(--darker);
+}
+
+body.dark-mode #projects .project-thumb {
+  background-color: #000;
+}
+
 body.dark-mode #projects .project-content p {
   color: #d1d1d1;
 }
 
-body.dark-mode .project-thumb {
-  background-color: #000;
+/* Contact section */
+body.dark-mode #contact {
+  background: linear-gradient(135deg, var(--darker), var(--dark));
 }
 
-/* Styles responsive */
-@media (max-width: 768px) {
-  .dark-mode-toggle {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
-  }
-  
-  .homepage .right-content {
-    gap: 10px;
-  }
-  
-  body:not(.homepage) .dark-mode-toggle {
-    right: 60px;
-  }
+/* Modal et messages de statut */
+body.dark-mode .modal {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.dark-mode .form-status.success {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+body.dark-mode .form-status.error {
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+body.dark-mode .form-status.sending {
+  background-color: rgba(3, 169, 244, 0.2);
+}
+
+/* Footer */
+body.dark-mode footer,
+body.dark-mode footer .container,
+body.dark-mode footer div,
+body.dark-mode footer p {
+  background: transparent;
+  color: white;
+  opacity: 0.9;
+  border: none;
+  box-shadow: none;
 }

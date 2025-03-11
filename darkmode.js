@@ -10,12 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Vérifier si nous sommes sur la page d'accueil ou une page de détail
-  const isHomePage = !document.querySelector(".description");
+  const isHomePage = document.body.classList.contains("homepage");
 
   // Créer ou récupérer le bouton toggle
   let darkModeToggle = document.querySelector(".dark-mode-toggle");
 
   if (!darkModeToggle) {
+    // Créer le bouton s'il n'existe pas
     darkModeToggle = document.createElement("button");
     darkModeToggle.className = "dark-mode-toggle";
 
@@ -23,7 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isHomePage) {
       const rightContent = document.querySelector(".right-content");
       if (rightContent) {
-        rightContent.appendChild(darkModeToggle);
+        // Pour la page d'accueil, insérer avant le bouton hamburger
+        const navToggle = document.querySelector(".nav-toggle");
+        if (navToggle) {
+          rightContent.insertBefore(darkModeToggle, navToggle);
+        } else {
+          rightContent.appendChild(darkModeToggle);
+        }
+      }
+    } else {
+      // Pour les pages de détail
+      const headerContent = document.querySelector(".header-content");
+      if (headerContent) {
+        headerContent.appendChild(darkModeToggle);
       }
     }
   }
@@ -68,4 +81,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Run when page loads
   fixSectionTitles();
+
+  // Ajouter la gestion du menu hamburger
+  const navToggle = document.querySelector(".nav-toggle");
+  const navMenu = document.querySelector("nav ul");
+
+  if (navToggle) {
+    navToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+
+    // Fermer le menu quand on clique sur un lien
+    document.querySelectorAll("nav ul li a").forEach((link) => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 768) {
+          navMenu.classList.remove("active");
+        }
+      });
+    });
+
+    // Fermer le menu quand on clique ailleurs
+    document.addEventListener("click", (e) => {
+      if (
+        window.innerWidth <= 768 &&
+        navMenu &&
+        navMenu.classList.contains("active") &&
+        !e.target.closest("nav") &&
+        !e.target.closest(".nav-toggle")
+      ) {
+        navMenu.classList.remove("active");
+      }
+    });
+  }
 });

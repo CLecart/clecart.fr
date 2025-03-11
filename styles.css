@@ -84,12 +84,12 @@ header.dark-mode {
 
 header.scrolled {
   padding: 10px 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--gradient-1); /* Garder le dégradé bleu au lieu du blanc */
   backdrop-filter: blur(10px);
 }
 
 header.scrolled.light-mode {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--gradient-1); /* Assurer que le mode clair utilise le dégradé */
 }
 
 header.scrolled.dark-mode {
@@ -170,7 +170,7 @@ header.scrolled.dark-mode nav ul li a {
 }
 
 header.scrolled nav ul li a:hover {
-  color: var(--primary-dark);
+  color: rgba(255, 255, 255, 0.8); /* Légèrement plus clair au survol */
 }
 
 header.scrolled.dark-mode nav ul li a:hover {
@@ -1468,6 +1468,48 @@ body.dark-mode footer {
   }
 }
 
+/* Correction du menu hamburger en mode clair */
+@media (max-width: 768px) {
+  /* Amélioration du contraste du bouton du menu hamburger */
+  .nav-toggle {
+    color: white; /* S'assurer que l'icône est blanche pour contraster avec le fond dégradé */
+    font-size: 1.5rem;
+    padding: 8px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1); /* Légère surbrillance pour rendre le bouton plus visible */
+  }
+  
+  /* Améliorer la visibilité du menu déroulant en mode clair */
+  body:not(.dark-mode) nav ul {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Rendre les liens du menu plus visibles en mode clair */
+  body:not(.dark-mode) nav ul li a {
+    color: var(--text); /* Couleur de texte sombre sur fond clair */
+    font-weight: 600; /* Rendre le texte plus épais pour une meilleure lisibilité */
+    padding: 12px 15px; /* Agrandir la zone cliquable */
+    display: block;
+    border-radius: 8px;
+  }
+  
+  /* Effet de survol pour améliorer l'interaction */
+  body:not(.dark-mode) nav ul li a:hover {
+    background-color: rgba(108, 99, 255, 0.1);
+    color: var(--primary);
+  }
+  
+  /* Correction pour s'assurer que le menu s'affiche au bon endroit */
+  nav ul {
+    top: 60px; /* Ajuster à la hauteur du header */
+    right: 20px; /* Marge par rapport au bord droit */
+    width: 200px; /* Largeur fixe pour le menu */
+    z-index: 1001; /* S'assurer qu'il est au-dessus des autres éléments */
+  }
+}
+
 @media (max-width: 576px) {
   .hero-content h1 {
     font-size: 2.5rem;
@@ -2543,12 +2585,57 @@ body.dark-mode #projects .project-btn:hover {
 
 /* Styles pour les cartes de compétences répétés plusieurs fois */
 .skill-card {
-  /* Règles définies à plusieurs endroits avec des valeurs différentes */
+  height: 310px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  color: var(--text);
+  overflow: visible;
 }
 
-/* Multiples redéfinitions des hauteurs des éléments */
-#skills .skill-card {
-  height: 310px; /* Défini plusieurs fois à différentes valeurs */
+.skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-/* Animation et media queries qui pourraient être consolidées */
+/* Style pour l'icône */
+.skill-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: var(--primary);
+}
+
+/* Style pour le nom de compétence */
+.skill-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Style pour le texte de description */
+.skill-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 60px;
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+  height: auto;
+  max-height: none;
+}
+
+/* Style pour le niveau de compétence - masqué selon décision précédente */
+.skill-level {
+  display: none;
+}
+
+/* Support de mode sombre pour les cartes de compétences */
+body.dark-mode .skill-card {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+}

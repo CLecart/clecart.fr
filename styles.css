@@ -2794,3 +2794,49 @@ body:not(.homepage) .logo {
     padding: 10px 0;
   }
 }
+
+/* Correction pour la barre de défilement horizontal sur mobile */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden; /* Empêcher le défilement horizontal */
+}
+
+/* S'assurer que tous les conteneurs respectent la largeur maximale */
+.container, 
+section, 
+header, 
+footer,
+.contact-container,
+.projects-grid,
+.skills-container,
+.about-content {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Assurer que les images et vidéos ne dépassent pas */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ajustement spécifique pour les portfolios sur mobile */
+@media (max-width: 576px) {
+  /* Réduire les paddings latéraux */
+  .container {
+    width: 95%;
+    padding: 0 10px;
+  }
+  
+  /* S'assurer que les éléments de grille s'adaptent */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Corriger les grilles en général */
+  [class*="grid"] {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

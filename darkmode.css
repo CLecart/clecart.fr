@@ -45,13 +45,42 @@ body.dark-mode {
   color: var(--text-dark);
 }
 
-/* Header et navigation */
+/* Header et navigation - garder le dégradé bleu */
 body.dark-mode header {
-  background: var(--gradient-1);
+  background: var(--gradient-1); /* Conserver le dégradé bleu du header */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode nav ul {
-  background: var(--dark);
+/* S'assurer que la navigation reste transparente pour prendre la couleur du header */
+body.dark-mode nav {
+  background: transparent;
+}
+
+/* Ajuster uniquement le texte des liens de navigation */
+body.dark-mode nav ul li a {
+  color: white; /* Garder le texte des liens en blanc */
+}
+
+/* Spécifiquement pour le menu mobile en mode sombre */
+@media (max-width: 768px) {
+  body.dark-mode nav ul {
+    background: var(--dark);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  body.dark-mode nav ul.active {
+    background: var(--dark);
+  }
+  
+  body.dark-mode nav ul li a {
+    color: var(--text-dark);
+  }
+  
+  body.dark-mode nav ul li a:hover {
+    background-color: rgba(108, 99, 255, 0.2);
+    color: var(--primary);
+  }
 }
 
 /* Sections spécifiques */

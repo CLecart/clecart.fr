@@ -2671,7 +2671,7 @@ body.dark-mode .skill-card {
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
-  background-color: #f9fafc;
+  background-color: transparent; /* Retirer l'arrière-plan */
   color: var(--text);
 }
 

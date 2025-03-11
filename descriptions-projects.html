@@ -354,5 +354,15 @@
             <p>&copy; 2025 Christophe Lecart. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+      // S'assurer que la page est positionnée en haut lors du chargement initial
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+        }, 100);
+      });
+    </script>
+
 </body>
 </html>

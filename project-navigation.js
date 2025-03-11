@@ -28,8 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
         titleElement.textContent = projectTitles[projectId];
       }
 
-      // Remonter en haut de la page
-      window.scrollTo(0, 0);
+      // Remonter en haut de la page, avec un délai pour s'assurer que le DOM est mis à jour
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 100);
     }
   }
 

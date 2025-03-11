@@ -197,6 +197,20 @@ body.dark-mode select {
   color: var(--text-dark);
 }
 
+/* Supprimer l'arrière-plan sombre des champs de formulaire */
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+  background-color: transparent;
+}
+
+/* Correction pour éviter que la règle générale n'affecte les champs de formulaire */
+body.dark-mode #contact div:not(.form-group input):not(.form-group textarea),
+body.dark-mode section,
+body.dark-mode div:not(.form-group input):not(.form-group textarea),
+body.dark-mode article {
+  background-color: var(--dark);
+}
+
 /* Exceptions pour les éléments qui doivent conserver leur couleur */
 body.dark-mode .btn,
 body.dark-mode button,

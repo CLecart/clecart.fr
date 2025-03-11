@@ -2764,3 +2764,33 @@ body.dark-mode #direct-email-msg {
   background-color: rgba(108, 99, 255, 0.15);
   color: var(--text-dark);
 }
+
+/* Style pour le header des pages de détail et privacy-policy */
+body:not(.homepage) header h1,
+body:not(.homepage) .logo {
+  display: inline-block;
+  line-height: 1.2;
+}
+
+/* Adaptation pour les petits écrans - mettre Lecart sous Christophe */
+@media (max-width: 576px) {
+  body:not(.homepage) .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+    font-size: 1.4rem;
+  }
+  
+  body:not(.homepage) .logo::after {
+    content: " ";
+    display: inline-block;
+    width: 100%;
+  }
+  
+  /* Ajuster l'espacement pour les boutons */
+  body:not(.homepage) header {
+    min-height: 70px;
+    padding: 10px 0;
+  }
+}

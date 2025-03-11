@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Amélioration de la gestion du menu mobile
+  // Improve hamburger menu functionality
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector("nav ul");
 
@@ -20,15 +20,36 @@ document.addEventListener("DOMContentLoaded", () => {
     navToggle.addEventListener("click", () => {
       navMenu.classList.toggle("active");
 
-      // Assurer que le menu prend la bonne couleur en fonction du mode
+      // Ensure menu takes the right color based on mode
       const isDarkMode = document.body.classList.contains("dark-mode");
       if (isDarkMode) {
-        navMenu.style.background = "var(--dark)";
+        navMenu.classList.add("dark-mode");
       } else {
-        navMenu.style.background = "white";
+        navMenu.classList.remove("dark-mode");
       }
     });
   }
+
+  // Close mobile menu when a link is clicked
+  document.querySelectorAll("nav ul li a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 768) {
+        navMenu.classList.remove("active");
+      }
+    });
+  });
+
+  // Close mobile menu when clicking outside
+  document.addEventListener("click", (e) => {
+    if (
+      window.innerWidth <= 768 &&
+      navMenu.classList.contains("active") &&
+      !e.target.closest("nav") &&
+      !e.target.closest(".nav-toggle")
+    ) {
+      navMenu.classList.remove("active");
+    }
+  });
 
   // Scroll animations
   const scrollElements = document.querySelectorAll(

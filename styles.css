@@ -1468,6 +1468,93 @@ body.dark-mode footer {
   }
 }
 
+/* Improved Mobile Menu Styles */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+    margin-left: 15px;
+  }
+  
+  nav ul {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    flex-direction: column;
+    background: white;
+    width: 250px;
+    padding: 20px;
+    gap: 15px;
+    border-radius: 0 0 0 10px;
+    box-shadow: var(--card-shadow);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    height: auto;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+  
+  nav ul.active {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  nav ul li {
+    width: 100%;
+  }
+  
+  nav ul li a {
+    color: var(--text);
+    display: block;
+    padding: 12px 15px;
+    width: 100%;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  nav ul li a:hover {
+    background-color: rgba(108, 99, 255, 0.1);
+  }
+  
+  /* Dark mode styles for mobile menu */
+  body.dark-mode nav ul {
+    background: var(--dark);
+  }
+  
+  body.dark-mode nav ul li a {
+    color: var(--text-dark);
+  }
+  
+  body.dark-mode nav ul li a:hover {
+    background-color: rgba(108, 99, 255, 0.2);
+  }
+  
+  /* Ensure the toggle button is visible */
+  header .nav-toggle {
+    display: block;
+    color: white;
+  }
+  
+  /* Adjust header padding for mobile */
+  header .container {
+    padding: 0 15px;
+  }
+  
+  /* Ensure dark mode toggle doesn't overlap */
+  .dark-mode-toggle {
+    margin-right: 15px;
+  }
+}
+
 @media (max-width: 576px) {
   .hero-content h1 {
     font-size: 2.5rem;
@@ -2539,78 +2626,4 @@ body.dark-mode #projects .project-btn {
 
 body.dark-mode #projects .project-btn:hover {
   background: var(--gradient-1);
-}
-
-/* Dark Mode Text Visibility Fixes */
-body.dark-mode #skills .skill-card p {
-  color: var(--text-dark);
-}
-
-body.dark-mode #skills .skill-card .skill-name {
-  color: var(--text-dark);
-}
-
-body.dark-mode #languages .language-card span {
-  color: var(--text-dark);
-}
-
-body.dark-mode .section-header h2 {
-  color: var(--text-dark);
-}
-
-body.dark-mode p, 
-body.dark-mode h1, 
-body.dark-mode h2, 
-body.dark-mode h3, 
-body.dark-mode h4, 
-body.dark-mode li, 
-body.dark-mode span {
-  color: var(--text-dark);
-}
-
-body.dark-mode .card,
-body.dark-mode .project-card,
-body.dark-mode .skill-card,
-body.dark-mode .language-card {
-  color: var(--text-dark);
-}
-
-/* Stronger specificity for skill cards in dark mode */
-html body.dark-mode #skills .skill-card p,
-html body.dark-mode #skills .skills-container .skill-card p {
-  color: var(--text-dark);
-}
-
-/* Ensure text in project cards is white in dark mode */
-body.dark-mode #projects .project-card h3 {
-  color: var(--text-dark);
-}
-
-body.dark-mode #projects .project-content h3 {
-  color: var(--text-dark);
-}
-
-body.dark-mode #projects .project-content p {
-  color: var(--text-dark);
-}
-
-/* Additional specificity for any nested elements */
-html body.dark-mode #projects .project-card * {
-  color: var(--text-dark);
-}
-
-/* Make sure all text in dark mode project cards is visible */
-body.dark-mode .project-card .project-content h3,
-body.dark-mode .project-card .project-content p,
-body.dark-mode #projects .project-card .project-content h3,
-body.dark-mode #projects .project-card .project-content p {
-  color: var(--text-dark);
-}
-
-/* Ensure headers have proper contrast in dark mode */
-html body.dark-mode #skills .section-header h2,
-html body.dark-mode #languages .section-header h2,
-html body-dark-mode #projects .section-header h2,
-html body-dark-mode #contact .section-header h2 {
-  color: var(--primary);
 }

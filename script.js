@@ -90,69 +90,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Le mode sombre est maintenant géré par darkmode.js
 
-  // Implement more robust email handling with fallback
+  // Refonte complète de la gestion du formulaire de contact pour éliminer les emails doubles
   function setupContactForm() {
     const contactForm = document.getElementById("contactForm");
-    const formStatus = document.getElementById("form-status");
-
     if (!contactForm) return;
 
-    // Check if EmailJS is available and set status message
-    const emailJsAvailable = typeof window.emailjs !== "undefined";
-    const directEmailMsg = document.getElementById("direct-email-msg");
+    // Variable de verrouillage globale
+    window.isProcessingEmail = false;
 
-    // Show appropriate message based on EmailJS availability
-    if (directEmailMsg) {
-      if (emailJsAvailable) {
-        directEmailMsg.style.display = "none";
-      } else {
-        directEmailMsg.style.display = "block";
-        console.warn("EmailJS not available, showing direct email message");
-      }
-    }
+    // Un seul écouteur d'événement sur le formulaire
+    contactForm.addEventListener("submit", handleFormSubmit);
 
-    contactForm.addEventListener("submit", function (event) {
+    // Fonction spécifique pour gérer la soumission
+    function handleFormSubmit(event) {
       event.preventDefault();
 
-      // Show sending status
+      const formStatus = document.getElementById("form-status");
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+
+      // Vérification si un envoi est déjà en cours
+      if (window.isProcessingEmail) {
+        return;
+      }
+
+      // Verrouiller le formulaire
+      window.isProcessingEmail = true;
+      if (submitButton) submitButton.disabled = true;
+
+      // Afficher le statut d'envoi
       if (formStatus) {
         formStatus.textContent = "Sending your message...";
         formStatus.className = "form-status sending";
         formStatus.style.display = "block";
       }
 
-      // If EmailJS is available, attempt to send email
+      // Vérifier si EmailJS est disponible
+      const emailJsAvailable = typeof window.emailjs !== "undefined";
+
       if (emailJsAvailable) {
+        // Utilisation d'une copie du formulaire pour éviter les problèmes
+        const formData = new FormData(contactForm);
+        const formObject = {};
+        formData.forEach((value, key) => (formObject[key] = value));
+
         emailjs
-          .sendForm("service_lokewrs", "template_2ov9l9i", contactForm)
+          .send("service_lokewrs", "template_2ov9l9i", formObject)
           .then(function (response) {
-            console.log("SUCCESS", response);
-            formStatus.textContent = "Message sent successfully!";
-            formStatus.className = "form-status success";
+            if (formStatus) {
+              formStatus.textContent = "Message sent successfully!";
+              formStatus.className = "form-status success";
+            }
             contactForm.reset();
           })
           .catch(function (error) {
-            console.error("FAILED", error);
-            formStatus.innerHTML = `Message could not be sent. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
-            formStatus.className = "form-status error";
+            if (formStatus) {
+              formStatus.innerHTML = `Message could not be sent. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
+              formStatus.className = "form-status error";
+            }
+          })
+          .finally(function () {
+            // Déverrouiller après 3 secondes pour éviter les doubles clics accidentels
+            setTimeout(() => {
+              window.isProcessingEmail = false;
+              if (submitButton) submitButton.disabled = false;
+            }, 3000);
           });
       } else {
-        // Fallback if EmailJS is not available
-        console.error("EmailJS not loaded");
+        // Fallback pour ouvrir le client email
         const formData = new FormData(contactForm);
         const name = formData.get("from_name") || "Not provided";
         const email = formData.get("email") || "Not provided";
-        const message = formData.get("message") || "No message content";
+        const message = formData.get("message") || "No message";
 
-        // Open user's email client as fallback
         const mailtoLink = `mailto:djlike@hotmail.fr?subject=Contact from ${name}&body=From: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
-
         window.open(mailtoLink);
 
-        formStatus.innerHTML = `The email form is currently unavailable. Your default email client should have opened. If not, please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
-        formStatus.className = "form-status error";
+        if (formStatus) {
+          formStatus.innerHTML = `Opening your email client. If it doesn't open, please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`;
+          formStatus.className = "form-status error";
+        }
+
+        // Déverrouiller après un délai
+        setTimeout(() => {
+          window.isProcessingEmail = false;
+          if (submitButton) submitButton.disabled = false;
+        }, 3000);
       }
-    });
+    }
   }
 
   // Run the contact form setup

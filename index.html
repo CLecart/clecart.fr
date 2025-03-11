@@ -13,9 +13,9 @@
         (function() {
             try {
                 emailjs.init("wCnIBsLz_IoHaoFDx");
-                console.log("EmailJS initialized successfully");
+                // Suppression du log de succès
             } catch (e) {
-                console.error("EmailJS init error:", e);
+                // Suppression du log d'erreur
             }
         })();
     </script>
@@ -291,12 +291,6 @@
                 <div class="contact-form slide-left">
                     <h3>Send Me a Message</h3>
                     
-                    <!-- Message that appears when EmailJS isn't available -->
-                    <div id="direct-email-msg">
-                        <p>The contact form may not be working properly at this time.</p>
-                        <p>Feel free to email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a></p>
-                    </div>
-                    
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="from_name">Your Name</label>
@@ -325,6 +319,5 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>

@@ -275,3 +275,75 @@ body.dark-mode footer p {
   border: none;
   box-shadow: none;
 }
+
+/* Styles pour les pages détail - ajustement pour éviter tout chevauchement */
+body:not(.homepage) .dark-mode-toggle {
+  position: absolute;
+  top: 50%; 
+  transform: translateY(-50%);
+  right: calc(65px + 15px);
+  margin-left: 0;
+}
+
+body:not(.homepage) .back-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  width: 65px;
+  justify-content: center;
+}
+
+/* Dimensions standardisées pour les boutons */
+body:not(.homepage) .dark-mode-toggle,
+body:not(.homepage) .back-btn {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Très petits écrans - ajustement radical pour garantir pas de chevauchement */
+@media (max-width: 360px) {
+  /* Bouton dark mode réduit au minimum */
+  body:not(.homepage) .dark-mode-toggle {
+    right: calc(45px + 8px); /* Espace réduit */
+    min-width: 28px; /* Taille minimale réduite */
+    width: 28px; /* Largeur fixe */
+    padding: 0; /* Suppression du padding horizontal */
+    font-size: 0.65rem; /* Texte plus petit */
+    border-radius: 50%; /* Format rond pour gagner de l'espace */
+  }
+  
+  /* Bouton Back réduit également */
+  body:not(.homepage) .back-btn {
+    min-width: 45px; /* Taille minimale réduite */
+    width: 45px; /* Largeur fixe */
+    padding: 0 5px; /* Padding horizontal minimal */
+    font-size: 0.65rem;
+  }
+  
+  /* S'assurer que la hauteur du header est suffisante */
+  body:not(.homepage) header {
+    min-height: 50px;
+  }
+  
+  /* S'assurer que les icônes sont centrées */
+  body:not(.homepage) .dark-mode-toggle i {
+    margin: 0 auto;
+  }
+}
+
+/* Styles spécifiques pour les très très petits écrans */
+@media (max-width: 320px) {
+  body:not(.homepage) header .container {
+    padding: 0 5px; /* Réduire le padding du conteneur */
+  }
+  
+  body:not(.homepage) header h1 {
+    font-size: 1.2rem; /* Réduire la taille du titre */
+  }
+}

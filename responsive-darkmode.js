@@ -150,27 +150,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Add support for mobile navigation
-  const navToggle = document.querySelector(".nav-toggle");
-  const navMenu = document.querySelector("nav ul");
-
-  if (navToggle && navMenu) {
-    // Ensure mobile menu has correct styling on init
-    if (isDarkMode && window.innerWidth <= 768) {
-      navMenu.classList.add("dark-mode");
-    }
-
-    // Update mobile menu styling when dark mode changes
-    toggle.addEventListener("click", function () {
-      // Update mobile menu styling
-      if (window.innerWidth <= 768) {
-        if (document.body.classList.contains("dark-mode")) {
-          navMenu.classList.add("dark-mode");
-        } else {
-          navMenu.classList.remove("dark-mode");
-        }
-      }
-    });
-  }
 });

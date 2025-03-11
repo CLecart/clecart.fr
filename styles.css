@@ -108,11 +108,15 @@ header.scrolled.dark-mode {
   align-items: center;
 }
 
+/* Modification du logo pour la page RGPD */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
   color: white;
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
 header.scrolled .logo {
@@ -120,10 +124,6 @@ header.scrolled .logo {
 }
 
 header.scrolled .logo.light-mode {
-  color: white;
-}
-
-header.scrolled .logo.dark-mode {
   color: white;
 }
 
@@ -2763,247 +2763,4 @@ body.dark-mode .form-group textarea:focus {
 body.dark-mode #direct-email-msg {
   background-color: rgba(108, 99, 255, 0.15);
   color: var(--text-dark);
-}
-
-/* Style pour le header des pages de détail et privacy-policy */
-body:not(.homepage) header h1,
-body:not(.homepage) .logo {
-  display: inline-block;
-  line-height: 1.2;
-}
-
-/* Adaptation pour les petits écrans - mettre Lecart sous Christophe */
-@media (max-width: 576px) {
-  body:not(.homepage) .logo {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.1;
-    font-size: 1.4rem;
-  }
-  
-  body:not(.homepage) .logo::after {
-    content: " ";
-    display: inline-block;
-    width: 100%;
-  }
-  
-  /* Ajuster l'espacement pour les boutons */
-  body:not(.homepage) header {
-    min-height: 70px;
-    padding: 10px 0;
-  }
-}
-
-/* Correction pour la barre de défilement horizontal sur mobile */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden; /* Empêcher le défilement horizontal */
-}
-
-/* S'assurer que tous les conteneurs respectent la largeur maximale */
-.container, 
-section, 
-header, 
-footer,
-.contact-container,
-.projects-grid,
-.skills-container,
-.about-content {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Assurer que les images et vidéos ne dépassent pas */
-img, video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Ajustement spécifique pour les portfolios sur mobile */
-@media (max-width: 576px) {
-  /* Réduire les paddings latéraux */
-  .container {
-    width: 95%;
-    padding: 0 10px;
-  }
-  
-  /* S'assurer que les éléments de grille s'adaptent */
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  /* Corriger les grilles en général */
-  [class*="grid"] {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
-/* Correction responsive pour tous les écrans */
-
-/* Base - éviter le débordement horizontal mais de façon moins restrictive */
-html, body {
-  overflow-x: hidden; /* Empêcher le défilement horizontal général */
-}
-
-/* Réinitialiser certaines propriétés restrictives pour les grands écrans */
-@media (min-width: 992px) {
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    padding: 0 20px;
-    margin: 0 auto;
-  }
-  
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 40px;
-    overflow: visible; /* Permettre le débordement visuel pour les effets hover */
-  }
-  
-  .skills-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-    overflow: visible;
-  }
-  
-  .project-card:hover,
-  .skill-card:hover {
-    transform: translateY(-10px); /* Restaurer l'effet de survol */
-    z-index: 1; /* S'assurer que l'élément survolé reste au-dessus */
-  }
-  
-  .about-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 50px;
-    align-items: center;
-    overflow: visible;
-  }
-  
-  .contact-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-  }
-}
-
-/* Media query pour les tablettes - correction des problèmes intermédiaires */
-@media (min-width: 768px) and (max-width: 991px) {
-  .container {
-    width: 90%;
-    padding: 0 15px;
-  }
-  
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-  
-  .about-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
-}
-
-/* Media query spécifique pour les téléphones - garder les correctifs */
-@media (max-width: 767px) {
-  .container {
-    width: 95%;
-    padding: 0 10px;
-  }
-  
-  .projects-grid,
-  .skills-container {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-  
-  .about-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .profile-img {
-    margin: 0 auto 20px;
-  }
-  
-  .contact-container {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-
-/* Corrections spécifiques pour certains éléments qui peuvent déborder */
-
-/* Les images et vidéos doivent être responsives partout */
-img, video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Correction pour les vignettes de projets */
-.project-thumb {
-  max-width: 100%;
-}
-
-/* Maintenir les effets de survol sur les cartes pour desktop */
-@media (min-width: 992px) {
-  .project-card:hover .project-thumb img,
-  .project-card:hover .project-thumb video {
-    transform: scale(1.05);
-  }
-  
-  .language-card:hover {
-    transform: translateY(-5px);
-  }
-}
-
-/* Suppression des barres de défilement verticales */
-
-/* Pour tous les éléments qui peuvent avoir un défilement */
-html, body, .modal, .container, .project-container, .description, 
-.projects-grid, .skills-container, .contact-container {
-  /* Cacher la barre de défilement tout en gardant la fonctionnalité */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-/* Cacher les barres de défilement pour Chrome, Safari et Opera */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-.modal::-webkit-scrollbar,
-.container::-webkit-scrollbar,
-.project-container::-webkit-scrollbar,
-.description::-webkit-scrollbar,
-.projects-grid::-webkit-scrollbar,
-.skills-container::-webkit-scrollbar,
-.contact-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-  width: 0;
-  height: 0;
-}
-
-/* S'assurer que les conteneurs s'adaptent correctement sans créer de défilement vertical */
-.project-container, .description {
-  max-height: none;
-  height: auto;
-  overflow-y: visible;
-}
-
-/* Correction spécifique pour la page de description des projets */
-body .description {
-  overflow: visible;
-  max-height: none;
-  height: auto;
-}
-
-/* Permettre aux conteneurs de contenu long de s'étendre naturellement */
-.project, .project.active {
-  height: auto;
-  overflow-y: visible;
 }

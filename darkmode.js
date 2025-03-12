@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isHomePage) {
       const rightContent = document.querySelector(".right-content");
       if (rightContent) {
-        // Pour la page d'accueil, insérer avant le bouton hamburger
         const navToggle = document.querySelector(".nav-toggle");
         if (navToggle) {
           rightContent.insertBefore(darkModeToggle, navToggle);
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     } else {
-      // Pour les pages de détail
       const headerContent = document.querySelector(".header-content");
       if (headerContent) {
         headerContent.appendChild(darkModeToggle);
@@ -59,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sauvegarder la préférence
     localStorage.setItem("darkMode", newDarkMode ? "enabled" : "disabled");
 
-    // Fix section title colors after dark mode toggle
+    // Fix section title colors
     fixSectionTitles();
   });
 

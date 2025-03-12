@@ -2764,3 +2764,120 @@ body.dark-mode #direct-email-msg {
   background-color: rgba(108, 99, 255, 0.15);
   color: var(--text-dark);
 }
+
+/* Fix propre pour les icônes sociales sur petits écrans */
+@media (max-width: 500px) {
+  /* Sélecteurs très spécifiques pour augmenter la priorité sans !important */
+  html body .contact-method .contact-icon,
+  html body.dark-mode .contact-method .contact-icon,
+  html body.light-mode .contact-method .contact-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+  
+  /* Garantir que l'icône est correctement centrée */
+  html body .contact-method .contact-icon i,
+  html body.dark-mode .contact-method .contact-icon i,
+  html body.light-mode .contact-method .contact-icon i {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+  }
+  
+  /* Assurer que le container contact-method respecte la structure */
+  html body .contact-method,
+  html body.dark-mode .contact-method,
+  html body.light-mode .contact-method {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Amélioration de la bannière GDPR pour une meilleure expérience sur petits écrans */
+@media (max-width: 768px) {
+  .gdpr-banner {
+    padding: 15px;
+  }
+
+  .gdpr-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 5px;
+    gap: 15px;
+  }
+  
+  .gdpr-content p {
+    flex: none;
+    width: 100%;
+    margin: 0 0 15px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .gdpr-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+/* Ajustement pour très petits écrans */
+@media (max-width: 480px) {
+  .gdpr-banner {
+    padding: 15px 10px;
+  }
+  
+  .gdpr-buttons {
+    flex-direction: row; /* Garder les boutons sur une ligne */
+    justify-content: space-evenly; /* Répartir l'espace entre les boutons */
+    width: 100%;
+    gap: 10px;
+  }
+  
+  .gdpr-buttons button {
+    min-width: 110px; /* Largeur minimale pour les boutons */
+    padding: 10px 15px; /* Plus de padding pour une meilleure zone de toucher */
+    font-size: 0.95rem;
+  }
+  
+  html body .gdpr-banner .gdpr-content p a {
+    display: inline-block;
+    margin-top: 5px;
+  }
+}
+
+/* Écrans extrêmement petits - amélioration du layout */
+@media (max-width: 360px) {
+  .gdpr-buttons {
+    flex-direction: column; /* Empiler les boutons */
+    gap: 8px;
+  }
+  
+  .gdpr-buttons button {
+    width: 100%; /* Boutons pleine largeur */
+    margin: 0 auto;
+  }
+  
+  .gdpr-content p {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+}

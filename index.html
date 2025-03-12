@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Christophe Lecart - Web & Mobile Developer</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Remplacer responsive-darkmode.css par darkmode.css -->
     <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -13,19 +12,13 @@
         (function() {
             try {
                 emailjs.init("wCnIBsLz_IoHaoFDx");
-                // Suppression du log de succès
             } catch (e) {
-                // Suppression du log d'erreur
+                // Erreur silencieuse
             }
         })();
     </script>
-    <!-- Supprimer cette référence à responsive-darkmode.js -->
-    <!-- <script src="responsive-darkmode.js"></script> -->
     <script src="darkmode.js"></script>
     <script src="script.js"></script>
-    <!-- Ajout des fichiers CSS et JS pour le RGPD -->
-    <link rel="stylesheet" href="gdpr.css">
-    <script src="gdpr.js"></script>
 </head>
 <body class="homepage">
     <header>

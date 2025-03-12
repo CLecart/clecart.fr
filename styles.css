@@ -2996,3 +2996,42 @@ body.dark-mode .gdpr-banner {
 body.dark-mode .gdpr-content p {
   color: var(--text-dark);
 }
+
+/* Nouvelle section pour les liens dans Contact Information */
+.contact-text a {
+  color: var(--primary);
+  position: relative;
+  transition: var(--transition);
+}
+
+.contact-text a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: var(--transition);
+}
+
+.contact-text a:hover {
+  color: var(--primary-dark);
+}
+
+.contact-text a:hover::after {
+  width: 100%;
+}
+
+/* Support du mode sombre pour les liens de contact */
+body.dark-mode .contact-text a {
+  color: var(--primary);
+}
+
+body.dark-mode .contact-text a::after {
+  background: var(--primary);
+}
+
+body.dark-mode .contact-text a:hover {
+  color: var(--secondary);
+}

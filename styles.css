@@ -600,12 +600,16 @@ body.dark-mode #skills .skill-card:hover {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Réduction de la largeur minimale de 350px à 320px */
   gap: 40px;
   align-items: stretch; /* Ensure all cards stretch to same height */
+  justify-content: center; /* Centrer les cartes dans la grille */
 }
 
 .project-card {
+  max-width: 320px; /* Limiter la largeur maximale pour éviter les bandes noires */
+  width: 100%;
+  margin: 0 auto; /* Centrer les cartes dans leur conteneur */
   background: white;
   border-radius: 15px;
   overflow: hidden;

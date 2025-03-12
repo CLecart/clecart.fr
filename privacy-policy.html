@@ -19,10 +19,19 @@
             color: white;
         }
         
+        /* Ajouter un espace entre Christophe et Lecart */
+        .logo span:first-child {
+            margin-right: 8px; /* Espace entre Christophe et Lecart */
+        }
+        
         /* Sur petit écran, passer en colonne (deux lignes) - EXACTEMENT comme sur la page d'accueil */
         @media (max-width: 421px) {
             .logo {
                 flex-direction: column;
+            }
+            
+            .logo span:first-child {
+                margin-right: 0; /* Pas d'espace en mode colonne */
             }
         }
     </style>

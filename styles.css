@@ -820,6 +820,41 @@ body.dark-mode .project-btn:hover {
   color: #6c757d;
 }
 
+/* Project buttons container - pour organiser les boutons */
+.project-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrer horizontalement les boutons */
+  gap: 15px;
+  margin-top: auto; /* Conserver l'alignement en bas */
+  width: 100%; /* Prendre toute la largeur disponible */
+}
+
+/* GitHub button style - harmonisé avec le bouton View Details */
+.github-btn {
+  background: var(--gradient-1);
+  color: white;
+  width: auto;
+  height: 44px; /* Hauteur fixe identique à celle du bouton View Details */
+  padding: 0 20px; /* Ajuster le padding horizontal */
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+}
+
+/* S'assurer que les boutons de projet ont une hauteur uniforme */
+.project-btn {
+  height: 44px; /* Même hauteur que le bouton GitHub */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Contact Section */
 #contact {
   padding: 100px 0;

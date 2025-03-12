@@ -8,13 +8,30 @@
     <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="darkmode.js"></script>
+    <style>
+        /* Style pour le logo - exactement comme sur les autres pages */
+        .logo {
+            display: flex;
+            flex-direction: row; /* Par défaut sur une ligne */
+            line-height: 1;
+            font-size: 1.8rem; /* Taille de police identique aux autres pages */
+            font-weight: 700;
+            color: white;
+        }
+        
+        /* Sur petit écran, passer en colonne (deux lignes) - EXACTEMENT comme sur la page d'accueil */
+        @media (max-width: 421px) {
+            .logo {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container header-content">
             <a href="index.html" class="logo">
-                <span>Christophe</span>
-                <span>Lecart</span>
+                <span>Christophe</span><span>Lecart</span>
             </a>
             <div class="right-content">
                 <a href="index.html" class="back-btn">Back</a>

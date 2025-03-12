@@ -1602,6 +1602,8 @@ body.dark-mode #skills .section-header h2 {
   background-color: rgba(0, 0, 0, 0.9);
   overflow: auto;
   padding: 0; /* Supprimez le padding qui pourrait causer un décalage */
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content {
@@ -1615,147 +1617,20 @@ body.dark-mode #skills .section-header h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: none; /* Supprimer toute transition qui pourrait causer le déplacement */
+  animation: modalFadeIn 0.3s ease; /* Remplacer l'animation de zoom par un simple fade in */
 }
 
+/* Remplacer l'animation de zoom par un fade in plus simple */
+@keyframes modalFadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+/* Supprimer l'animation scale qui pourrait causer le problème */
 @keyframes zoom {
-  from {transform: scale(0.1)} 
-  to {transform: scale(1)}
-}
-
-.modal .close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Styles pour rendre l'image cliquable */
-.project-thumb {
-  cursor: pointer;
-  position: relative;
-}
-
-.project-thumb:hover::before {
-  display: none;
-  content: none;
-}
-
-/* Correction de l'alignement du formulaire de contact */
-.form-group {
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: var(--transition);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--primary);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
-}
-
-/* Styles ajoutés pour le formulaire en mode sombre */
-body.dark-mode .form-group input,
-body.dark-mode .form-group textarea {
-  background-color: #2a2a3a;
-  border-color: #444;
-  color: var(--text-dark);
-}
-
-body.dark-mode .form-group label {
-  color: var(--text-dark);
-}
-
-/* Ajustement des cartes de compétences si nécessaire */
-.skill-card p {
-  height: auto; /* Permettre au texte de s'étendre si nécessaire */
-  min-height: 60px; /* Garder une hauteur minimale */
-}
-
-/* Solution intégrée pour les cartes de compétences - ajoutez à la fin du fichier */
-
-/* Reset des styles problématiques */
-.skill-card {
-  height: 250px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-}
-
-.skill-card p {
-  height: auto;
-  max-height: 4.8em; /* Exactement 3-4 lignes */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 15px;
-  flex-grow: 0;
-}
-
-.skill-level {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  right: 25px;
-  height: 6px;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-/* Assurer que tous les traits ont la même apparence */
-.skill-card:last-child .skill-level,
-#skills .skill-card:last-child .skill-level,
-.skills-container .skill-card:nth-child(3) .skill-level {
-  position: absolute;
-  bottom: 25px;
-  height: 6px;
-}
-
-/* Amélioration de l'affichage des images */
-
-/* Correction de la taille des images dans la modal */
-.modal-content {
-  max-width: 90%; /* Étendre la largeur maximale */
-  max-height: 90vh; /* Maintenir une hauteur maximale par rapport à la fenêtre */
-  object-fit: contain; /* Conserver les proportions sans déformation */
-  margin: auto;
-  display: block;
-}
-
-/* Centrage amélioré de la modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 30px;
-  text-align: center;
-  overflow: auto;
-  align-items: center;
-  justify-content: center;
+  from {transform: translate(-50%, -50%) scale(0.1)}
+  to {transform: translate(-50%, -50%) scale(1)}
 }
 
 /* S'assurer que l'animation de zoom fonctionne bien */

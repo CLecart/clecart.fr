@@ -206,8 +206,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add event listeners to project images
   document.querySelectorAll(".project-thumb img").forEach((img) => {
     img.addEventListener("click", function () {
-      modal.style.display = "block";
-      expandedImg.src = this.src;
+      // Précharger l'image avant d'afficher la modal
+      const tempImg = new Image();
+      tempImg.onload = function () {
+        expandedImg.src = tempImg.src;
+        modal.style.display = "flex"; // Utiliser flex au lieu de block pour un meilleur centrage
+      };
+      tempImg.src = this.src;
     });
   });
 

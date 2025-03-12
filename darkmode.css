@@ -366,3 +366,64 @@ body:not(.homepage) .back-btn {
     font-size: 1.2rem; /* Réduire la taille du titre */
   }
 }
+
+/* Alignement vertical du bouton dark mode avec les liens de navigation */
+header .right-content .dark-mode-toggle {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Spécifiquement sur la page d'accueil, aligner avec les liens de navigation */
+.homepage header .right-content .dark-mode-toggle {
+  height: 36px;
+  align-self: center;
+}
+
+/* Cibler le bouton avec une spécificité plus élevée pour éviter les conflits */
+header .container .right-content .dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+/* S'assurer que le bouton est correctement positionné par rapport aux autres éléments */
+header nav + .dark-mode-toggle {
+  margin-left: 20px;
+}
+
+/* Aligner l'icône verticalement à l'intérieur du bouton */
+.dark-mode-toggle i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Assurons-nous que la hauteur est correcte sur les écrans mobiles également */
+@media (max-width: 768px) {
+  header .right-content .dark-mode-toggle {
+    height: 36px;
+    padding: 8px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  
+  /* Quand le menu est en mode hamburger, aligner avec le bouton hamburger */
+  header .right-content .nav-toggle + .dark-mode-toggle,
+  header .right-content .dark-mode-toggle + .nav-toggle {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+  }
+}

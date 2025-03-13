@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gdprChoice = localStorage.getItem("gdpr-choice");
     if (gdprChoice === "declined") {
       contactForm.innerHTML =
-        '<p class="gdpr-message">Le formulaire de contact est désactivé car vous avez refusé notre politique de confidentialité. Vous pouvez me contacter directement par email à <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+        '<p class="gdpr-message">The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
       return; // Arrêter l'exécution si RGPD refusé
     }
 
@@ -240,30 +240,38 @@ document.addEventListener("DOMContentLoaded", function () {
   // Vérifier si l'utilisateur a déjà fait un choix
   const gdprChoice = localStorage.getItem("gdpr-choice");
 
-  if (!gdprChoice) {
-    // Montrer la bannière si aucun choix n'a été fait
-    gdprBanner.style.display = "block";
+  // Masquer la bannière si un choix a déjà été fait
+  if (gdprChoice) {
+    if (gdprBanner) gdprBanner.style.display = "none";
+  } else {
+    // Montrer la bannière seulement si aucun choix n'a été fait
+    if (gdprBanner) gdprBanner.style.display = "block";
   }
 
-  acceptButton.addEventListener("click", function () {
-    localStorage.setItem("gdpr-choice", "accepted");
-    gdprBanner.style.display = "none";
-    // Activer le formulaire si nécessaire
-  });
+  // Gestion des événements de clic sur les boutons si les éléments existent
+  if (acceptButton) {
+    acceptButton.addEventListener("click", function () {
+      localStorage.setItem("gdpr-choice", "accepted");
+      if (gdprBanner) gdprBanner.style.display = "none";
+      // Aucune action supplémentaire nécessaire car le formulaire est activé par défaut
+    });
+  }
 
-  declineButton.addEventListener("click", function () {
-    localStorage.setItem("gdpr-choice", "declined");
-    gdprBanner.style.display = "none";
-    // Désactiver le formulaire si nécessaire
-    if (contactForm) {
-      contactForm.innerHTML =
-        '<p>The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
-    }
-  });
+  if (declineButton) {
+    declineButton.addEventListener("click", function () {
+      localStorage.setItem("gdpr-choice", "declined");
+      if (gdprBanner) gdprBanner.style.display = "none";
+      // Désactiver le formulaire si l'utilisateur décline
+      if (contactForm) {
+        contactForm.innerHTML =
+          '<p class="gdpr-message">The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+      }
+    });
+  }
 
-  // Vérifier le choix au chargement pour le formulaire
+  // Appliquer l'état du formulaire au chargement selon le choix GDPR
   if (gdprChoice === "declined" && contactForm) {
     contactForm.innerHTML =
-      '<p>The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+      '<p class="gdpr-message">The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
   }
 });

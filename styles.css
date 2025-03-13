@@ -153,6 +153,7 @@ nav ul li a {
   font-weight: 500;
   position: relative;
   padding: 5px 0;
+  display: inline-block;
 }
 
 nav ul li a.light-mode {
@@ -207,12 +208,12 @@ nav ul li a:hover::after {
 }
 
 /* Style pour le lien de téléchargement CV dans la navigation */
-.cv-link {
-  display: flex;
+nav ul li a.cv-link {
+  position: relative;
+  padding: 5px 0;
+  display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: white;
-  font-weight: 500;
 }
 
 .cv-link i {
@@ -1560,6 +1561,19 @@ body.dark-mode footer {
   
   body.dark-mode nav ul li a {
     color: var(--text-dark);
+  }
+
+  /* Alignement spécifique pour le lien CV dans le menu mobile */
+  nav ul li a.cv-link {
+    padding: 10px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  
+  /* S'assurer que l'icône reste bien alignée avec le texte */
+  nav ul li a.cv-link i {
+    margin-right: 5px;
   }
 }
 

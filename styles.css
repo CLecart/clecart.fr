@@ -206,6 +206,43 @@ nav ul li a:hover::after {
   width: 100%;
 }
 
+/* Style pour le lien de téléchargement CV dans la navigation */
+.cv-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  font-weight: 500;
+}
+
+.cv-link i {
+  font-size: 0.9rem;
+}
+
+/* Style spécial pour la surbrillance au survol */
+.cv-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cv-link:hover::after {
+  background: var(--accent);
+  width: 100%;
+}
+
+/* Support du mode sombre */
+body.dark-mode .cv-link {
+  color: var(--text-dark);
+}
+
+/* Responsive : alignement de l'icône sur mobile */
+@media (max-width: 768px) {
+  nav ul li .cv-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
 /* Hero Section - Ajustement de la position verticale */
 #hero {
   height: 100vh;
@@ -2909,4 +2946,41 @@ body.dark-mode .contact-text a::after {
 
 body.dark-mode .contact-text a:hover {
   color: var(--secondary);
+}
+
+/* Correctif minimal pour iPhone SE et problèmes de défilement horizontal */
+@media screen and (max-width: 380px) {
+  /* Force tout le contenu à respecter la largeur de l'écran */
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* S'assurer que les vidéos et images sont correctement dimensionnées */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Forcer les cartes de projet à rester dans les limites de l'écran */
+  .project-card {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Ajuster la grille des projets pour les petits écrans */
+  .projects-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  
+  /* Assurer que les marges des conteneurs sont gérables */
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+  }
 }

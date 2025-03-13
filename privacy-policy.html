@@ -34,6 +34,39 @@
                 margin-right: 0; /* Pas d'espace en mode colonne */
             }
         }
+        
+        /* Mise en évidence simple du lien EmailJS avec juste une couleur plus vive */
+        .description a[href*="emailjs.com"] {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* En mode sombre, assurer que la couleur est suffisamment visible */
+        body.dark-mode .description a[href*="emailjs.com"] {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Mise en évidence de tous les liens dans la page de politique de confidentialité */
+        .description a {
+            color: var(--primary);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .description a:hover {
+            color: var(--secondary);
+        }
+        
+        /* En mode sombre, assurer que tous les liens sont suffisamment visibles */
+        body.dark-mode .description a {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        body.dark-mode .description a:hover {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>

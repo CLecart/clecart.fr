@@ -113,12 +113,10 @@ nav ul li a.cv-link i {
   justify-content: center;
   height: 40px;
   width: 40px;
-  
-  /* Utilisation de la même transition que les autres boutons */
+  margin-left: 15px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* Animation spécifique au bouton mode sombre - sans conflit avec les animations des boutons */
 .dark-mode-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
@@ -129,24 +127,5 @@ nav ul li a.cv-link i {
 }
 
 .dark-mode-toggle:hover i {
-  transform: scale(1.2);
-}
-
-/* Styles spécifiques pour le bouton mode sombre uniquement dans l'en-tête */
-header .dark-mode-toggle {
-  margin-left: 15px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-header .dark-mode-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-5px);
-}
-
-header .dark-mode-toggle i {
-  transition: transform 0.3s ease;
-}
-
-header .dark-mode-toggle:hover i {
   transform: scale(1.2);
 }

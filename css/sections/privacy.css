@@ -1,33 +1,54 @@
 /* Styles pour la page de politique de confidentialité */
 
-/* Styles pour les liens de la page de confidentialité */
+/* Styles de base pour la description */
+.description {
+  max-width: 900px;
+  margin: 120px auto 30px;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  color: var(--text-color);
+}
+
+/* Style pour les titres de la description */
+.description h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.description h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+/* Style de base pour tous les liens de description */
 .description a {
-    color: var(--primary);
-    font-weight: 600;
-    transition: var(--transition);
+  color: var(--primary);
+  font-weight: 600;
+  transition: var(--transition);
 }
 
 .description a:hover {
-    color: var(--secondary);
+  color: var(--secondary);
 }
 
-/* Style spécifique pour les liens EmailJS */
-.description a[href*="emailjs.com"] {
-    color: var(--primary);
-    font-weight: 600;
-}
-
-/* Styles pour le mode sombre */
+/* Mode sombre - tous les liens */
 body.dark-mode .description a {
     color: var(--secondary);
-    font-weight: 600;
 }
 
 body.dark-mode .description a:hover {
     color: var(--primary);
 }
 
-body.dark-mode .description a[href*="emailjs.com"] {
-    color: var(--secondary);
-    font-weight: 600;
+/* Styles pour les listes */
+.description ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.description ul li {
+  margin-bottom: 10px;
 }

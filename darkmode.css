@@ -179,6 +179,27 @@ body.dark-mode .description {
   border-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Correction pour la page de politique de confidentialité */
+body.dark-mode .description {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode .description p,
+body.dark-mode .description li {
+  color: var(--text-dark);
+}
+
+body.dark-mode .description strong {
+  color: var(--text-dark);
+}
+
 /* Textes et titres */
 body.dark-mode a,
 body.dark-mode p,

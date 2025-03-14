@@ -1,8 +1,12 @@
-/* Architecture CSS modulaire - Fichier d'imports uniquement */
+/* Réorganisation des imports */
 
 /* Base */
-@import './css/base/variables.css';
+@import './css/base/variables.css'; /* Garder en premier pour les dépendances */
 @import './css/base/reset.css';
+
+/* Utils - déplacer avant les composants car ils peuvent être utilisés par eux */
+@import './css/utils/animations.css';
+@import './css/utils/responsive.css';
 
 /* Composants */
 @import './css/components/buttons.css';
@@ -19,11 +23,7 @@
 @import './css/sections/skills.css';
 @import './css/sections/projects.css';
 @import './css/sections/contact.css';
-@import './css/sections/privacy.css'; /* Ajout du fichier pour la politique de confidentialité */
+@import './css/sections/privacy.css';
 
-/* Utils */
-@import './css/utils/animations.css';
-@import './css/utils/responsive.css';
-
-/* Inclusion du mode sombre */
+/* Mode sombre - toujours en dernier pour écraser les styles si nécessaire */
 @import './darkmode.css';

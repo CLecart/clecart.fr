@@ -1,0 +1,33 @@
+/* Styles pour la page de politique de confidentialité */
+
+/* Styles pour les liens de la page de confidentialité */
+.description a {
+    color: var(--primary);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.description a:hover {
+    color: var(--secondary);
+}
+
+/* Style spécifique pour les liens EmailJS */
+.description a[href*="emailjs.com"] {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Styles pour le mode sombre */
+body.dark-mode .description a {
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+body.dark-mode .description a:hover {
+    color: var(--primary);
+}
+
+body.dark-mode .description a[href*="emailjs.com"] {
+    color: var(--secondary);
+    font-weight: 600;
+}

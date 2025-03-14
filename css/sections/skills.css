@@ -19,12 +19,13 @@
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
 }
 
 #skills .skill-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  border-color: rgba(108, 99, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(108, 99, 255, 0.2);
+  border-color: var(--primary);
 }
 
 #skills .skill-card p {
@@ -45,6 +46,12 @@
 #skills .skill-icon {
   font-size: 2.8rem;
   margin-bottom: 18px;
+  transition: transform 0.4s ease, color 0.4s ease;
+}
+
+#skills .skill-card:hover .skill-icon {
+  transform: scale(1.1);
+  color: var(--accent);
 }
 
 /* Support du mode sombre */
@@ -59,8 +66,8 @@ body.dark-mode #skills .skill-card {
 }
 
 body.dark-mode #skills .skill-card:hover {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
-  border-color: rgba(108, 99, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(108, 99, 255, 0.25);
+  border-color: var(--primary);
 }
 
 body.dark-mode #skills .section-header h2 {

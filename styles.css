@@ -1,4 +1,4 @@
-/* Architecture CSS modulaire */
+/* Architecture CSS modulaire - Fichier d'imports uniquement */
 
 /* Base */
 @import './css/base/variables.css';
@@ -19,6 +19,7 @@
 @import './css/sections/skills.css';
 @import './css/sections/projects.css';
 @import './css/sections/contact.css';
+@import './css/sections/privacy.css'; /* Ajout du fichier pour la politique de confidentialité */
 
 /* Utils */
 @import './css/utils/animations.css';

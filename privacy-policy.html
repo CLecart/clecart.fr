@@ -12,72 +12,9 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Scripts -->
     <script type="module" src="js/main.js"></script>
-    <script src="darkmode.js"></script>
-    <style>
-        /* Style pour le logo - exactement comme sur les autres pages */
-        .logo {
-            display: flex;
-            flex-direction: row; /* Par défaut sur une ligne */
-            line-height: 1;
-            font-size: 1.8rem; /* Taille de police identique aux autres pages */
-            font-weight: 700;
-            color: white;
-        }
-        
-        /* Ajouter un espace entre Christophe et Lecart */
-        .logo span:first-child {
-            margin-right: 8px; /* Espace entre Christophe et Lecart */
-        }
-        
-        /* Sur petit écran, passer en colonne (deux lignes) - EXACTEMENT comme sur la page d'accueil */
-        @media (max-width: 421px) {
-            .logo {
-                flex-direction: column;
-            }
-            
-            .logo span:first-child {
-                margin-right: 0; /* Pas d'espace en mode colonne */
-            }
-        }
-        
-        /* Mise en évidence simple du lien EmailJS avec juste une couleur plus vive */
-        .description a[href*="emailjs.com"] {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        /* En mode sombre, assurer que la couleur est suffisamment visible */
-        body.dark-mode .description a[href*="emailjs.com"] {
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        /* Mise en évidence de tous les liens dans la page de politique de confidentialité */
-        .description a {
-            color: var(--primary);
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        
-        .description a:hover {
-            color: var(--secondary);
-        }
-        
-        /* En mode sombre, assurer que tous les liens sont suffisamment visibles */
-        body.dark-mode .description a {
-            color: var(--secondary);
-            font-weight: 600;
-        }
-        
-        body.dark-mode .description a:hover {
-            color: var(--primary);
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -86,8 +23,10 @@
                 <span>Christophe</span><span>Lecart</span>
             </a>
             <div class="right-content">
-                <a href="index.html" class="back-btn">Back to Home</a>
-                <!-- Dark mode toggle will be inserted by JavaScript -->
+                <div class="header-buttons">
+                    <!-- Le bouton dark-mode-toggle sera inséré ici par JavaScript -->
+                    <a href="index.html" class="back-btn">Back</a>
+                </div>
             </div>
         </div>
     </header>

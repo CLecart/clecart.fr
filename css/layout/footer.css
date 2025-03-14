@@ -1,0 +1,35 @@
+/* Styles pour le pied de page */
+
+footer {
+  background: transparent;
+  padding: 5px 0;
+  color: var(--text-color);
+  text-align: center;
+  border-top: none;
+  box-shadow: none;
+  height: auto;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer .container {
+  text-align: center;
+}
+
+footer p {
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+footer a {
+  color: var(--primary);
+  transition: var(--transition);
+}
+
+footer a:hover {
+  color: var(--secondary);
+}

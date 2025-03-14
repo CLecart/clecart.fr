@@ -1,0 +1,289 @@
+/* Styles complets pour la section Projets */
+
+#projects {
+  padding: 100px 0;
+  background-color: #f9f9ff;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Cartes de projet */
+#projects .project-card {
+  min-height: 450px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Vignettes des projets */
+#projects .project-thumb {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#projects .project-thumb img,
+#projects .project-thumb video {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  background-color: #000;
+  transition: var(--transition);
+}
+
+#projects .project-thumb:hover img,
+#projects .project-thumb:hover video {
+  transform: scale(1.05);
+}
+
+/* Contenu des cartes projet */
+#projects .project-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 300px);
+}
+
+#projects .project-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+#projects .project-content p {
+  /* Solution cross-browser pour limiter le texte à 2 lignes */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  /* Propriété standard (en cours de standardisation) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  
+  /* Pour Firefox (ancien) */
+  display: -moz-box;
+  -moz-line-clamp: 2;
+  -moz-box-orient: vertical;
+  
+  /* Pour les anciens IE/Edge */
+  display: -ms-box;
+  -ms-line-clamp: 2;
+  -ms-box-orient: vertical;
+  
+  /* Propriété en cours de standardisation */
+  display: box;
+  line-clamp: 2;
+  box-orient: vertical;
+  
+  /* Fallback pour les navigateurs ne supportant pas line-clamp */
+  max-height: 3em; /* 2 lignes × 1.5 line-height */
+  height: 3em;
+  
+  margin-bottom: 15px;
+  color: #6c757d;
+}
+
+/* Boutons des projets */
+#projects .project-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: auto;
+  width: 100%;
+  padding-top: 10px;
+}
+
+#projects .project-btn {
+  background: var(--gradient-1);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 500;
+  display: inline-block;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+  text-decoration: none;
+  border: none;
+}
+
+#projects .project-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+  color: white;
+}
+
+/* Effets de survol */
+#projects .project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-color: rgba(108, 99, 255, 0.2);
+}
+
+/* Modal pour les images/vidéos */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90vh;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Page de description des projets */
+.description {
+  max-width: 900px;
+  margin: 120px auto 30px;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+.description h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.description h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.description ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.description ul li {
+  margin-bottom: 10px;
+}
+
+/* Navigation entre projets */
+.project-navigation {
+  margin-bottom: 30px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.project-navigation h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  padding: 8px 16px;
+  background: var(--gradient-1);
+  color: white;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Styles pour les animations de projets */
+.project {
+  display: none;
+  animation: fadeIn 0.5s;
+}
+
+.project.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Support du mode sombre */
+body.dark-mode #projects {
+  background-color: #14141e;
+}
+
+body.dark-mode #projects .project-card {
+  background-color: #2a2a42;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #projects .project-content p {
+  color: #d1d1d1;
+}
+
+body.dark-mode #projects .project-content h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode #projects .project-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  border-color: rgba(108, 99, 255, 0.3);
+}
+
+body.dark-mode .description {
+  background-color: var(--dark);
+  color: var(--text-dark);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary);
+}
+
+body.dark-mode .project-navigation {
+  border-bottom: 1px solid #333;
+}

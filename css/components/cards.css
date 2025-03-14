@@ -1,0 +1,209 @@
+/* Styles pour les différentes cartes du site */
+
+/* Cartes de compétence */
+.skill-card {
+  height: 310px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  color: var(--text-color);
+  overflow: visible;
+}
+
+.skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.skill-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: var(--primary);
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.skill-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 60px;
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+  height: auto;
+  max-height: none;
+}
+
+/* Cartes de projet */
+.project-card {
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 450px;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.project-thumb {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-thumb img,
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  transition: var(--transition);
+}
+
+.project-card:hover .project-thumb img,
+.project-card:hover .project-thumb video {
+  transform: scale(1.05);
+}
+
+.project-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.project-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.project-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  height: 3em;
+  margin-bottom: 15px;
+  color: var(--text-light);
+}
+
+.project-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Cartes de langue - Style harmonisé pour modes clair et sombre */
+.language-card {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 90px;
+  padding: 15px 10px;
+  margin: 0;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.2);
+  border-color: var(--primary);
+}
+
+.language-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.language-icon img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.language-card:hover .language-icon img {
+  transform: scale(1.15);
+}
+
+.language-card span {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-align: center;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Ajout des styles pour le mode sombre */
+body.dark-mode .language-card {
+  background-color: var(--card-dark);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .language-card span {
+  color: var(--text-dark);
+}
+
+body.dark-mode .language-card:hover {
+  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.25);
+  border-color: var(--primary);
+}
+
+/* Ajout d'un léger effet de luminosité aux icônes en mode sombre */
+body.dark-mode .language-icon img {
+  filter: brightness(1.1);
+}
+
+/* Effet de pulsation subtile sur le mode sombre et clair pour les icônes */
+@keyframes subtle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.language-card:hover .language-icon img {
+  animation: subtle-pulse 2s infinite ease-in-out;
+}

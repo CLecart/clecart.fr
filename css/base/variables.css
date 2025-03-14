@@ -1,0 +1,17 @@
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #5a52d9;
+  --secondary: #4ecdc4;
+  --accent: #ff6b6b;
+  --dark: #1a1a2e;
+  --darker: #14141e;
+  --card-dark: #2a2a42;
+  --text-color: #2d334a;
+  --text-light: #6c757d;
+  --text-dark: #f4f4f4;
+  --light: #f8f9fa;
+  --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
+  --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}

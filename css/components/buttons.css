@@ -1,23 +1,16 @@
 /* Styles pour les boutons */
 
-/* Variables de boutons communes */
-:root {
-  --btn-padding: 12px 28px;
-  --btn-radius: 50px;
-  --btn-font-weight: 500;
-  --btn-transition: all 0.3s ease;
-  --btn-shadow: var(--button-shadow);
-  --btn-shadow-hover: var(--button-shadow-hover);
-}
-
 /* Styles de base communs */
 .btn, 
 .project-btn,
 .github-btn,
 .back-btn,
-.dark-mode-toggle {
+.nav-btn {
+  background: var(--gradient-1);
+  color: var(--white);
   border-radius: var(--btn-radius);
   font-weight: var(--btn-font-weight);
+  box-shadow: var(--btn-shadow);
   border: none;
   outline: none;
   cursor: pointer;
@@ -27,21 +20,12 @@
   transition: var(--btn-transition);
 }
 
-/* Bouton standard et variations */
-.btn, 
-.project-btn,
-.github-btn,
-.back-btn {
-  background: var(--gradient-1);
-  color: var(--white);
-  box-shadow: var(--btn-shadow);
-}
-
-/* Effet hover unifié pour tous les boutons */
+/* Effet hover unifié */
 .btn:hover,
 .project-btn:hover,
 .github-btn:hover,
-.back-btn:hover {
+.back-btn:hover,
+.nav-btn:hover {
   transform: translateY(-5px);
   box-shadow: var(--btn-shadow-hover);
   color: var(--white);
@@ -51,7 +35,8 @@
 .btn:active,
 .project-btn:active,
 .github-btn:active,
-.back-btn:active {
+.back-btn:active,
+.nav-btn:active {
   transform: translateY(-2px);
 }
 
@@ -59,7 +44,8 @@
 .btn::before,
 .project-btn::before,
 .github-btn::before,
-.back-btn::before {
+.back-btn::before,
+.nav-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -73,7 +59,8 @@
 .btn:hover::before,
 .project-btn:hover::before,
 .github-btn:hover::before,
-.back-btn:hover::before {
+.back-btn:hover::before,
+.nav-btn:hover::before {
   left: 100%;
 }
 
@@ -86,16 +73,16 @@
 
 .btn-secondary {
   background: var(--gradient-2);
-  box-shadow: var(--button-secondary-shadow);
+  box-shadow: var(--btn-secondary-shadow);
 }
 
 .btn-secondary:hover {
-  box-shadow: var(--button-secondary-shadow-hover);
+  box-shadow: var(--btn-secondary-shadow-hover);
 }
 
 .project-btn {
   display: inline-block;
-  padding: 12px 28px;
+  padding: var(--btn-padding);
   font-size: 0.95rem;
 }
 
@@ -119,6 +106,14 @@
   z-index: 100;
 }
 
+.nav-btn {
+  padding: var(--btn-padding);
+  font-size: 0.95rem;
+  text-align: center;
+  min-width: 110px;
+  display: inline-block;
+}
+
 /* Positionnement spécifique */
 .description .back-btn {
   position: absolute;
@@ -133,7 +128,6 @@
   right: auto;
 }
 
-/* Corrections pour le bouton back sur les pages de détail */
 body:not(.homepage) .back-btn {
   position: absolute;
   top: 50%;
@@ -153,12 +147,6 @@ body:not(.homepage) .back-btn {
 }
 
 /* Adaptation responsive */
-@media (max-width: 768px) {
-  body:not(.homepage) .back-btn {
-    right: 15px;
-  }
-}
-
 @media (max-width: 576px) {
   body:not(.homepage) .back-btn {
     min-width: 65px;

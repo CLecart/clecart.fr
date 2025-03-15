@@ -1,80 +1,67 @@
 /**
- * Module pour gérer les modales d'images/vidéos
+ * Module pour gérer les modales
+ * Traite les ouvertures et fermetures des fenêtres modales
  */
 export function initModals() {
-  // Créer une modale si elle n'existe pas
-  let modal = document.querySelector('.modal');
-  
+  // Obtenir toutes les miniatures avec l'attribut title contenant "Click to enlarge"
+  const thumbnails = document.querySelectorAll(
+    '.project-thumb[title*="Click to enlarge"]'
+  );
+
+  // Créer la modale si elle n'existe pas déjà
+  let modal = document.querySelector(".modal");
+
   if (!modal) {
-    modal = document.createElement('div');
-    modal.className = 'modal';
+    modal = document.createElement("div");
+    modal.className = "modal";
     modal.innerHTML = `
       <span class="close">&times;</span>
       <img class="modal-content" id="modal-img">
-      <video class="modal-content" id="modal-video" controls></video>
     `;
     document.body.appendChild(modal);
   }
-  
-  const modalImg = document.getElementById('modal-img');
-  const modalVideo = document.getElementById('modal-video');
-  const closeBtn = modal.querySelector('.close');
-  
-  // Fonction pour fermer la modale
-  function closeModal() {
-    modal.style.display = 'none';
-    if (modalVideo) {
-      modalVideo.pause();
-    }
+
+  const modalImg =
+    document.getElementById("modal-img") ||
+    modal.querySelector(".modal-content");
+  const closeBtn = modal.querySelector(".close");
+
+  // Ajouter des événements aux miniatures
+  thumbnails.forEach((thumb) => {
+    thumb.style.cursor = "pointer";
+
+    thumb.addEventListener("click", function () {
+      const img = this.querySelector("img");
+      if (img) {
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        document.body.style.overflow = "hidden"; // Empêcher le défilement
+      }
+    });
+  });
+
+  // Fermer la modale lors du clic sur le bouton de fermeture
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeModal);
   }
-  
-  // Fermer la modale lors du clic sur le X
-  closeBtn.addEventListener('click', closeModal);
-  
-  // Fermer la modale lors du clic en dehors
-  window.addEventListener('click', (e) => {
+
+  // Fermer la modale lors du clic n'importe où sur la modale
+  modal.addEventListener("click", function (e) {
     if (e.target === modal) {
       closeModal();
     }
   });
-  
-  // Fermer la modale avec Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+
+  // Fermer la modale avec la touche Escape
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal.style.display === "block") {
       closeModal();
     }
   });
-  
-  // Ajouter événements aux images
-  document.querySelectorAll('.project-thumb img').forEach(img => {
-    img.style.cursor = 'pointer';
-    img.title = 'Click to enlarge';
-    
-    img.addEventListener('click', () => {
-      modalImg.src = img.src;
-      modalImg.style.display = 'block';
-      modalVideo.style.display = 'none';
-      modal.style.display = 'block';
-    });
-  });
-  
-  // Ajouter événements aux vidéos
-  document.querySelectorAll('.project-thumb video').forEach(video => {
-    video.style.cursor = 'pointer';
-    
-    // Ouvrir la modale au clic sur la vidéo
-    video.addEventListener('click', (e) => {
-      // Ne pas ouvrir la modale si on clique sur les contrôles
-      if (e.target.closest('video[controls]')) return;
-      
-      const source = video.querySelector('source');
-      if (source) {
-        modalVideo.src = source.src;
-        modalVideo.style.display = 'block';
-        modalImg.style.display = 'none';
-        modal.style.display = 'block';
-        modalVideo.play();
-      }
-    });
-  });
+
+  function closeModal() {
+    modal.style.display = "none";
+    document.body.style.overflow = ""; // Restaurer le défilement
+  }
 }

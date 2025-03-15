@@ -103,4 +103,37 @@ body.dark-mode #hero .hero-content {
   }
 }
 
+/* Optimisation pour éviter le flash noir lors des transitions de mode */
+.hero-content .btn,
+.hero-content .btn-secondary {
+  position: relative;
+  z-index: 5;
+}
+
+.hero-buttons {
+  background-color: transparent !important;
+  position: relative;
+  z-index: 5;
+}
+
+body.dark-mode .hero-buttons,
+body.dark-mode .hero-content .btn,
+body.dark-mode .hero-content .btn-secondary {
+  background-color: transparent !important;
+}
+
+body.dark-mode .hero-content .btn {
+  background-image: var(--gradient-1);
+}
+
+body.dark-mode .hero-content .btn-secondary {
+  background-image: var(--gradient-2);
+}
+
+/* Ajustement spécifique pour la transition du mode */
+body.theme-transitioning .hero-content * {
+  background-color: transparent !important;
+  transition: none !important;
+}
+
 /* Règles spécifiques au mode sombre déplacées dans darkmode.css */

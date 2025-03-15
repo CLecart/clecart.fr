@@ -26,6 +26,125 @@
   transform: translateX(0) translateY(0);
 }
 
+/* Exclusion des animations pour certains éléments en mode sombre/clair */
+.header-content .fade-in,
+.header-content .slide-left,
+.header-content .slide-right,
+.right-content .fade-in,
+.right-content .slide-left,
+.right-content .slide-right,
+.dark-mode-toggle.fade-in,
+.dark-mode-toggle.slide-left,
+.dark-mode-toggle.slide-right {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+  transition: none;
+}
+
+/* Classe pour désactiver les transitions pendant le changement de mode */
+.no-transition {
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+.no-transition::before,
+.no-transition::after {
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* Exclusion spécifique pour empêcher les effets indésirables */
+.hero-content .fade-in,
+#hero .fade-in,
+.hero-content .slide-left,
+.hero-content .slide-right {
+  background: transparent !important;
+}
+
+/* Correction spécifique pour le conteneur des boutons dans le hero */
+.hero-content .fade-in,
+.hero-buttons {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.hero-buttons a.btn,
+.hero-buttons a.btn-secondary {
+  /* Maintenir les styles du bouton sans rectangle autour */
+  position: relative;
+  z-index: 10;
+}
+
+body.dark-mode .hero-content .fade-in,
+body.dark-mode #hero .fade-in,
+body.dark-mode .hero-content .slide-left,
+body.dark-mode .hero-content .slide-right {
+  background: transparent !important;
+}
+
+/* Transition dark/light mode */
+body.dark-mode .hero-content .fade-in,
+body.dark-mode .hero-buttons,
+body.theme-transitioning .hero-content .fade-in,
+body.theme-transitioning .hero-buttons {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Classe principale pour désactiver les transitions pendant le changement de mode */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: none !important;
+}
+
+/* Empêcher tout fond noir pendant les transitions de thème */
+.theme-transitioning .hero-content .fade-in,
+.theme-transitioning .hero-content .slide-left,
+.theme-transitioning .hero-content .slide-right,
+.theme-transitioning .hero-content .btn,
+.theme-transitioning .hero-content .btn-secondary,
+.theme-transitioning #hero .fade-in,
+.theme-transitioning .hero-buttons {
+  background-color: transparent !important;
+  transition: none !important;
+}
+
+/* Styles spécifiques pour éviter le flash noir */
+.hero-content .fade-in,
+.hero-content .slide-left,
+.hero-content .slide-right,
+.hero-content .btn,
+.hero-content .btn-secondary {
+  position: relative;
+  z-index: 10;
+  background-color: transparent !important; /* Toujours transparent pour le conteneur */
+}
+
+.hero-content .btn,
+.hero-content .btn-secondary {
+  /* Les boutons eux-mêmes conservent leur style, mais sans flash noir */
+  position: relative;
+  z-index: 11;
+}
+
+/* Assurer que les dégradés des boutons sont proprement appliqués sans fond noir */
+.no-transition.btn,
+.no-transition.btn-secondary {
+  background-image: var(--gradient-1) !important;
+  background-color: transparent !important;
+}
+
+.no-transition.btn-secondary {
+  background-image: var(--gradient-2) !important;
+}
+
 /* Animation de progression pour les compétences */
 @keyframes skill-animation {
   to {

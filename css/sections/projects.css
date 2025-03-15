@@ -1,4 +1,4 @@
-/* Styles complets pour la section Projets */
+/* Styles pour la section Projets */
 
 #projects {
   padding: 100px 0;
@@ -13,41 +13,39 @@
   justify-content: center;
 }
 
-/* Cartes de projet */
+/* Cartes de projet - utilisation des variables globales */
 .project-card {
   max-width: 360px;
   width: 100%;
   margin: 0 auto;
   background-color: var(--white);
-  border-radius: 15px;
-  border: 1px solid var(--border-light);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: all 0.4s ease;
+  transition: var(--transition);
   display: flex;
   flex-direction: column;
-  height: 500px; /* Hauteur fixe pour uniformiser */
+  height: 500px;
 }
 
-/* Effets de survol */
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px var(--primary-light);
+  transform: var(--hover-y-offset);
+  box-shadow: var(--shadow-lg);
   border-color: var(--primary);
 }
 
-/* Vignette avec ratio 16:9 exact - définition UNIQUE */
+/* Vignette avec ratio 16:9 */
 .project-thumb {
   position: relative;
   width: 100%;
   height: 0;
-  padding-top: 56.25%; /* Ratio 16:9 exact */
+  padding-top: 56.25%;
   background-color: var(--black);
   overflow: hidden;
   cursor: pointer;
 }
 
-/* Styles communs pour les médias */
 .project-thumb img,
 .project-thumb video {
   position: absolute;
@@ -55,29 +53,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.4s ease;
-}
-
-/* Styles spécifiques pour les vidéos de format 1280×720 */
-.project-thumb video {
-  object-fit: cover; /* Changé de 'contain' à 'cover' pour remplir l'espace */
-}
-
-/* Style spécifique pour les images */
-.project-thumb img {
+  transition: var(--transition);
   object-fit: cover;
 }
 
-/* Animation au survol */
-.project-thumb:hover img,
-.project-thumb:hover video {
-  transform: scale(1.05);
+.project-card:hover .project-thumb img,
+.project-card:hover .project-thumb video {
+  transform: var(--hover-scale);
 }
 
 /* Contenu des cartes projet */
 .project-content {
   flex: 1;
-  padding: 20px;
+  padding: var(--card-padding);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -89,19 +77,16 @@
   color: var(--text-color);
 }
 
-/* Correction du style pour la limitation à 2 lignes de texte avec propriété standard */
 .project-content p {
-  /* Propriétés essentielles pour le line-clamp */
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Pour les navigateurs basés sur WebKit */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-clamp: 2; /* Propriété standard */
+  line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  
   margin-bottom: 15px;
   color: var(--text-light);
-  line-height: 1.5; /* Définir une hauteur de ligne cohérente */
+  line-height: 1.5;
 }
 
 /* Boutons des projets */
@@ -113,25 +98,6 @@
   margin-top: auto;
   width: 100%;
   padding-top: 10px;
-}
-
-#projects .project-btn {
-  background: var(--gradient-1);
-  color: var(--white);
-  padding: 12px 28px;
-  border-radius: 50px;
-  font-weight: 500;
-  display: inline-block;
-  transition: all 0.4s ease;
-  box-shadow: 0 4px 15px var(--primary-light);
-  text-decoration: none;
-  border: none;
-}
-
-#projects .project-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px var(--primary-opacity);
-  color: var(--white);
 }
 
 /* Modal pour les images/vidéos */
@@ -171,33 +137,14 @@
 /* Page de description des projets */
 .description {
   max-width: 900px;
-  margin: 30px auto 30px; /* Réduction de la marge top car nous avons la navigation */
+  margin: 30px auto;
   background: var(--white);
   padding: 30px 40px;
-  border-radius: 15px;
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow);
   position: relative;
-  transition: all 0.3s ease;
-  display: block; /* S'assurer que le contenu est visible */
-}
-
-@media (max-width: 768px) {
-  .description {
-    margin-top: 80px;
-    padding: 25px 20px;
-  }
-  
-  .back-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-  }
-  
-  .header-content .back-btn {
-    position: relative;
-    top: auto;
-    right: auto;
-  }
+  transition: var(--transition);
+  display: block;
 }
 
 .description h2 {
@@ -220,9 +167,9 @@
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets - styles améliorés */
+/* Navigation entre projets */
 .project-navigation {
-  margin-top: 100px; /* Augmentation de la marge supérieure pour éviter le chevauchement avec le header */
+  margin-top: 80px;
   margin-bottom: 30px;
   padding: 15px 0;
   border-bottom: 1px solid var(--light-gray);
@@ -230,6 +177,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
+  position: relative;
 }
 
 .project-navigation h1 {
@@ -239,58 +187,23 @@
   color: var(--primary);
 }
 
-/* Boutons de navigation - amélioration de l'alignement */
+/* Boutons de navigation */
 .nav-buttons {
   display: flex;
   gap: 10px;
   margin-top: 10px;
-  flex-wrap: wrap; /* Permettre au boutons de s'adapter sur les petits écrans */
-  justify-content: center; /* Centrer les boutons quand ils sont sur une ligne */
+  flex-wrap: wrap;
+  justify-content: flex-end; /* Changé de flex-start à flex-end pour aligner à droite */
+  padding-right: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 15px;
 }
 
-.nav-btn {
-  padding: 10px 16px; /* Padding plus cohérent */
-  background: var(--gradient-1);
-  color: var(--white);
-  border-radius: 50px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center; /* Assurer que le texte est centré */
-  min-width: 110px; /* Largeur minimale pour uniformité */
-  display: inline-block; /* Pour garantir des dimensions cohérentes */
-}
-
-/* Style pour les projets */
-.project {
-  display: none; /* Masquer par défaut */
-}
-
-/* Transition fluide pour les changements */
-.project {
-  animation: fadeIn 0.4s ease forwards;
-}
-
-@media (max-width: 768px) {
-  .project-navigation {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .nav-buttons {
-    margin-top: 15px;
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* Styles pour les animations de projets */
+/* Animations des projets */
 .project {
   display: none;
-  animation: fadeIn 0.5s;
+  animation: var(--fade-in-animation);
 }
 
 .project.active {
@@ -298,19 +211,14 @@
   opacity: 1;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Support du mode sombre */
+/* Mode sombre */
 body.dark-mode #projects {
   background-color: var(--darker);
 }
 
 body.dark-mode #projects .project-card {
   background-color: var(--card-dark);
-  border: 1px solid var(--border-dark);
+  border-color: var(--border-dark);
   box-shadow: var(--shadow-dark);
 }
 
@@ -323,14 +231,14 @@ body.dark-mode #projects .project-content h3 {
 }
 
 body.dark-mode #projects .project-card:hover {
-  box-shadow: 0 15px 35px var(--primary-light);
+  box-shadow: var(--btn-shadow-hover);
   border-color: var(--primary);
 }
 
 body.dark-mode .description {
   background-color: var(--dark);
   color: var(--text-dark);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-dark);
 }
 
 body.dark-mode .description h2,
@@ -340,4 +248,28 @@ body.dark-mode .description h3 {
 
 body.dark-mode .project-navigation {
   border-bottom: 1px solid var(--form-border-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .description {
+    margin-top: 80px;
+    padding: 25px 20px;
+  }
+  
+  .project-navigation {
+    flex-direction: column;
+    align-items: flex-end; /* Changé de flex-start à flex-end pour aligner à droite */
+    text-align: right; /* Changé de left à right */
+    padding: 10px 0;
+    position: relative;
+  }
+  
+  .nav-buttons {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: flex-end; /* Changé de flex-start à flex-end */
+    padding-right: 15px;
+    position: static;
+  }
 }

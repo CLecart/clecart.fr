@@ -11,12 +11,21 @@ import { initModals } from "./utils/modal.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialisation du mode sombre en premier pour éviter le flash
   initDarkMode();
+
+  // Initialisation des modules d'interface
   initAnimations();
   initTypewriter();
   initNavigation();
+
+  // Initialisation des fonctionnalités interactives
   initContactForm();
   initGDPRBanner();
   initModals();
-  initProjectNavigation();
+
+  // Navigation spécifique aux projets (si applicable)
+  if (document.querySelector(".project-navigation")) {
+    initProjectNavigation();
+  }
 });

@@ -8,6 +8,7 @@
  * - 360px: Mobile très petit
  */
 
+/* Tablette large / Petits écrans */
 @media (max-width: 992px) {
   .about-content {
     grid-template-columns: 1fr;
@@ -23,8 +24,9 @@
   }
 }
 
+/* Tablette portrait / Mobile large */
 @media (max-width: 768px) {
-  /* Menu hamburger */
+  /* Navigation */
   .nav-toggle {
     display: block;
     color: var(--white);
@@ -61,21 +63,16 @@
   /* Liens du menu */
   nav ul li a {
     color: var(--text-color);
-    display: inline-block;
     padding: 10px;
     font-weight: 600;
-    width: auto;
-    box-sizing: border-box;
     position: relative;
-    text-decoration: none;
   }
   
   nav ul li a:hover {
-    background-color: transparent;
     color: var(--primary);
   }
   
-  /* Effet de surbrillance limité au texte */
+  /* Effet de surbrillance */
   nav ul li a::before {
     content: '';
     position: absolute;
@@ -91,46 +88,7 @@
   nav ul li a:hover::before {
     width: 100%;
   }
-  
-  /* Lien CV */
-  nav ul li a.cv-link {
-    padding: 10px;
-    display: inline-flex;
-    align-items: center;
-    width: auto;
-    text-decoration: none;
-  }
-  
-  nav ul li a.cv-link::after {
-    width: 0;
-    bottom: 0;
-  }
-  
-  nav ul li a.cv-link:hover::after {
-    width: 100%;
-  }
-  
-  nav ul li a.cv-link i {
-    margin-right: 5px;
-  }
-  
-  /* Mode sombre */
-  body.dark-mode nav ul {
-    background-color: var(--card-dark);
-  }
-  
-  body.dark-mode nav ul li a {
-    color: var(--text-dark);
-  }
-  
-  body.dark-mode nav ul li a:hover {
-    color: var(--primary);
-  }
-  
-  body.dark-mode nav ul li a::before {
-    background-color: var(--primary-dark);
-  }
-  
+
   /* Typographie responsive */
   h1 {
     font-size: 2.5rem;
@@ -163,8 +121,32 @@
   .gdpr-content p {
     margin-bottom: 15px;
   }
+
+  /* Garantir que header-content et right-content restent propres */
+  .header-content,
+  .right-content {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Alignement des boutons de navigation */
+  .project-navigation {
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    padding: 10px 0;
+  }
+  
+  .nav-buttons {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: flex-end;
+    padding-right: 15px;
+  }
 }
 
+/* Mobile moyen */
 @media (max-width: 576px) {
   .container {
     width: 95%;
@@ -186,6 +168,7 @@
   }
 }
 
+/* Mobile petit */
 @media (max-width: 480px) {
   .gdpr-buttons button {
     min-width: 110px;
@@ -194,6 +177,7 @@
   }
 }
 
+/* Mobile très petit */
 @media (max-width: 360px) {
   .gdpr-buttons {
     flex-direction: column;
@@ -212,11 +196,6 @@
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
-  }
-  
-  img, video {
-    max-width: 100%;
-    height: auto;
   }
   
   .project-card {

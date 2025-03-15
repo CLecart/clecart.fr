@@ -7,6 +7,15 @@ export function initContactForm() {
 
   if (!contactForm) return;
 
+  // Nettoyer les styles inline des éléments du formulaire
+  contactForm
+    .querySelectorAll("input, textarea, label, .form-group")
+    .forEach((el) => {
+      el.removeAttribute("style");
+      el.classList.remove("form-control");
+    });
+
+  // Vérifier le consentement GDPR
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     contactForm.innerHTML =
@@ -42,14 +51,14 @@ export function initContactForm() {
     if (typeof emailjs !== "undefined") {
       emailjs
         .send("service_lokewrs", "template_2ov9l9i", templateParams)
-        .then(function (response) {
+        .then(function () {
           if (formStatus) {
             formStatus.textContent = "Message sent successfully!";
             formStatus.className = "form-status success";
           }
           contactForm.reset();
         })
-        .catch(function (error) {
+        .catch(function () {
           if (formStatus) {
             formStatus.innerHTML =
               'Error sending message. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>';

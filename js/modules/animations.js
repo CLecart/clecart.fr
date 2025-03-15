@@ -1,57 +1,100 @@
 /**
- * Module pour gérer les animations
+ * Module pour les animations
+ * Inclut les effets d'apparition au scroll et l'effet machine à écrire
+ */
+
+/**
+ * Initialise les animations d'apparition au défilement
  */
 export function initAnimations() {
-  // Animation basée sur le défilement
-  const elements = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
-  
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.1,
+  };
+
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('appear');
+        entry.target.classList.add("appear");
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-  
-  elements.forEach(element => {
+  }, observerOptions);
+
+  const animatedElements = document.querySelectorAll(
+    ".fade-in, .slide-left, .slide-right"
+  );
+  animatedElements.forEach((element) => {
     observer.observe(element);
+  });
+
+  // Observer les barres de compétences
+  const skillLevels = document.querySelectorAll(".skill-level");
+  const skillObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const level = entry.target.dataset.level;
+          entry.target.style.setProperty("--skill-level", `${level}%`);
+          entry.target.style.transform = "scaleX(1)";
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  skillLevels.forEach((skill) => {
+    skill.style.transform = "scaleX(0)";
+    skill.style.transformOrigin = "left";
+    skill.style.transition = "transform 1.5s ease";
+    skillObserver.observe(skill);
   });
 }
 
-// Animation de la machine à écrire
+/**
+ * Initialise l'effet machine à écrire
+ */
 export function initTypewriter() {
-  const typewriterElement = document.getElementById('typewriter');
+  const typewriterElement = document.getElementById("typewriter");
   if (!typewriterElement) return;
-  
-  const roles = ['Web Developer', 'Mobile Developer', 'UI/UX Designer'];
-  let roleIndex = 0;
+
+  const words = [
+    "Web Developer",
+    "Mobile Developer",
+    "UI Designer",
+    "Problem Solver",
+  ];
+  let wordIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
-  let typingSpeed = 100;
-  
+  let typeSpeed = 100;
+
   function type() {
-    const currentRole = roles[roleIndex];
-    
+    const currentWord = words[wordIndex];
+
     if (isDeleting) {
-      typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
+      typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
       charIndex--;
-      typingSpeed = 50;
+      typeSpeed = 50;
     } else {
-      typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
+      typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
       charIndex++;
-      typingSpeed = 100;
+      typeSpeed = 100;
     }
-    
-    if (!isDeleting && charIndex === currentRole.length) {
+
+    if (!isDeleting && charIndex === currentWord.length) {
       isDeleting = true;
-      typingSpeed = 1000; // Pause avant effacement
+      typeSpeed = 1000; // Pause before deleting
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
+      wordIndex = (wordIndex + 1) % words.length;
+      typeSpeed = 500; // Pause before typing new word
     }
-    
-    setTimeout(type, typingSpeed);
+
+    setTimeout(type, typeSpeed);
   }
-  
+
   setTimeout(type, 1000);
 }

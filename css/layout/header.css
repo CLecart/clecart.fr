@@ -19,6 +19,10 @@ header.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .logo {
@@ -40,12 +44,25 @@ header.scrolled {
 .right-content {
   display: flex;
   align-items: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-/* Navigation */
+/* Navigation - suppression du fond rectangulaire */
+nav {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 nav ul {
   display: flex;
   gap: 2rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
 nav ul li a {
@@ -54,18 +71,18 @@ nav ul li a {
   position: relative;
   padding: 5px 0;
   display: inline-block;
-  transition: all 0.3s ease;
+  transition: var(--transition);
 }
 
 nav ul li a:hover {
   color: var(--white-opacity-80);
 }
 
-/* Amélioration de l'effet de soulignement - plus proche du texte */
+/* Effet de soulignement */
 nav ul li a::after {
   content: '';
   position: absolute;
-  bottom: 0;  /* Était -2px, maintenant 0 pour être plus proche du texte */
+  bottom: 0;
   left: 0;
   width: 0;
   height: 2px;
@@ -99,9 +116,8 @@ nav ul li a.cv-link i {
   z-index: 1005;
 }
 
-/* Correction pour l'affichage de l'icône hamburger */
 .nav-toggle i {
-  display: block !important;
+  display: block;
   font-size: 1.5rem;
   line-height: 1;
   width: 1.5rem;
@@ -138,24 +154,22 @@ nav ul li a.cv-link i {
     visibility: visible;
   }
   
-  /* Correction des liens du menu burger */
+  /* Styles des liens du menu burger */
   nav ul li a {
-    color: var(--text-color) !important;
-    display: inline-block; /* Changé de block à inline-block pour limiter la largeur au texte */
+    color: var(--text-color);
+    display: inline-block;
     padding: 10px;
     font-weight: 600;
-    width: auto; /* Changé de 100% à auto pour s'adapter à la taille du texte */
+    width: auto;
     text-align: left;
     position: relative;
   }
   
-  /* Surbrillance limitée à la longueur du texte */
   nav ul li a:hover {
     background-color: transparent;
-    color: var(--primary) !important;
+    color: var(--primary);
   }
   
-  /* Effet de surbrillance bleue limitée à la largeur du texte */
   nav ul li a::before {
     content: '';
     position: absolute;
@@ -166,35 +180,24 @@ nav ul li a.cv-link i {
     background-color: var(--primary-light);
     transition: width 0.3s ease;
     z-index: -1;
-    display: inline-block; /* S'assurer que l'élément est de type inline */
+    display: inline-block;
   }
   
-  /* Au survol, la surbrillance s'étend uniquement à la largeur du contenu */
   nav ul li a:hover::before {
     width: 100%;
   }
   
-  /* Correction des couleurs de lien en mode clair */
-  nav ul li a {
-    color: var(--text-color) !important;
-    display: block;
-    padding: 10px;
-    font-weight: 600;
-    width: 100%;
-  }
-  
-  nav ul li a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary) !important;
-  }
-  
-  /* Style pour les liens dans le menu dark mode */
+  /* Mode sombre */
   body.dark-mode nav ul li a {
-    color: var(--text-dark) !important;
+    color: var(--text-dark);
   }
   
   body.dark-mode nav ul li a:hover {
+    color: var(--primary);
+    background-color: transparent;
+  }
+  
+  body.dark-mode nav ul li a::before {
     background-color: var(--primary-dark);
-    color: var(--white) !important;
   }
 }

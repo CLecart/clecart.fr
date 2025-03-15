@@ -6,22 +6,46 @@ body.dark-mode {
   color: var(--text-dark);
 }
 
+/* Classes utilitaires pour empêcher les transitions lors du changement de thème */
+.no-transition {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
 /* Header et navigation */
 body.dark-mode header {
   background: var(--gradient-dark);
 }
 
-body.dark-mode nav ul {
-  background: var(--dark);
+/* Header content et right-content transparents en mode sombre */
+body.dark-mode header .header-content,
+body.dark-mode header .right-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Navigation transparente en mode sombre */
+body.dark-mode nav,
+body.dark-mode nav ul:not(.active) {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Seulement le menu mobile a un fond en mode sombre */
+@media (max-width: 768px) {
+  body.dark-mode nav ul.active {
+    background-color: var(--card-dark);
+  }
 }
 
 /* Sections et conteneurs */
 body.dark-mode #hero,
 body.dark-mode #about,
-body.dark-mode #languages,
-body.dark-mode section,
-body.dark-mode div,
-body.dark-mode article {
+body.dark-mode #languages {
   background-color: var(--dark);
 }
 
@@ -85,6 +109,4 @@ body.dark-mode footer p {
   background: transparent;
   color: var(--white);
   opacity: 0.9;
-  border: none;
-  box-shadow: none;
 }

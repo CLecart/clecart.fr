@@ -69,6 +69,7 @@
   --btn-padding: 12px 28px;
   --btn-radius: 50px;
   --btn-font-weight: 500;
+  --btn-transition: all 0.4s ease;
   --btn-shadow: 0 4px 15px var(--primary-light);
   --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
   --btn-secondary-shadow: 0 4px 15px var(--accent-light);
@@ -95,6 +96,9 @@
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
+  --skill-progress-animation: skill-animation 1.5s ease forwards;
+  --fade-in-animation: fadeIn 0.5s ease forwards;
+  --modal-animation: modalFadeIn 0.3s ease-in-out;
   
   /* États de formulaire */
   --status-success-bg: rgba(76, 175, 80, 0.15);

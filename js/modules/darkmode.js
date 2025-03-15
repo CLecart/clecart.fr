@@ -1,6 +1,5 @@
 /**
  * Module de gestion du mode sombre
- * Configure le basculement entre thèmes clair et sombre
  */
 export function initDarkMode() {
   const body = document.body;
@@ -18,34 +17,73 @@ export function initDarkMode() {
 
   // Fonction pour appliquer le mode sombre
   function applyDarkMode() {
+    // Désactivation des transitions
+    document.body.classList.add("theme-transitioning");
+
+    // Cibler les éléments problématiques
+    document
+      .querySelectorAll(
+        ".hero-content *, .fade-in, .slide-left, .slide-right, .btn, .btn-secondary, .contact-method, .form-group input, .form-group textarea, .contact-info, .contact-form"
+      )
+      .forEach((el) => {
+        el.classList.add("no-transition");
+        el.style.backgroundColor = "transparent";
+      });
+
     body.classList.add("dark-mode");
     darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     localStorage.setItem("dark-mode", "enabled");
+
+    // Réactiver les animations après le changement
+    setTimeout(() => {
+      document.querySelectorAll(".no-transition").forEach((el) => {
+        el.classList.remove("no-transition");
+        el.style.backgroundColor = "";
+      });
+      document.body.classList.remove("theme-transitioning");
+    }, 150);
   }
 
   // Fonction pour appliquer le mode clair
   function applyLightMode() {
+    // Désactivation des transitions
+    document.body.classList.add("theme-transitioning");
+
+    // Cibler les éléments problématiques
+    document
+      .querySelectorAll(
+        ".hero-content *, .fade-in, .slide-left, .slide-right, .btn, .btn-secondary, .contact-method, .form-group input, .form-group textarea, .contact-info, .contact-form"
+      )
+      .forEach((el) => {
+        el.classList.add("no-transition");
+        el.style.backgroundColor = "transparent";
+      });
+
     body.classList.remove("dark-mode");
     darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
     localStorage.setItem("dark-mode", "disabled");
+
+    // Réactiver les animations après le changement
+    setTimeout(() => {
+      document.querySelectorAll(".no-transition").forEach((el) => {
+        el.classList.remove("no-transition");
+        el.style.backgroundColor = "";
+      });
+      document.body.classList.remove("theme-transitioning");
+    }, 150);
   }
 
   // Vérifier les préférences utilisateur
   const darkModePreference = localStorage.getItem("dark-mode");
-  const prefersDarkMode = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
 
-  // Définir le mode sombre par défaut
-  if (darkModePreference === null) {
+  // Définir le mode par défaut
+  if (darkModePreference === "enabled") {
+    applyDarkMode();
+  } else if (darkModePreference === "disabled") {
+    applyLightMode();
+  } else {
     // Si aucune préférence n'est enregistrée, utiliser le mode sombre par défaut
     applyDarkMode();
-  } else if (darkModePreference === "enabled") {
-    // Si le mode sombre était activé précédemment
-    applyDarkMode();
-  } else {
-    // Si le mode sombre était désactivé précédemment
-    applyLightMode();
   }
 
   // Ajouter l'événement de basculement

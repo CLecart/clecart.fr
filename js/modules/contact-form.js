@@ -4,10 +4,22 @@
 export function initContactForm() {
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("form-status");
+  const contactFormContainer = document.querySelector(".contact-form");
 
   if (!contactForm) return;
 
-  // Nettoyer les styles inline des éléments du formulaire
+  // Initialisation des styles du formulaire de contact
+  if (contactFormContainer) {
+    contactFormContainer.removeAttribute("style");
+
+    if (document.body.classList.contains("dark-mode")) {
+      contactFormContainer.style.backgroundColor = "var(--card-dark)";
+    } else {
+      contactFormContainer.style.backgroundColor = "var(--white)";
+    }
+  }
+
+  // Normalisation des éléments du formulaire
   contactForm
     .querySelectorAll("input, textarea, label, .form-group")
     .forEach((el) => {
@@ -15,7 +27,7 @@ export function initContactForm() {
       el.classList.remove("form-control");
     });
 
-  // Vérifier le consentement GDPR
+  // Vérification du consentement GDPR
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     contactForm.innerHTML =

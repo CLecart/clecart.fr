@@ -82,6 +82,8 @@
   --input-focus-shadow: 0 5px 15px var(--primary-light);
   --input-bg: var(--white);
   --input-color: var(--text-color);
+  --input-focus-bg: rgba(240, 240, 240, 0.2);
+  --input-focus-bg-dark: rgba(60, 60, 80, 0.3);
   
   /* Cartes */
   --card-padding: 25px;

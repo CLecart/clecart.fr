@@ -29,7 +29,9 @@ export function initAnimations() {
     observer.observe(element);
   });
 
-  // Observer les barres de compétences
+  // Les barres de compétences sont masquées via CSS, cette partie est désactivée
+  // mais conservée en commentaire pour référence future
+  /*
   const skillLevels = document.querySelectorAll(".skill-level");
   const skillObserver = new IntersectionObserver(
     (entries, observer) => {
@@ -51,6 +53,7 @@ export function initAnimations() {
     skill.style.transition = "transform 1.5s ease";
     skillObserver.observe(skill);
   });
+  */
 }
 
 /**

@@ -17,10 +17,10 @@ export function initDarkMode() {
 
   // Fonction pour appliquer le mode sombre
   function applyDarkMode() {
-    // Désactivation des transitions
+    // Désactivation temporaire des transitions pour éviter les effets visuels
     document.body.classList.add("theme-transitioning");
 
-    // Cibler les éléments problématiques
+    // Préparation des éléments sensibles aux changements de thème
     document
       .querySelectorAll(
         ".hero-content *, .fade-in, .slide-left, .slide-right, .btn, .btn-secondary, .contact-method, .form-group input, .form-group textarea, .contact-info, .contact-form"
@@ -34,7 +34,14 @@ export function initDarkMode() {
     darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     localStorage.setItem("dark-mode", "enabled");
 
-    // Réactiver les animations après le changement
+    // Harmonisation des couleurs entre cartes de contact
+    const contactInfo = document.querySelector(".contact-info");
+    const contactForm = document.querySelector(".contact-form");
+
+    if (contactInfo) contactInfo.style.backgroundColor = "var(--card-dark)";
+    if (contactForm) contactForm.style.backgroundColor = "var(--card-dark)";
+
+    // Réactivation des animations
     setTimeout(() => {
       document.querySelectorAll(".no-transition").forEach((el) => {
         el.classList.remove("no-transition");
@@ -44,12 +51,12 @@ export function initDarkMode() {
     }, 150);
   }
 
-  // Fonction pour appliquer le mode clair
+  // Fonction pour appliquer le mode clair (similaire au mode sombre)
   function applyLightMode() {
-    // Désactivation des transitions
+    // Désactivation temporaire des transitions pour éviter les effets visuels
     document.body.classList.add("theme-transitioning");
 
-    // Cibler les éléments problématiques
+    // Préparation des éléments sensibles aux changements de thème
     document
       .querySelectorAll(
         ".hero-content *, .fade-in, .slide-left, .slide-right, .btn, .btn-secondary, .contact-method, .form-group input, .form-group textarea, .contact-info, .contact-form"
@@ -63,7 +70,14 @@ export function initDarkMode() {
     darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
     localStorage.setItem("dark-mode", "disabled");
 
-    // Réactiver les animations après le changement
+    // Harmonisation des couleurs entre cartes de contact
+    const contactInfo = document.querySelector(".contact-info");
+    const contactForm = document.querySelector(".contact-form");
+
+    if (contactInfo) contactInfo.style.backgroundColor = "var(--white)";
+    if (contactForm) contactForm.style.backgroundColor = "var(--white)";
+
+    // Réactivation des animations
     setTimeout(() => {
       document.querySelectorAll(".no-transition").forEach((el) => {
         el.classList.remove("no-transition");

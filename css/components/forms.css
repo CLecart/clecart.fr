@@ -16,7 +16,7 @@
   background: transparent;
 }
 
-/* Champs de formulaire */
+/* Champs de formulaire - état par défaut */
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -27,37 +27,40 @@
   font-size: 1rem;
   transition: var(--transition);
   color: var(--input-color);
-  background-color: transparent !important;
+  background-color: transparent;
   background-clip: padding-box;
   box-shadow: none;
   appearance: none;
 }
 
+/* Styles pour les champs avec focus */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
   outline: none;
   box-shadow: var(--input-focus-shadow);
-  background-color: transparent !important;
+  background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
   transform: var(--hover-y-tiny);
 }
 
-/* Intégration avec l'animation des cartes */
-.contact-form:hover .form-group input,
-.contact-form:hover .form-group textarea {
-  border-color: var(--primary-light);
+/* Styles pour les champs qui ont du contenu */
+.form-group input:not(:placeholder-shown),
+.form-group textarea:not(:placeholder-shown) {
+  border-color: var(--primary);
+  background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
 }
 
+/* Intégration avec l'animation des cartes */
 .contact-form:hover .form-group input:focus,
 .contact-form:hover .form-group textarea:focus {
   border-color: var(--primary);
   box-shadow: var(--input-focus-shadow);
 }
 
-/* Suppression des inline styles via JavaScript */
-.contact-form,
-.contact-form * {
-  background-color: transparent !important;
+/* Optimisation des styles du formulaire de contact */
+body .contact-form,
+body .contact-form * {
+  background-color: transparent;
 }
 
 /* Mode sombre */
@@ -67,15 +70,17 @@ body.dark-mode .form-group label {
 
 body.dark-mode .form-group input,
 body.dark-mode .form-group textarea {
-  background-color: transparent !important;
+  background-color: transparent;
   border-color: var(--form-border-dark);
   color: var(--text-dark);
 }
 
 body.dark-mode .form-group input:focus,
-body.dark-mode .form-group textarea:focus {
+body.dark-mode .form-group textarea:focus,
+body.dark-mode .form-group input:not(:placeholder-shown),
+body.dark-mode .form-group textarea:not(:placeholder-shown) {
   box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
-  background-color: transparent !important;
+  background-color: var(--input-focus-bg-dark, rgba(60, 60, 80, 0.3));
   border-color: var(--primary);
 }
 

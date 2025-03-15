@@ -56,29 +56,9 @@
   color: var(--accent);
 }
 
-/* Niveau de compétence */
+/* Masquer les barres de niveau de compétence */
 .skill-level {
-  width: 100%;
-  height: 8px;
-  background-color: var(--light-gray);
-  border-radius: 4px;
-  margin-top: auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.skill-level::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: var(--skill-level, 0%);
-  background: var(--gradient-1);
-  border-radius: 4px;
-  transition: transform 1.5s ease;
-  transform-origin: left;
-  transform: scaleX(0);
+  display: none;
 }
 
 /* Mode sombre */
@@ -98,8 +78,4 @@ body.dark-mode #skills .skill-card p {
 
 body.dark-mode #skills .skill-name {
   color: var(--text-dark);
-}
-
-body.dark-mode #skills .skill-level {
-  background-color: var(--form-bg-dark);
 }

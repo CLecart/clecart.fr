@@ -6,18 +6,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 25px;
+  padding: var(--card-padding);
   background: var(--white);
-  border-radius: 15px;
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: var(--transition);
   color: var(--text-color);
   overflow: visible;
 }
 
 .skill-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-lg); /* Remplacé la valeur codée en dur */
+  transform: var(--hover-y-offset);
+  box-shadow: var(--shadow-lg);
 }
 
 .skill-icon {
@@ -145,7 +145,7 @@
 }
 
 .language-card:hover {
-  transform: translateY(-7px);
+  transform: var(--hover-y-small);
   box-shadow: 0 10px 25px var(--primary-light); /* Remplacé la valeur codée en dur */
   border-color: var(--primary);
 }

@@ -65,7 +65,7 @@
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   
-  /* Variables de boutons */
+  /* Boutons */
   --btn-padding: 12px 28px;
   --btn-radius: 50px;
   --btn-font-weight: 500;
@@ -74,7 +74,7 @@
   --btn-secondary-shadow: 0 4px 15px var(--accent-light);
   --btn-secondary-shadow-hover: 0 8px 20px var(--accent-opacity);
   
-  /* Variables de formulaires */
+  /* Formulaires */
   --input-padding: 12px 15px;
   --input-border: 1px solid var(--light-gray);
   --input-radius: 8px;
@@ -82,12 +82,12 @@
   --input-bg: var(--white);
   --input-color: var(--text-color);
   
-  /* Variables de cartes */
+  /* Cartes */
   --card-padding: 25px;
   --card-radius: 15px;
   --card-border: 1px solid var(--border-light);
   
-  /* Transitions */
+  /* Animations et transitions */
   --transition: all 0.3s ease;
   --transition-slow: all 0.6s ease-out;
   --transition-fast: all 0.2s ease;
@@ -96,19 +96,6 @@
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
   
-  /* Animations de compétences */
-  --skill-progress-animation: skill-animation 1.5s ease forwards;
-  --fade-in-animation: fadeIn 0.5s ease forwards;
-  --modal-animation: modalFadeIn 0.3s ease-in-out;
-  
-  /* Bordures et coins arrondis */
-  --border-radius-default: 15px;
-  --border-radius-small: 8px;
-  --border-radius-circle: 50%;
-  --border-width: 1px;
-  --border-light: rgba(0, 0, 0, 0.05);
-  --border-dark: rgba(255, 255, 255, 0.05);
-
   /* États de formulaire */
   --status-success-bg: rgba(76, 175, 80, 0.15);
   --status-success-color: #2e7d32;

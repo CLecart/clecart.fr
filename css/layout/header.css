@@ -141,10 +141,10 @@ nav ul li a.cv-link i {
   /* Correction des liens du menu burger */
   nav ul li a {
     color: var(--text-color) !important;
-    display: inline-block; /* Changé de block à inline-block */
+    display: inline-block; /* Changé de block à inline-block pour limiter la largeur au texte */
     padding: 10px;
     font-weight: 600;
-    width: auto; /* Changé de 100% à auto */
+    width: auto; /* Changé de 100% à auto pour s'adapter à la taille du texte */
     text-align: left;
     position: relative;
   }
@@ -152,9 +152,10 @@ nav ul li a.cv-link i {
   /* Surbrillance limitée à la longueur du texte */
   nav ul li a:hover {
     background-color: transparent;
+    color: var(--primary) !important;
   }
   
-  /* Effet de surbrillance bleue limité à la largeur du texte */
+  /* Effet de surbrillance bleue limitée à la largeur du texte */
   nav ul li a::before {
     content: '';
     position: absolute;
@@ -165,8 +166,10 @@ nav ul li a.cv-link i {
     background-color: var(--primary-light);
     transition: width 0.3s ease;
     z-index: -1;
+    display: inline-block; /* S'assurer que l'élément est de type inline */
   }
   
+  /* Au survol, la surbrillance s'étend uniquement à la largeur du contenu */
   nav ul li a:hover::before {
     width: 100%;
   }

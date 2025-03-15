@@ -1,6 +1,6 @@
-/* Styles pour le mode sombre */
-
-/* Styles principaux du mode sombre */
+/**
+ * Styles du mode sombre
+ */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
@@ -8,7 +8,7 @@ body.dark-mode {
 
 /* Header et navigation */
 body.dark-mode header {
-  background: var(--dark);
+  background: var(--gradient-dark);
 }
 
 body.dark-mode nav ul {
@@ -18,13 +18,21 @@ body.dark-mode nav ul {
 /* Sections et conteneurs */
 body.dark-mode #hero,
 body.dark-mode #about,
-body.dark-mode #skills,
-body.dark-mode #projects,
-body.dark-mode #contact,
+body.dark-mode #languages,
 body.dark-mode section,
 body.dark-mode div,
 body.dark-mode article {
   background-color: var(--dark);
+}
+
+/* Sections avec couleurs spécifiques */
+body.dark-mode #skills,
+body.dark-mode #projects {
+  background-color: var(--darker);
+}
+
+body.dark-mode #contact {
+  background: var(--gradient-dark);
 }
 
 /* Cartes et éléments spécifiques */
@@ -32,10 +40,12 @@ body.dark-mode .project-card,
 body.dark-mode .skill-card,
 body.dark-mode .contact-info,
 body.dark-mode .contact-form,
+body.dark-mode .language-card,
 body.dark-mode .description {
   background-color: var(--card-dark);
   color: var(--text-dark);
   border-color: var(--border-dark);
+  box-shadow: var(--shadow-dark);
 }
 
 /* Textes et éléments typographiques */
@@ -43,13 +53,19 @@ body.dark-mode a,
 body.dark-mode p,
 body.dark-mode h1,
 body.dark-mode h4,
-body.dark-mode label {
+body.dark-mode label,
+body.dark-mode .skill-card p,
+body.dark-mode .project-content h3 {
   color: var(--text-dark);
 }
 
 body.dark-mode h2,
 body.dark-mode h3 {
   color: var(--primary);
+}
+
+body.dark-mode .project-content p {
+  color: var(--text-gray-dark);
 }
 
 /* Formulaires */
@@ -59,19 +75,6 @@ body.dark-mode select {
   background-color: var(--form-bg-dark);
   border-color: var(--form-border-dark);
   color: var(--text-dark);
-}
-
-/* Statuts de formulaire */
-body.dark-mode .form-status.success {
-  background-color: var(--status-success-bg);
-}
-
-body.dark-mode .form-status.error {
-  background-color: var(--status-error-bg);
-}
-
-body.dark-mode .form-status.sending {
-  background-color: var(--status-info-bg);
 }
 
 /* Footer */

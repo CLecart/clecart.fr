@@ -4,19 +4,19 @@
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: var(--transition-slow);
 }
 
 .slide-left {
   opacity: 0;
   transform: translateX(-50px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: var(--transition-slow);
 }
 
 .slide-right {
   opacity: 0;
   transform: translateX(50px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: var(--transition-slow);
 }
 
 .fade-in.appear, 
@@ -48,4 +48,11 @@
 @keyframes zoom {
   from {transform: scale(0.1)}
   to {transform: scale(1)}
+}
+
+/* Animation de pulsation pour les icônes */
+@keyframes subtle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

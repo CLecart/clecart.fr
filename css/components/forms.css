@@ -47,7 +47,7 @@
   outline: none;
   box-shadow: var(--input-focus-shadow);
   background-color: var(--white);
-  transform: translateY(-2px);
+  transform: var(--hover-y-tiny);
 }
 
 /* Assurer que les champs de formulaire s'intègrent bien avec l'animation de la carte */

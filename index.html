@@ -26,6 +26,7 @@
     <script type="module" src="js/main.js"></script>
 </head>
 <body class="homepage">
+    <!-- En-tête -->
     <header>
         <div class="container header-content">
             <a href="#" class="logo">Christophe Lecart</a>
@@ -40,7 +41,6 @@
                         <li><a href="/files/CV_Christophe_Lecart.pdf" class="cv-link" download><i class="fas fa-file-download"></i> CV</a></li>
                     </ul>
                 </nav>
-                <!-- Correction: attribut aria-label correctement placé dans la balise button -->
                 <button class="nav-toggle" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -48,6 +48,7 @@
         </div>
     </header>
 
+    <!-- Section hero -->
     <section id="hero">
         <div class="container hero-content">
             <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
@@ -59,6 +60,7 @@
         </div>
     </section>
 
+    <!-- Section À propos -->
     <section id="about">
         <div class="container">
             <div class="section-header fade-in">
@@ -77,71 +79,73 @@
         </div>
     </section>
 
+    <!-- Section Langages -->
     <section id="languages">
-    <div class="container">
-        <div class="section-header fade-in">
-            <h2>Programming Languages</h2>
-            <p>Currently Learning</p>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Programming Languages</h2>
+                <p>Currently Learning</p>
+            </div>
+            <div class="languages-grid">
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go">
+                    </div>
+                    <span>Go</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                    </div>
+                    <span>HTML5</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    </div>
+                    <span>CSS3</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                    </div>
+                    <span>JavaScript</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                    </div>
+                    <span>Java</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                    </div>
+                    <span>Docker</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+                    </div>
+                    <span>Git</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite">
+                    </div>
+                    <span>SQLite</span>
+                </div>
+                <div class="language-card fade-in">
+                    <div class="language-icon">
+                        <img src="https://www.rust-lang.org/logos/rust-logo-512x512.png" alt="Rust">
+                    </div>
+                    <span>Rust</span>
+                </div>
+            </div>
         </div>
-        <div class="languages-grid">
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="Go">
-                </div>
-                <span>Go</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-                </div>
-                <span>HTML5</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-                </div>
-                <span>CSS3</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-                </div>
-                <span>JavaScript</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-                </div>
-                <span>Java</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
-                </div>
-                <span>Docker</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-                </div>
-                <span>Git</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite">
-                </div>
-                <span>SQLite</span>
-            </div>
-            <div class="language-card fade-in">
-                <div class="language-icon">
-                    <img src="https://www.rust-lang.org/logos/rust-logo-512x512.png" alt="Rust">
-                </div>
-                <span>Rust</span>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
+    <!-- Section Compétences -->
     <section id="skills">
         <div class="container">
             <div class="section-header fade-in">
@@ -207,12 +211,14 @@
         </div>
     </section>
 
+    <!-- Section Projets -->
     <section id="projects">
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Featured Projects</h2>
             </div>
             <div class="projects-grid">
+                <!-- Projet 1 : Groupie-Tracker -->
                 <div class="project-card fade-in">
                     <div class="project-thumb">
                         <video autoplay loop muted controls loading="lazy">
@@ -229,6 +235,7 @@
                     </div>
                 </div>
                 
+                <!-- Projet 2 : BombermanDX -->
                 <div class="project-card fade-in">
                     <div class="project-thumb">
                         <video autoplay loop muted controls loading="lazy">
@@ -245,6 +252,7 @@
                     </div>
                 </div>
                 
+                <!-- Projet 3 : Forum -->
                 <div class="project-card fade-in">
                     <div class="project-thumb" title="Click to enlarge">
                         <img src="PICTURES/forum.png" alt="Forum Project Screenshot" loading="lazy">
@@ -262,6 +270,7 @@
         </div>
     </section>
 
+    <!-- Section Contact -->
     <section id="contact">
         <div class="container">
             <div class="section-header fade-in">
@@ -299,9 +308,9 @@
                     </div>
                 </div>
                 
+                <!-- Formulaire de contact -->
                 <div class="contact-form slide-left">
                     <h3>Send Me a Message</h3>
-                    
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="from_name">Your Name</label>
@@ -324,13 +333,14 @@
         </div>
     </section>
 
+    <!-- Pied de page -->
     <footer>
         <div class="container">
             <p>&copy; 2025 Christophe Lecart. All rights reserved. | <a href="privacy-policy.html">Privacy Policy</a></p>
         </div>
     </footer>
 
-    <!-- Correction de la bannière RGPD en anglais -->
+    <!-- Bannière GDPR -->
     <div id="gdpr-banner" class="gdpr-banner">
         <div class="gdpr-content">
             <p>This site uses third-party services to process the contact form. By continuing, you accept our <a href="privacy-policy.html">privacy policy</a>.</p>

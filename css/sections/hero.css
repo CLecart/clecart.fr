@@ -5,14 +5,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--hero-gradient-light);
   background-size: cover;
-  background-position: top center; /* Importante: positionne la vague en haut */
+  background-position: top center;
   padding-top: 80px;
-  position: relative; /* Important pour le positionnement */
+  position: relative;
 }
 
-/* Ajout d'un pseudo-élément pour le positionnement précis de la vague */
+/* Fond avec vague */
 #hero::before {
   content: '';
   position: absolute;
@@ -29,18 +28,10 @@
 
 .hero-content {
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 60px auto 0;
   text-align: center;
-  margin-top: 60px;
-  position: relative; /* Pour garantir qu'il est au-dessus du fond */
+  position: relative;
   z-index: 1;
-}
-
-.hero-content h1,
-.hero-content p,
-.hero-content div {
-  text-align: center;
 }
 
 .hero-content h1 {
@@ -48,6 +39,7 @@
   margin-bottom: 20px;
   font-weight: 700;
   line-height: 1.2;
+  color: var(--text-color);
 }
 
 .hero-content p {
@@ -56,39 +48,34 @@
   color: var(--text-color);
 }
 
-.hero-content .btn {
-  font-size: 1rem;
-  padding: 12px 28px;
-  margin: 10px 8px;
-}
-
 #typewriter {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--primary);
 }
 
-/* Mode sombre */
-body.dark-mode #hero {
-  background-color: transparent;
-  background-image: var(--hero-gradient-dark);
-  background-position: top center;
+.hero-buttons {
+  margin-top: 30px;
+  background-color: transparent !important;
 }
 
+.hero-content .btn {
+  font-size: 1rem;
+  padding: var(--btn-padding);
+  margin: 10px 8px;
+}
+
+/* Mode sombre */
 body.dark-mode #hero::before {
   background: var(--hero-gradient-dark);
-  background-position: top center;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
 }
 
-body.dark-mode #hero .container,
-body.dark-mode #hero .hero-content {
-  background-color: transparent !important;
-  box-shadow: none;
+body.dark-mode .hero-content h1,
+body.dark-mode .hero-content p {
+  color: var(--text-dark);
 }
 
-/* Ajustement responsive pour mobile */
+/* Responsive */
 @media (max-width: 768px) {
   .hero-content {
     margin-top: 40px;
@@ -98,42 +85,8 @@ body.dark-mode #hero .hero-content {
     font-size: 2.5rem;
   }
   
-  .hero-content p, #typewriter {
+  .hero-content p, 
+  #typewriter {
     font-size: 1.3rem;
   }
 }
-
-/* Optimisation pour éviter le flash noir lors des transitions de mode */
-.hero-content .btn,
-.hero-content .btn-secondary {
-  position: relative;
-  z-index: 5;
-}
-
-.hero-buttons {
-  background-color: transparent !important;
-  position: relative;
-  z-index: 5;
-}
-
-body.dark-mode .hero-buttons,
-body.dark-mode .hero-content .btn,
-body.dark-mode .hero-content .btn-secondary {
-  background-color: transparent !important;
-}
-
-body.dark-mode .hero-content .btn {
-  background-image: var(--gradient-1);
-}
-
-body.dark-mode .hero-content .btn-secondary {
-  background-image: var(--gradient-2);
-}
-
-/* Ajustement spécifique pour la transition du mode */
-body.theme-transitioning .hero-content * {
-  background-color: transparent !important;
-  transition: none !important;
-}
-
-/* Règles spécifiques au mode sombre déplacées dans darkmode.css */

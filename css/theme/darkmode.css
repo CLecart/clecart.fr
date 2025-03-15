@@ -1,12 +1,12 @@
 /**
- * Styles du mode sombre
+ * Styles du mode sombre - organisation optimisée
  */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
 }
 
-/* Classes utilitaires pour empêcher les transitions lors du changement de thème */
+/* Gestion des transitions lors du changement de thème */
 .no-transition {
   transition: none !important;
   animation: none !important;
@@ -19,15 +19,8 @@ body.dark-mode header {
   background: var(--gradient-dark);
 }
 
-/* Header content et right-content transparents en mode sombre */
 body.dark-mode header .header-content,
-body.dark-mode header .right-content {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-/* Navigation transparente en mode sombre */
+body.dark-mode header .right-content,
 body.dark-mode nav,
 body.dark-mode nav ul:not(.active) {
   background: transparent;
@@ -35,7 +28,7 @@ body.dark-mode nav ul:not(.active) {
   box-shadow: none;
 }
 
-/* Seulement le menu mobile a un fond en mode sombre */
+/* Menu mobile en mode sombre */
 @media (max-width: 768px) {
   body.dark-mode nav ul.active {
     background-color: var(--card-dark);
@@ -49,7 +42,6 @@ body.dark-mode #languages {
   background-color: var(--dark);
 }
 
-/* Sections avec couleurs spécifiques */
 body.dark-mode #skills,
 body.dark-mode #projects {
   background-color: var(--darker);
@@ -59,7 +51,7 @@ body.dark-mode #contact {
   background: var(--gradient-dark);
 }
 
-/* Cartes et éléments spécifiques */
+/* Cartes et éléments */
 body.dark-mode .project-card,
 body.dark-mode .skill-card,
 body.dark-mode .contact-info,
@@ -72,14 +64,12 @@ body.dark-mode .description {
   box-shadow: var(--shadow-dark);
 }
 
-/* Textes et éléments typographiques */
+/* Typographie */
 body.dark-mode a,
 body.dark-mode p,
 body.dark-mode h1,
 body.dark-mode h4,
-body.dark-mode label,
-body.dark-mode .skill-card p,
-body.dark-mode .project-content h3 {
+body.dark-mode label {
   color: var(--text-dark);
 }
 

@@ -9,6 +9,7 @@ import { initContactForm } from "./modules/contact-form.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
 import { initModals } from "./utils/modal.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
+import { initFormEnhancements } from "./modules/form-enhancements.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialisation du mode sombre en premier pour éviter le flash
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
   initTypewriter();
   initNavigation();
+  initFormEnhancements();
 
   // Initialisation des fonctionnalités interactives
   initContactForm();

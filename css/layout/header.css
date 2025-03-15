@@ -80,6 +80,7 @@ nav ul {
   padding: 0;
 }
 
+/* Style des liens de navigation */
 nav ul li a {
   color: var(--white);
   font-weight: 500;
@@ -93,7 +94,7 @@ nav ul li a:hover {
   color: var(--white-opacity-80);
 }
 
-/* Effet de soulignement */
+/* Effet de soulignement spécifique au header (blanc sur fond foncé) */
 nav ul li a::after {
   content: '';
   position: absolute;
@@ -101,7 +102,7 @@ nav ul li a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--accent);
+  background: var(--white); /* Soulignement blanc pour contraste sur fond foncé */
   transition: width 0.3s ease;
 }
 
@@ -171,49 +172,32 @@ nav ul li a.cv-link i {
   
   /* Styles des liens du menu burger */
   nav ul li a {
-    color: var(--text-color);
+    color: var(--primary); /* Couleur bleue pour meilleure visibilité */
     display: inline-block;
-    padding: 10px;
+    padding: 12px 15px; /* Zones cliquables plus grandes */
+    width: 100%; /* Occupe toute la largeur */
     font-weight: 600;
-    width: auto;
-    text-align: left;
-    position: relative;
+    border-radius: 8px; /* Coins arrondis */
+    transition: all 0.3s ease;
   }
   
   nav ul li a:hover {
-    background-color: transparent;
-    color: var(--primary);
-  }
-  
-  nav ul li a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
     background-color: var(--primary-light);
-    transition: width 0.3s ease;
-    z-index: -1;
-    display: inline-block;
+    color: var(--primary-dark);
   }
   
-  nav ul li a:hover::before {
-    width: 100%;
+  /* Effet de surlignage au survol plutôt que soulignement */
+  nav ul li a::after {
+    display: none; /* Désactiver l'effet de soulignement standard */
   }
   
-  /* Mode sombre */
   body.dark-mode nav ul li a {
-    color: var(--text-dark);
+    color: var(--primary); /* Même couleur bleue en mode sombre pour constance */
   }
   
   body.dark-mode nav ul li a:hover {
-    color: var(--primary);
-    background-color: transparent;
-  }
-  
-  body.dark-mode nav ul li a::before {
-    background-color: var(--primary-dark);
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
   }
 }
 

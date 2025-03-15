@@ -10,9 +10,27 @@ export function initNavigation() {
     // Initialisation correcte du menu
     navMenu.classList.remove("active");
 
-    // Forcer un style initial pour éviter les problèmes de visibilité
+    // Assurer que le menu a une largeur appropriée
+    function setMenuWidth() {
+      if (window.innerWidth <= 768) {
+        // Trouver l'élément le plus large
+        let maxWidth = 0;
+        navMenu.querySelectorAll("li a").forEach((link) => {
+          const computedWidth = link.offsetWidth;
+          if (computedWidth > maxWidth) {
+            maxWidth = computedWidth;
+          }
+        });
+
+        // Ajouter un padding pour l'esthétique
+        navMenu.style.width = maxWidth + 40 + "px";
+      } else {
+        navMenu.style.width = "";
+      }
+    }
+
+    // S'assurer que les liens ont la bonne couleur à l'initialisation
     if (window.innerWidth <= 768) {
-      // S'assurer que les liens ont la bonne couleur à l'initialisation
       document.querySelectorAll("nav ul li a").forEach((link) => {
         if (document.body.classList.contains("dark-mode")) {
           link.style.color = "var(--text-dark)";
@@ -20,6 +38,9 @@ export function initNavigation() {
           link.style.color = "var(--text-color)";
         }
       });
+
+      // Définir la largeur appropriée
+      setTimeout(setMenuWidth, 100);
     }
 
     navToggle.addEventListener("click", () => {
@@ -35,6 +56,18 @@ export function initNavigation() {
       if (navMenu.classList.contains("active")) {
         navMenu.style.visibility = "visible";
         navMenu.style.opacity = "1";
+
+        // Ajuster la largeur lors de l'ouverture
+        setMenuWidth();
+      }
+    });
+
+    // Ajuster la largeur lors du redimensionnement
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 768 && navMenu.classList.contains("active")) {
+        setMenuWidth();
+      } else {
+        navMenu.style.width = "";
       }
     });
 

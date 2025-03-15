@@ -23,7 +23,7 @@
   color: var(--text-color);
 }
 
-/* Style cohérent pour tous les liens de description */
+/* Style cohérent pour tous les liens de la politique de confidentialité */
 .description a {
   color: var(--primary);
   font-weight: 500;
@@ -33,11 +33,11 @@
   text-decoration: none;
 }
 
-/* Effet de soulignement au survol, identique à la navigation */
+/* S'assurer que l'effet de soulignement est cohérent */
 .description a::after {
   content: '';
   position: absolute;
-  bottom: -2px; /* Distance harmonisée */
+  bottom: -2px;
   left: 0;
   width: 0;
   height: 2px;

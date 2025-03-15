@@ -11,49 +11,10 @@
   gap: 30px;
 }
 
-/* Cartes de compétences */
+/* Application des styles de carte unifiés */
 #skills .skill-card {
   height: 310px;
   min-height: 310px;
-  background-color: var(--white);
-  border: var(--card-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow);
-  transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-  padding: var(--card-padding);
-}
-
-#skills .skill-card:hover {
-  transform: var(--hover-y-offset);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
-}
-
-#skills .skill-card p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  color: var(--text-light);
-}
-
-#skills .skill-name {
-  font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 10px;
-}
-
-#skills .skill-icon {
-  font-size: 2.8rem;
-  margin-bottom: 18px;
-  color: var(--primary);
-  transition: transform 0.4s ease, color 0.4s ease;
-}
-
-#skills .skill-card:hover .skill-icon {
-  transform: scale(1.1);
-  color: var(--accent);
 }
 
 /* Masquer les barres de niveau de compétence */
@@ -64,18 +25,4 @@
 /* Mode sombre */
 body.dark-mode #skills {
   background-color: var(--darker);
-}
-
-body.dark-mode #skills .skill-card {
-  background-color: var(--card-dark);
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-dark);
-}
-
-body.dark-mode #skills .skill-card p {
-  color: var(--text-gray-dark);
-}
-
-body.dark-mode #skills .skill-name {
-  color: var(--text-dark);
 }

@@ -56,7 +56,7 @@
 
 .hero-buttons {
   margin-top: 30px;
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 .hero-content .btn {

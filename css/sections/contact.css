@@ -5,14 +5,6 @@
   background: var(--gradient-1-light);
 }
 
-/* Variables pour les cartes de contact */
-:root {
-  --contact-card-padding: 40px;
-  --contact-card-radius: 15px;
-  --contact-card-shadow: var(--shadow);
-  --contact-card-border: 1px solid var(--border-light);
-}
-
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -21,31 +13,7 @@
   margin: 0 auto;
 }
 
-/* Styles des cartes contact avec variables */
-.contact-info,
-.contact-form {
-  background: var(--white);
-  padding: var(--card-padding);
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow);
-  border: var(--card-border);
-  height: 100%;
-  transition: var(--transition);
-}
-
-/* Harmonisation de la couleur de fond entre les cartes */
-.contact-info,
-.contact-form {
-  background-color: var(--white);
-}
-
-/* Effets au survol */
-.contact-info:hover,
-.contact-form:hover {
-  transform: var(--hover-y-offset);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
-}
+/* Les styles principaux des cartes ont été déplacés dans cards.css */
 
 .contact-method {
   display: flex;
@@ -85,10 +53,17 @@
 .contact-text a {
   color: var(--primary);
   background: transparent;
+  font-weight: 500;
 }
 
-.contact-form {
-  background: var(--white);
+.contact-text a:hover {
+  color: var(--primary-dark);
+}
+
+/* S'assurer que l'effet de soulignement est cohérent */
+.contact-text a::after {
+  bottom: -2px;
+  height: 2px;
 }
 
 .contact-form h3,
@@ -97,75 +72,9 @@
   color: var(--text-color);
 }
 
-.social-links {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.social-link {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--light-gray);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color);
-  transition: var(--transition);
-}
-
-.social-link:hover {
-  background: var(--gradient-1);
-  color: var(--white);
-  transform: translateY(-5px);
-}
-
-.contact-info a {
-  color: var(--primary);
-  font-weight: 500;
-  position: relative;
-  padding: 5px 0;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.contact-info a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.contact-info a:hover {
-  color: var(--primary-opacity);
-}
-
-.contact-info a:hover::after {
-  width: 100%;
-}
-
 /* Mode sombre */
 body.dark-mode #contact {
   background: var(--gradient-dark);
-}
-
-/* Application des styles en mode sombre avec spécificité adéquate */
-body.dark-mode .contact-container .contact-info,
-body.dark-mode .contact-container .contact-form {
-  background-color: var(--card-dark);
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-dark);
-}
-
-body.dark-mode .contact-info:hover,
-body.dark-mode .contact-form:hover {
-  box-shadow: 0 15px 35px var(--primary-light);
-  border-color: var(--primary);
 }
 
 body.dark-mode .contact-info h3,

@@ -33,27 +33,29 @@ body {
   padding: 0 20px;
 }
 
+/* Style de lien uniforme à travers tout le site */
 a {
   text-decoration: none;
-  color: var(--primary);
+  color: var(--primary); /* Couleur bleue définie dans les variables */
   transition: var(--transition);
-  position: relative; /* Important pour les effets de soulignement */
+  position: relative; /* Nécessaire pour le soulignement */
 }
 
 a:hover {
   color: var(--primary-dark);
 }
 
-/* Style de soulignement global plus proche du texte - avec exceptions */
+/* Effet de soulignement uniforme */
 a::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   width: 0;
-  height: 1px;
-  background: var(--accent);
+  height: 2px;
+  background: var(--accent); /* Couleur du soulignement */
   transition: width 0.3s ease;
+  opacity: 0.8;
 }
 
 a:hover::after {
@@ -66,7 +68,9 @@ a:hover::after {
 .github-btn::after,
 .back-btn::after,
 .dark-mode-toggle::after,
-.nav-btn::after {
+.nav-btn::after,
+.nav-toggle::after,
+.cv-link::after {
   display: none;
 }
 

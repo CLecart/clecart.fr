@@ -1,3 +1,35 @@
+/* Styles génériques pour toutes les cartes */
+.card-base {
+  background-color: var(--card-bg);
+  color: var(--card-color);
+  border-radius: var(--card-border-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-box-shadow);
+  transition: var(--card-transition);
+  padding: var(--card-padding);
+  margin: var(--card-margin);
+  overflow: hidden;
+}
+
+.card-base:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+/* Mode sombre générique pour les cartes */
+body.dark-mode .card-base {
+  background-color: var(--card-bg-dark);
+  color: var(--card-color-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
+body.dark-mode .card-base:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+  border-color: var(--primary);
+}
+
 /* Styles pour les différentes cartes du site */
 
 /* Cartes de compétence */
@@ -6,24 +38,19 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: var(--card-padding);
-  background: var(--white);
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow);
-  transition: var(--transition);
-  color: var(--text-color);
   overflow: visible;
-}
-
-.skill-card:hover {
-  transform: var(--hover-y-offset);
-  box-shadow: var(--shadow-lg);
 }
 
 .skill-icon {
   font-size: 2.5rem;
   margin-bottom: 15px;
-  color: var(--primary);
+  color: var(--card-icon-color);
+  transition: var(--card-icon-transition);
+}
+
+.skill-card:hover .skill-icon {
+  transform: var(--card-icon-hover-transform);
+  color: var(--card-icon-hover-color);
 }
 
 .skill-name {
@@ -36,34 +63,16 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 60px;
-  overflow: visible;
-  text-overflow: initial;
-  white-space: normal;
-  height: auto;
-  max-height: none;
 }
 
 /* Cartes de projet - alignement avec les variables globales */
 .project-card {
-  max-width: 320px;
+  max-width: 360px;
   width: 100%;
-  margin: 0 auto;
-  background: var(--white);
-  border-radius: var(--card-radius);
-  border: var(--card-border);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
   height: auto;
   display: flex;
   flex-direction: column;
   min-height: 450px;
-}
-
-.project-card:hover {
-  transform: var(--hover-y-offset);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
 }
 
 .project-thumb {
@@ -73,9 +82,7 @@
   width: 100%;
   background-color: var(--black);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
 }
 
 .project-thumb img,
@@ -86,19 +93,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition);
+  transition: var(--card-transition);
 }
 
 .project-card:hover .project-thumb img,
 .project-card:hover .project-thumb video {
-  transform: var(--hover-scale);
+  transform: var(--card-hover-scale);
 }
 
 .project-content {
-  padding: 25px;
+  flex: 1;
+  padding: var(--card-padding);
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: space-between;
   height: 100%;
 }
@@ -106,7 +113,7 @@
 .project-content h3 {
   font-size: 1.4rem;
   margin-bottom: 15px;
-  color: var(--text-color);
+  color: var(--card-color);
 }
 
 .project-content p {
@@ -120,6 +127,7 @@
   height: 3em;
   margin-bottom: 15px;
   color: var(--text-light);
+  line-height: 1.5;
 }
 
 .project-buttons {
@@ -144,7 +152,7 @@ body.dark-mode .project-card:hover {
 }
 
 body.dark-mode .project-content h3 {
-  color: var(--text-dark);
+  color: var(--card-color-dark);
 }
 
 body.dark-mode .project-content p {
@@ -159,10 +167,10 @@ body.dark-mode .project-content p {
   padding: 15px 10px;
   margin: 0;
   border-radius: 10px;
-  background-color: var(--white);
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm); /* Remplacé la valeur codée en dur */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background-color: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--card-transition);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,7 +179,7 @@ body.dark-mode .project-content p {
 
 .language-card:hover {
   transform: var(--hover-y-small);
-  box-shadow: 0 10px 25px var(--primary-light); /* Remplacé la valeur codée en dur */
+  box-shadow: 0 10px 25px var(--primary-light);
   border-color: var(--primary);
 }
 
@@ -186,11 +194,11 @@ body.dark-mode .project-content p {
   width: 40px;
   height: 40px;
   margin-bottom: 0;
-  transition: transform 0.3s ease;
+  transition: var(--card-transition);
 }
 
 .language-card:hover .language-icon img {
-  transform: scale(1.15);
+  transform: var(--card-icon-hover-transform);
 }
 
 .language-card span {
@@ -201,25 +209,58 @@ body.dark-mode .project-content p {
   transition: color 0.3s ease;
 }
 
-/* Ajout des styles pour le mode sombre */
+/* Mode sombre pour les cartes de langue */
 body.dark-mode .language-card {
-  background-color: var(--card-dark);
-  border: 1px solid var(--border-dark); /* Remplacé la valeur codée en dur */
-  box-shadow: var(--shadow-dark); /* Remplacé la valeur codée en dur */
+  background-color: var(--card-bg-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-box-shadow-dark);
 }
 
 body.dark-mode .language-card span {
-  color: var(--text-dark);
+  color: var(--card-color-dark);
 }
 
 body.dark-mode .language-card:hover {
-  box-shadow: 0 12px 30px var(--primary-light); /* Remplacé la valeur codée en dur */
+  box-shadow: var(--card-box-shadow-hover-dark);
   border-color: var(--primary);
 }
 
 /* Ajout d'un léger effet de luminosité aux icônes en mode sombre */
 body.dark-mode .language-icon img {
   filter: brightness(1.1);
+}
+
+/* Cartes contact avec harmonisation des styles */
+.contact-info,
+.contact-form {
+  background-color: var(--card-bg);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-box-shadow);
+  border: var(--card-border);
+  height: 100%;
+  transition: var(--card-transition);
+}
+
+.contact-info:hover,
+.contact-form:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+body.dark-mode .contact-info,
+body.dark-mode .contact-form {
+  background-color: var(--card-bg-dark);
+  color: var(--card-color-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
+body.dark-mode .contact-info:hover,
+body.dark-mode .contact-form:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+  border-color: var(--primary);
 }
 
 /* Effet de pulsation subtile sur le mode sombre et clair pour les icônes */
@@ -229,6 +270,7 @@ body.dark-mode .language-icon img {
   100% { transform: scale(1); }
 }
 
-.language-card:hover .language-icon img {
+.language-card:hover .language-icon img,
+.skill-card:hover .skill-icon {
   animation: subtle-pulse 2s infinite ease-in-out;
 }

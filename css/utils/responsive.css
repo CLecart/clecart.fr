@@ -42,11 +42,12 @@
     right: 20px;
     flex-direction: column;
     background: var(--white);
-    width: 250px;
-    padding: 20px;
-    gap: 15px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+    width: auto; /* Largeur automatique basée sur le contenu */
+    min-width: 150px; /* Largeur minimale pour assurer la lisibilité */
+    padding: 15px;
+    gap: 6px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
     transform: translateX(100%);
     transition: var(--transition);
     opacity: 0;
@@ -62,31 +63,44 @@
   
   /* Liens du menu */
   nav ul li a {
-    color: var(--text-color);
-    padding: 10px;
+    color: var(--primary);
+    padding: 10px 15px;
     font-weight: 600;
-    position: relative;
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    text-align: center;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+  
+  /* Correction spécifique pour le lien CV */
+  nav ul li a.cv-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    gap: 5px;
   }
   
   nav ul li a:hover {
-    color: var(--primary);
-  }
-  
-  /* Effet de surbrillance */
-  nav ul li a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0; 
-    width: 0;
-    height: 100%;
     background-color: var(--primary-light);
-    transition: width 0.3s ease;
-    z-index: -1;
+    color: var(--primary-dark);
   }
   
-  nav ul li a:hover::before {
-    width: 100%;
+  /* Mode sombre - menu burger */
+  body.dark-mode nav ul {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-dark);
+  }
+  
+  body.dark-mode nav ul li a {
+    color: var(--primary); /* Bleu pour visibilité */
+  }
+  
+  body.dark-mode nav ul li a:hover {
+    background-color: rgba(108, 99, 255, 0.15);
   }
 
   /* Typographie responsive */
@@ -125,9 +139,9 @@
   /* Garantir que header-content et right-content restent propres */
   .header-content,
   .right-content {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    background: transparent;
+    box-shadow: none;
+    border: none;
   }
 
   /* Alignement des boutons de navigation */
@@ -190,7 +204,7 @@
   }
 }
 
-/* Fix pour iPhone SE et appareils très petits */
+/* Ajustements pour petits appareils */
 @media screen and (max-width: 380px) {
   html, body {
     width: 100%;

@@ -90,6 +90,35 @@
   --card-radius: 15px;
   --card-border: 1px solid var(--border-light);
   
+  /* Variables standardisées pour les cartes */
+  --card-bg: var(--white);
+  --card-bg-dark: var(--card-dark);
+  --card-color: var(--text-color);
+  --card-color-dark: var(--text-dark);
+  --card-padding: 25px;
+  --card-margin: 0 auto;
+  --card-border-radius: 15px;
+  --card-border: 1px solid var(--border-light);
+  --card-border-dark: 1px solid var(--border-dark);
+  --card-box-shadow: var(--shadow);
+  --card-box-shadow-dark: var(--shadow-dark);
+  --card-box-shadow-hover: var(--shadow-lg);
+  --card-box-shadow-hover-dark: 0 15px 35px var(--primary-light);
+  --card-border-hover: 1px solid var(--primary);
+  --card-transition: var(--transition);
+  
+  /* Effets d'animation unifiés */
+  --card-hover-transform: translateY(-10px);
+  --card-hover-scale: scale(1.05);
+  --card-icon-hover-transform: scale(1.1);
+  --card-icon-color: var(--primary);
+  --card-icon-hover-color: var(--accent);
+  
+  /* Timings animés */
+  --card-transition-timing: 0.3s ease;
+  --card-hover-transition: all 0.3s ease;
+  --card-icon-transition: transform 0.4s ease, color 0.4s ease;
+  
   /* Animations et transitions */
   --transition: all 0.3s ease;
   --transition-slow: all 0.6s ease-out;

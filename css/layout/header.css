@@ -19,9 +19,10 @@ header::after {
   left: 0;
   width: 100%;
   height: 60px;
-  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"%3E%3Cpath fill="%236c63ff" fill-opacity="0.3" d="M0,32L80,26.7C160,21,320,11,480,16C640,21,800,43,960,48C1120,53,1280,43,1360,37.3L1440,32L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+  background-image: var(--header-wave);
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: top center;
   z-index: 999;
   pointer-events: none;
 }
@@ -43,11 +44,27 @@ header.scrolled {
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--primary);
   transition: var(--transition);
   display: flex;
   flex-direction: row;
   line-height: 1;
+  position: relative;
+}
+
+.logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.logo:hover::after {
+  width: 100%;
 }
 
 @media (max-width: 421px) {
@@ -82,7 +99,7 @@ nav ul {
 
 /* Style des liens de navigation */
 nav ul li a {
-  color: var(--white);
+  color: var(--primary);
   font-weight: 500;
   position: relative;
   padding: 5px 0;
@@ -91,10 +108,10 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: var(--white-opacity-80);
+  color: var(--primary-dark);
 }
 
-/* Effet de soulignement spécifique au header (blanc sur fond foncé) */
+/* Effet de soulignement spécifique au header */
 nav ul li a::after {
   content: '';
   position: absolute;
@@ -102,7 +119,7 @@ nav ul li a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--white); /* Soulignement blanc pour contraste sur fond foncé */
+  background: var(--accent);
   transition: width 0.3s ease;
 }
 
@@ -152,13 +169,14 @@ nav ul li a.cv-link i {
     right: 20px;
     flex-direction: column;
     background: var(--white);
-    width: 250px;
-    padding: 20px;
-    gap: 15px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
+    width: auto;
+    min-width: 150px;
+    padding: 15px;
+    gap: 6px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
     transform: translateX(100%);
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transition: var(--transition);
     opacity: 0;
     z-index: 1001;
     visibility: hidden;
@@ -172,13 +190,25 @@ nav ul li a.cv-link i {
   
   /* Styles des liens du menu burger */
   nav ul li a {
-    color: var(--primary); /* Couleur bleue pour meilleure visibilité */
-    display: inline-block;
-    padding: 12px 15px; /* Zones cliquables plus grandes */
-    width: 100%; /* Occupe toute la largeur */
+    color: var(--primary);
+    padding: 10px 15px;
     font-weight: 600;
-    border-radius: 8px; /* Coins arrondis */
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    text-align: center;
+    white-space: nowrap;
     transition: all 0.3s ease;
+  }
+  
+  /* Correction spécifique pour le lien CV */
+  nav ul li a.cv-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    gap: 5px;
   }
   
   nav ul li a:hover {
@@ -188,11 +218,11 @@ nav ul li a.cv-link i {
   
   /* Effet de surlignage au survol plutôt que soulignement */
   nav ul li a::after {
-    display: none; /* Désactiver l'effet de soulignement standard */
+    display: none;
   }
   
   body.dark-mode nav ul li a {
-    color: var(--primary); /* Même couleur bleue en mode sombre pour constance */
+    color: var(--primary);
   }
   
   body.dark-mode nav ul li a:hover {
@@ -203,5 +233,13 @@ nav ul li a.cv-link i {
 
 /* Adaptation de la vague en mode sombre */
 body.dark-mode header::after {
-  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"%3E%3Cpath fill="%236c63ff" fill-opacity="0.4" d="M0,32L80,26.7C160,21,320,11,480,16C640,21,800,43,960,48C1120,53,1280,43,1360,37.3L1440,32L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+  background-image: var(--header-wave-dark);
+}
+
+/* Ajustement de la vague pour les écrans mobiles */
+@media (max-width: 768px) {
+  header::after {
+    bottom: -15vh;
+    height: 15vh;
+  }
 }

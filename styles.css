@@ -27,6 +27,7 @@
 @import './css/sections/projects.css';
 @import './css/sections/contact.css';
 @import './css/sections/privacy.css';
+@import './css/sections/portfolio-details.css';
 
 /* Thème - toujours en dernier pour écraser les styles si nécessaire */
 @import './css/theme/darkmode.css';

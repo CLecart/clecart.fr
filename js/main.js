@@ -1,6 +1,5 @@
 /**
- * Point d'entrée principal du JavaScript
- * Initialise tous les modules nécessaires au fonctionnement du site
+ * Point d'entrée JavaScript - Initialisation des modules
  */
 import { initDarkMode } from "./modules/darkmode.js";
 import { initAnimations, initTypewriter } from "./modules/animations.js";
@@ -12,21 +11,21 @@ import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialisation du mode sombre en premier pour éviter le flash
+  // Mode sombre (prioritaire)
   initDarkMode();
 
-  // Initialisation des modules d'interface
+  // Interface
   initAnimations();
   initTypewriter();
   initNavigation();
   initFormEnhancements();
 
-  // Initialisation des fonctionnalités interactives
+  // Fonctionnalités
   initContactForm();
   initGDPRBanner();
   initModals();
 
-  // Navigation spécifique aux projets (si applicable)
+  // Navigation projets (conditionnelle)
   if (document.querySelector(".project-navigation")) {
     initProjectNavigation();
   }

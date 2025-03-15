@@ -1,6 +1,5 @@
 /**
  * Module pour les animations
- * Inclut les effets d'apparition au scroll et l'effet machine à écrire
  */
 
 /**
@@ -22,38 +21,11 @@ export function initAnimations() {
     });
   }, observerOptions);
 
-  const animatedElements = document.querySelectorAll(
-    ".fade-in, .slide-left, .slide-right"
-  );
-  animatedElements.forEach((element) => {
-    observer.observe(element);
-  });
-
-  // Les barres de compétences sont masquées via CSS, cette partie est désactivée
-  // mais conservée en commentaire pour référence future
-  /*
-  const skillLevels = document.querySelectorAll(".skill-level");
-  const skillObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const level = entry.target.dataset.level;
-          entry.target.style.setProperty("--skill-level", `${level}%`);
-          entry.target.style.transform = "scaleX(1)";
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  skillLevels.forEach((skill) => {
-    skill.style.transform = "scaleX(0)";
-    skill.style.transformOrigin = "left";
-    skill.style.transition = "transform 1.5s ease";
-    skillObserver.observe(skill);
-  });
-  */
+  document
+    .querySelectorAll(".fade-in, .slide-left, .slide-right")
+    .forEach((element) => {
+      observer.observe(element);
+    });
 }
 
 /**

@@ -2,7 +2,7 @@
 
 #skills {
   padding: 100px 0;
-  background-color: #f9f9ff;
+  background-color: var(--light);
 }
 
 .skills-container {
@@ -16,15 +16,15 @@
   height: 310px;
   min-height: 310px;
   max-height: none;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background-color: var(--white);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow);
   transition: all 0.4s ease;
 }
 
 #skills .skill-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(108, 99, 255, 0.2);
+  box-shadow: var(--shadow-lg);
   border-color: var(--primary);
 }
 
@@ -56,17 +56,17 @@
 
 /* Support du mode sombre */
 body.dark-mode #skills {
-  background-color: #14141e;
+  background-color: var(--darker);
 }
 
 body.dark-mode #skills .skill-card {
-  background-color: #2a2a42;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background-color: var(--card-dark);
+  border: 1px solid var(--border-dark);
+  box-shadow: var(--shadow-dark);
 }
 
 body.dark-mode #skills .skill-card:hover {
-  box-shadow: 0 15px 35px rgba(108, 99, 255, 0.25);
+  box-shadow: 0 15px 35px var(--primary-light);
   border-color: var(--primary);
 }
 

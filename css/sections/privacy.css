@@ -4,7 +4,7 @@
 .description {
   max-width: 900px;
   margin: 120px auto 30px;
-  background: white;
+  background: var(--white);
   padding: 30px 40px;
   border-radius: 15px;
   box-shadow: var(--shadow);
@@ -37,7 +37,7 @@
 .description a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -2px; /* Distance harmonisée */
   left: 0;
   width: 0;
   height: 2px;
@@ -46,7 +46,7 @@
 }
 
 .description a:hover {
-  color: rgba(108, 99, 255, 0.8);
+  color: var(--primary-opacity);
 }
 
 .description a:hover::after {
@@ -59,7 +59,7 @@ body.dark-mode .description a {
 }
 
 body.dark-mode .description a:hover {
-  color: rgba(78, 205, 196, 0.8);
+  color: var(--secondary-opacity);
 }
 
 /* Styles pour les listes */

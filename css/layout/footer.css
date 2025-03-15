@@ -27,9 +27,35 @@ footer p {
 
 footer a {
   color: var(--primary);
+  position: relative;
+  padding: 2px 0;
   transition: var(--transition);
+}
+
+footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
 }
 
 footer a:hover {
   color: var(--secondary);
+}
+
+footer a:hover::after {
+  width: 100%;
+}
+
+/* Mode sombre */
+body.dark-mode footer a {
+  color: var(--secondary);
+}
+
+body.dark-mode footer a:hover {
+  color: var(--primary);
 }

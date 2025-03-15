@@ -1,46 +1,36 @@
-/* Styles optimisés pour le mode sombre - suppression des doublons */
+/* Styles pour le mode sombre */
 
-:root {
-  --primary: #6c63ff;
-  --primary-dark: #5a52d9;
-  --dark: #1a1a2e;
-  --darker: #14141e; /* Couleur encore plus sombre pour les contrastes */
-  --card-dark: #2a2a42; /* Couleur pour les cartes en mode sombre */
-  --light: #f8f9fa;
-  --text-dark: #f4f4f4;
-}
-
-/* Styles de base pour le bouton dark mode */
+/* Styles du bouton dark mode */
 .dark-mode-toggle {
-  background: transparent; /* Suppression du fond pour une apparence plus harmonieuse */
-  color: white;
+  background: transparent;
+  color: var(--white);
   border: none;
-  padding: 8px 10px; /* Réduction du padding horizontal */
+  padding: 8px 10px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 1.1rem; /* Taille d'icône harmonisée avec les liens */
+  font-size: 1.1rem;
   margin-left: 15px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px; /* Hauteur fixe pour aligner avec les liens */
+  height: 40px;
 }
 
 .dark-mode-toggle:hover {
-  background: rgba(255, 255, 255, 0.1); /* Fond légèrement visible au survol */
-  transform: translateY(-2px); /* Translation plus subtile */
-  box-shadow: none; /* Suppression de l'ombre */
+  background: var(--white-opacity-10);
+  transform: translateY(-2px);
+  box-shadow: none;
 }
 
 /* Styles pour les pages détail */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
-  top: 50%; /* Aligner verticalement au milieu du header */
-  transform: translateY(-50%); /* Ajustement précis du centrage vertical */
-  right: calc(65px + 15px); /* Exactement 15px à gauche du bouton Back (qui fait 65px) */
-  margin-left: 0; /* Annuler la marge gauche par défaut */
-  height: 32px; /* Hauteur réduite pour les pages de détail */
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(65px + 15px);
+  margin-left: 0;
+  height: 32px;
 }
 
 /* Style du bouton avec dimensions cohérentes par rapport au bouton "Back" */
@@ -53,18 +43,16 @@ body:not(.homepage) .dark-mode-toggle {
   justify-content: center;
 }
 
-/* Assurer que l'icône est correctement positionnée */
 body:not(.homepage) .dark-mode-toggle i {
   margin: 0;
 }
 
-/* Position fixe pour le bouton back, à exactement 15px du dark-mode-toggle */
 body:not(.homepage) .back-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 15px; /* Toujours à 15px du bord droit */
-  width: 65px; /* Largeur fixe pour le bouton Back */
+  right: 15px;
+  width: 65px;
   justify-content: center;
 }
 
@@ -75,7 +63,7 @@ body:not(.homepage) .back-btn {
   }
   
   body:not(.homepage) .dark-mode-toggle {
-    right: 80px; /* Garder un bon espacement */
+    right: 80px;
   }
   
   body:not(.homepage) .back-btn {
@@ -83,63 +71,57 @@ body:not(.homepage) .back-btn {
   }
 }
 
-/* Responsive - ajuster l'espacement sur mobile */
+/* Responsive */
 @media (max-width: 576px) {
   body:not(.homepage) .dark-mode-toggle {
-    right: calc(65px + 10px); /* Réduire légèrement l'espace sur petit écran */
-    top: 50%; /* Aligner verticalement comme le bouton Back */
-    transform: translateY(-50%); /* Centrage vertical */
-    bottom: auto; /* Annuler le positionnement en bas */
-    /* Taille minimale fixe */
+    right: calc(65px + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
     min-width: 32px;
     min-height: 32px;
   }
   
   body:not(.homepage) .back-btn {
     top: 50%;
-    
     transform: translateY(-50%);
     right: 15px;
-    /* Taille minimale fixe */
     min-width: 65px;
     min-height: 32px;
   }
   
-  /* S'assurer que le header a suffisamment de hauteur */
   body:not(.homepage) header {
-    min-height: 60px; /* Augmenter légèrement pour accommoder les deux boutons */
-    padding-bottom: 0; /* Espace pour le bouton en bas */
+    min-height: 60px;
+    padding-bottom: 0;
   }
   
   body:not(.homepage) .back-btn,
   body:not(.homepage) .dark-mode-toggle {
-    padding: 5px 10px; /* Padding uniforme */
-    font-size: 0.8rem; /* Garder une taille de texte plus lisible */
-    white-space: nowrap; /* Empêcher le texte de passer à la ligne */
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 }
 
-/* Très petits écrans */
 @media (max-width: 360px) {
   body:not(.homepage) .dark-mode-toggle {
-    right: calc(55px + 8px); /* Réduire encore l'espacement */
+    right: calc(55px + 8px);
   }
   
   body:not(.homepage) .dark-mode-toggle,
   body:not(.homepage) .back-btn {
-    /* Conserver les mêmes dimensions minimales */
     min-width: 32px;
     min-height: 32px;
-    padding: 3px 8px; /* Padding réduit mais identique pour les deux boutons */
+    padding: 3px 8px;
     font-size: 0.7rem;
   }
   
   body:not(.homepage) .back-btn {
-    width: 55px; /* Bouton Back légèrement plus petit */
+    width: 55px;
   }
 }
 
-/* ===== RÈGLES UNIFIÉES POUR LE MODE SOMBRE ===== */
+/* RÈGLES POUR LE MODE SOMBRE */
 
 /* Règles principales */
 body.dark-mode {
@@ -176,14 +158,14 @@ body.dark-mode .contact-form,
 body.dark-mode .description {
   background-color: var(--card-dark);
   color: var(--text-dark);
-  border-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-dark);
 }
 
-/* Correction pour la page de politique de confidentialité */
+/* Page de politique de confidentialité */
 body.dark-mode .description {
   background-color: var(--card-dark);
   color: var(--text-dark);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-dark);
 }
 
 body.dark-mode .description h2,
@@ -218,18 +200,16 @@ body.dark-mode h3 {
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
-  background-color: #2a2a3a;
-  border-color: #444;
+  background-color: var(--form-bg-dark);
+  border-color: var(--form-border-dark);
   color: var(--text-dark);
 }
 
-/* Supprimer l'arrière-plan sombre des champs de formulaire */
 body.dark-mode .form-group input,
 body.dark-mode .form-group textarea {
   background-color: transparent;
 }
 
-/* Correction pour éviter que la règle générale n'affecte les champs de formulaire */
 body.dark-mode #contact div:not(.form-group input):not(.form-group textarea),
 body.dark-mode section,
 body.dark-mode div:not(.form-group input):not(.form-group textarea),
@@ -237,7 +217,6 @@ body.dark-mode article {
   background-color: var(--dark);
 }
 
-/* Exceptions pour les éléments qui doivent conserver leur couleur */
 body.dark-mode .btn,
 body.dark-mode button,
 body.dark-mode .skill-icon,
@@ -245,12 +224,10 @@ body.dark-mode .contact-icon {
   background-color: initial;
 }
 
-/* Corrections spécifiques pour certaines sections */
-
-/* Hero */
+/* Sections spécifiques */
 body.dark-mode #hero {
   background-color: transparent;
-  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+  background-image: var(--hero-gradient-dark);
 }
 
 body.dark-mode #hero .container,
@@ -260,7 +237,6 @@ body.dark-mode .hero-content {
   box-shadow: none;
 }
 
-/* Skills section */
 body.dark-mode #skills {
   background-color: var(--darker);
 }
@@ -269,39 +245,37 @@ body.dark-mode #skills .skill-card {
   background-color: var(--card-dark);
 }
 
-/* Projects section */
 body.dark-mode #projects {
   background-color: var(--darker);
 }
 
 body.dark-mode #projects .project-thumb {
-  background-color: #000;
+  background-color: var(--black);
 }
 
 body.dark-mode #projects .project-content p {
-  color: #d1d1d1;
+  color: var(--text-gray-dark);
 }
 
-/* Contact section */
 body.dark-mode #contact {
   background: linear-gradient(135deg, var(--darker), var(--dark));
 }
 
-/* Modal et messages de statut */
+/* Messages de statut */
 body.dark-mode .modal {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--black-opacity-90);
 }
 
 body.dark-mode .form-status.success {
-  background-color: rgba(76, 175, 80, 0.2);
+  background-color: var(--status-success-bg);
 }
 
 body.dark-mode .form-status.error {
-  background-color: rgba(244, 67, 54, 0.2);
+  background-color: var(--status-error-bg);
 }
 
 body.dark-mode .form-status.sending {
-  background-color: rgba(3, 169, 244, 0.2);
+  background-color: var(--status-info-bg);
 }
 
 /* Footer */
@@ -310,28 +284,10 @@ body.dark-mode footer .container,
 body.dark-mode footer div,
 body.dark-mode footer p {
   background: transparent;
-  color: white;
+  color: var(--white);
   opacity: 0.9;
   border: none;
   box-shadow: none;
-}
-
-/* Styles pour les pages détail - ajustement pour éviter tout chevauchement */
-body:not(.homepage) .dark-mode-toggle {
-  position: absolute;
-  top: 50%; 
-  transform: translateY(-50%);
-  right: calc(65px + 15px);
-  margin-left: 0;
-}
-
-body:not(.homepage) .back-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 15px;
-  width: 65px;
-  justify-content: center;
 }
 
 /* Dimensions standardisées pour les boutons */
@@ -346,49 +302,43 @@ body:not(.homepage) .back-btn {
   overflow: hidden;
 }
 
-/* Très petits écrans - ajustement radical pour garantir pas de chevauchement */
 @media (max-width: 360px) {
-  /* Bouton dark mode réduit au minimum */
   body:not(.homepage) .dark-mode-toggle {
-    right: calc(45px + 8px); /* Espace réduit */
-    min-width: 28px; /* Taille minimale réduite */
-    width: 28px; /* Largeur fixe */
-    padding: 0; /* Suppression du padding horizontal */
-    font-size: 0.65rem; /* Texte plus petit */
-    border-radius: 50%; /* Format rond pour gagner de l'espace */
+    right: calc(45px + 8px);
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+    font-size: 0.65rem;
+    border-radius: 50%;
   }
   
-  /* Bouton Back réduit également */
   body:not(.homepage) .back-btn {
-    min-width: 45px; /* Taille minimale réduite */
-    width: 45px; /* Largeur fixe */
-    padding: 0 5px; /* Padding horizontal minimal */
+    min-width: 45px;
+    width: 45px;
+    padding: 0 5px;
     font-size: 0.65rem;
   }
   
-  /* S'assurer que la hauteur du header est suffisante */
   body:not(.homepage) header {
     min-height: 50px;
   }
   
-  /* S'assurer que les icônes sont centrées */
   body:not(.homepage) .dark-mode-toggle i {
     margin: 0 auto;
   }
 }
 
-/* Styles spécifiques pour les très très petits écrans */
 @media (max-width: 320px) {
   body:not(.homepage) header .container {
-    padding: 0 5px; /* Réduire le padding du conteneur */
+    padding: 0 5px;
   }
   
   body:not(.homepage) header h1 {
-    font-size: 1.2rem; /* Réduire la taille du titre */
+    font-size: 1.2rem;
   }
 }
 
-/* Alignement vertical du bouton dark mode avec les liens de navigation */
+/* Alignement vertical du bouton dark mode */
 header .right-content .dark-mode-toggle {
   height: 100%;
   display: flex;
@@ -400,13 +350,11 @@ header .right-content .dark-mode-toggle {
   padding-bottom: 5px;
 }
 
-/* Spécifiquement sur la page d'accueil, aligner avec les liens de navigation */
 .homepage header .right-content .dark-mode-toggle {
   height: 36px;
   align-self: center;
 }
 
-/* Cibler le bouton avec une spécificité plus élevée pour éviter les conflits */
 header .container .right-content .dark-mode-toggle {
   display: flex;
   align-items: center;
@@ -416,12 +364,10 @@ header .container .right-content .dark-mode-toggle {
   vertical-align: middle;
 }
 
-/* S'assurer que le bouton est correctement positionné par rapport aux autres éléments */
 header nav + .dark-mode-toggle {
   margin-left: 20px;
 }
 
-/* Aligner l'icône verticalement à l'intérieur du bouton */
 .dark-mode-toggle i {
   display: flex;
   align-items: center;
@@ -430,7 +376,6 @@ header nav + .dark-mode-toggle {
   line-height: 1;
 }
 
-/* Assurons-nous que la hauteur est correcte sur les écrans mobiles également */
 @media (max-width: 768px) {
   header .right-content .dark-mode-toggle {
     height: 36px;
@@ -439,7 +384,6 @@ header nav + .dark-mode-toggle {
     margin-right: 15px;
   }
   
-  /* Quand le menu est en mode hamburger, aligner avec le bouton hamburger */
   header .right-content .nav-toggle + .dark-mode-toggle,
   header .right-content .dark-mode-toggle + .nav-toggle {
     height: 36px;

@@ -171,7 +171,7 @@
 /* Page de description des projets */
 .description {
   max-width: 900px;
-  margin: 120px auto 30px;
+  margin: 30px auto 30px; /* Réduction de la marge top car nous avons la navigation */
   background: var(--white);
   padding: 30px 40px;
   border-radius: 15px;
@@ -220,40 +220,71 @@
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets */
+/* Navigation entre projets - styles améliorés */
 .project-navigation {
+  margin-top: 100px; /* Augmentation de la marge supérieure pour éviter le chevauchement avec le header */
   margin-bottom: 30px;
-  padding: 10px 0;
+  padding: 15px 0;
   border-bottom: 1px solid var(--light-gray);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .project-navigation h1 {
   margin: 0;
   padding: 0;
   font-size: 1.8rem;
+  color: var(--primary);
 }
 
+/* Boutons de navigation - amélioration de l'alignement */
 .nav-buttons {
   display: flex;
   gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Permettre au boutons de s'adapter sur les petits écrans */
+  justify-content: center; /* Centrer les boutons quand ils sont sur une ligne */
 }
 
 .nav-btn {
-  padding: 8px 16px;
+  padding: 10px 16px; /* Padding plus cohérent */
   background: var(--gradient-1);
   color: var(--white);
   border-radius: 50px;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center; /* Assurer que le texte est centré */
+  min-width: 110px; /* Largeur minimale pour uniformité */
+  display: inline-block; /* Pour garantir des dimensions cohérentes */
 }
 
-.nav-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px var(--black-opacity-10);
+/* Style pour les projets */
+.project {
+  display: none; /* Masquer par défaut */
+}
+
+/* Transition fluide pour les changements */
+.project {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@media (max-width: 768px) {
+  .project-navigation {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .nav-buttons {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Styles pour les animations de projets */
@@ -264,17 +295,12 @@
 
 .project.active {
   display: block;
+  opacity: 1;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-/* S'assurer que les projets sont visibles */
-.project.description {
-  display: block !important;
-  opacity: 1 !important;
 }
 
 /* Support du mode sombre */

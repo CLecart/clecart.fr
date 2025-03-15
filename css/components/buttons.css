@@ -6,10 +6,10 @@
 .github-btn,
 .back-btn {
   background: var(--gradient-1);
-  color: white;
+  color: var(--white);
   border-radius: 50px;
   font-weight: 500;
-  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2);
+  box-shadow: 0 4px 15px var(--primary-light);
   border: none;
   outline: none;
   cursor: pointer;
@@ -17,7 +17,7 @@
   position: relative;
   overflow: hidden;
   /* Transition unifiée pour tous les boutons */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  transition: var(--transition);
 }
 
 /* Effet hover unifié pour tous les boutons */
@@ -26,8 +26,8 @@
 .github-btn:hover,
 .back-btn:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
-  color: white;
+  box-shadow: 0 8px 20px var(--primary-opacity);
+  color: var(--white);
 }
 
 /* Effet actif unifié */
@@ -49,7 +49,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, var(--white-opacity-20), transparent);
   transition: left 0.7s ease;
 }
 
@@ -69,11 +69,11 @@
 
 .btn-secondary {
   background: var(--gradient-2);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 4px 15px var(--accent-light, rgba(255, 107, 107, 0.2));
 }
 
 .btn-secondary:hover {
-  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 8px 20px var(--accent-opacity, rgba(255, 107, 107, 0.3));
 }
 
 .project-btn {
@@ -126,15 +126,32 @@
 /* Dark mode toggle - définition minimale, le reste dans header.css */
 .dark-mode-toggle {
   background: transparent;
-  color: white;
+  color: var(--white);
   border: none;
+  padding: 8px 10px;
   border-radius: 50px;
   cursor: pointer;
-  padding: 8px;
+  font-size: 1.1rem;
+  margin-left: 15px;
+  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
-  width: 40px;
-  font-size: 1.1rem;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--white-opacity-10);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* Styles pour les pages détail */
+body:not(.homepage) .dark-mode-toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(65px + 15px);
+  margin-left: 0;
+  height: 32px;
 }

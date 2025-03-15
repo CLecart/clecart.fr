@@ -1,6 +1,4 @@
-/* Styles pour le responsive design */
-
-/* Breakpoints principaux:
+/* Breakpoints:
 - 992px: Tablette large / Petits écrans
 - 768px: Tablette portrait / Mobile large
 - 576px: Mobile moyen
@@ -24,14 +22,13 @@
 }
 
 @media (max-width: 768px) {
-  /* Header et navigation */
   .nav-toggle {
     display: block;
-    color: white;
+    color: var(--white);
     font-size: 1.5rem;
     padding: 8px;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--white-opacity-10);
   }
   
   nav ul {
@@ -39,7 +36,7 @@
     top: 60px;
     right: 20px;
     flex-direction: column;
-    background: white;
+    background: var(--white);
     width: 250px;
     padding: 20px;
     gap: 15px;
@@ -79,7 +76,6 @@
     margin-right: 5px;
   }
   
-  /* Mode sombre pour navigation */
   body.dark-mode nav ul {
     background: var(--dark);
   }
@@ -88,7 +84,6 @@
     color: var(--text-dark);
   }
   
-  /* Adaptations générales */
   h1 {
     font-size: 2.5rem;
   }
@@ -109,7 +104,6 @@
     font-size: 1.3rem;
   }
   
-  /* GDPR Banner */
   .gdpr-content {
     flex-direction: column;
     text-align: center;
@@ -163,7 +157,7 @@
   }
 }
 
-/* Fix pour iPhone SE et problèmes de défilement horizontal */
+/* Fix pour iPhone SE */
 @media screen and (max-width: 380px) {
   html, body {
     width: 100%;

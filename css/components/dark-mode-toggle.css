@@ -29,7 +29,7 @@
   line-height: 1;
 }
 
-/* Pages spécifiques */
+/* Positionnement spécifique sur les pages détaillées */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
   top: 50%;

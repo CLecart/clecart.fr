@@ -13,7 +13,8 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -39,8 +40,8 @@
                         <li><a href="/files/CV_Christophe_Lecart.pdf" class="cv-link" download><i class="fas fa-file-download"></i> CV</a></li>
                     </ul>
                 </nav>
-                <!-- Dark mode toggle will be inserted by JavaScript -->
-                <button class="nav-toggle">
+                <!-- Correction: attribut aria-label correctement placé dans la balise button -->
+                <button class="nav-toggle" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>

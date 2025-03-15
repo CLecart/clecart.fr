@@ -1,17 +1,61 @@
 :root {
+  /* Couleurs principales */
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
+  --primary-opacity: rgba(108, 99, 255, 0.8);
+  --primary-light: rgba(108, 99, 255, 0.1);
+  --primary-ultra-light: rgba(108, 99, 255, 0.05);
+  
+  /* Couleurs secondaires */
   --secondary: #4ecdc4;
+  --secondary-opacity: rgba(78, 205, 196, 0.8);
+  --secondary-light: rgba(78, 205, 196, 0.1);
+  
+  /* Couleur d'accent */
   --accent: #ff6b6b;
+  --accent-dark: #e95f5f;
+  
+  /* Mode sombre */
   --dark: #1a1a2e;
   --darker: #14141e;
   --card-dark: #2a2a42;
+  --form-bg-dark: #2a2a3a;
+  --form-border-dark: #3e3e50;
+  
+  /* Textes */
   --text-color: #2d334a;
   --text-light: #6c757d;
   --text-dark: #f4f4f4;
+  --text-gray-dark: #d1d1d1;
+  
+  /* Couleurs neutres */
+  --white: #ffffff;
+  --black: #000000;
   --light: #f8f9fa;
+  --light-gray: #f0f0f0;
+  --border-light: rgba(0, 0, 0, 0.05);
+  --border-dark: rgba(255, 255, 255, 0.05);
+  
+  /* Transparences */
+  --white-opacity-10: rgba(255, 255, 255, 0.1);
+  --white-opacity-20: rgba(255, 255, 255, 0.2);
+  --black-opacity-10: rgba(0, 0, 0, 0.1);
+  --black-opacity-80: rgba(0, 0, 0, 0.8);
+  --black-opacity-90: rgba(0, 0, 0, 0.9);
+  
+  /* Dégradés */
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
   --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  --gradient-1-light: linear-gradient(135deg, rgba(108, 99, 255, 0.03), rgba(78, 205, 196, 0.03));
+  --gradient-dark: linear-gradient(135deg, var(--darker), var(--dark));
+  
+  /* Ombres et transitions */
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
+  --shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
+  --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
+  
   --transition: all 0.3s ease;
 }

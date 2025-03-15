@@ -72,6 +72,38 @@
   transform: translateY(-5px);
 }
 
+/* Ajout de l'effet de soulignement pour les liens de contact */
+
+/* Style cohérent pour les liens dans la section contact */
+.contact-info a {
+  color: var(--primary);
+  font-weight: 500;
+  position: relative;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Effet de soulignement au survol, identique à la navigation */
+.contact-info a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.contact-info a:hover {
+  color: rgba(108, 99, 255, 0.8);
+}
+
+.contact-info a:hover::after {
+  width: 100%;
+}
+
 /* Mode sombre */
 body.dark-mode #contact {
   background: linear-gradient(135deg, #14141e, #1a1a2e);
@@ -104,4 +136,36 @@ body.dark-mode .form-group textarea {
 
 body.dark-mode .contact-icon {
   background: var(--primary-dark);
+}
+
+body.dark-mode .contact-info a {
+  color: var(--secondary);
+}
+
+body.dark-mode .contact-info a:hover {
+  color: rgba(78, 205, 196, 0.8);
+}
+
+/* Media query pour rendre les cartes de contact responsives */
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+  
+  .contact-info,
+  .contact-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-container {
+    gap: 30px;
+  }
+  
+  .contact-info,
+  .contact-form {
+    padding: 25px;
+  }
 }

@@ -12,6 +12,7 @@
 @import './css/components/buttons.css';
 @import './css/components/cards.css';
 @import './css/components/forms.css';
+@import './css/components/gdpr.css'; /* Ajout de l'import pour le fichier GDPR */
 
 /* Layout */
 @import './css/layout/header.css';

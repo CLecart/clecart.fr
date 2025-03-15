@@ -23,24 +23,43 @@
   color: var(--text-color);
 }
 
-/* Style de base pour tous les liens de description */
+/* Style cohérent pour tous les liens de description */
 .description a {
   color: var(--primary);
-  font-weight: 600;
-  transition: var(--transition);
+  font-weight: 500;
+  position: relative;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Effet de soulignement au survol, identique à la navigation */
+.description a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
 }
 
 .description a:hover {
-  color: var(--secondary);
+  color: rgba(108, 99, 255, 0.8);
+}
+
+.description a:hover::after {
+  width: 100%;
 }
 
 /* Mode sombre - tous les liens */
 body.dark-mode .description a {
-    color: var(--secondary);
+  color: var(--secondary);
 }
 
 body.dark-mode .description a:hover {
-    color: var(--primary);
+  color: rgba(78, 205, 196, 0.8);
 }
 
 /* Styles pour les listes */

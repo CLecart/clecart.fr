@@ -1,0 +1,120 @@
+/* Styles pour la bannière GDPR avec centrage amélioré */
+
+.gdpr-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: var(--shadow-up);
+  z-index: 9999;
+  display: none;
+  text-align: center; /* Centrer le texte par défaut */
+}
+
+.gdpr-content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; /* Empiler les éléments verticalement */
+  align-items: center; /* Centrer horizontalement */
+  justify-content: center; /* Centrer verticalement */
+}
+
+.gdpr-content p {
+  margin: 0 0 20px 0; /* Marge en bas uniquement */
+  text-align: center; /* Centrer explicitement le texte */
+  max-width: 800px; /* Limiter la largeur pour une meilleure lisibilité */
+  color: var(--text-color);
+}
+
+.gdpr-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center; /* Centrer les boutons */
+  width: 100%;
+  max-width: 300px; /* Limiter la largeur */
+}
+
+/* Styles des boutons pour la bannière GDPR */
+.gdpr-buttons button {
+  min-width: 120px; /* Largeur minimale pour uniformité */
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Style pour le message de refus GDPR */
+.gdpr-message {
+  padding: 15px 20px;
+  background-color: rgba(108, 99, 255, 0.1);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  margin: 20px 0;
+  text-align: center;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.gdpr-message a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.gdpr-message a:hover {
+  color: var(--primary-dark);
+}
+
+/* Mode sombre */
+body.dark-mode .gdpr-banner {
+  background-color: var(--card-dark);
+  box-shadow: var(--shadow-up-dark);
+}
+
+body.dark-mode .gdpr-content p {
+  color: var(--text-dark);
+}
+
+/* Mode sombre pour le message */
+body.dark-mode .gdpr-message {
+  background-color: rgba(108, 99, 255, 0.15);
+  border-color: var(--primary-dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode .gdpr-message a {
+  color: var(--secondary);
+}
+
+body.dark-mode .gdpr-message a:hover {
+  color: var(--primary);
+}
+
+/* Adaptations pour mobile */
+@media (max-width: 768px) {
+  .gdpr-buttons {
+    gap: 15px;
+  }
+  
+  .gdpr-content p {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gdpr-buttons {
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+  }
+  
+  .gdpr-buttons button {
+    width: 100%;
+  }
+}

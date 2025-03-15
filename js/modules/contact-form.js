@@ -19,14 +19,6 @@ export function initContactForm() {
     }
   }
 
-  // Normalisation des éléments du formulaire
-  contactForm
-    .querySelectorAll("input, textarea, label, .form-group")
-    .forEach((el) => {
-      el.removeAttribute("style");
-      el.classList.remove("form-control");
-    });
-
   // Vérification du consentement GDPR
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
@@ -52,14 +44,18 @@ export function initContactForm() {
       formStatus.style.display = "block";
     }
 
+    // Récupération des données du formulaire
     const formData = new FormData(contactForm);
     const templateParams = {
       from_name: formData.get("from_name"),
+      user_name: formData.get("from_name"), // Pour compatibilité avec votre template
       email: formData.get("email"),
+      user_email: formData.get("email"), // Pour compatibilité avec votre template
       message: formData.get("message"),
       to_name: "Christophe",
     };
 
+    // Envoi via EmailJS avec votre configuration
     if (typeof emailjs !== "undefined") {
       emailjs
         .send("service_lokewrs", "template_2ov9l9i", templateParams)
@@ -70,7 +66,8 @@ export function initContactForm() {
           }
           contactForm.reset();
         })
-        .catch(function () {
+        .catch(function (error) {
+          console.log("FAILED...", error);
           if (formStatus) {
             formStatus.innerHTML =
               'Error sending message. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>';

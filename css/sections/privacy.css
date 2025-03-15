@@ -23,21 +23,21 @@
   color: var(--text-color);
 }
 
-/* Style cohérent pour tous les liens de la politique de confidentialité */
+/* Style cohérent pour tous les liens de la politique de confidentialité - aligné avec les liens du header */
 .description a {
   color: var(--primary);
   font-weight: 500;
   position: relative;
   padding: 5px 0;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   text-decoration: none;
 }
 
-/* S'assurer que l'effet de soulignement est cohérent */
+/* S'assurer que l'effet de soulignement est identique à celui du header */
 .description a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 0;
   width: 0;
   height: 2px;
@@ -46,7 +46,7 @@
 }
 
 .description a:hover {
-  color: var(--primary-opacity);
+  color: var(--primary-dark);
 }
 
 .description a:hover::after {
@@ -55,11 +55,15 @@
 
 /* Mode sombre - tous les liens */
 body.dark-mode .description a {
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 body.dark-mode .description a:hover {
-  color: var(--secondary-opacity);
+  color: var(--primary-dark);
+}
+
+body.dark-mode .description a::after {
+  background: var(--accent);
 }
 
 /* Styles pour les listes */

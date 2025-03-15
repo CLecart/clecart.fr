@@ -1,7 +1,7 @@
-/* Réorganisation des imports */
+/* Organisation des imports CSS */
 
 /* Base */
-@import './css/base/variables.css'; /* Garder en premier pour les dépendances */
+@import './css/base/variables.css';
 @import './css/base/reset.css';
 
 /* Utils */

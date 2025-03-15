@@ -61,11 +61,11 @@ nav ul li a:hover {
   color: var(--white-opacity-80);
 }
 
-/* Mettre à jour l'effet de soulignement */
+/* Amélioration de l'effet de soulignement - plus proche du texte */
 nav ul li a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 0;  /* Était -2px, maintenant 0 pour être plus proche du texte */
   left: 0;
   width: 0;
   height: 2px;
@@ -136,5 +136,62 @@ nav ul li a.cv-link i {
     transform: translateX(0);
     opacity: 1;
     visibility: visible;
+  }
+  
+  /* Correction des liens du menu burger */
+  nav ul li a {
+    color: var(--text-color) !important;
+    display: inline-block; /* Changé de block à inline-block */
+    padding: 10px;
+    font-weight: 600;
+    width: auto; /* Changé de 100% à auto */
+    text-align: left;
+    position: relative;
+  }
+  
+  /* Surbrillance limitée à la longueur du texte */
+  nav ul li a:hover {
+    background-color: transparent;
+  }
+  
+  /* Effet de surbrillance bleue limité à la largeur du texte */
+  nav ul li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--primary-light);
+    transition: width 0.3s ease;
+    z-index: -1;
+  }
+  
+  nav ul li a:hover::before {
+    width: 100%;
+  }
+  
+  /* Correction des couleurs de lien en mode clair */
+  nav ul li a {
+    color: var(--text-color) !important;
+    display: block;
+    padding: 10px;
+    font-weight: 600;
+    width: 100%;
+  }
+  
+  nav ul li a:hover {
+    background-color: var(--primary-light);
+    color: var(--primary) !important;
+  }
+  
+  /* Style pour les liens dans le menu dark mode */
+  body.dark-mode nav ul li a {
+    color: var(--text-dark) !important;
+  }
+  
+  body.dark-mode nav ul li a:hover {
+    background-color: var(--primary-dark);
+    color: var(--white) !important;
   }
 }

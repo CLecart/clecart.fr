@@ -4,11 +4,11 @@
   background: transparent;
   color: var(--white);
   border: none;
+  border-radius: var(--btn-radius);
   padding: 8px 10px;
-  border-radius: 50px;
+  margin-left: 15px;
   cursor: pointer;
   font-size: 1.1rem;
-  margin-left: 15px;
   transition: var(--transition);
   display: flex;
   align-items: center;
@@ -19,7 +19,6 @@
 .dark-mode-toggle:hover {
   background: var(--white-opacity-10);
   transform: translateY(-2px);
-  box-shadow: none;
 }
 
 .dark-mode-toggle i {
@@ -30,7 +29,7 @@
   line-height: 1;
 }
 
-/* Positionnement sur les pages de détail */
+/* Pages spécifiques */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
   top: 50%;
@@ -38,25 +37,6 @@ body:not(.homepage) .dark-mode-toggle {
   right: calc(65px + 15px);
   margin-left: 0;
   height: 32px;
-}
-
-body:not(.homepage) .dark-mode-toggle i {
-  margin: 0;
-}
-
-/* Positionnement en header */
-header .right-content .dark-mode-toggle {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.homepage header .right-content .dark-mode-toggle {
-  height: 36px;
-  align-self: center;
 }
 
 /* Adaptations responsive */
@@ -67,13 +47,6 @@ header .right-content .dark-mode-toggle {
   
   body:not(.homepage) .dark-mode-toggle {
     right: 80px;
-  }
-  
-  header .right-content .dark-mode-toggle {
-    height: 36px;
-    padding: 8px;
-    margin-left: 15px;
-    margin-right: 15px;
   }
 }
 
@@ -94,6 +67,5 @@ header .right-content .dark-mode-toggle {
     width: 28px;
     padding: 0;
     font-size: 0.65rem;
-    border-radius: 50%;
   }
 }

@@ -37,10 +37,37 @@ a {
   text-decoration: none;
   color: var(--primary);
   transition: var(--transition);
+  position: relative; /* Important pour les effets de soulignement */
 }
 
 a:hover {
   color: var(--primary-dark);
+}
+
+/* Style de soulignement global plus proche du texte - avec exceptions */
+a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* Exception pour les boutons - pas de soulignement */
+.btn::after,
+.project-btn::after,
+.github-btn::after,
+.back-btn::after,
+.dark-mode-toggle::after,
+.nav-btn::after {
+  display: none;
 }
 
 ul {

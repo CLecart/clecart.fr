@@ -37,6 +37,7 @@
     right: 20px;
     flex-direction: column;
     background: var(--white);
+    background-color: var(--white); /* Assurer que l'arrière-plan est blanc */
     width: 250px;
     padding: 20px;
     gap: 15px;
@@ -46,11 +47,13 @@
     transition: var(--transition);
     opacity: 0;
     z-index: 1001;
+    visibility: hidden; /* Pour s'assurer que le menu est complètement masqué */
   }
   
   nav ul.active {
     transform: translateX(0);
     opacity: 1;
+    visibility: visible;
   }
   
   nav ul li a {
@@ -58,11 +61,34 @@
     display: block;
     padding: 10px;
     font-weight: 600;
+    width: auto; /* Changer de 100% à auto pour ne pas forcer la pleine largeur */
+    box-sizing: border-box;
+    position: relative; /* Important pour le positionnement des pseudo-éléments */
+    text-decoration: none;
   }
   
+  /* Correction de l'effet de surbrillance au survol */
   nav ul li a:hover {
-    background-color: var(--primary-light); /* Remplacé rgba(108, 99, 255, 0.1) */
+    background-color: transparent; /* Supprimer l'arrière-plan pleine largeur */
     color: var(--primary);
+  }
+  
+  /* Ajout d'un pseudo-élément pour la surbrillance limitée au texte */
+  nav ul li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 0;  /* Commence à 0 et s'élargit au survol */
+    height: 100%;
+    background-color: var(--primary-light);
+    transition: width 0.3s ease;
+    z-index: -1;
+  }
+  
+  /* Au survol, la surbrillance s'étend jusqu'à la largeur du contenu */
+  nav ul li a:hover::before {
+    width: 100%;
   }
   
   nav ul li a.cv-link {
@@ -76,11 +102,11 @@
   /* Correction pour l'effet de soulignement du CV dans le menu burger */
   nav ul li a.cv-link::after {
     width: 0; /* Au lieu de display: none, on garde l'élément mais avec width: 0 */
+    bottom: 0; /* Ajusté pour être plus proche du texte */
   }
   
   nav ul li a.cv-link:hover::after {
-    width: auto; /* Au survol, on applique une largeur automatique au lieu de 100% */
-    max-width: 50%; /* On limite la largeur pour qu'elle ne dépasse pas le texte */
+    width: 100%; /* Utilise la largeur complète, mais seulement du texte */
   }
   
   nav ul li a.cv-link i {
@@ -89,10 +115,15 @@
   
   body.dark-mode nav ul {
     background: var(--dark);
+    background-color: var(--card-dark); /* Utiliser la couleur des cartes pour plus de cohérence */
   }
   
   body.dark-mode nav ul li a {
     color: var(--text-dark);
+  }
+  
+  body.dark-mode nav ul li a:hover {
+    background-color: var(--primary-opacity);
   }
   
   h1 {

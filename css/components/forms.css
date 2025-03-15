@@ -1,10 +1,17 @@
 /* Styles pour les formulaires */
 
 .contact-form {
-  background: var(--white);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: var(--shadow);
+  /* Les styles généraux sont maintenant dans contact.css */
+}
+
+/* Variables pour les champs de formulaire */
+:root {
+  --input-padding: 12px 15px;
+  --input-border: 1px solid var(--light-gray);
+  --input-radius: 8px;
+  --input-focus-shadow: 0 5px 15px var(--primary-light);
+  --input-bg: var(--white);
+  --input-color: var(--text-color);
 }
 
 .form-group {
@@ -24,26 +31,38 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid var(--light-gray);
-  border-radius: 8px;
+  padding: var(--input-padding);
+  border: var(--input-border);
+  border-radius: var(--input-radius);
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
-  background-color: var(--white); /* Changement: toujours blanc en mode clair */
-  color: var(--text-color);
+  background-color: var(--input-bg); /* Changement: toujours blanc en mode clair */
+  color: var(--input-color);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
   outline: none;
-  box-shadow: 0 5px 15px var(--primary-light);
+  box-shadow: var(--input-focus-shadow);
   background-color: var(--white);
   transform: translateY(-2px);
 }
 
-/* Ajout des styles spécifiques au mode sombre pour les formulaires */
+/* Assurer que les champs de formulaire s'intègrent bien avec l'animation de la carte */
+.contact-form:hover .form-group input,
+.contact-form:hover .form-group textarea {
+  border-color: var(--primary-light);
+}
+
+.contact-form:hover .form-group input:focus,
+.contact-form:hover .form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: var(--input-focus-shadow);
+}
+
+/* Mode sombre */
 body.dark-mode .form-group input,
 body.dark-mode .form-group textarea {
   background-color: var(--form-bg-dark);
@@ -53,11 +72,19 @@ body.dark-mode .form-group textarea {
 
 body.dark-mode .form-group input:focus,
 body.dark-mode .form-group textarea:focus {
-  border-color: var(--primary);
-  outline: none;
   box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
   background-color: var(--darker);
-  transform: translateY(-2px);
+}
+
+body.dark-mode .contact-form:hover .form-group input,
+body.dark-mode .contact-form:hover .form-group textarea {
+  border-color: var(--form-border-dark);
+}
+
+body.dark-mode .contact-form:hover .form-group input:focus,
+body.dark-mode .contact-form:hover .form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
 }
 
 .form-status {

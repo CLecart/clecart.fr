@@ -64,11 +64,30 @@
   --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-  --button-shadow: 0 4px 15px var(--primary-light);
-  --button-shadow-hover: 0 8px 20px var(--primary-opacity);
-  --button-secondary-shadow: 0 4px 15px var(--accent-light);
-  --button-secondary-shadow-hover: 0 8px 20px var(--accent-opacity);
   
+  /* Variables de boutons */
+  --btn-padding: 12px 28px;
+  --btn-radius: 50px;
+  --btn-font-weight: 500;
+  --btn-shadow: 0 4px 15px var(--primary-light);
+  --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
+  --btn-secondary-shadow: 0 4px 15px var(--accent-light);
+  --btn-secondary-shadow-hover: 0 8px 20px var(--accent-opacity);
+  
+  /* Variables de formulaires */
+  --input-padding: 12px 15px;
+  --input-border: 1px solid var(--light-gray);
+  --input-radius: 8px;
+  --input-focus-shadow: 0 5px 15px var(--primary-light);
+  --input-bg: var(--white);
+  --input-color: var(--text-color);
+  
+  /* Variables de cartes */
+  --card-padding: 25px;
+  --card-radius: 15px;
+  --card-border: 1px solid var(--border-light);
+  
+  /* Transitions */
   --transition: all 0.3s ease;
 
   /* États de formulaire */

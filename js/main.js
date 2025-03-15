@@ -8,6 +8,7 @@ import { initNavigation } from "./modules/navigation.js";
 import { initContactForm } from "./modules/contact-form.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
 import { initModals } from "./utils/modal.js";
+import { initProjectNavigation } from "./modules/project-navigation.js"; // Ajout de l'import
 
 document.addEventListener("DOMContentLoaded", () => {
   initDarkMode();
@@ -17,4 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initGDPRBanner();
   initModals();
+  initProjectNavigation(); // Ajout de l'initialisation
 });

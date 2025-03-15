@@ -4,15 +4,17 @@
 @import './css/base/variables.css'; /* Garder en premier pour les dépendances */
 @import './css/base/reset.css';
 
-/* Utils - déplacer avant les composants car ils peuvent être utilisés par eux */
+/* Utils */
 @import './css/utils/animations.css';
 @import './css/utils/responsive.css';
+@import './css/utils/modals.css';
 
 /* Composants */
 @import './css/components/buttons.css';
 @import './css/components/cards.css';
 @import './css/components/forms.css';
-@import './css/components/gdpr.css'; /* Ajout de l'import pour le fichier GDPR */
+@import './css/components/gdpr.css';
+@import './css/components/dark-mode-toggle.css';
 
 /* Layout */
 @import './css/layout/header.css';
@@ -26,5 +28,5 @@
 @import './css/sections/contact.css';
 @import './css/sections/privacy.css';
 
-/* Mode sombre - toujours en dernier pour écraser les styles si nécessaire */
-@import './darkmode.css';
+/* Thème - toujours en dernier pour écraser les styles si nécessaire */
+@import './css/theme/darkmode.css';

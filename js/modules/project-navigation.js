@@ -1,17 +1,18 @@
-// Script pour gérer la navigation entre projets dans descriptions-projects.html
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Référence au titre du projet actuel
-  const titleElement = document.getElementById("project-title");
-
-  // Table de correspondance des titres de projet
+/**
+ * Module pour la navigation entre les projets
+ */
+export function initProjectNavigation() {
+  // Mapping des IDs vers les titres de projet
   const projectTitles = {
     project1: "Groupie Tracker",
     project2: "Bomberman",
     project3: "Forum",
   };
 
-  // Fonction pour afficher un projet spécifique
+  /**
+   * Affiche un projet spécifique et masque les autres
+   * @param {string} projectId - L'ID du projet à afficher
+   */
   function showProject(projectId) {
     // Masquer tous les projets
     document.querySelectorAll(".project").forEach((project) => {
@@ -23,12 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (selectedProject) {
       selectedProject.classList.add("active");
 
-      // Mettre à jour le titre de la page
-      if (titleElement && projectTitles[projectId]) {
-        titleElement.textContent = projectTitles[projectId];
-      }
-
-      // Remonter en haut de la page, avec un délai pour s'assurer que le DOM est mis à jour
+      // Défilement en douceur vers le haut
       setTimeout(() => {
         window.scrollTo({
           top: 0,
@@ -38,18 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Fonction pour gérer la navigation par ancre d'URL
+  /**
+   * Gère la navigation basée sur l'ancre dans l'URL
+   */
   function handleProjectNavigation() {
-    // Récupérer l'ancre dans l'URL
     const hash = window.location.hash.substring(1);
-
-    // Si une ancre existe et correspond à un projet, l'afficher
     if (hash && ["project1", "project2", "project3"].includes(hash)) {
       showProject(hash);
     }
   }
 
-  // Attacher la navigation aux boutons si présents
+  // Attacher les événements aux boutons de navigation
   document.querySelectorAll(".nav-btn").forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
@@ -59,12 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Gérer la navigation initiale
+  // Initialisation et gestion des événements
   handleProjectNavigation();
-
-  // Écouter les changements d'URL
   window.addEventListener("hashchange", handleProjectNavigation);
-
-  // Exposer la fonction showProject globalement pour une utilisation externe
-  window.showProject = showProject;
-});
+}

@@ -1,6 +1,6 @@
 /* Styles pour les animations */
 
-/* Animations de base */
+/* Animations de base avec apparition */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -26,26 +26,25 @@
   transform: translateX(0) translateY(0);
 }
 
-/* Animation pour la barre de compétence */
+/* Animation de progression pour les compétences */
 @keyframes skill-animation {
   to {
     transform: scaleX(1);
   }
 }
 
-/* Animation de zoom pour la modal */
+/* Animation pour la modal */
 @keyframes modalFadeIn {
   from {opacity: 0}
   to {opacity: 1}
 }
 
-/* Animation de fondu pour les projets */
+/* Animation pour les projets */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Animation de zoom */
 @keyframes zoom {
   from {transform: scale(0.1)}
   to {transform: scale(1)}

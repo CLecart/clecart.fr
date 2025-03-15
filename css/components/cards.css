@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   padding: 25px;
-  background: white;
+  background: var(--white);
   border-radius: 15px;
   box-shadow: var(--shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -17,7 +17,7 @@
 
 .skill-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg); /* Remplacé la valeur codée en dur */
 }
 
 .skill-icon {
@@ -48,7 +48,7 @@
   max-width: 320px;
   width: 100%;
   margin: 0 auto;
-  background: white;
+  background: var(--white);
   border-radius: 15px;
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -61,7 +61,7 @@
 
 .project-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg); /* Remplacé la valeur codée en dur */
 }
 
 .project-thumb {
@@ -134,9 +134,9 @@
   padding: 15px 10px;
   margin: 0;
   border-radius: 10px;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  background-color: var(--white);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm); /* Remplacé la valeur codée en dur */
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -146,7 +146,7 @@
 
 .language-card:hover {
   transform: translateY(-7px);
-  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.2);
+  box-shadow: 0 10px 25px var(--primary-light); /* Remplacé la valeur codée en dur */
   border-color: var(--primary);
 }
 
@@ -179,8 +179,8 @@
 /* Ajout des styles pour le mode sombre */
 body.dark-mode .language-card {
   background-color: var(--card-dark);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-dark); /* Remplacé la valeur codée en dur */
+  box-shadow: var(--shadow-dark); /* Remplacé la valeur codée en dur */
 }
 
 body.dark-mode .language-card span {
@@ -188,7 +188,7 @@ body.dark-mode .language-card span {
 }
 
 body.dark-mode .language-card:hover {
-  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.25);
+  box-shadow: 0 12px 30px var(--primary-light); /* Remplacé la valeur codée en dur */
   border-color: var(--primary);
 }
 

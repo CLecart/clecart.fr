@@ -61,7 +61,7 @@
   }
   
   nav ul li a:hover {
-    background-color: rgba(108, 99, 255, 0.1);
+    background-color: var(--primary-light); /* Remplacé rgba(108, 99, 255, 0.1) */
     color: var(--primary);
   }
   

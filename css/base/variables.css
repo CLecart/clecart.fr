@@ -64,6 +64,12 @@
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   
+  /* Ombres de boutons */
+  --button-shadow: 0 4px 15px var(--primary-light);
+  --button-shadow-hover: 0 8px 20px var(--primary-opacity);
+  --button-secondary-shadow: 0 4px 15px var(--accent-light);
+  --button-secondary-shadow-hover: 0 8px 20px var(--accent-opacity);
+  
   --transition: all 0.3s ease;
 
   /* États de formulaire */

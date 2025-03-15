@@ -1,0 +1,99 @@
+/* Styles pour le bouton toggle mode sombre */
+
+.dark-mode-toggle {
+  background: transparent;
+  color: var(--white);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 15px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--white-opacity-10);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.dark-mode-toggle i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Positionnement sur les pages de détail */
+body:not(.homepage) .dark-mode-toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: calc(65px + 15px);
+  margin-left: 0;
+  height: 32px;
+}
+
+body:not(.homepage) .dark-mode-toggle i {
+  margin: 0;
+}
+
+/* Positionnement en header */
+header .right-content .dark-mode-toggle {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.homepage header .right-content .dark-mode-toggle {
+  height: 36px;
+  align-self: center;
+}
+
+/* Adaptations responsive */
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    margin-left: 15px;
+  }
+  
+  body:not(.homepage) .dark-mode-toggle {
+    right: 80px;
+  }
+  
+  header .right-content .dark-mode-toggle {
+    height: 36px;
+    padding: 8px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  body:not(.homepage) .dark-mode-toggle {
+    right: calc(65px + 10px);
+    min-width: 32px;
+    min-height: 32px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  body:not(.homepage) .dark-mode-toggle {
+    right: calc(45px + 8px);
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+    font-size: 0.65rem;
+    border-radius: 50%;
+  }
+}

@@ -1,6 +1,6 @@
 /* Styles pour le mode sombre */
 
-/* Bouton dark mode */
+/* Styles du bouton toggle mode sombre/clair */
 .dark-mode-toggle {
   background: transparent;
   color: var(--white);
@@ -23,7 +23,6 @@
   box-shadow: none;
 }
 
-/* Pages détail */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
   top: 50%;
@@ -33,7 +32,6 @@ body:not(.homepage) .dark-mode-toggle {
   height: 32px;
 }
 
-/* Style du bouton avec dimensions cohérentes par rapport au bouton "Back" */
 body:not(.homepage) .back-btn,
 body:not(.homepage) .dark-mode-toggle {
   padding: 5px 15px;
@@ -56,7 +54,6 @@ body:not(.homepage) .back-btn {
   justify-content: center;
 }
 
-/* Support mobile pour le bouton dark mode */
 @media (max-width: 768px) {
   .dark-mode-toggle {
     margin-left: 15px;
@@ -71,7 +68,6 @@ body:not(.homepage) .back-btn {
   }
 }
 
-/* Responsive */
 @media (max-width: 576px) {
   body:not(.homepage) .dark-mode-toggle {
     right: calc(65px + 10px);
@@ -121,15 +117,12 @@ body:not(.homepage) .back-btn {
   }
 }
 
-/* RÈGLES POUR LE MODE SOMBRE */
-
-/* Règles principales */
+/* Styles principaux du mode sombre */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
 }
 
-/* Header et navigation */
 body.dark-mode header {
   background: var(--dark);
 }
@@ -138,7 +131,6 @@ body.dark-mode nav ul {
   background: var(--dark);
 }
 
-/* Sections de contenus */
 body.dark-mode #hero,
 body.dark-mode #about,
 body.dark-mode #skills,
@@ -150,7 +142,6 @@ body.dark-mode article {
   background-color: var(--dark);
 }
 
-/* Cartes et conteneurs */
 body.dark-mode .project-card,
 body.dark-mode .skill-card,
 body.dark-mode .contact-info,
@@ -161,7 +152,6 @@ body.dark-mode .description {
   border-color: var(--border-dark);
 }
 
-/* Page de politique de confidentialité */
 body.dark-mode .description {
   background-color: var(--card-dark);
   color: var(--text-dark);
@@ -182,7 +172,7 @@ body.dark-mode .description strong {
   color: var(--text-dark);
 }
 
-/* Textes et titres */
+/* Adaptation des couleurs du texte */
 body.dark-mode a,
 body.dark-mode p,
 body.dark-mode h1,
@@ -196,7 +186,6 @@ body.dark-mode h3 {
   color: var(--primary);
 }
 
-/* Formulaires */
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
@@ -224,7 +213,6 @@ body.dark-mode .contact-icon {
   background-color: initial;
 }
 
-/* Sections spécifiques */
 body.dark-mode #hero {
   background-color: transparent;
   background-image: var(--hero-gradient-dark);
@@ -261,7 +249,6 @@ body.dark-mode #contact {
   background: linear-gradient(135deg, var(--darker), var(--dark));
 }
 
-/* Messages de statut */
 body.dark-mode .modal {
   background-color: var(--black-opacity-90);
 }
@@ -278,7 +265,6 @@ body.dark-mode .form-status.sending {
   background-color: var(--status-info-bg);
 }
 
-/* Footer */
 body.dark-mode footer,
 body.dark-mode footer .container,
 body.dark-mode footer div,
@@ -290,7 +276,6 @@ body.dark-mode footer p {
   box-shadow: none;
 }
 
-/* Dimensions standardisées pour les boutons */
 body:not(.homepage) .dark-mode-toggle,
 body:not(.homepage) .back-btn {
   height: 32px;
@@ -338,7 +323,6 @@ body:not(.homepage) .back-btn {
   }
 }
 
-/* Alignement vertical du bouton dark mode */
 header .right-content .dark-mode-toggle {
   height: 100%;
   display: flex;

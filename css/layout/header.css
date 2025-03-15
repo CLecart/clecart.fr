@@ -99,6 +99,7 @@ nav ul li a.cv-link i {
   z-index: 1005;
 }
 
+/* Correction pour l'affichage de l'icône hamburger */
 .nav-toggle i {
   display: block !important;
   font-size: 1.5rem;

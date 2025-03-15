@@ -41,10 +41,11 @@ header.scrolled {
   box-shadow: none;
 }
 
+/* Style du logo - blanc par défaut */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--white);
   transition: var(--transition);
   display: flex;
   flex-direction: row;
@@ -59,12 +60,18 @@ header.scrolled {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--accent);
+  background: var(--white); /* Soulignement blanc par défaut */
   transition: width 0.3s ease;
+}
+
+/* Effet de survol du logo - utilisation de la variable primary-dark pour un bleu plus foncé */
+.logo:hover {
+  color: var(--primary-dark); /* Bleu plus foncé au survol */
 }
 
 .logo:hover::after {
   width: 100%;
+  background: var(--accent); /* Soulignement rouge au survol comme les liens */
 }
 
 @media (max-width: 421px) {
@@ -97,9 +104,9 @@ nav ul {
   padding: 0;
 }
 
-/* Style des liens de navigation */
+/* Style des liens de navigation - blanc par défaut */
 nav ul li a {
-  color: var(--primary);
+  color: var(--white);
   font-weight: 500;
   position: relative;
   padding: 5px 0;
@@ -108,7 +115,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: var(--primary-dark);
+  color: var(--primary-dark); /* Même bleu foncé que le logo au survol */
 }
 
 /* Effet de soulignement spécifique au header */

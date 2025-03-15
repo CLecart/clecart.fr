@@ -106,6 +106,12 @@
   z-index: 100;
 }
 
+.back-btn:hover {
+  transform: var(--hover-y-small); /* Utilisation de la variable d'animation */
+  box-shadow: var(--btn-shadow-hover);
+  color: var(--white);
+}
+
 .nav-btn {
   padding: var(--btn-padding);
   font-size: 0.95rem;
@@ -122,12 +128,7 @@
   margin: 0;
 }
 
-.header-content .back-btn {
-  position: relative;
-  top: auto;
-  right: auto;
-}
-
+/* Animation unifiée pour tous les boutons Back */
 body:not(.homepage) .back-btn {
   position: absolute;
   top: 50%;
@@ -137,6 +138,12 @@ body:not(.homepage) .back-btn {
   justify-content: center;
   margin: 0;
   z-index: 100;
+  transition: var(--transition); /* Assurer une transition cohérente */
+}
+
+body:not(.homepage) .back-btn:hover {
+  transform: translateY(-50%) var(--hover-y-small); /* Combinaison du positionnement et de l'animation */
+  box-shadow: var(--btn-shadow-hover);
 }
 
 /* Groupe de boutons d'en-tête */

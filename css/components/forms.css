@@ -20,6 +20,7 @@
   font-size: 0.95rem;
 }
 
+/* Amélioration des champs de formulaire */
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -29,7 +30,7 @@
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
-  background-color: transparent;
+  background-color: var(--white); /* Changement: toujours blanc en mode clair */
   color: var(--text-color);
 }
 
@@ -39,6 +40,23 @@
   outline: none;
   box-shadow: 0 5px 15px var(--primary-light);
   background-color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Ajout des styles spécifiques au mode sombre pour les formulaires */
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+  background-color: var(--form-bg-dark);
+  border-color: var(--form-border-dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+  background-color: var(--darker);
   transform: translateY(-2px);
 }
 

@@ -20,6 +20,7 @@
   box-shadow: var(--shadow);
   color: var(--text-color);
   border: 1px solid var(--border-light);
+  height: 100%;
 }
 
 .contact-method {
@@ -40,6 +41,7 @@
   margin-right: 15px;
   color: var(--white);
   font-size: 1.2rem;
+  box-shadow: 0 5px 15px var(--primary-light);
 }
 
 .contact-text h4 {
@@ -72,9 +74,6 @@
   transform: translateY(-5px);
 }
 
-/* Ajout de l'effet de soulignement pour les liens de contact */
-
-/* Liens de contact */
 .contact-info a {
   color: var(--primary);
   font-weight: 500;
@@ -103,49 +102,6 @@
   width: 100%;
 }
 
-/* Mode sombre */
-body.dark-mode #contact {
-  background: var(--gradient-dark);
-}
-
-body.dark-mode .contact-info,
-body.dark-mode .contact-form {
-  background-color: var(--card-dark);
-  border: 1px solid var(--border-dark);
-  box-shadow: var(--shadow-dark);
-  color: var(--text-dark);
-}
-
-body.dark-mode .contact-info h3,
-body.dark-mode .contact-form h3,
-body.dark-mode .contact-text h4 {
-  color: var(--text-dark);
-}
-
-body.dark-mode .form-group label {
-  color: var(--text-dark);
-}
-
-body.dark-mode .form-group input,
-body.dark-mode .form-group textarea {
-  background-color: transparent;
-  border-color: #3e3e50;
-  color: var(--text-dark);
-}
-
-body.dark-mode .contact-icon {
-  background: var(--primary-dark);
-}
-
-body.dark-mode .contact-info a {
-  color: var(--secondary);
-}
-
-body.dark-mode .contact-info a:hover {
-  color: var(--secondary-opacity);
-}
-
-/* Media query pour rendre les cartes de contact responsives */
 @media (max-width: 992px) {
   .contact-container {
     grid-template-columns: 1fr;

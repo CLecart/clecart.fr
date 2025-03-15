@@ -1,3 +1,6 @@
+/**
+ * Variables CSS globales
+ */
 :root {
   /* Couleurs principales */
   --primary: #6c63ff;
@@ -29,21 +32,19 @@
   --text-dark: #f4f4f4;
   --text-gray-dark: #d1d1d1;
   
-  /* Couleurs neutres */
+  /* Neutres et transparences */
   --white: #ffffff;
   --black: #000000;
   --light-gray: #f0f0f0;
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
-  
-  /* Transparences */
   --white-opacity-10: rgba(255, 255, 255, 0.1);
   --white-opacity-20: rgba(255, 255, 255, 0.2);
   --white-opacity-80: rgba(255, 255, 255, 0.8);
   --black-opacity-10: rgba(0, 0, 0, 0.1);
+  --black-opacity-30: rgba(0, 0, 0, 0.3);
   --black-opacity-80: rgba(0, 0, 0, 0.8);
   --black-opacity-90: rgba(0, 0, 0, 0.9);
-  --black-opacity-30: rgba(0, 0, 0, 0.3);
   
   /* Dégradés */
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
@@ -51,7 +52,7 @@
   --gradient-1-light: linear-gradient(135deg, rgba(108, 99, 255, 0.03), rgba(78, 205, 196, 0.03));
   --gradient-dark: linear-gradient(135deg, var(--darker), var(--dark));
   
-  /* Patterns SVG pour fonds */
+  /* Patterns SVG */
   --hero-gradient-light: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.1" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
   --hero-gradient-dark: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
   
@@ -63,8 +64,6 @@
   --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-  
-  /* Ombres de boutons */
   --button-shadow: 0 4px 15px var(--primary-light);
   --button-shadow-hover: 0 8px 20px var(--primary-opacity);
   --button-secondary-shadow: 0 4px 15px var(--accent-light);

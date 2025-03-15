@@ -70,6 +70,17 @@
     display: flex;
     width: 100%;
     align-items: center;
+    text-decoration: none; /* Ajout pour empêcher le soulignement par défaut */
+  }
+  
+  /* Correction pour l'effet de soulignement du CV dans le menu burger */
+  nav ul li a.cv-link::after {
+    width: 0; /* Au lieu de display: none, on garde l'élément mais avec width: 0 */
+  }
+  
+  nav ul li a.cv-link:hover::after {
+    width: auto; /* Au survol, on applique une largeur automatique au lieu de 100% */
+    max-width: 50%; /* On limite la largeur pour qu'elle ne dépasse pas le texte */
   }
   
   nav ul li a.cv-link i {

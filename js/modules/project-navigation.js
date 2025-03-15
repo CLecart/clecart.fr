@@ -1,8 +1,8 @@
 /**
- * Module pour la navigation entre les projets
+ * Module de navigation entre projets
+ * @module project-navigation
  */
 export function initProjectNavigation() {
-  // Mapping des IDs vers les titres de projet
   const projectTitles = {
     project1: "Groupie Tracker",
     project2: "Bomberman",
@@ -11,20 +11,17 @@ export function initProjectNavigation() {
 
   /**
    * Affiche un projet spécifique et masque les autres
-   * @param {string} projectId - L'ID du projet à afficher
+   * @param {string} projectId - ID du projet à afficher
    */
   function showProject(projectId) {
-    // Masquer tous les projets
     document.querySelectorAll(".project").forEach((project) => {
       project.classList.remove("active");
     });
 
-    // Afficher le projet sélectionné
     const selectedProject = document.getElementById(projectId);
     if (selectedProject) {
       selectedProject.classList.add("active");
 
-      // Défilement en douceur vers le haut
       setTimeout(() => {
         window.scrollTo({
           top: 0,
@@ -34,9 +31,6 @@ export function initProjectNavigation() {
     }
   }
 
-  /**
-   * Gère la navigation basée sur l'ancre dans l'URL
-   */
   function handleProjectNavigation() {
     const hash = window.location.hash.substring(1);
     if (hash && ["project1", "project2", "project3"].includes(hash)) {
@@ -44,7 +38,6 @@ export function initProjectNavigation() {
     }
   }
 
-  // Attacher les événements aux boutons de navigation
   document.querySelectorAll(".nav-btn").forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
@@ -54,7 +47,6 @@ export function initProjectNavigation() {
     });
   });
 
-  // Initialisation et gestion des événements
   handleProjectNavigation();
   window.addEventListener("hashchange", handleProjectNavigation);
 }

@@ -74,7 +74,7 @@
 
 /* Ajout de l'effet de soulignement pour les liens de contact */
 
-/* Style cohérent pour les liens dans la section contact */
+/* Liens de contact */
 .contact-info a {
   color: var(--primary);
   font-weight: 500;
@@ -84,7 +84,6 @@
   text-decoration: none;
 }
 
-/* Effet de soulignement au survol, identique à la navigation */
 .contact-info a::after {
   content: '';
   position: absolute;

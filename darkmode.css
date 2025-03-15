@@ -1,6 +1,6 @@
 /* Styles pour le mode sombre */
 
-/* Styles du bouton dark mode */
+/* Bouton dark mode */
 .dark-mode-toggle {
   background: transparent;
   color: var(--white);
@@ -23,7 +23,7 @@
   box-shadow: none;
 }
 
-/* Styles pour les pages détail */
+/* Pages détail */
 body:not(.homepage) .dark-mode-toggle {
   position: absolute;
   top: 50%;

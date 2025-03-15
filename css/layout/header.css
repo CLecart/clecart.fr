@@ -100,7 +100,7 @@ nav ul li a.cv-link i {
 }
 
 .nav-toggle i {
-  display: block !important; /* Force l'affichage de l'icône */
+  display: block !important;
   font-size: 1.5rem;
   line-height: 1;
   width: 1.5rem;
@@ -137,25 +137,3 @@ nav ul li a.cv-link i {
     visibility: visible;
   }
 }
-
-/* Éliminer le conflit avec buttons.css */
-
-/* Correction du conflit pour le bouton de mode sombre */
-
-/* Enlever section pour bouton dark-mode - gérée dans darkmode.css */
-/* Supprimer ces règles conflictuelles */
-/* .dark-mode-toggle {
-  ...styles supprimés...
-}
-
-.dark-mode-toggle:hover {
-  ...styles supprimés...
-}
-
-.dark-mode-toggle i {
-  ...styles supprimés...
-}
-
-.dark-mode-toggle:hover i {
-  ...styles supprimés...
-} */

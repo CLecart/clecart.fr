@@ -1,4 +1,4 @@
-/* Styles pour la bannière GDPR avec centrage amélioré */
+/* Styles pour la bannière GDPR */
 
 .gdpr-banner {
   position: fixed;
@@ -9,7 +9,7 @@
   box-shadow: var(--shadow-up);
   z-index: 9999;
   display: none;
-  text-align: center; /* Centrer le texte par défaut */
+  text-align: center;
 }
 
 .gdpr-content {
@@ -17,29 +17,29 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column; /* Empiler les éléments verticalement */
-  align-items: center; /* Centrer horizontalement */
-  justify-content: center; /* Centrer verticalement */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .gdpr-content p {
-  margin: 0 0 20px 0; /* Marge en bas uniquement */
-  text-align: center; /* Centrer explicitement le texte */
-  max-width: 800px; /* Limiter la largeur pour une meilleure lisibilité */
+  margin: 0 0 20px 0;
+  text-align: center;
+  max-width: 800px;
   color: var(--text-color);
 }
 
 .gdpr-buttons {
   display: flex;
   gap: 20px;
-  justify-content: center; /* Centrer les boutons */
+  justify-content: center;
   width: 100%;
-  max-width: 300px; /* Limiter la largeur */
+  max-width: 300px;
 }
 
 /* Styles des boutons pour la bannière GDPR */
 .gdpr-buttons button {
-  min-width: 120px; /* Largeur minimale pour uniformité */
+  min-width: 120px;
   padding: 12px 24px;
   font-size: 1rem;
   cursor: pointer;

@@ -1,6 +1,6 @@
-/* Refactorisation complète - suppression de tous les conflits */
+/* Styles pour les boutons */
 
-/* Styles de base pour tous les boutons */
+/* Styles de base communs */
 .btn, 
 .project-btn,
 .github-btn,
@@ -16,7 +16,6 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  /* Transition unifiée pour tous les boutons */
   transition: var(--transition);
 }
 
@@ -123,7 +122,7 @@
   gap: 10px;
 }
 
-/* Dark mode toggle - définition minimale, le reste dans header.css */
+/* Dark mode toggle */
 .dark-mode-toggle {
   background: transparent;
   color: var(--white);

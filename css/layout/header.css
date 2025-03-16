@@ -1,4 +1,4 @@
-/* Styles pour l'en-tête */
+/* Styles pour l'en-tête - nettoyé */
 
 header {
   background: var(--gradient-1);
@@ -11,7 +11,7 @@ header {
   transition: var(--transition);
 }
 
-/* Nouveau séparateur moderne avec effet de glissement */
+/* Séparateur avec effet de glissement */
 header::after {
   content: '';
   position: absolute;
@@ -39,71 +39,39 @@ header.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
 }
 
-/* Style du logo */
+/* Style du logo - préserver l'affichage sur deux lignes */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--white);
   transition: var(--transition);
   display: flex;
-  flex-direction: row;
-  line-height: 1;
+  flex-direction: column; /* Force l'affichage sur deux lignes */
+  line-height: 1.1;
   position: relative;
 }
 
+/* Suppression de l'effet de soulignement du logo */
 .logo::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--white);
-  transition: width 0.3s ease;
+  display: none;
 }
 
 .logo:hover {
   color: var(--primary-dark);
 }
 
-.logo:hover::after {
-  width: 100%;
-  background: var(--accent);
-}
-
-@media (max-width: 421px) {
-  .logo {
-    flex-direction: column;
-  }
-}
-
 .right-content {
   display: flex;
   align-items: center;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  margin-left: auto; /* Pousse le contenu à droite */
 }
 
 /* Navigation */
-nav {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
 nav ul {
   display: flex;
   gap: 2rem;
-  background: transparent;
-  border: none;
-  box-shadow: none;
   padding: 0;
 }
 
@@ -154,69 +122,80 @@ nav ul li a.cv-link i {
   color: var(--white);
   font-size: 1.5rem;
   cursor: pointer;
-  padding: 8px;
-  margin-left: 10px;
+  padding: 8px 12px;
   z-index: 1005;
+  margin-left: 15px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.nav-toggle:hover {
+  background: var(--white-opacity-10);
 }
 
 .nav-toggle i {
-  display: block;
   font-size: 1.5rem;
   line-height: 1;
-  width: 1.5rem;
-  height: 1.5rem;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Styles mobiles */
+/* Media queries */
 @media (max-width: 768px) {
   .nav-toggle {
     display: block;
   }
   
+  /* Menu navigation - repositionné pour éviter les chevauchements */
   nav ul {
     position: absolute;
-    top: 60px;
+    top: calc(var(--header-height) + 5px); /* Position plus basse pour éviter le chevauchement */
     right: 20px;
     flex-direction: column;
     background: var(--white);
-    min-width: 150px;
+    min-width: 180px; /* Largeur minimale garantie */
     padding: 15px;
     gap: 6px;
     border-radius: 15px;
     box-shadow: var(--shadow-lg);
     transform: translateX(100%);
-    transition: var(--transition);
     opacity: 0;
     z-index: 1001;
     visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
   }
   
   nav ul.active {
     transform: translateX(0);
     opacity: 1;
     visibility: visible;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0s;
   }
   
+  nav ul li {
+    width: 100%; /* Garantit que tous les liens occupent toute la largeur */
+  }
+  
+  /* Menu navigation - Modification pour les liens */
   nav ul li a {
     color: var(--primary);
-    padding: 10px 15px;
+    padding: 12px 15px;
     font-weight: 600;
     width: 100%;
-    display: block;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
     text-align: center;
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  nav ul li a.cv-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    gap: 5px;
+  /* Suppression de l'effet de soulignement pour le menu burger */
+  nav ul li a::after {
+    display: none;
   }
   
   nav ul li a:hover {
@@ -224,26 +203,76 @@ nav ul li a.cv-link i {
     color: var(--primary-dark);
   }
   
-  nav ul li a::after {
-    display: none;
+  /* Spécifiquement pour le CV dans le menu */
+  nav ul li a.cv-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   
-  body.dark-mode nav ul li a {
-    color: var(--primary);
+  body:not(.homepage) .logo {
+    font-size: 1.6rem;
+    max-width: 65%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  body.dark-mode nav ul li a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary-dark);
+  .right-content {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 0; /* Supprime l'espace entre les éléments */
+  }
+  
+  /* S'assurer que le menu hamburger est bien positionné */
+  .nav-toggle {
+    margin-left: 12px; /* Espacement consistant */
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.4rem;
+    max-width: 60%;
   }
   
   header::after {
     bottom: -2px;
     height: 2px;
   }
+  
+  .header-content {
+    padding: 0 5px; /* Réduit le padding pour gagner de l'espace */
+  }
+  
+  .right-content {
+    gap: 0; /* Élimine l'écart supplémentaire */
+  }
 }
 
-/* Mode sombre - même séparateur */
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1.2rem;
+    max-width: 50%;
+    line-height: 1;
+  }
+  
+  .nav-toggle {
+    padding: 5px;
+    height: 32px;
+    width: 32px;
+  }
+}
+
+/* Mode sombre */
 body.dark-mode header::after {
-  opacity: 0.8; /* Légèrement plus subtil en mode sombre */
+  opacity: 0.8;
 }

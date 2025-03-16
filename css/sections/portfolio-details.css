@@ -6,11 +6,19 @@
 
 .portfolio-details .section-header {
   margin-bottom: 40px;
+  text-align: center; /* Garantit que le texte du header est centré */
 }
 
 .portfolio-details .section-header h1 {
   color: var(--primary);
   margin-bottom: 10px;
+  text-align: center; /* Centrage explicite du titre principal */
+}
+
+.portfolio-details .section-header p {
+  text-align: center; /* S'assure que le sous-titre est également centré */
+  margin: 0 auto; /* Centre le paragraphe horizontalement */
+  max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
 }
 
 .portfolio-section {
@@ -139,15 +147,9 @@ body.dark-mode .approach-item {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin: 40px 0;
-}
-
-.cta-section .btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 180px;
-  justify-content: center;
+  margin: 40px auto; /* Auto margin pour centrer horizontalement */
+  max-width: 600px; /* Largeur maximale pour contrôler l'alignement */
+  text-align: center; /* Assure le centrage du texte dans les boutons */
 }
 
 /* Mode sombre */
@@ -181,5 +183,9 @@ body.dark-mode .code-block {
   
   .portfolio-section {
     padding: 20px;
+  }
+  
+  .portfolio-details .section-header h1 {
+    font-size: 2.2rem; /* Ajustement de la taille pour mobile */
   }
 }

@@ -1,4 +1,4 @@
-/* Styles pour les animations */
+/* Styles pour les animations - nettoyé */
 
 /* Animations de base avec apparition */
 .fade-in {
@@ -26,16 +26,13 @@
   transform: translateX(0) translateY(0);
 }
 
-/* Exclusion des animations pour certains éléments en mode sombre/clair */
+/* Exclusion des animations pour éléments d'interface */
 .header-content .fade-in,
 .header-content .slide-left,
 .header-content .slide-right,
-.right-content .fade-in,
-.right-content .slide-left,
-.right-content .slide-right,
-.dark-mode-toggle.fade-in,
-.dark-mode-toggle.slide-left,
-.dark-mode-toggle.slide-right {
+.dark-mode-toggle,
+.right-content [class*="fade-"],
+.right-content [class*="slide-"] {
   opacity: 1;
   transform: translateX(0) translateY(0);
   transition: none;
@@ -43,113 +40,32 @@
 
 /* Classe pour désactiver les transitions pendant le changement de mode */
 .no-transition {
-  transition: none;
-  transform: none;
-  animation: none;
-  background-color: transparent;
-  opacity: 1;
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
+  opacity: 1 !important;
 }
 
 .no-transition::before,
 .no-transition::after {
-  transition: none;
-  transform: none;
-  animation: none;
-  opacity: 0;
+  transition: none !important;
+  opacity: 0 !important;
 }
 
-/* Optimisation des éléments hero pour transitions entre thèmes */
-#hero .hero-content .fade-in,
-#hero .hero-content .slide-left,
-#hero .hero-content .slide-right {
+/* Conteneur des boutons dans le hero */
+.hero-buttons {
   background: transparent;
 }
 
-/* Configuration du conteneur des boutons dans le hero */
-#hero .hero-content .fade-in,
-#hero .hero-buttons {
-  background: transparent;
-  box-shadow: none;
-  border: none;
-}
-
-.hero-buttons a.btn,
-.hero-buttons a.btn-secondary {
-  position: relative;
-  z-index: 10;
-}
-
-body.dark-mode .hero-content .fade-in,
-body.dark-mode #hero .fade-in,
-body.dark-mode .hero-content .slide-left,
-body.dark-mode .hero-content .slide-right {
-  background: transparent;
-}
-
-/* Transition dark/light mode */
-body.dark-mode .hero-content .fade-in,
-body.dark-mode .hero-buttons,
-body.theme-transitioning .hero-content .fade-in,
-body.theme-transitioning .hero-buttons {
-  background: transparent;
-  box-shadow: none;
-  border: none;
-}
-
-/* Classe principale pour désactiver les transitions pendant le changement de mode */
+/* Classe pour désactiver les transitions pendant le changement de mode */
 .theme-transitioning,
 .theme-transitioning * {
-  transition: none;
+  transition: none !important;
 }
 
-/* Configuration des transitions entre thèmes */
-.theme-transitioning .hero-content .fade-in,
-.theme-transitioning .hero-content .slide-left,
-.theme-transitioning .hero-content .slide-right,
-.theme-transitioning .hero-content .btn,
-.theme-transitioning .hero-content .btn-secondary,
-.theme-transitioning #hero .fade-in,
-.theme-transitioning .hero-buttons {
-  background-color: transparent;
-  transition: none;
-}
-
-/* Optimisation de l'affichage des éléments hero */
-.hero-content .fade-in,
-.hero-content .slide-left,
-.hero-content .slide-right,
-.hero-content .btn,
-.hero-content .btn-secondary {
-  position: relative;
-  z-index: 10;
-  background-color: transparent;
-}
-
-.hero-content .btn,
-.hero-content .btn-secondary {
-  position: relative;
-  z-index: 11;
-}
-
-/* Configuration des boutons pendant les transitions */
-.no-transition.btn,
-.no-transition.btn-secondary {
-  background-image: var(--gradient-1);
-  background-color: transparent;
-}
-
-.no-transition.btn-secondary {
-  background-image: var(--gradient-2);
-}
-
-/* Animation pour les différents éléments */
+/* Définition d'animations */
 @keyframes skill-animation {
   to { transform: scaleX(1); }
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 @keyframes fadeIn {
@@ -157,9 +73,9 @@ body.theme-transitioning .hero-buttons {
   to { opacity: 1; }
 }
 
-@keyframes zoom {
-  from { transform: scale(0.1); }
-  to { transform: scale(1); }
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes subtle-pulse {

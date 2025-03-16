@@ -23,10 +23,15 @@ body.dark-mode #projects {
 /* Page de description des projets */
 .description {
   max-width: 900px;
-  margin: 30px auto;
+  margin: 120px auto 30px; /* Augmenté de 30px à 120px pour éviter le chevauchement */
   padding: 30px 40px;
   position: relative;
   display: block;
+}
+
+/* Projets individuels - correction du positionnement */
+.project {
+  scroll-margin-top: 150px; /* Augmenté pour garantir la visibilité sous le header */
 }
 
 .description h2 {
@@ -49,37 +54,36 @@ body.dark-mode #projects {
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets */
+/* Navigation entre projets - centrage des éléments */
 .project-navigation {
-  margin-top: 80px;
+  margin-top: 120px; 
   margin-bottom: 30px;
   padding: 15px 0;
   border-bottom: 1px solid var(--light-gray);
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column; /* Changé en colonne pour faciliter le centrage */
+  align-items: center; /* Centre les éléments horizontalement */
+  justify-content: center;
+  text-align: center;
   position: relative;
 }
 
 .project-navigation h1 {
-  margin: 0;
-  padding: 0;
-  font-size: 1.8rem;
+  margin: 0 0 30px 0; /* Marge en bas pour séparer du groupe de boutons */
+  text-align: center;
+  width: 100%;
   color: var(--primary);
 }
 
-/* Boutons de navigation */
+/* Boutons de navigation - centrés */
 .nav-buttons {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px; /* Plus d'espace entre les boutons */
   flex-wrap: wrap;
-  justify-content: flex-end;
-  padding-right: 20px;
-  position: absolute;
-  right: 0;
-  bottom: 15px;
+  justify-content: center; /* Centre les boutons horizontalement */
+  width: 100%;
+  position: relative; /* Position relative au lieu d'absolute */
+  margin: 0 auto; /* Centre si flex ne fonctionne pas */
 }
 
 /* Animations des projets */
@@ -135,23 +139,35 @@ body.dark-mode .project-navigation {
 /* Responsive */
 @media (max-width: 768px) {
   .description {
-    margin-top: 80px;
+    margin-top: 140px; /* Augmenté encore plus sur mobile */
     padding: 25px 20px;
   }
   
   .project-navigation {
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    padding: 10px 0;
-    position: relative;
+    margin-top: 140px;
+    padding-top: 15px;
+    flex-direction: column; /* Assure que la direction reste en colonne */
+    align-items: center; /* Centre toujours horizontalement */
   }
   
   .nav-buttons {
-    margin-top: 15px;
+    margin-top: 20px;
     width: 100%;
-    justify-content: flex-end;
-    padding-right: 15px;
-    position: static;
+    justify-content: center;
+    padding: 0; /* Supprime le padding qui pourrait décentrer */
+    position: relative;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-buttons {
+    flex-direction: column; /* Empilage vertical pour petits écrans */
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nav-btn {
+    width: 80%; /* Largeur fixe pour tous les boutons */
+    max-width: 200px;
   }
 }

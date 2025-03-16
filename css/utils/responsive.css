@@ -1,179 +1,65 @@
 /**
- * Styles responsives 
- * Breakpoints:
- * - 992px: Tablette large / Petits écrans
- * - 768px: Tablette portrait / Mobile large
- * - 576px: Mobile moyen
- * - 480px: Mobile petit
- * - 360px: Mobile très petit
+ * Styles responsives - nettoyés et organisés
  */
 
-/* Tablette large / Petits écrans */
+/* Grands écrans et tablettes */
 @media (max-width: 992px) {
-  .about-content {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .container {
+    width: 95%;
+    padding: 0 15px;
   }
   
-  .profile-img {
-    margin: 0 auto 30px;
-  }
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
   
+  /* Layout grids */
+  .about-content,
   .contact-container {
     grid-template-columns: 1fr;
   }
+  
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }
 
-/* Tablette portrait / Mobile large */
+/* Tablettes et mobiles larges */
 @media (max-width: 768px) {
-  /* Navigation */
-  .nav-toggle {
-    display: block;
-    color: var(--white);
-    font-size: 1.5rem;
-    padding: 8px;
-    border-radius: 5px;
-    background: var(--white-opacity-10);
+  header {
+    height: var(--header-height);
+    padding: 0;
   }
   
-  nav ul {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    flex-direction: column;
-    background: var(--white);
-    width: auto; /* Largeur automatique basée sur le contenu */
-    min-width: 150px; /* Largeur minimale pour assurer la lisibilité */
-    padding: 15px;
-    gap: 6px;
-    border-radius: 15px;
-    box-shadow: var(--shadow-lg);
-    transform: translateX(100%);
-    transition: var(--transition);
-    opacity: 0;
-    z-index: 1001;
-    visibility: hidden;
+  .header-content {
+    height: var(--header-height);
   }
   
-  nav ul.active {
-    transform: translateX(0);
-    opacity: 1;
-    visibility: visible;
+  .header-buttons {
+    margin-left: auto;
   }
   
-  /* Liens du menu */
-  nav ul li a {
-    color: var(--primary);
-    padding: 10px 15px;
-    font-weight: 600;
-    width: 100%;
-    display: block;
-    border-radius: 8px;
-    text-align: center;
-    white-space: nowrap;
-    transition: all 0.3s ease;
-  }
-  
-  /* Correction spécifique pour le lien CV */
-  nav ul li a.cv-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    gap: 5px;
-  }
-  
-  nav ul li a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary-dark);
-  }
-  
-  /* Mode sombre - menu burger */
+  /* Mode sombre navigation */
   body.dark-mode nav ul {
     background-color: var(--card-dark);
     border: 1px solid var(--border-dark);
   }
   
-  body.dark-mode nav ul li a {
-    color: var(--primary); /* Bleu pour visibilité */
+  /* Pages projets */
+  .tech-grid, 
+  .approach-grid {
+    grid-template-columns: 1fr;
   }
   
-  body.dark-mode nav ul li a:hover {
-    background-color: rgba(108, 99, 255, 0.15);
-  }
-
-  /* Typographie responsive */
-  h1 {
-    font-size: 2.5rem;
+  .cta-section {
+    flex-direction: column;
+    align-items: center;
   }
   
-  h2 {
-    font-size: 2rem;
-  }
-  
-  h3 {
-    font-size: 1.2rem;
-  }
-  
-  .hero-content {
-    margin-top: 40px;
-  }
-  
-  #typewriter {
-    font-size: 1.3rem;
-  }
-  
-  /* GDPR responsive */
+  /* GDPR */
   .gdpr-content {
     flex-direction: column;
     text-align: center;
-    padding: 10px 5px;
-    gap: 15px;
-  }
-  
-  .gdpr-content p {
-    margin-bottom: 15px;
-  }
-
-  /* Garantir que header-content et right-content restent propres */
-  .header-content,
-  .right-content {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-  }
-
-  /* Alignement des boutons de navigation */
-  .project-navigation {
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    padding: 10px 0;
-  }
-  
-  .nav-buttons {
-    margin-top: 15px;
-    width: 100%;
-    justify-content: flex-end;
-    padding-right: 15px;
-  }
-}
-
-/* Mobile moyen */
-@media (max-width: 576px) {
-  .container {
-    width: 95%;
-    padding: 0 10px;
-  }
-  
-  .logo {
-    flex-direction: column;
-  }
-  
-  footer p {
-    font-size: 0.8rem;
-    padding: 8px 16px;
+    padding: 15px 10px;
   }
   
   .gdpr-buttons {
@@ -182,29 +68,46 @@
   }
 }
 
-/* Mobile petit */
+/* Mobiles */
 @media (max-width: 480px) {
-  .gdpr-buttons button {
-    min-width: 110px;
-    padding: 10px 15px;
-    font-size: 0.95rem;
+  .container {
+    padding: 0 var(--spacing-mobile);
   }
-}
-
-/* Mobile très petit */
-@media (max-width: 360px) {
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  
+  /* Cartes et contenus */
+  .card-base {
+    padding: 15px;
+  }
+  
+  .skill-card {
+    height: auto;
+    min-height: 250px;
+  }
+  
+  .project-card {
+    min-height: auto;
+  }
+  
+  .project-content p {
+    min-height: auto;
+    max-height: 4.5em;
+  }
+  
+  /* Boutons GDPR */
   .gdpr-buttons {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   
   .gdpr-buttons button {
     width: 100%;
-    margin: 0 auto;
   }
 }
 
-/* Ajustements pour petits appareils */
+/* Très petits écrans */
 @media screen and (max-width: 380px) {
   html, body {
     width: 100%;
@@ -212,21 +115,33 @@
     overflow-x: hidden;
   }
   
-  .project-card {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+  /* Pas de débordements horizontaux */
+  * {
+    box-sizing: border-box;
   }
   
-  .projects-grid {
-    grid-template-columns: 1fr;
-    width: 100%;
+  body {
+    font-size: 14px;
   }
   
   .container {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 8px;
     width: 100%;
+  }
+  
+  /* Éléments media responsifs */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Pages projets */
+  body:not(.homepage) main {
+    margin-top: 70px;
+  }
+  
+  .project-navigation {
+    margin-top: 10px;
+    padding-top: 0;
   }
 }

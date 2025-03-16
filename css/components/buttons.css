@@ -1,4 +1,4 @@
-/* Styles pour les boutons */
+/* Styles pour les boutons - nettoyé */
 
 /* Styles de base communs */
 .btn, 
@@ -40,7 +40,7 @@
   transform: translateY(-2px);
 }
 
-/* Effet de vague unifié */
+/* Effet de vague */
 .btn::before,
 .project-btn::before,
 .github-btn::before,
@@ -86,45 +86,18 @@
   font-size: 0.95rem;
 }
 
-/* Effet de lueur amélioré pour les boutons GitHub */
+/* Boutons GitHub */
 .github-btn {
-  width: auto;
   height: 44px;
   padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  background: var(--gradient-2); /* Utiliser le même dégradé que btn-secondary */
+  background: var(--gradient-2);
   box-shadow: var(--btn-secondary-shadow);
-  position: relative;
-  overflow: hidden;
 }
 
-.github-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--btn-secondary-shadow-hover);
-  color: var(--white);
-  filter: brightness(1.1); /* Effet de luminosité accrue au survol */
-}
-
-/* Effet de projection lumineuse au survol */
-.github-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, var(--white-opacity-20), transparent);
-  transition: left 0.7s ease;
-}
-
-.github-btn:hover::before {
-  left: 100%;
-}
-
-/* Effet supplémentaire de lueur externe */
 .github-btn:hover {
   animation: pulse-red 2s infinite;
 }
@@ -141,22 +114,22 @@
   }
 }
 
+/* Bouton Back */
 .back-btn {
-  display: inline-flex;
+  height: 36px;
+  min-height: 36px;
+  width: 65px;
+  min-width: 65px;
+  padding: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 20px;
   font-size: 0.9rem;
-  height: 40px;
   z-index: 100;
+  order: 2;
 }
 
-.back-btn:hover {
-  transform: var(--hover-y-small); /* Utilisation de la variable d'animation */
-  box-shadow: var(--btn-shadow-hover);
-  color: var(--white);
-}
-
+/* Bouton Navigation */
 .nav-btn {
   padding: var(--btn-padding);
   font-size: 0.95rem;
@@ -165,54 +138,58 @@
   display: inline-block;
 }
 
-/* Positionnement spécifique */
-.description .back-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  margin: 0;
-}
-
-/* Animation unifiée pour tous les boutons Back */
-body:not(.homepage) .back-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 15px;
-  width: 65px;
-  justify-content: center;
-  margin: 0;
-  z-index: 100;
-  transition: var(--transition); /* Assurer une transition cohérente */
-}
-
-body:not(.homepage) .back-btn:hover {
-  transform: translateY(-50%) var(--hover-y-small); /* Combinaison du positionnement et de l'animation */
-  box-shadow: var(--btn-shadow-hover);
-}
-
-/* Groupe de boutons d'en-tête */
+/* Header buttons container */
 .header-buttons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--btn-gap, 10px);
+  z-index: 100;
+  position: relative;
+  margin: 0; /* Supprime les marges qui peuvent causer des décalages */
 }
 
-/* Adaptation responsive */
-@media (max-width: 576px) {
-  body:not(.homepage) .back-btn {
-    min-width: 65px;
-    min-height: 32px;
-    padding: 5px 10px;
+/* Optimisation du bouton hamburger */
+.nav-toggle {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white-opacity-10);
+  border-radius: 5px;
+}
+
+.nav-toggle:active {
+  background-color: var(--white-opacity-20);
+  transform: scale(0.95);
+}
+
+/* Adaptations responsive */
+@media (max-width: 480px) {
+  .back-btn {
+    min-width: 55px;
+    width: 55px;
     font-size: 0.8rem;
+  }
+  
+  .header-buttons {
+    gap: 5px; /* Réduire l'espace entre les boutons */
   }
 }
 
 @media (max-width: 360px) {
-  body:not(.homepage) .back-btn {
+  .back-btn {
     min-width: 45px;
     width: 45px;
-    padding: 0 5px;
-    font-size: 0.65rem;
+    height: 32px;
+    min-height: 32px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-buttons {
+    gap: 8px; /* Espacement réduit pour une meilleure cohérence sur mobile */
+    margin-right: 5px; /* Léger espacement à droite pour éviter de coller au bord */
   }
 }

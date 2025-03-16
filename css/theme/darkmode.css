@@ -1,17 +1,9 @@
 /**
- * Styles du mode sombre - organisation optimisée
+ * Styles du mode sombre - nettoyés
  */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
-}
-
-/* Gestion des transitions lors du changement de thème */
-.no-transition {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  opacity: 1 !important;
 }
 
 /* Header et navigation */
@@ -19,19 +11,11 @@ body.dark-mode header {
   background: var(--gradient-dark);
 }
 
-body.dark-mode header .header-content,
-body.dark-mode header .right-content,
-body.dark-mode nav,
-body.dark-mode nav ul:not(.active) {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
 /* Menu mobile en mode sombre */
 @media (max-width: 768px) {
-  body.dark-mode nav ul.active {
+  body.dark-mode nav ul {
     background-color: var(--card-dark);
+    border: 1px solid var(--border-dark);
   }
 }
 
@@ -51,19 +35,6 @@ body.dark-mode #contact {
   background: var(--gradient-dark);
 }
 
-/* Cartes et éléments */
-body.dark-mode .project-card,
-body.dark-mode .skill-card,
-body.dark-mode .contact-info,
-body.dark-mode .contact-form,
-body.dark-mode .language-card,
-body.dark-mode .description {
-  background-color: var(--card-dark);
-  color: var(--text-dark);
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-dark);
-}
-
 /* Typographie */
 body.dark-mode a,
 body.dark-mode p,
@@ -78,10 +49,6 @@ body.dark-mode h3 {
   color: var(--primary);
 }
 
-body.dark-mode .project-content p {
-  color: var(--text-gray-dark);
-}
-
 /* Formulaires */
 body.dark-mode input,
 body.dark-mode textarea,
@@ -92,11 +59,7 @@ body.dark-mode select {
 }
 
 /* Footer */
-body.dark-mode footer,
-body.dark-mode footer .container,
-body.dark-mode footer div,
-body.dark-mode footer p {
-  background: transparent;
+body.dark-mode footer {
   color: var(--white);
   opacity: 0.9;
 }

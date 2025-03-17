@@ -1,4 +1,4 @@
-/* Styles pour les animations - nettoyé */
+/* Styles pour les animations - nettoyés et consolidés */
 
 /* Animations de base avec apparition */
 .fade-in {
@@ -27,50 +27,21 @@
 }
 
 /* Exclusion des animations pour éléments d'interface */
-.header-content .fade-in,
-.header-content .slide-left,
-.header-content .slide-right,
-.dark-mode-toggle,
-.right-content [class*="fade-"],
-.right-content [class*="slide-"] {
+.header-content *, .dark-mode-toggle, .right-content * {
   opacity: 1;
-  transform: translateX(0) translateY(0);
+  transform: none;
   transition: none;
 }
 
 /* Classe pour désactiver les transitions pendant le changement de mode */
-.no-transition {
-  transition: none !important;
-  transform: none !important;
-  animation: none !important;
-  opacity: 1 !important;
-}
-
-.no-transition::before,
-.no-transition::after {
-  transition: none !important;
-  opacity: 0 !important;
-}
-
-/* Conteneur des boutons dans le hero */
-.hero-buttons {
-  background: transparent;
-}
-
-/* Classe pour désactiver les transitions pendant le changement de mode */
-.theme-transitioning,
 .theme-transitioning * {
   transition: none !important;
 }
 
-/* Définition d'animations */
-@keyframes skill-animation {
-  to { transform: scaleX(1); }
-}
-
+/* Définition d'animations - consolidées pour éviter les doublons */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes modalFadeIn {
@@ -78,6 +49,11 @@
   to { opacity: 1; }
 }
 
+@keyframes skill-animation {
+  to { transform: scaleX(1); }
+}
+
+/* Définition centralisée pour éviter la duplication */
 @keyframes subtle-pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }

@@ -1,5 +1,5 @@
 /**
- * Module pour les animations
+ * Module pour les animations - optimisé
  */
 
 /**

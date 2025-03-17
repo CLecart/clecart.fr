@@ -1,4 +1,4 @@
-/* Styles pour la page détails du portfolio */
+/* Styles pour la page détails du portfolio - nettoyés */
 
 .portfolio-details {
   padding: 130px 0 60px;
@@ -6,19 +6,19 @@
 
 .portfolio-details .section-header {
   margin-bottom: 40px;
-  text-align: center; /* Garantit que le texte du header est centré */
+  text-align: center;
 }
 
 .portfolio-details .section-header h1 {
   color: var(--primary);
   margin-bottom: 10px;
-  text-align: center; /* Centrage explicite du titre principal */
+  text-align: center;
 }
 
 .portfolio-details .section-header p {
-  text-align: center; /* S'assure que le sous-titre est également centré */
-  margin: 0 auto; /* Centre le paragraphe horizontalement */
-  max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .portfolio-section {
@@ -37,8 +37,16 @@
 }
 
 .portfolio-section h2 i {
-  color: var(--accent);
+  color: var(--card-icon-color);
   font-size: 1.5rem;
+  transition: var(--card-icon-transition);
+}
+
+/* Effet de survol pour les icônes - simplifié */
+.portfolio-section:hover h2 i {
+  color: var(--card-icon-hover-color);
+  transform: var(--card-icon-hover-transform);
+  animation: subtle-pulse 2s infinite ease-in-out;
 }
 
 /* Grille pour les technologies */
@@ -54,15 +62,22 @@
   border-radius: 10px;
   transition: var(--transition);
   border: 1px solid transparent;
+  box-shadow: var(--shadow);
 }
 
 body.dark-mode .tech-item {
-  background-color: rgba(108, 99, 255, 0.15);
+  background-color: var(--primary-light-15);
+  box-shadow: var(--shadow-dark);
 }
 
 .tech-item:hover {
   transform: var(--hover-y-tiny);
   border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+}
+
+body.dark-mode .tech-item:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 .tech-item h3 {
@@ -120,45 +135,19 @@ body.dark-mode .tech-item {
   margin-top: 20px;
 }
 
-.approach-item {
-  background-color: var(--primary-light);
-  padding: 20px;
-  border-radius: 10px;
-  transition: var(--transition);
-}
-
-body.dark-mode .approach-item {
-  background-color: rgba(108, 99, 255, 0.15);
-}
-
-.approach-item:hover {
-  transform: var(--hover-y-tiny);
-  box-shadow: var(--shadow);
-}
-
-.approach-item h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: var(--primary);
-}
-
 /* Section CTA */
 .cta-section {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin: 40px auto; /* Auto margin pour centrer horizontalement */
-  max-width: 600px; /* Largeur maximale pour contrôler l'alignement */
-  text-align: center; /* Assure le centrage du texte dans les boutons */
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
 }
 
 /* Mode sombre */
 body.dark-mode .portfolio-section {
   background-color: var(--card-dark);
-}
-
-body.dark-mode .portfolio-section h2 {
-  color: var(--primary);
 }
 
 body.dark-mode .code-block {
@@ -186,6 +175,6 @@ body.dark-mode .code-block {
   }
   
   .portfolio-details .section-header h1 {
-    font-size: 2.2rem; /* Ajustement de la taille pour mobile */
+    font-size: 2.2rem;
   }
 }

@@ -60,9 +60,11 @@
   background-color: var(--primary-light);
   padding: 20px;
   border-radius: 10px;
-  transition: var(--transition);
+  transition: var(--card-transition);
   border: 1px solid transparent;
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
 }
 
 body.dark-mode .tech-item {
@@ -71,7 +73,7 @@ body.dark-mode .tech-item {
 }
 
 .tech-item:hover {
-  transform: var(--hover-y-tiny);
+  transform: var(--card-hover-transform); /* Utilise la même variable que les autres cartes */
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
 }
@@ -84,6 +86,16 @@ body.dark-mode .tech-item:hover {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: var(--primary);
+  transition: var(--card-icon-transition);
+}
+
+.tech-item:hover h3 {
+  color: var(--card-icon-hover-color); /* Animation de couleur identique aux icônes */
+}
+
+/* Animation de pulsation pour les cartes */
+.tech-item:hover h3 {
+  animation: subtle-pulse 2s infinite ease-in-out;
 }
 
 /* Liste de fonctionnalités */

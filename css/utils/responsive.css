@@ -91,11 +91,6 @@
     min-height: auto;
   }
   
-  .project-content p {
-    min-height: auto;
-    max-height: 4.5em;
-  }
-  
   /* Boutons GDPR */
   .gdpr-buttons {
     flex-direction: column;

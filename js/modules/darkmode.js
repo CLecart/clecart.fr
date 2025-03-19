@@ -26,8 +26,8 @@ export function initDarkMode() {
 
   // Fonction pour appliquer un thème
   function applyTheme(isDark) {
-    // Désactivation temporaire des transitions
-    document.body.classList.add("theme-transitioning");
+    // Création d'une classe spécifique pour contrôler les transitions
+    document.documentElement.classList.add("theme-transitioning");
 
     // Préparer les éléments sensibles au changement de thème
     document
@@ -65,13 +65,13 @@ export function initDarkMode() {
         : "var(--white)";
     }
 
-    // Réactiver les animations
+    // Réactiver les animations avec délai suffisant
     setTimeout(() => {
       document.querySelectorAll(".no-transition").forEach((el) => {
         el.classList.remove("no-transition");
         el.style.backgroundColor = "";
       });
-      document.body.classList.remove("theme-transitioning");
+      document.documentElement.classList.remove("theme-transitioning");
     }, 150);
   }
 

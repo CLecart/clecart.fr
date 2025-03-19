@@ -38,8 +38,13 @@
 }
 
 /* Support pour le changement de thème sans animations */
-.theme-transitioning * {
-  transition: none !important; /* Exception justifiée: priorité technique */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *:before,
+.theme-transitioning *:after {
+  transition: none;
+  animation-duration: 0s;
+  animation-delay: 0s;
 }
 
 /* Keyframes centralisés et standardisés */

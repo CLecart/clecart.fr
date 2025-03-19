@@ -162,6 +162,25 @@ body.dark-mode .project.description.card-base:hover {
   box-shadow: var(--card-box-shadow-hover-dark);
 }
 
+/* Style spécial pour les cartes avec un sélecteur hautement spécifique */
+body #project1.project.description.card-base:hover,
+body #project2.project.description.card-base:hover,
+body #project3.project.description.card-base:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+  z-index: 10; /* Valeur plus élevée pour garantir la visibilité */
+}
+
+/* Forcer la priorité avec des sélecteurs plus spécifiques plutôt qu'avec !important */
+body .project.active.description.card-base:hover,
+html body .project.active#project1.description.card-base:hover,
+html body .project.active#project2.description.card-base:hover, 
+html body .project.active#project3.description.card-base:hover {
+  transform: translateY(-10px);
+  z-index: 10;
+}
+
 @media (max-width: 768px) {
   .description {
     margin-top: 140px;

@@ -115,7 +115,22 @@ body.dark-mode .tech-item:hover {
   position: absolute;
   left: 0;
   top: 4px;
-  color: var(--accent);
+  color: var(--primary); /* Bleu par défaut */
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-size: 1.1rem;
+}
+
+/* Animation au survol - passage au rouge avec effet de pulsation */
+.features-list li:hover i {
+  color: var(--accent); /* Rouge au survol */
+  animation: checkmark-pulse 1.5s infinite ease-in-out;
+}
+
+/* Animation de pulsation pour les checkmarks */
+@keyframes checkmark-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 /* Bloc de code */

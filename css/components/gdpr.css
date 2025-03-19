@@ -52,7 +52,7 @@
 /* Style pour le message de refus GDPR */
 .gdpr-message {
   padding: 15px 20px;
-  background-color: rgba(108, 99, 255, 0.1);
+  background-color: var(--primary-light);
   border: 1px solid var(--primary);
   border-radius: 10px;
   margin: 20px 0;
@@ -83,7 +83,7 @@ body.dark-mode .gdpr-content p {
 
 /* Mode sombre pour le message */
 body.dark-mode .gdpr-message {
-  background-color: rgba(108, 99, 255, 0.15);
+  background-color: var(--primary-light-15);
   border-color: var(--primary-dark);
   color: var(--text-dark);
 }

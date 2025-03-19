@@ -13,25 +13,20 @@
   justify-content: center;
 }
 
-/* Les styles principaux des cartes ont été déplacés dans cards.css */
-
-/* Modes sombre */
 body.dark-mode #projects {
   background-color: var(--darker);
 }
 
-/* Page de description des projets */
 .description {
   max-width: 900px;
-  margin: 120px auto 30px; /* Augmenté de 30px à 120px pour éviter le chevauchement */
+  margin: 120px auto 30px;
   padding: 30px 40px;
   position: relative;
   display: block;
 }
 
-/* Projets individuels - correction du positionnement */
 .project {
-  scroll-margin-top: 150px; /* Augmenté pour garantir la visibilité sous le header */
+  scroll-margin-top: 150px;
 }
 
 .description h2 {
@@ -54,42 +49,44 @@ body.dark-mode #projects {
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets - centrage des éléments */
 .project-navigation {
   margin-top: 120px; 
   margin-bottom: 30px;
   padding: 15px 0;
   border-bottom: 1px solid var(--light-gray);
   display: flex;
-  flex-direction: column; /* Changé en colonne pour faciliter le centrage */
-  align-items: center; /* Centre les éléments horizontalement */
+  flex-direction: column; 
+  align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
 }
 
-.project-navigation h1 {
-  margin: 0 0 30px 0; /* Marge en bas pour séparer du groupe de boutons */
-  text-align: center;
-  width: 100%;
-  color: var(--primary);
-}
-
-/* Boutons de navigation - centrés */
 .nav-buttons {
   display: flex;
-  gap: 15px; /* Plus d'espace entre les boutons */
+  gap: 15px;
   flex-wrap: wrap;
-  justify-content: center; /* Centre les boutons horizontalement */
+  justify-content: center;
   width: 100%;
-  position: relative; /* Position relative au lieu d'absolute */
-  margin: 0 auto; /* Centre si flex ne fonctionne pas */
+  position: relative;
+  margin: 0 auto;
 }
 
-/* Animations des projets */
+.nav-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn.active {
+  background: var(--gradient-2);
+  box-shadow: var(--btn-shadow-hover);
+  transform: translateY(-5px);
+}
+
 .project {
   display: none;
   animation: var(--fade-in-animation);
+  opacity: 0;
 }
 
 .project.active {
@@ -97,7 +94,6 @@ body.dark-mode #projects {
   opacity: 1;
 }
 
-/* Mode sombre */
 body.dark-mode #projects {
   background-color: var(--darker);
 }
@@ -136,38 +132,67 @@ body.dark-mode .project-navigation {
   border-bottom: 1px solid var(--form-border-dark);
 }
 
-/* Responsive */
+.card-base.description {
+  transition: var(--card-transition);
+}
+
+.card-base.description:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+body.dark-mode .card-base.description:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+.project.description.card-base {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+
+.project.description.card-base:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+  z-index: 1;
+}
+
+body.dark-mode .project.description.card-base:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
 @media (max-width: 768px) {
   .description {
-    margin-top: 140px; /* Augmenté encore plus sur mobile */
+    margin-top: 140px;
     padding: 25px 20px;
   }
   
   .project-navigation {
     margin-top: 140px;
     padding-top: 15px;
-    flex-direction: column; /* Assure que la direction reste en colonne */
-    align-items: center; /* Centre toujours horizontalement */
+    flex-direction: column;
+    align-items: center;
   }
   
   .nav-buttons {
     margin-top: 20px;
     width: 100%;
     justify-content: center;
-    padding: 0; /* Supprime le padding qui pourrait décentrer */
+    padding: 0;
     position: relative;
   }
 }
 
 @media (max-width: 480px) {
   .nav-buttons {
-    flex-direction: column; /* Empilage vertical pour petits écrans */
+    flex-direction: column;
     align-items: center;
     gap: 10px;
   }
   
   .nav-btn {
-    width: 80%; /* Largeur fixe pour tous les boutons */
+    width: 80%;
     max-width: 200px;
   }
 }

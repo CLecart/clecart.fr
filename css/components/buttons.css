@@ -1,6 +1,5 @@
-/* Styles pour les boutons - nettoyé */
+/* Styles pour les boutons */
 
-/* Styles de base communs */
 .btn, 
 .project-btn,
 .github-btn,
@@ -20,7 +19,6 @@
   transition: var(--btn-transition);
 }
 
-/* Effet hover unifié */
 .btn:hover,
 .project-btn:hover,
 .github-btn:hover,
@@ -31,7 +29,6 @@
   color: var(--white);
 }
 
-/* Effet actif unifié */
 .btn:active,
 .project-btn:active,
 .github-btn:active,
@@ -40,7 +37,6 @@
   transform: translateY(-2px);
 }
 
-/* Effet de vague */
 .btn::before,
 .project-btn::before,
 .github-btn::before,
@@ -64,7 +60,6 @@
   left: 100%;
 }
 
-/* Variations spécifiques */
 .btn {
   display: inline-block;
   padding: var(--btn-padding);
@@ -86,7 +81,6 @@
   font-size: 0.95rem;
 }
 
-/* Boutons GitHub */
 .github-btn {
   height: 44px;
   padding: 0 20px;
@@ -104,17 +98,16 @@
 
 @keyframes pulse-red {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4);
+    box-shadow: 0 0 0 0 var(--accent-opacity);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+    box-shadow: 0 0 0 10px transparent;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+    box-shadow: 0 0 0 0 transparent;
   }
 }
 
-/* Bouton Back */
 .back-btn {
   height: 36px;
   min-height: 36px;
@@ -129,7 +122,6 @@
   order: 2;
 }
 
-/* Bouton Navigation */
 .nav-btn {
   padding: var(--btn-padding);
   font-size: 0.95rem;
@@ -138,17 +130,15 @@
   display: inline-block;
 }
 
-/* Header buttons container */
 .header-buttons {
   display: flex;
   align-items: center;
   gap: var(--btn-gap, 10px);
   z-index: 100;
   position: relative;
-  margin: 0; /* Supprime les marges qui peuvent causer des décalages */
+  margin: 0;
 }
 
-/* Optimisation du bouton hamburger */
 .nav-toggle {
   height: 40px;
   width: 40px;
@@ -164,7 +154,6 @@
   transform: scale(0.95);
 }
 
-/* Adaptations responsive */
 @media (max-width: 480px) {
   .back-btn {
     min-width: 55px;
@@ -173,7 +162,7 @@
   }
   
   .header-buttons {
-    gap: 5px; /* Réduire l'espace entre les boutons */
+    gap: 5px;
   }
 }
 
@@ -189,7 +178,7 @@
 
 @media (max-width: 768px) {
   .header-buttons {
-    gap: 8px; /* Espacement réduit pour une meilleure cohérence sur mobile */
-    margin-right: 5px; /* Léger espacement à droite pour éviter de coller au bord */
+    gap: 8px;
+    margin-right: 5px;
   }
 }

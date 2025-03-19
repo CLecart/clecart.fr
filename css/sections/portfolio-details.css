@@ -147,6 +147,17 @@ body.dark-mode .tech-item:hover {
   margin-top: 20px;
 }
 
+/* Animation des cartes explicatives cohérente avec les autres cartes du site */
+.approach-item {
+  transition: var(--card-transition);
+}
+
+.approach-item:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
 /* Section CTA */
 .cta-section {
   display: flex;
@@ -160,6 +171,10 @@ body.dark-mode .tech-item:hover {
 /* Mode sombre */
 body.dark-mode .portfolio-section {
   background-color: var(--card-dark);
+}
+
+body.dark-mode .approach-item:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 body.dark-mode .code-block {

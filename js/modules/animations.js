@@ -1,9 +1,5 @@
 /**
- * Module pour les animations - optimisé
- */
-
-/**
- * Initialise les animations d'apparition au défilement
+ * Module pour les animations
  */
 export function initAnimations() {
   const observerOptions = {
@@ -16,7 +12,6 @@ export function initAnimations() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
-        observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
@@ -26,6 +21,16 @@ export function initAnimations() {
     .forEach((element) => {
       observer.observe(element);
     });
+
+  if (document.querySelector(".project-navigation")) {
+    document
+      .querySelectorAll(".project.description.card-base")
+      .forEach((card) => {
+        if (!card.classList.contains("appear")) {
+          observer.observe(card);
+        }
+      });
+  }
 }
 
 /**
@@ -61,11 +66,11 @@ export function initTypewriter() {
 
     if (!isDeleting && charIndex === currentWord.length) {
       isDeleting = true;
-      typeSpeed = 1000; // Pause before deleting
+      typeSpeed = 1000;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       wordIndex = (wordIndex + 1) % words.length;
-      typeSpeed = 500; // Pause before typing new word
+      typeSpeed = 500;
     }
 
     setTimeout(type, typeSpeed);

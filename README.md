@@ -122,7 +122,24 @@ Pour exécuter ce projet localement:
 
 ## Déploiement
 
+Le portfolio peut être déployé de plusieurs façons:
+
+### Déploiement avec Docker
+
+1. Assurez-vous que Docker est installé sur votre système
+2. Exécutez le script de déploiement:
+
+   ```bash
+   ./deploy.sh
+   ```
+
+3. Le site sera disponible sur `http://localhost`
+
+### Déploiement manuel
+
 Le portfolio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
+
+Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur web.
 
 ## Contact
 

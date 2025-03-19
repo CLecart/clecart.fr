@@ -11,7 +11,6 @@
   position: relative;
 }
 
-/* Fond géométrique moderne pour le hero */
 #hero::before {
   content: '';
   position: absolute;
@@ -64,18 +63,16 @@
   margin: 10px 8px;
 }
 
-/* Mode sombre */
 body.dark-mode #hero::before {
-  background-image: radial-gradient(rgba(108, 99, 255, 0.2) 1px, transparent 1px);
+  background-image: radial-gradient(var(--primary-light-20) 1px, transparent 1px);
   opacity: 0.3;
 }
 
-body.dark-mode .hero-content h1,
-body.dark-mode .hero-content p {
+body.dark-mode #hero .hero-content h1,
+body.dark-mode #hero .hero-content p {
   color: var(--text-dark);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero-content {
     margin-top: 40px;

@@ -1,4 +1,4 @@
-/* Styles pour l'en-tête - nettoyé */
+/* Styles pour l'en-tête */
 
 header {
   background: var(--gradient-1);
@@ -9,9 +9,9 @@ header {
   z-index: 1000;
   box-shadow: var(--header-shadow);
   transition: var(--transition);
+  height: var(--header-height);
 }
 
-/* Séparateur avec effet de glissement */
 header::after {
   content: '';
   position: absolute;
@@ -33,27 +33,29 @@ header::after {
 
 header.scrolled {
   padding: 10px 0;
+  height: var(--header-height-scrolled);
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
-/* Style du logo - préserver l'affichage sur deux lignes */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--white);
   transition: var(--transition);
   display: flex;
-  flex-direction: column; /* Force l'affichage sur deux lignes */
+  flex-direction: column;
   line-height: 1.1;
   position: relative;
+  z-index: 100;
+  padding-bottom: 3px;
 }
 
-/* Suppression de l'effet de soulignement du logo */
 .logo::after {
   display: none;
 }
@@ -65,17 +67,15 @@ header.scrolled {
 .right-content {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Pousse le contenu à droite */
+  margin-left: auto;
 }
 
-/* Navigation */
 nav ul {
   display: flex;
   gap: 2rem;
   padding: 0;
 }
 
-/* Style des liens de navigation */
 nav ul li a {
   color: var(--white);
   font-weight: 500;
@@ -114,7 +114,6 @@ nav ul li a.cv-link i {
   font-size: 0.9rem;
 }
 
-/* Bouton de menu mobile */
 .nav-toggle {
   display: none;
   background: transparent;
@@ -142,20 +141,22 @@ nav ul li a.cv-link i {
   justify-content: center;
 }
 
-/* Media queries */
 @media (max-width: 768px) {
+  header {
+    height: var(--header-height-mobile);
+  }
+  
   .nav-toggle {
     display: block;
   }
   
-  /* Menu navigation - repositionné pour éviter les chevauchements */
   nav ul {
     position: absolute;
-    top: calc(var(--header-height) + 5px); /* Position plus basse pour éviter le chevauchement */
+    top: calc(var(--header-height-mobile) + 5px);
     right: 20px;
     flex-direction: column;
     background: var(--white);
-    min-width: 180px; /* Largeur minimale garantie */
+    min-width: 180px;
     padding: 15px;
     gap: 6px;
     border-radius: 15px;
@@ -175,16 +176,15 @@ nav ul li a.cv-link i {
   }
   
   nav ul li {
-    width: 100%; /* Garantit que tous les liens occupent toute la largeur */
+    width: 100%;
   }
   
-  /* Menu navigation - Modification pour les liens */
   nav ul li a {
     color: var(--primary);
     padding: 12px 15px;
     font-weight: 600;
     width: 100%;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
@@ -193,7 +193,6 @@ nav ul li a.cv-link i {
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  /* Suppression de l'effet de soulignement pour le menu burger */
   nav ul li a::after {
     display: none;
   }
@@ -203,7 +202,6 @@ nav ul li a.cv-link i {
     color: var(--primary-dark);
   }
   
-  /* Spécifiquement pour le CV dans le menu */
   nav ul li a.cv-link {
     display: flex;
     align-items: center;
@@ -213,7 +211,7 @@ nav ul li a.cv-link i {
   
   body:not(.homepage) .logo {
     font-size: 1.6rem;
-    max-width: 65%;
+    max-width: 60%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -223,12 +221,11 @@ nav ul li a.cv-link i {
     display: flex;
     align-items: center;
     margin-left: auto;
-    gap: 0; /* Supprime l'espace entre les éléments */
+    gap: 0;
   }
   
-  /* S'assurer que le menu hamburger est bien positionné */
   .nav-toggle {
-    margin-left: 12px; /* Espacement consistant */
+    margin-left: 12px;
     padding: 8px;
     display: flex;
     align-items: center;
@@ -241,7 +238,7 @@ nav ul li a.cv-link i {
 @media (max-width: 480px) {
   .logo {
     font-size: 1.4rem;
-    max-width: 60%;
+    max-width: 55%;
   }
   
   header::after {
@@ -250,18 +247,18 @@ nav ul li a.cv-link i {
   }
   
   .header-content {
-    padding: 0 5px; /* Réduit le padding pour gagner de l'espace */
+    padding: 0 5px;
   }
   
   .right-content {
-    gap: 0; /* Élimine l'écart supplémentaire */
+    gap: 0;
   }
 }
 
 @media (max-width: 360px) {
   .logo {
     font-size: 1.2rem;
-    max-width: 50%;
+    max-width: 45%;
     line-height: 1;
   }
   
@@ -272,7 +269,6 @@ nav ul li a.cv-link i {
   }
 }
 
-/* Mode sombre */
 body.dark-mode header::after {
   opacity: 0.8;
 }

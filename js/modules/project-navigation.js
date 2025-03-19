@@ -18,7 +18,16 @@ export function initProjectNavigation() {
     }
 
     if (!shown && projects.length > 0) {
+      // Hide all projects first
+      projects.forEach((p) => {
+        p.style.display = "none";
+        p.classList.remove("active");
+      });
+
+      // Show only the first project
+      projects[0].style.display = "block";
       projects[0].classList.add("active");
+
       if (navButtons.length > 0) {
         navButtons[0].classList.add("active");
       }
@@ -26,16 +35,31 @@ export function initProjectNavigation() {
   }
 
   function showProject(projectId) {
-    projects.forEach((project) => project.classList.remove("active"));
-    navButtons.forEach((button) => button.classList.remove("active"));
+    // Hide all projects
+    projects.forEach((project) => {
+      project.style.display = "none";
+      project.classList.remove("active");
+    });
 
+    // Remove active class from all buttons
+    navButtons.forEach((button) => {
+      button.classList.remove("active");
+    });
+
+    // Show the target project
     const targetProject = document.getElementById(projectId);
     const targetButton = document.querySelector(
       `.nav-buttons a[href="#${projectId}"]`
     );
 
     if (targetProject) {
+      targetProject.style.display = "block";
       targetProject.classList.add("active");
+
+      // Ensure the project is visible with animation
+      setTimeout(() => {
+        targetProject.style.opacity = "1";
+      }, 50);
     }
 
     if (targetButton) {
@@ -52,18 +76,19 @@ export function initProjectNavigation() {
       history.pushState(null, null, `#${targetId}`);
 
       const headerHeight = document.querySelector("header").offsetHeight;
-      const targetPosition =
-        document.getElementById(targetId).getBoundingClientRect().top +
-        window.pageYOffset;
       window.scrollTo({
-        top: targetPosition - headerHeight - 20,
+        top:
+          document.querySelector(".project-navigation").offsetTop -
+          headerHeight,
         behavior: "smooth",
       });
     });
   });
 
+  // Initialize project visibility
   showInitialProject();
 
+  // Handle hash changes (e.g., from back button)
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash;
     if (hash && hash.length > 1) {

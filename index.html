@@ -8,10 +8,8 @@
     
     <title>Christophe Lecart - Web & Mobile Developer</title>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <!-- Favicon - Updated -->
+    <link rel="icon" href="PICTURES/favicon.ico">
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
@@ -19,6 +17,11 @@
     <!-- Preconnect pour les ressources externes -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="/PICTURES/profile.jpg" as="image">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.emailjs.com">
     
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
@@ -35,7 +38,10 @@
     <!-- En-tête -->
     <header>
         <div class="container header-content">
-            <a href="#" class="logo">Christophe Lecart</a>
+            <a href="#" class="logo">
+                <span>Christophe</span>
+                <span>Lecart</span>
+            </a>
             <div class="right-content">
                 <nav>
                     <ul>
@@ -79,7 +85,10 @@
                 <div class="about-text slide-left">
                     <p>I am a passionate developer currently studying web and mobile application development. I am pursuing a level 6 diploma in this field, with expertise in building solutions using modern technologies.</p>
                     <p>With a focus on creating intuitive and high-performing applications, I combine technical skills with creative problem-solving to deliver exceptional digital experiences.</p>
-                    <a href="#contact" class="btn">Get In Touch</a>
+                    <div class="about-buttons">
+                        <a href="#contact" class="btn">Get In Touch</a>
+                        <a href="about-portfolio.html" class="btn btn-secondary">For Recruiters <i class="fas fa-briefcase"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -233,7 +242,7 @@
                     </div>
                     <div class="project-content">
                         <h3>Groupie-Tracker</h3>
-                        <p>A comprehensive web application developed in Go that visualizes data from a RESTful API about music artists and bands.</p>
+                        <p>A Go web application that visualizes music artist data from a REST API. It allows searching and filtering groups by name, dates, or concert locations with an optimized interactive interface.</p>
                         <div class="project-buttons">
                             <a href="descriptions-projects.html#project1" class="project-btn">View Details</a>
                             <a href="https://github.com/CLecart/groupie-tracker" class="github-btn" target="_blank" title="View on GitHub"><i class="fab fa-github"></i></a>
@@ -250,7 +259,7 @@
                     </div>
                     <div class="project-content">
                         <h3>BombermanDX</h3>
-                        <p>A browser-based game developed with JavaScript and DOM manipulation, focused on performance optimization.</p>
+                        <p>A browser game inspired by the classic Bomberman, developed with JavaScript and DOM manipulation. Includes progressive levels, different AI enemies, and power-ups, all with optimized performance management.</p>
                         <div class="project-buttons">
                             <a href="descriptions-projects.html#project2" class="project-btn">View Details</a>
                             <a href="https://github.com/SpauriRosso/bomberman-dx" class="github-btn" target="_blank" title="View on GitHub"><i class="fab fa-github"></i></a>
@@ -265,7 +274,7 @@
                     </div>
                     <div class="project-content">
                         <h3>Forum</h3>
-                        <p>A dynamic forum platform with user authentication, thread management, and real-time features for online communities.</p>
+                        <p>A complete discussion platform with user authentication, thread creation and management, and real-time features. Uses Go for the backend, SQLite for the database, and WebSockets for instant notifications.</p>
                         <div class="project-buttons">
                             <a href="descriptions-projects.html#project3" class="project-btn">View Details</a>
                             <a href="https://github.com/nicgen/forum" class="github-btn" target="_blank" title="View on GitHub"><i class="fab fa-github"></i></a>

@@ -9,9 +9,9 @@ header {
   z-index: 1000;
   box-shadow: var(--header-shadow);
   transition: var(--transition);
+  height: var(--header-height);
 }
 
-/* Nouveau séparateur moderne avec effet de glissement */
 header::after {
   content: '';
   position: absolute;
@@ -33,81 +33,49 @@ header::after {
 
 header.scrolled {
   padding: 10px 0;
+  height: var(--header-height-scrolled);
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
+  height: 100%;
 }
 
-/* Style du logo */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--white);
   transition: var(--transition);
   display: flex;
-  flex-direction: row;
-  line-height: 1;
+  flex-direction: column;
+  line-height: 1.1;
   position: relative;
+  z-index: 100;
+  padding-bottom: 3px;
 }
 
 .logo::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--white);
-  transition: width 0.3s ease;
+  display: none;
 }
 
 .logo:hover {
   color: var(--primary-dark);
 }
 
-.logo:hover::after {
-  width: 100%;
-  background: var(--accent);
-}
-
-@media (max-width: 421px) {
-  .logo {
-    flex-direction: column;
-  }
-}
-
 .right-content {
   display: flex;
   align-items: center;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-/* Navigation */
-nav {
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  margin-left: auto;
 }
 
 nav ul {
   display: flex;
   gap: 2rem;
-  background: transparent;
-  border: none;
-  box-shadow: none;
   padding: 0;
 }
 
-/* Style des liens de navigation */
 nav ul li a {
   color: var(--white);
   font-weight: 500;
@@ -146,7 +114,6 @@ nav ul li a.cv-link i {
   font-size: 0.9rem;
 }
 
-/* Bouton de menu mobile */
 .nav-toggle {
   display: none;
   background: transparent;
@@ -154,69 +121,89 @@ nav ul li a.cv-link i {
   color: var(--white);
   font-size: 1.5rem;
   cursor: pointer;
-  padding: 8px;
-  margin-left: 10px;
+  padding: 8px 12px;
   z-index: 1005;
+  margin-left: 15px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.nav-toggle:hover {
+  background: var(--white-opacity-10);
 }
 
 .nav-toggle i {
-  display: block;
   font-size: 1.5rem;
   line-height: 1;
-  width: 1.5rem;
-  height: 1.5rem;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Styles mobiles */
 @media (max-width: 768px) {
+  header {
+    height: var(--header-height-mobile);
+  }
+  
   .nav-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--toggle-height);
+    width: var(--toggle-width);
+    margin-left: var(--spacing-sm);
+    background: var(--white-opacity-10);
+    border-radius: var(--toggle-radius);
   }
   
   nav ul {
     position: absolute;
-    top: 60px;
-    right: 20px;
+    top: calc(var(--header-height-mobile) + var(--spacing-xs));
+    right: var(--spacing-lg);
     flex-direction: column;
     background: var(--white);
-    min-width: 150px;
-    padding: 15px;
-    gap: 6px;
-    border-radius: 15px;
+    min-width: 180px;
+    padding: var(--spacing-md);
+    gap: var(--spacing-xs);
+    border-radius: var(--card-radius);
     box-shadow: var(--shadow-lg);
     transform: translateX(100%);
-    transition: var(--transition);
     opacity: 0;
-    z-index: 1001;
     visibility: hidden;
+    transition: 
+      transform var(--animation-duration-short) ease, 
+      opacity var(--animation-duration-short) ease, 
+      visibility 0s linear var(--animation-duration-short);
   }
   
   nav ul.active {
     transform: translateX(0);
     opacity: 1;
     visibility: visible;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0s;
+  }
+  
+  nav ul li {
+    width: 100%;
   }
   
   nav ul li a {
     color: var(--primary);
-    padding: 10px 15px;
+    padding: 12px 15px;
     font-weight: 600;
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
     text-align: center;
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  nav ul li a.cv-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    gap: 5px;
+  nav ul li a::after {
+    display: none;
   }
   
   nav ul li a:hover {
@@ -224,26 +211,73 @@ nav ul li a.cv-link i {
     color: var(--primary-dark);
   }
   
-  nav ul li a::after {
-    display: none;
+  nav ul li a.cv-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   
-  body.dark-mode nav ul li a {
-    color: var(--primary);
+  body:not(.homepage) .logo {
+    font-size: 1.6rem;
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  body.dark-mode nav ul li a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary-dark);
+  .right-content {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 0;
+  }
+  
+  .nav-toggle {
+    margin-left: 12px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.4rem;
+    max-width: 55%;
   }
   
   header::after {
     bottom: -2px;
     height: 2px;
   }
+  
+  .header-content {
+    padding: 0 5px;
+  }
+  
+  .right-content {
+    gap: 0;
+  }
 }
 
-/* Mode sombre - même séparateur */
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1.2rem;
+    max-width: 45%;
+    line-height: 1;
+  }
+  
+  .nav-toggle {
+    padding: 5px;
+    height: 32px;
+    width: 32px;
+  }
+}
+
 body.dark-mode header::after {
-  opacity: 0.8; /* Légèrement plus subtil en mode sombre */
+  opacity: 0.8;
 }

@@ -1,0 +1,222 @@
+/* Styles pour la page détails du portfolio - nettoyés */
+
+.portfolio-details {
+  padding: 130px 0 60px;
+}
+
+.portfolio-details .section-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.portfolio-details .section-header h1 {
+  color: var(--primary);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.portfolio-details .section-header p {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.portfolio-section {
+  margin-bottom: 40px;
+  padding: 30px;
+  border-radius: var(--card-radius);
+}
+
+.portfolio-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.portfolio-section h2 i {
+  color: var(--card-icon-color);
+  font-size: 1.5rem;
+  transition: var(--card-icon-transition);
+}
+
+/* Effet de survol pour les icônes - simplifié */
+.portfolio-section:hover h2 i {
+  color: var(--card-icon-hover-color);
+  transform: var(--card-icon-hover-transform);
+  animation: subtle-pulse 2s infinite ease-in-out;
+}
+
+/* Grille pour les technologies */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.tech-item {
+  background-color: var(--primary-light);
+  padding: 20px;
+  border-radius: 10px;
+  transition: var(--card-transition);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+body.dark-mode .tech-item {
+  background-color: var(--primary-light-15);
+  box-shadow: var(--shadow-dark);
+}
+
+.tech-item:hover {
+  transform: var(--card-hover-transform); /* Utilise la même variable que les autres cartes */
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+}
+
+body.dark-mode .tech-item:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+.tech-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--primary);
+  transition: var(--card-icon-transition);
+}
+
+.tech-item:hover h3 {
+  color: var(--card-icon-hover-color); /* Animation de couleur identique aux icônes */
+}
+
+/* Animation de pulsation pour les cartes */
+.tech-item:hover h3 {
+  animation: subtle-pulse 2s infinite ease-in-out;
+}
+
+/* Liste de fonctionnalités */
+.features-list, .outcomes-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.features-list li, .outcomes-list li {
+  margin-bottom: 15px;
+  padding-left: 30px;
+  position: relative;
+}
+
+.features-list i {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  color: var(--primary); /* Bleu par défaut */
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-size: 1.1rem;
+}
+
+/* Animation au survol - passage au rouge avec effet de pulsation */
+.features-list li:hover i {
+  color: var(--accent); /* Rouge au survol */
+  animation: checkmark-pulse 1.5s infinite ease-in-out;
+}
+
+/* Animation de pulsation pour les checkmarks */
+@keyframes checkmark-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Bloc de code */
+.code-block {
+  background-color: var(--dark);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.code-block code {
+  color: var(--text-dark);
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Grille pour l'approche de développement */
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* Animation des cartes explicatives cohérente avec les autres cartes du site */
+.approach-item {
+  transition: var(--card-transition);
+}
+
+.approach-item:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+/* Section CTA */
+.cta-section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Mode sombre */
+body.dark-mode .portfolio-section {
+  background-color: var(--card-dark);
+}
+
+body.dark-mode .approach-item:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+body.dark-mode .code-block {
+  background-color: var(--darker);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tech-grid, .approach-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-section .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .portfolio-section {
+    padding: 20px;
+  }
+  
+  .portfolio-details .section-header h1 {
+    font-size: 2.2rem;
+  }
+}

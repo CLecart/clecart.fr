@@ -62,7 +62,7 @@ a:hover::after {
   width: 100%;
 }
 
-/* Exception pour les boutons - pas de soulignement */
+/* Exception pour les boutons et logo - pas de soulignement */
 .btn::after,
 .project-btn::after,
 .github-btn::after,
@@ -70,7 +70,11 @@ a:hover::after {
 .dark-mode-toggle::after,
 .nav-btn::after,
 .nav-toggle::after,
-.cv-link::after {
+.cv-link::after,
+.logo::after,
+.modal-close::after,
+.header-buttons a::after,
+.gdpr-buttons button::after {
   display: none;
 }
 

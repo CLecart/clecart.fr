@@ -1,6 +1,6 @@
-/* Styles pour les animations */
+/* Styles pour les animations - Optimisés */
 
-/* Animations de base avec apparition */
+/* Classes d'animation simplifiées et unifiées */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -19,6 +19,7 @@
   transition: var(--transition-slow);
 }
 
+/* Application uniforme des effets d'apparition */
 .fade-in.appear, 
 .slide-left.appear, 
 .slide-right.appear {
@@ -26,125 +27,30 @@
   transform: translateX(0) translateY(0);
 }
 
-/* Exclusion des animations pour certains éléments en mode sombre/clair */
-.header-content .fade-in,
-.header-content .slide-left,
-.header-content .slide-right,
-.right-content .fade-in,
-.right-content .slide-left,
-.right-content .slide-right,
-.dark-mode-toggle.fade-in,
-.dark-mode-toggle.slide-left,
-.dark-mode-toggle.slide-right {
+/* Exclusion ciblée pour éviter interférences avec l'UI fixe */
+.header-content *, 
+.dark-mode-toggle, 
+.right-content *,
+.nav-toggle {
   opacity: 1;
-  transform: translateX(0) translateY(0);
-  transition: none;
-}
-
-/* Classe pour désactiver les transitions pendant le changement de mode */
-.no-transition {
-  transition: none;
   transform: none;
-  animation: none;
-  background-color: transparent;
-  opacity: 1;
-}
-
-.no-transition::before,
-.no-transition::after {
   transition: none;
-  transform: none;
-  animation: none;
-  opacity: 0;
 }
 
-/* Optimisation des éléments hero pour transitions entre thèmes */
-#hero .hero-content .fade-in,
-#hero .hero-content .slide-left,
-#hero .hero-content .slide-right {
-  background: transparent;
-}
-
-/* Configuration du conteneur des boutons dans le hero */
-#hero .hero-content .fade-in,
-#hero .hero-buttons {
-  background: transparent;
-  box-shadow: none;
-  border: none;
-}
-
-.hero-buttons a.btn,
-.hero-buttons a.btn-secondary {
-  position: relative;
-  z-index: 10;
-}
-
-body.dark-mode .hero-content .fade-in,
-body.dark-mode #hero .fade-in,
-body.dark-mode .hero-content .slide-left,
-body.dark-mode .hero-content .slide-right {
-  background: transparent;
-}
-
-/* Transition dark/light mode */
-body.dark-mode .hero-content .fade-in,
-body.dark-mode .hero-buttons,
-body.theme-transitioning .hero-content .fade-in,
-body.theme-transitioning .hero-buttons {
-  background: transparent;
-  box-shadow: none;
-  border: none;
-}
-
-/* Classe principale pour désactiver les transitions pendant le changement de mode */
+/* Support pour le changement de thème sans animations */
 .theme-transitioning,
-.theme-transitioning * {
+.theme-transitioning *,
+.theme-transitioning *:before,
+.theme-transitioning *:after {
   transition: none;
+  animation-duration: 0s;
+  animation-delay: 0s;
 }
 
-/* Configuration des transitions entre thèmes */
-.theme-transitioning .hero-content .fade-in,
-.theme-transitioning .hero-content .slide-left,
-.theme-transitioning .hero-content .slide-right,
-.theme-transitioning .hero-content .btn,
-.theme-transitioning .hero-content .btn-secondary,
-.theme-transitioning #hero .fade-in,
-.theme-transitioning .hero-buttons {
-  background-color: transparent;
-  transition: none;
-}
-
-/* Optimisation de l'affichage des éléments hero */
-.hero-content .fade-in,
-.hero-content .slide-left,
-.hero-content .slide-right,
-.hero-content .btn,
-.hero-content .btn-secondary {
-  position: relative;
-  z-index: 10;
-  background-color: transparent;
-}
-
-.hero-content .btn,
-.hero-content .btn-secondary {
-  position: relative;
-  z-index: 11;
-}
-
-/* Configuration des boutons pendant les transitions */
-.no-transition.btn,
-.no-transition.btn-secondary {
-  background-image: var(--gradient-1);
-  background-color: transparent;
-}
-
-.no-transition.btn-secondary {
-  background-image: var(--gradient-2);
-}
-
-/* Animation pour les différents éléments */
-@keyframes skill-animation {
-  to { transform: scaleX(1); }
+/* Keyframes centralisés et standardisés */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes modalFadeIn {
@@ -152,14 +58,8 @@ body.theme-transitioning .hero-buttons {
   to { opacity: 1; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes zoom {
-  from { transform: scale(0.1); }
-  to { transform: scale(1); }
+@keyframes skill-animation {
+  to { transform: scaleX(1); }
 }
 
 @keyframes subtle-pulse {

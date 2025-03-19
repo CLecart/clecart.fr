@@ -1,23 +1,29 @@
-/* Styles génériques pour toutes les cartes */
+/* Styles pour les cartes - nettoyés des doublons */
+
+/* Base commune pour toutes les cartes */
 .card-base {
   background-color: var(--card-bg);
   color: var(--card-color);
   border-radius: var(--card-border-radius);
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
-  transition: var(--card-transition);
+  transition: 
+    transform var(--animation-duration-short) ease,
+    box-shadow var(--animation-duration-short) ease,
+    border-color var(--animation-duration-short) ease;
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
+  position: relative;
 }
 
 .card-base:hover {
-  transform: var(--card-hover-transform);
+  transform: var(--hover-y-offset);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
 }
 
-/* Mode sombre générique pour les cartes */
+/* Mode sombre pour les cartes */
 body.dark-mode .card-base {
   background-color: var(--card-bg-dark);
   color: var(--card-color-dark);
@@ -30,15 +36,12 @@ body.dark-mode .card-base:hover {
   border-color: var(--primary);
 }
 
-/* Styles pour les différentes cartes du site */
-
 /* Cartes de compétence */
 .skill-card {
   height: 310px;
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: visible;
 }
 
 .skill-icon {
@@ -65,14 +68,13 @@ body.dark-mode .card-base:hover {
   margin-bottom: 60px;
 }
 
-/* Cartes de projet - alignement avec les variables globales */
+/* Cartes de projet */
 .project-card {
   max-width: 360px;
   width: 100%;
-  height: auto;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
-  min-height: 450px;
 }
 
 .project-thumb {
@@ -107,7 +109,6 @@ body.dark-mode .card-base:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
 }
 
 .project-content h3 {
@@ -117,15 +118,8 @@ body.dark-mode .card-base:hover {
 }
 
 .project-content p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-  height: 3em;
-  margin-bottom: 15px;
+  height: auto;
+  margin-bottom: 20px;
   color: var(--text-light);
   line-height: 1.5;
 }
@@ -140,17 +134,6 @@ body.dark-mode .card-base:hover {
 }
 
 /* Mode sombre pour les cartes projet */
-body.dark-mode .project-card {
-  background-color: var(--card-dark);
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-dark);
-}
-
-body.dark-mode .project-card:hover {
-  box-shadow: var(--btn-shadow-hover);
-  border-color: var(--primary);
-}
-
 body.dark-mode .project-content h3 {
   color: var(--card-color-dark);
 }
@@ -159,7 +142,18 @@ body.dark-mode .project-content p {
   color: var(--text-gray-dark);
 }
 
-/* Cartes de langue - Style harmonisé pour modes clair et sombre */
+/* Cartes spécifiques: descriptions de projets */
+.project.description.card-base {
+  will-change: transform; /* Optimisation GPU */
+  position: relative;
+  z-index: 0;
+}
+
+.project.description.card-base:hover {
+  z-index: 1;
+}
+
+/* Cartes de langue */
 .language-card {
   flex: 0 0 auto;
   width: 90px;
@@ -167,10 +161,6 @@ body.dark-mode .project-content p {
   padding: 15px 10px;
   margin: 0;
   border-radius: 10px;
-  background-color: var(--card-bg);
-  border: var(--card-border);
-  box-shadow: var(--shadow-sm);
-  transition: var(--card-transition);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,7 +169,7 @@ body.dark-mode .project-content p {
 
 .language-card:hover {
   transform: var(--hover-y-small);
-  box-shadow: 0 10px 25px var(--primary-light);
+  box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
 }
 
@@ -193,7 +183,6 @@ body.dark-mode .project-content p {
 .language-icon img {
   width: 40px;
   height: 40px;
-  margin-bottom: 0;
   transition: var(--card-transition);
 }
 
@@ -206,64 +195,24 @@ body.dark-mode .project-content p {
   font-size: 0.75rem;
   text-align: center;
   margin: 0;
-  transition: color 0.3s ease;
 }
 
 /* Mode sombre pour les cartes de langue */
-body.dark-mode .language-card {
-  background-color: var(--card-bg-dark);
-  border: var(--card-border-dark);
-  box-shadow: var(--card-box-shadow-dark);
-}
-
 body.dark-mode .language-card span {
   color: var(--card-color-dark);
 }
 
-body.dark-mode .language-card:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-  border-color: var(--primary);
-}
-
-/* Ajout d'un léger effet de luminosité aux icônes en mode sombre */
 body.dark-mode .language-icon img {
   filter: brightness(1.1);
 }
 
-/* Cartes contact avec harmonisation des styles */
+/* Cartes contact */
 .contact-info,
 .contact-form {
-  background-color: var(--card-bg);
-  padding: var(--card-padding);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--card-box-shadow);
-  border: var(--card-border);
   height: 100%;
-  transition: var(--card-transition);
 }
 
-.contact-info:hover,
-.contact-form:hover {
-  transform: var(--card-hover-transform);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
-}
-
-body.dark-mode .contact-info,
-body.dark-mode .contact-form {
-  background-color: var(--card-bg-dark);
-  color: var(--card-color-dark);
-  border: var(--card-border-dark);
-  box-shadow: var(--card-box-shadow-dark);
-}
-
-body.dark-mode .contact-info:hover,
-body.dark-mode .contact-form:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-  border-color: var(--primary);
-}
-
-/* Effet de pulsation subtile sur le mode sombre et clair pour les icônes */
+/* Animation de pulsation pour icônes */
 @keyframes subtle-pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }

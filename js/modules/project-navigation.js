@@ -1,52 +1,98 @@
 /**
- * Module de navigation entre projets
- * @module project-navigation
+ * Module pour la navigation entre projets
  */
 export function initProjectNavigation() {
-  const projectTitles = {
-    project1: "Groupie Tracker",
-    project2: "Bomberman",
-    project3: "Forum",
-  };
+  const navButtons = document.querySelectorAll(".nav-buttons a");
+  const projects = document.querySelectorAll(".project");
 
-  /**
-   * Affiche un projet spécifique et masque les autres
-   * @param {string} projectId - ID du projet à afficher
-   */
+  function showInitialProject() {
+    const hash = window.location.hash;
+    let shown = false;
+
+    if (hash && hash.length > 1) {
+      const targetProject = document.querySelector(hash);
+      if (targetProject && targetProject.classList.contains("project")) {
+        showProject(hash.substring(1));
+        shown = true;
+      }
+    }
+
+    if (!shown && projects.length > 0) {
+      // Hide all projects first
+      projects.forEach((p) => {
+        p.style.display = "none";
+        p.classList.remove("active");
+      });
+
+      // Show only the first project
+      projects[0].style.display = "block";
+      projects[0].classList.add("active");
+
+      if (navButtons.length > 0) {
+        navButtons[0].classList.add("active");
+      }
+    }
+  }
+
   function showProject(projectId) {
-    document.querySelectorAll(".project").forEach((project) => {
+    // Hide all projects
+    projects.forEach((project) => {
+      project.style.display = "none";
       project.classList.remove("active");
     });
 
-    const selectedProject = document.getElementById(projectId);
-    if (selectedProject) {
-      selectedProject.classList.add("active");
+    // Remove active class from all buttons
+    navButtons.forEach((button) => {
+      button.classList.remove("active");
+    });
 
+    // Show the target project
+    const targetProject = document.getElementById(projectId);
+    const targetButton = document.querySelector(
+      `.nav-buttons a[href="#${projectId}"]`
+    );
+
+    if (targetProject) {
+      targetProject.style.display = "block";
+      targetProject.classList.add("active");
+
+      // Ensure the project is visible with animation
       setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }, 100);
+        targetProject.style.opacity = "1";
+      }, 50);
+    }
+
+    if (targetButton) {
+      targetButton.classList.add("active");
     }
   }
 
-  function handleProjectNavigation() {
-    const hash = window.location.hash.substring(1);
-    if (hash && ["project1", "project2", "project3"].includes(hash)) {
-      showProject(hash);
-    }
-  }
-
-  document.querySelectorAll(".nav-btn").forEach((button) => {
-    button.addEventListener("click", function (e) {
+  navButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
       e.preventDefault();
-      const projectId = this.getAttribute("href").substring(1);
-      showProject(projectId);
-      window.history.pushState(null, null, `#${projectId}`);
+      const targetId = button.getAttribute("href").substring(1);
+      showProject(targetId);
+
+      history.pushState(null, null, `#${targetId}`);
+
+      const headerHeight = document.querySelector("header").offsetHeight;
+      window.scrollTo({
+        top:
+          document.querySelector(".project-navigation").offsetTop -
+          headerHeight,
+        behavior: "smooth",
+      });
     });
   });
 
-  handleProjectNavigation();
-  window.addEventListener("hashchange", handleProjectNavigation);
+  // Initialize project visibility
+  showInitialProject();
+
+  // Handle hash changes (e.g., from back button)
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      showProject(hash.substring(1));
+    }
+  });
 }

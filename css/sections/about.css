@@ -42,6 +42,26 @@
   object-fit: cover;
 }
 
+/* Ajout des styles pour les boutons dans About */
+.about-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.about-buttons .btn {
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.about-buttons .btn i {
+  font-size: 0.9rem;
+}
+
 /* Languages Section */
 #languages {
   padding: 30px 0 50px;
@@ -68,5 +88,9 @@
   
   .profile-img {
     margin: 0 auto 30px;
+  }
+
+  .about-buttons {
+    justify-content: center;
   }
 }

@@ -4,93 +4,110 @@
 export function initContactForm() {
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("form-status");
-  const contactFormContainer = document.querySelector(".contact-form");
 
   if (!contactForm) return;
 
-  // Initialisation des styles du formulaire de contact
-  if (contactFormContainer) {
-    contactFormContainer.removeAttribute("style");
-
-    if (document.body.classList.contains("dark-mode")) {
-      contactFormContainer.style.backgroundColor = "var(--card-dark)";
-    } else {
-      contactFormContainer.style.backgroundColor = "var(--white)";
-    }
-  }
-
-  // Vérification du consentement GDPR
+  // Vérification du consentement GDPR et adaptation de l'interface
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
-    contactForm.innerHTML =
-      '<p class="gdpr-message">The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+    renderContactAlternative(contactForm);
     return;
   }
 
-  contactForm.addEventListener("submit", function (event) {
+  // Configuration du comportement du formulaire
+  setupFormSubmissionHandling(contactForm, formStatus);
+}
+
+/**
+ * Affiche une alternative au formulaire quand le GDPR est refusé
+ */
+function renderContactAlternative(form) {
+  form.innerHTML = `
+    <p class="gdpr-message">
+      Le formulaire de contact a été désactivé car vous avez refusé notre politique de confidentialité. 
+      Vous pouvez me contacter directement par email à 
+      <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
+    </p>`;
+}
+
+/**
+ * Configure la gestion de soumission du formulaire
+ */
+function setupFormSubmissionHandling(form, statusElement) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    if (contactForm.classList.contains("sending")) {
-      return;
-    }
+    // Éviter les soumissions multiples
+    if (form.classList.contains("sending")) return;
 
-    contactForm.classList.add("sending");
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
+    // UI feedback immédiat
+    const submitButton = form.querySelector('button[type="submit"]');
+    setFormState(
+      form,
+      submitButton,
+      statusElement,
+      "sending",
+      "Envoi de votre message..."
+    );
 
-    if (formStatus) {
-      formStatus.textContent = "Sending your message...";
-      formStatus.className = "form-status sending";
-      formStatus.style.display = "block";
-    }
+    try {
+      // Récupération des données dans un format adapté à EmailJS
+      const formData = new FormData(form);
+      const templateParams = {
+        from_name: formData.get("from_name"),
+        user_name: formData.get("from_name"),
+        email: formData.get("email"),
+        user_email: formData.get("email"),
+        message: formData.get("message"),
+        to_name: "Christophe",
+      };
 
-    // Récupération des données du formulaire
-    const formData = new FormData(contactForm);
-    const templateParams = {
-      from_name: formData.get("from_name"),
-      user_name: formData.get("from_name"), // Pour compatibilité avec votre template
-      email: formData.get("email"),
-      user_email: formData.get("email"), // Pour compatibilité avec votre template
-      message: formData.get("message"),
-      to_name: "Christophe",
-    };
-
-    // Envoi via EmailJS avec votre configuration
-    if (typeof emailjs !== "undefined") {
-      emailjs
-        .send("service_lokewrs", "template_2ov9l9i", templateParams)
-        .then(function () {
-          if (formStatus) {
-            formStatus.textContent = "Message sent successfully!";
-            formStatus.className = "form-status success";
-          }
-          contactForm.reset();
-        })
-        .catch(function (error) {
-          console.log("FAILED...", error);
-          if (formStatus) {
-            formStatus.innerHTML =
-              'Error sending message. Please email me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>';
-            formStatus.className = "form-status error";
-          }
-        })
-        .finally(function () {
-          setTimeout(() => {
-            contactForm.classList.remove("sending");
-            if (submitBtn) submitBtn.disabled = false;
-          }, 3000);
-        });
-    } else {
-      if (formStatus) {
-        formStatus.innerHTML =
-          'Email service not available. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>';
-        formStatus.className = "form-status error";
+      // Vérification que le service EmailJS est disponible
+      if (typeof emailjs === "undefined") {
+        throw new Error("Service d'email non disponible");
       }
 
+      // Envoi du message
+      await emailjs.send("service_lokewrs", "template_2ov9l9i", templateParams);
+
+      // Succès
+      setFormState(
+        form,
+        submitButton,
+        statusElement,
+        "success",
+        "Message envoyé avec succès!"
+      );
+      form.reset();
+    } catch (error) {
+      console.error("Erreur d'envoi:", error);
+      setFormState(
+        form,
+        submitButton,
+        statusElement,
+        "error",
+        `Erreur d'envoi. Merci de me contacter directement à <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+      );
+    } finally {
+      // Réinitialisation du formulaire après délai
       setTimeout(() => {
-        contactForm.classList.remove("sending");
-        if (submitBtn) submitBtn.disabled = false;
+        form.classList.remove("sending");
+        if (submitButton) submitButton.disabled = false;
       }, 3000);
     }
   });
+}
+
+/**
+ * Met à jour l'état visuel du formulaire
+ */
+function setFormState(form, button, statusElement, state, message) {
+  form.classList.add("sending");
+  if (button) button.disabled = true;
+
+  if (statusElement) {
+    statusElement.innerHTML = message;
+    statusElement.className = `form-status ${state}`;
+    statusElement.style.display = "block";
+  }
 }

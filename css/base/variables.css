@@ -1,16 +1,21 @@
 /**
- * Variables CSS globales
+ * Variables CSS globales - Optimisées et nettoyées des doublons
  */
 :root {
-  /* Couleurs principales */
+  /* Couleurs principales - Système harmonisé */
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
   --primary-opacity: rgba(108, 99, 255, 0.8);
   --primary-light: rgba(108, 99, 255, 0.1);
+  --primary-light-15: rgba(108, 99, 255, 0.15);
+  --primary-light-20: rgba(108, 99, 255, 0.2);
+  --primary-light-30: rgba(108, 99, 255, 0.3);
   
   /* Couleurs secondaires */
   --secondary: #4ecdc4;
+  --secondary-dark: #3db8b0;
   --secondary-opacity: rgba(78, 205, 196, 0.8);
+  --secondary-light: rgba(78, 205, 196, 0.1);
   
   /* Couleur d'accent */
   --accent: #ff6b6b;
@@ -56,14 +61,26 @@
   --hero-gradient-light: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.1" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
   --hero-gradient-dark: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
   
-  /* Ombres */
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* Système unifié d'ombres et de lueurs */
   --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px var(--glow-primary-light);
   --shadow-dark: 0 8px 25px var(--black-opacity-30);
   --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Effets de lueur pour les cartes */
+  --glow-primary-light: rgba(108, 99, 255, 0.2);
+  --glow-primary-medium: rgba(108, 99, 255, 0.35);
+  --glow-primary-dark: rgba(108, 99, 255, 0.3);
+  --glow-primary-dark-hover: rgba(108, 99, 255, 0.45);
+  
+  /* Ombres spécifiques aux cartes */
+  --card-box-shadow: var(--shadow-lg);
+  --card-box-shadow-dark: var(--shadow-dark);
+  --card-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px var(--glow-primary-medium);
+  --card-box-shadow-hover-dark: 0 15px 35px rgba(0, 0, 0, 0.3), 0 10px 30px var(--glow-primary-dark-hover);
   
   /* Boutons */
   --btn-padding: 12px 28px;
@@ -96,10 +113,6 @@
   --card-margin: 0 auto;
   --card-border-radius: 15px;
   --card-border-dark: 1px solid var(--border-dark);
-  --card-box-shadow: var(--shadow);
-  --card-box-shadow-dark: var(--shadow-dark);
-  --card-box-shadow-hover: var(--shadow-lg);
-  --card-box-shadow-hover-dark: 0 15px 35px var(--primary-light);
   --card-border-hover: 1px solid var(--primary);
   --card-transition: var(--transition);
   
@@ -113,7 +126,7 @@
   --card-hover-transition: all 0.3s ease;
   --card-icon-transition: transform 0.4s ease, color 0.4s ease;
   
-  /* Animations et transitions */
+  /* Transitions et animations - Système unifié */
   --transition: all 0.3s ease;
   --transition-slow: all 0.6s ease-out;
   --transition-fast: all 0.2s ease;
@@ -121,9 +134,15 @@
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
+  
+  /* Animations préconfigurées pour réutilisation */  
+  --animation-duration-short: 0.3s;
+  --animation-duration-medium: 0.5s;
+  --animation-duration-long: 1s;
+  --animation-timing-function: ease;
   --skill-progress-animation: skill-animation 1.5s ease forwards;
-  --fade-in-animation: fadeIn 0.5s ease forwards;
-  --modal-animation: modalFadeIn 0.3s ease-in-out;
+  --fade-in-animation: fadeIn var(--animation-duration-medium) ease forwards;
+  --modal-animation: modalFadeIn var(--animation-duration-short) ease-in-out;
   
   /* États de formulaire */
   --status-success-bg: rgba(76, 175, 80, 0.15);
@@ -135,4 +154,30 @@
   --status-info-bg: rgba(3, 169, 244, 0.15);
   --status-info-color: #0288d1;
   --status-info-border: rgba(3, 169, 244, 0.3);
+  
+  /* Variables header */
+  --header-height: 80px;
+  --header-height-scrolled: 60px;
+  --header-height-mobile: 60px;
+  --header-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Dimensions d'UI */
+  --toggle-height: 36px;
+  --toggle-width: 36px;
+  --toggle-mobile-height: 32px;
+  --toggle-mobile-width: 32px;
+  --toggle-radius: 4px;
+  --toggle-padding: 8px;
+  --dark-toggle-radius: 50%;
+  --dark-toggle-size: 36px;
+  --dark-toggle-mobile-size: 32px;
+  
+  /* Dimensions normalisées pour responsive */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 25px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 60px;
+  --spacing-3xl: 100px;
 }

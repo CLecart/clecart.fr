@@ -1,5 +1,6 @@
-/* Styles pour les animations */
+/* Styles pour les animations - Optimisés */
 
+/* Classes d'animation simplifiées et unifiées */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -18,6 +19,7 @@
   transition: var(--transition-slow);
 }
 
+/* Application uniforme des effets d'apparition */
 .fade-in.appear, 
 .slide-left.appear, 
 .slide-right.appear {
@@ -25,16 +27,22 @@
   transform: translateX(0) translateY(0);
 }
 
-.header-content *, .dark-mode-toggle, .right-content * {
+/* Exclusion ciblée pour éviter interférences avec l'UI fixe */
+.header-content *, 
+.dark-mode-toggle, 
+.right-content *,
+.nav-toggle {
   opacity: 1;
   transform: none;
   transition: none;
 }
 
+/* Support pour le changement de thème sans animations */
 .theme-transitioning * {
-  transition: none !important;
+  transition: none !important; /* Exception justifiée: priorité technique */
 }
 
+/* Keyframes centralisés et standardisés */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

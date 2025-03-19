@@ -147,25 +147,34 @@ nav ul li a.cv-link i {
   }
   
   .nav-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--toggle-height);
+    width: var(--toggle-width);
+    margin-left: var(--spacing-sm);
+    background: var(--white-opacity-10);
+    border-radius: var(--toggle-radius);
   }
   
   nav ul {
     position: absolute;
-    top: calc(var(--header-height-mobile) + 5px);
-    right: 20px;
+    top: calc(var(--header-height-mobile) + var(--spacing-xs));
+    right: var(--spacing-lg);
     flex-direction: column;
     background: var(--white);
     min-width: 180px;
-    padding: 15px;
-    gap: 6px;
-    border-radius: 15px;
+    padding: var(--spacing-md);
+    gap: var(--spacing-xs);
+    border-radius: var(--card-radius);
     box-shadow: var(--shadow-lg);
     transform: translateX(100%);
     opacity: 0;
-    z-index: 1001;
     visibility: hidden;
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+    transition: 
+      transform var(--animation-duration-short) ease, 
+      opacity var(--animation-duration-short) ease, 
+      visibility 0s linear var(--animation-duration-short);
   }
   
   nav ul.active {

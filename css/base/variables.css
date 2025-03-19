@@ -2,7 +2,7 @@
  * Variables CSS globales - Optimisées et nettoyées des doublons
  */
 :root {
-  /* Couleurs principales */
+  /* Couleurs principales - Système harmonisé */
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
   --primary-opacity: rgba(108, 99, 255, 0.8);
@@ -126,7 +126,7 @@
   --card-hover-transition: all 0.3s ease;
   --card-icon-transition: transform 0.4s ease, color 0.4s ease;
   
-  /* Transitions et animations */
+  /* Transitions et animations - Système unifié */
   --transition: all 0.3s ease;
   --transition-slow: all 0.6s ease-out;
   --transition-fast: all 0.2s ease;
@@ -134,9 +134,15 @@
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
+  
+  /* Animations préconfigurées pour réutilisation */  
+  --animation-duration-short: 0.3s;
+  --animation-duration-medium: 0.5s;
+  --animation-duration-long: 1s;
+  --animation-timing-function: ease;
   --skill-progress-animation: skill-animation 1.5s ease forwards;
-  --fade-in-animation: fadeIn 0.5s ease forwards;
-  --modal-animation: modalFadeIn 0.3s ease-in-out;
+  --fade-in-animation: fadeIn var(--animation-duration-medium) ease forwards;
+  --modal-animation: modalFadeIn var(--animation-duration-short) ease-in-out;
   
   /* États de formulaire */
   --status-success-bg: rgba(76, 175, 80, 0.15);
@@ -165,4 +171,13 @@
   --dark-toggle-radius: 50%;
   --dark-toggle-size: 36px;
   --dark-toggle-mobile-size: 32px;
+  
+  /* Dimensions normalisées pour responsive */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 25px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 60px;
+  --spacing-3xl: 100px;
 }

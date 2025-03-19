@@ -7,7 +7,10 @@
   border-radius: var(--card-border-radius);
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
-  transition: var(--card-transition);
+  transition: 
+    transform var(--animation-duration-short) ease,
+    box-shadow var(--animation-duration-short) ease,
+    border-color var(--animation-duration-short) ease;
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
@@ -15,7 +18,7 @@
 }
 
 .card-base:hover {
-  transform: var(--card-hover-transform);
+  transform: var(--hover-y-offset);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
 }
@@ -137,6 +140,17 @@ body.dark-mode .project-content h3 {
 
 body.dark-mode .project-content p {
   color: var(--text-gray-dark);
+}
+
+/* Cartes spécifiques: descriptions de projets */
+.project.description.card-base {
+  will-change: transform; /* Optimisation GPU */
+  position: relative;
+  z-index: 0;
+}
+
+.project.description.card-base:hover {
+  z-index: 1;
 }
 
 /* Cartes de langue */

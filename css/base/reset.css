@@ -71,7 +71,10 @@ a:hover::after {
 .nav-btn::after,
 .nav-toggle::after,
 .cv-link::after,
-.logo::after {
+.logo::after,
+.modal-close::after,
+.header-buttons a::after,
+.gdpr-buttons button::after {
   display: none;
 }
 

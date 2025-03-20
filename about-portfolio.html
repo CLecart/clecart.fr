@@ -102,18 +102,36 @@
                         <pre><code>
 /home/student/dev/clecart.fr/
 ├── css/
-│   ├── base/          # Fondations CSS (reset, variables)
-│   ├── components/    # Composants réutilisables
-│   ├── layout/        # Structure principale (header, footer)
-│   ├── sections/      # Styles par section
-│   ├── theme/         # Mode sombre
-│   └── utils/         # Utilitaires (animations, responsive)
+│   ├── base/         # Reset, variables
+│   ├── components/   # Buttons, cards, forms, gdpr, dark-mode-toggle
+│   ├── layout/       # Header, footer
+│   ├── sections/     # Page-specific styles (hero, about, projects, etc.)
+│   ├── theme/        # Darkmode styles
+│   └── utils/        # Animations, responsive, modals
 ├── js/
-│   ├── modules/       # Modules JavaScript
-│   └── utils/         # Utilitaires JS
-├── PICTURES/          # Images et vidéos de projet
-├── files/             # Ressources téléchargeables
-└── index.html         # Page principale</code></pre>
+│   ├── modules/      # Feature modules
+│   │   ├── animations.js
+│   │   ├── contact-form.js
+│   │   ├── darkmode.js
+│   │   ├── form-enhancements.js
+│   │   ├── navigation.js
+│   │   └── project-navigation.js
+│   ├── utils/        # Utility modules
+│   │   ├── gdpr.js
+│   │   └── modal.js
+│   └── main.js       # Entry point
+├── PICTURES/         # Media assets
+├── images/           # SVG icons
+├── files/            # Downloadable resources (CV)
+├── index.html
+├── about-portfolio.html
+├── descriptions-projects.html
+├── privacy-policy.html
+├── styles.css
+├── .htaccess
+├── nginx.conf
+├── Dockerfile
+└── deploy.sh</code></pre>
                     </div>
                 </div>
                 

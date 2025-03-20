@@ -19,9 +19,24 @@
   align-self: center;
 }
 
-.dark-mode-toggle:hover {
-  background: var(--white-opacity-10);
-  transform: translateY(-2px);
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) {
+  .dark-mode-toggle:hover {
+    background: var(--white-opacity-10);
+    transform: translateY(-2px);
+  }
+}
+
+/* No animation for touch devices */
+@media (hover: none) {
+  .dark-mode-toggle:hover {
+    background: transparent;
+    transform: none;
+  }
+  
+  .homepage .dark-mode-toggle {
+    background-color: var(--white-opacity-10);
+  }
 }
 
 .dark-mode-toggle i {

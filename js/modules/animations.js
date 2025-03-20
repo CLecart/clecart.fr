@@ -13,10 +13,9 @@ export function initAnimations() {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
       } else {
-        const boundingRect = entry.boundingClientRect;
-        if (boundingRect.top + boundingRect.height < 0) {
-          entry.target.classList.remove("appear");
-        }
+        // Remove 'appear' class when element is not visible
+        // Regardless of scroll direction
+        entry.target.classList.remove("appear");
       }
     });
   }, observerOptions);

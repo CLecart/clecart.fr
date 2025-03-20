@@ -2,22 +2,17 @@
  * Module pour les animations - Optimisé
  */
 export function initAnimations() {
-  // Configuration uniforme de l'observateur
   const observerOptions = {
     root: null,
     rootMargin: "0px",
     threshold: 0.1,
   };
 
-  // Création d'un seul observer partagé
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      // Gestion adaptative: apparition/disparition conditionnelle
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
       } else {
-        // Détecter si l'élément est sorti complètement vers le haut
-        // pour permettre la réanimation lors du défilement vers le haut
         const boundingRect = entry.boundingClientRect;
         if (boundingRect.top + boundingRect.height < 0) {
           entry.target.classList.remove("appear");
@@ -26,15 +21,12 @@ export function initAnimations() {
     });
   }, observerOptions);
 
-  // Sélection ciblée des éléments à animer
   const animatedElements = document.querySelectorAll(
     ".fade-in, .slide-left, .slide-right, .project.description.card-base"
   );
 
-  // Application uniforme de l'observation
   animatedElements.forEach((element) => observer.observe(element));
 
-  // Traitement spécialisé pour la page de projets
   if (document.querySelector(".project-navigation")) {
     const projectCards = document.querySelectorAll(".project.description");
     projectCards.forEach((card) => card.classList.add("fade-in"));

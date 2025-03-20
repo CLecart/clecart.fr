@@ -14,9 +14,8 @@
   height: 36px;
   width: 36px;
   min-width: 36px;
-  order: 1; /* Avant le bouton retour */
-  margin: 0; /* Reset des marges pour éviter les décalages */
-  /* Ajuster la position verticale pour l'aligner avec les liens */
+  order: 1;
+  margin: 0;
   align-self: center;
 }
 
@@ -30,12 +29,13 @@
   display: block;
 }
 
-/* Adaptations responsive */
+/* Adaptations responsive - harmonisées avec le menu hamburger */
 @media (max-width: 768px) {
   .dark-mode-toggle {
-    height: 36px; /* Hauteur cohérente avec les liens */
+    height: 36px;
     width: 36px;
     min-width: 36px;
+    min-height: 36px;
     margin: 0;
     padding: 0;
     background-color: var(--white-opacity-10);
@@ -45,19 +45,19 @@
 
 @media (max-width: 480px) {
   .dark-mode-toggle {
-    height: 32px;
-    min-height: 32px;
-    width: 32px;
-    min-width: 32px;
+    height: 36px;
+    min-height: 36px;
+    width: 36px;
+    min-width: 36px;
   }
 }
 
 @media (max-width: 360px) {
   .dark-mode-toggle {
-    height: 28px;
-    width: 28px;
-    min-width: 28px;
-    min-height: 28px;
+    height: 32px;
+    width: 32px;
+    min-width: 32px;
+    min-height: 32px;
   }
   
   .dark-mode-toggle i {

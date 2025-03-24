@@ -89,34 +89,54 @@ export function initAnimations() {
   if (document.querySelector(".portfolio-details")) {
     const portfolioSections = document.querySelectorAll(".portfolio-section");
 
-    portfolioSections.forEach((section, index) => {
-      // Ajouter un délai progressif pour une animation en cascade
-      setTimeout(() => {
-        section.classList.add("appear");
-      }, 200 * index);
+    // Utiliser IntersectionObserver pour les sections portfolio
+    const portfolioObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("appear");
+            entry.target.classList.add("section-active"); // Ajoute la classe utilisée sur les autres pages
 
-      // Animation au survol pour les éléments tech-item
-      const techItems = section.querySelectorAll(".tech-item");
-      techItems.forEach((item) => {
-        item.addEventListener("mouseenter", () => {
-          item.style.transition =
-            "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-          item.style.transform = "translateY(-10px)";
+            // Animation des éléments enfants après l'apparition de la section
+            const outcomeItems =
+              entry.target.querySelectorAll(".outcomes-list li");
+            outcomeItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add("appear-outcome");
+              }, 100 * index);
+            });
+          } else {
+            // Cette ligne est optionnelle selon votre comportement préféré
+            // entry.target.classList.remove("section-active");
+          }
         });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "-10% 0px",
+      }
+    );
 
-        item.addEventListener("mouseleave", () => {
-          item.style.transform = "translateY(0)";
-        });
-      });
+    // Observer toutes les sections portfolio
+    portfolioSections.forEach((section) => {
+      portfolioObserver.observe(section);
     });
 
-    // Animation pour la liste des résultats d'apprentissage
-    const outcomeItems = document.querySelectorAll(".outcomes-list li");
-    outcomeItems.forEach((item, index) => {
-      setTimeout(() => {
-        item.classList.add("appear-outcome");
-      }, 100 * index);
-    });
+    // Animation de la section CTA - harmonisation avec les autres pages
+    const ctaSection = document.querySelector(".cta-section");
+    if (ctaSection) {
+      const ctaObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("appear");
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      ctaObserver.observe(ctaSection);
+    }
   }
 }
 

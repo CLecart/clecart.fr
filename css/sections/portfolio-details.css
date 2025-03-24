@@ -21,18 +21,39 @@
   max-width: 800px;
 }
 
+/* Harmonisation des animations pour les sections principales */
 .portfolio-section {
   margin-bottom: 40px;
   padding: 30px;
   border-radius: var(--card-radius);
+  background-color: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  border: var(--card-border);
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: 
+    opacity 0.6s var(--transition), 
+    transform 0.6s var(--transition),
+    box-shadow var(--animation-duration-short) ease,
+    border-color var(--animation-duration-short) ease;
+  will-change: transform, opacity, box-shadow, border-color;
 }
 
+/* Animation d'apparition unifiée avec autres pages */
 .portfolio-section.appear {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Effet de hover unifié avec autres cartes */
+.portfolio-section:hover {
+  transform: var(--hover-y-offset);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+body.dark-mode .portfolio-section:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 .portfolio-section h2 {
@@ -64,19 +85,48 @@
   gap: 25px;
 }
 
+/* Harmonisation des animations pour les éléments tech-item */
 .tech-item {
   background-color: var(--primary-light);
   padding: 20px;
   border-radius: 10px;
-  transition: var(--card-transition);
+  transition: 
+    transform var(--animation-duration-short) ease,
+    box-shadow var(--animation-duration-short) ease,
+    border-color var(--animation-duration-short) ease;
   border: 1px solid transparent;
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
-  will-change: transform, box-shadow, border-color;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity, box-shadow, border-color;
+}
+
+/* Animation d'apparition cascadée pour tech-items */
+.portfolio-section.appear .tech-item {
+  animation: fadeInUp 0.6s forwards;
+}
+
+.portfolio-section.appear .tech-item:nth-child(1) { animation-delay: 0.1s; }
+.portfolio-section.appear .tech-item:nth-child(2) { animation-delay: 0.15s; }
+.portfolio-section.appear .tech-item:nth-child(3) { animation-delay: 0.2s; }
+.portfolio-section.appear .tech-item:nth-child(4) { animation-delay: 0.25s; }
+.portfolio-section.appear .tech-item:nth-child(5) { animation-delay: 0.3s; }
+.portfolio-section.appear .tech-item:nth-child(6) { animation-delay: 0.35s; }
+.portfolio-section.appear .tech-item:nth-child(7) { animation-delay: 0.4s; }
+.portfolio-section.appear .tech-item:nth-child(8) { animation-delay: 0.45s; }
+.portfolio-section.appear .tech-item:nth-child(9) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body.dark-mode .tech-item {
@@ -85,7 +135,7 @@ body.dark-mode .tech-item {
 }
 
 .tech-item:hover {
-  transform: var(--card-hover-transform); /* Utilise la même variable que les autres cartes */
+  transform: var(--hover-y-offset);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
 }
@@ -102,7 +152,8 @@ body.dark-mode .tech-item:hover {
 }
 
 .tech-item:hover h3 {
-  color: var(--card-icon-hover-color); /* Animation de couleur identique aux icônes */
+  color: var(--card-icon-hover-color);
+  animation: subtle-pulse 2s infinite ease-in-out;
 }
 
 /* Animation de pulsation pour les cartes */
@@ -115,6 +166,36 @@ body.dark-mode .tech-item:hover {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+/* Harmonisation des features-list pour correspondre aux animations des autres pages */
+.features-list li {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.portfolio-section.appear .features-list li {
+  animation: slideInFromLeft 0.5s forwards;
+}
+
+.portfolio-section.appear .features-list li:nth-child(1) { animation-delay: 0.1s; }
+.portfolio-section.appear .features-list li:nth-child(2) { animation-delay: 0.15s; }
+.portfolio-section.appear .features-list li:nth-child(3) { animation-delay: 0.2s; }
+.portfolio-section.appear .features-list li:nth-child(4) { animation-delay: 0.25s; }
+.portfolio-section.appear .features-list li:nth-child(5) { animation-delay: 0.3s; }
+.portfolio-section.appear .features-list li:nth-child(6) { animation-delay: 0.35s; }
+.portfolio-section.appear .features-list li:nth-child(7) { animation-delay: 0.4s; }
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .features-list li, .outcomes-list li {
@@ -151,6 +232,15 @@ body.dark-mode .tech-item:hover {
   border-radius: 10px;
   overflow: hidden;
   margin: 20px 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.portfolio-section.appear .code-block {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
 }
 
 .code-block pre {
@@ -176,10 +266,13 @@ body.dark-mode .tech-item:hover {
 
 /* Animation des cartes explicatives cohérente avec les autres cartes du site */
 .approach-item {
-  transition: var(--card-transition);
+  transition: 
+    transform var(--animation-duration-short) ease,
+    box-shadow var(--animation-duration-short) ease,
+    border-color var(--animation-duration-short) ease;
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .approach-grid .approach-item:nth-child(1) { transition-delay: 0.1s; }
@@ -193,7 +286,7 @@ body.dark-mode .tech-item:hover {
 }
 
 .approach-item:hover {
-  transform: var(--card-hover-transform);
+  transform: var(--hover-y-offset);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
 }
@@ -228,6 +321,20 @@ body.dark-mode .tech-item:hover {
   transform: translateY(0);
 }
 
+.cta-section .btn {
+  transition: var(--btn-transition);
+  will-change: transform, box-shadow;
+}
+
+.cta-section .btn:hover {
+  transform: var(--hover-y-offset);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+.cta-section .btn-secondary:hover {
+  box-shadow: var(--btn-secondary-shadow-hover);
+}
+
 /* Mode sombre */
 body.dark-mode .portfolio-section {
   background-color: var(--card-dark);
@@ -239,6 +346,12 @@ body.dark-mode .approach-item:hover {
 
 body.dark-mode .code-block {
   background-color: var(--darker);
+}
+
+body.dark-mode .tech-item:hover,
+body.dark-mode .approach-item:hover,
+body.dark-mode .outcomes-list li:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 /* Responsive */
@@ -279,13 +392,16 @@ body.dark-mode .code-block {
   border-radius: 10px;
   padding: 18px 20px 18px 50px;
   position: relative;
-  transition: var(--card-transition);
+  transition: 
+    opacity 0.5s ease, 
+    transform 0.5s ease, 
+    box-shadow var(--animation-duration-short) ease, 
+    border-color var(--animation-duration-short) ease;
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
   margin-bottom: 0;
   opacity: 0;
   transform: translateX(-20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .outcomes-list li.appear-outcome {
@@ -306,7 +422,7 @@ body.dark-mode .code-block {
 }
 
 .outcomes-list li:hover {
-  transform: var(--hover-y-small);
+  transform: var(--hover-y-offset);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
 }

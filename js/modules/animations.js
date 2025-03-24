@@ -1,5 +1,5 @@
 /**
- * Module pour les animations - Optimisé
+ * Module pour les animations
  */
 export function initAnimations() {
   const observerOptions = {
@@ -13,8 +13,6 @@ export function initAnimations() {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
       } else {
-        // Remove 'appear' class when element is not visible
-        // Regardless of scroll direction
         entry.target.classList.remove("appear");
       }
     });
@@ -26,6 +24,9 @@ export function initAnimations() {
 
   animatedElements.forEach((element) => observer.observe(element));
 
+  // Initialisation du typewriter intégré ici plutôt que dans un fichier séparé
+  initTypewriterEffect();
+
   if (document.querySelector(".project-navigation")) {
     const projectCards = document.querySelectorAll(".project.description");
     projectCards.forEach((card) => card.classList.add("fade-in"));
@@ -33,9 +34,9 @@ export function initAnimations() {
 }
 
 /**
- * Initialise l'effet machine à écrire
+ * Effet machine à écrire intégré
  */
-export function initTypewriter() {
+function initTypewriterEffect() {
   const typewriterElement = document.getElementById("typewriter");
   if (!typewriterElement) return;
 

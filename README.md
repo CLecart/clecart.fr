@@ -51,7 +51,7 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 
 ## Structure du projet
 
-```
+````
 /home/student/dev/clecart.fr/
 ├── css/
 │   ├── base/
@@ -81,73 +81,79 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 │   │   ├── gdpr.js
 │   │   ├── modal.js
 │   │   └── typewriter.js
-│   └── main.js
-├── PICTURES/
-│   ├── profile.jpg
-│   ├── Groupie-Tracker.mp4
+│   └── main.jstact-form.js
+├── PICTURES/orm-enhancements.js
+│   ├── profile.jpgion.js
+│   ├── Groupie-Tracker.mp4ion.js
 │   ├── BombermanDX.mp4
 │   └── forum.png
-├── files/
+├── files/ofile.jpg
 │   └── CV_Christophe_Lecart.pdf
-├── index.html
+├── index.htmlmanDX.mp4
 ├── descriptions-projects.html
 ├── privacy-policy.html
-├── styles.css
+├── styles.cssistophe_Lecart.pdf
 ├── favicon.ico
-├── images/
-│   ├── favicon.png
+├── images/tions-projects.html
+│   ├── favicon.pnghtml
 │   └── apple-touch-icon.png
-```
-
+``` favicon.ico
+├── images/
 ## Configuration locale
-
+│   └── apple-touch-icon.png
 Pour exécuter ce projet localement:
 
-1. Clonez le dépôt:
+1. Clonez le dépôt:cale
 
-   ```bash
+   ```bashter ce projet localement:
    git clone https://github.com/CLecart/portfolio.git
-   cd portfolio
-   ```
+   cd portfoliopôt:
+````
 
+````bash
 2. Ouvrez le fichier index.html dans votre navigateur, ou utilisez un serveur local:
-
-   ```bash
-   # Si vous avez Python installé
-   python -m http.server
-   # Puis accédez à http://localhost:8000
-   ```
-
+cd portfolio
+```bash
+# Si vous avez Python installé
+python -m http.serverex.html dans votre navigateur, ou utilisez un serveur local:
+# Puis accédez à http://localhost:8000
+```bash
+# Si vous avez Python installé
 3. Pour le développement, toute modification des fichiers CSS ou JS sera visible après rafraîchissement de la page.
-
+# Puis accédez à http://localhost:8000
 ## Déploiement
 
-Le portfolio peut être déployé de plusieurs façons:
+Le portfolio peut être déployé de plusieurs façons:chiers CSS ou JS sera visible après rafraîchissement de la page.
 
 ### Déploiement avec Docker
 
 1. Assurez-vous que Docker est installé sur votre système
 2. Exécutez le script de déploiement:
-
-   ```bash
-   ./deploy.sh
-   ```
+### Déploiement avec Docker
+```bash
+./deploy.shs que Docker est installé sur votre système
+```cutez le script de déploiement:
 
 3. Le site sera disponible sur `http://localhost`
-
+./deploy.sh
 ### Déploiement manuel
 
 Le portfolio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
 
 Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur web.
 
-## Contact
+## Contactio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
 
-- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
+- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)rs vers votre serveur web.
 - **LinkedIn**: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
 - **GitHub**: [github.com/CLecart](https://github.com/CLecart)
 - **Portfolio**: [clecart.fr](https://clecart.fr)
+- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
+---*LinkedIn**: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
+- **GitHub**: [github.com/CLecart](https://github.com/CLecart)
+© 2025 Christophe Lecart. Tous droits réservés.r)
 
 ---
 
 © 2025 Christophe Lecart. Tous droits réservés.
+````

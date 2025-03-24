@@ -2,7 +2,7 @@
  * Point d'entrée JavaScript - Initialisation des modules
  */
 import { initDarkMode } from "./modules/darkmode.js";
-import { initAnimations, initTypewriter } from "./modules/animations.js";
+import { initAnimations } from "./modules/animations.js";
 import { initNavigation } from "./modules/navigation.js";
 import { initContactForm } from "./modules/contact-form.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Interface
   initAnimations();
-  initTypewriter();
   initNavigation();
   initFormEnhancements();
 

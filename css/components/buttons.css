@@ -182,3 +182,33 @@
     margin-right: 5px;
   }
 }
+
+/* Boutons de projet - harmonisation pour très petits écrans */
+@media (max-width: 404px) {
+  .project-btn,
+  .github-btn {
+    /* Garantir une hauteur fixe */
+    height: 38px;
+    min-height: 38px;
+    /* Largeur optimisée */
+    min-width: 100%;
+    max-width: 100%;
+    /* Ajustement de texte */
+    padding: 0 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Centrage parfait */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .github-btn {
+    padding: 0;
+    width: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+  }
+}

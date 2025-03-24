@@ -11,19 +11,44 @@
     <!-- Favicon - Updated -->
     <link rel="icon" href="PICTURES/favicon.ico">
     
-    <!-- Preload critical web fonts with crossorigin attribute -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v22/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <!-- Replace preload with standard Google Fonts implementation -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/PICTURES/profile.jpg" as="image" fetchpriority="high">
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Preconnect pour les ressources externes -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Font Awesome with error suppression for Firefox -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
-    <!-- Préchargement des ressources critiques -->
-    <link rel="preload" href="/PICTURES/profile.jpg" as="image">
+    <!-- Script to prevent FOUC and suppress Font Awesome warnings -->
+    <script>
+        // Ajouter une classe js-loading à html (pas à body)
+        document.documentElement.className = 'js-loading';
+        
+        // Firefox Font Awesome warning suppression
+        if (navigator.userAgent.indexOf("Firefox") !== -1) {
+            const originalConsoleError = console.error;
+            console.error = function(msg) {
+                if (typeof msg === 'string' && msg.indexOf('Glyph bbox was incorrect') !== -1) {
+                    return;
+                }
+                originalConsoleError.apply(console, arguments);
+            };
+        }
+        
+        // Retirer la classe js-loading quand tout est chargé
+        window.addEventListener('load', function() {
+            document.documentElement.classList.remove('js-loading');
+        });
+    </script>
+    
+    <!-- Preconnect to external services -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.emailjs.com">
     

@@ -1,5 +1,5 @@
-/* Import font with display swap for better performance */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+/* Remove previous font import as we're now using the link in the HTML */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); */
 
 * {
   margin: 0;
@@ -7,8 +7,33 @@
   box-sizing: border-box;
 }
 
+/* Fix FOUC sans utiliser !important - utiliser la spécificité des sélecteurs à la place */
+html.js-loading,
+html.js-loading body {
+  /* Bloquer le rendu jusqu'à ce que tout soit chargé */
+  visibility: hidden;
+}
+
+html.js-loading .js-loading-visible,
+html.js-loading #splash-screen {
+  /* Éléments spécifiques qu'on veut rendre visibles pendant le chargement */
+  visibility: visible;
+}
+
+html.js-loading [class*="animate"],
+html.js-loading [class*="transition"],
+html.js-loading [class*="fade"],
+html.js-loading [class*="slide"] {
+  /* Désactiver les animations pendant le chargement avec une spécificité plus élevée */
+  animation-name: none;
+  transition-property: none;
+  transform: none;
+  opacity: 0;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
+  font-display: swap; /* Improve font display performance */
   line-height: 1.6;
   color: var(--text-color);
   overflow-x: hidden;

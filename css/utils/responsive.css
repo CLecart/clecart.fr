@@ -149,3 +149,25 @@
     padding-top: 0;
   }
 }
+
+/* Styles spécifiques pour très petits écrans (moins de 404px) */
+@media (max-width: 404px) {
+  /* Améliorations des boutons de projet */
+  .project-buttons {
+    display: grid;
+    grid-template-columns: 1fr auto; /* Une colonne plus large pour le bouton View Details, une plus étroite pour GitHub */
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+  
+  /* S'assurer que les projets ont un espacement correct */
+  .project-content {
+    padding-bottom: 15px;
+  }
+  
+  /* Réduire légèrement certaines marges pour économiser de l'espace */
+  .project-content p {
+    margin-bottom: 15px;
+  }
+}

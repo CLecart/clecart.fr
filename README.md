@@ -14,7 +14,6 @@
 - [Structure du projet](#structure-du-projet)
 - [Configuration locale](#configuration-locale)
 - [Déploiement](#déploiement)
-- [Maintenance](#maintenance)
 - [Contact](#contact)
 
 ## À propos
@@ -142,10 +141,6 @@ Le portfolio est actuellement déployé sur [clecart.fr](https://clecart.fr) via
 
 Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur web.
 
-## Maintenance
-
-Pour maintenir ce projet, assurez-vous de vérifier régulièrement les mises à jour des dépendances et de tester les nouvelles fonctionnalités dans un environnement de développement avant de les déployer en production.
-
 ## Contact
 
 - **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
@@ -156,7 +151,3 @@ Pour maintenir ce projet, assurez-vous de vérifier régulièrement les mises à
 ---
 
 © 2025 Christophe Lecart. Tous droits réservés.
-
-```
-
-```

@@ -238,6 +238,38 @@ body.dark-mode .tech-item:hover {
   animation: checkmark-pulse 1.5s infinite ease-in-out;
 }
 
+/* Correction: Séparer les effets de survol pour les listes de fonctionnalités */
+.features-list li {
+  margin-bottom: 15px;
+  padding-left: 30px;
+  position: relative;
+  /* Supprimer la transition qui affecte le conteneur entier */
+  transition: none;
+}
+
+/* Limiter l'animation au survol uniquement à l'icône, pas à tout l'élément li */
+.features-list li:hover {
+  /* Retirer les propriétés qui affectent le contour */
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Animation au survol - passage au rouge avec effet de pulsation uniquement pour l'icône */
+.features-list li i {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  color: var(--primary); /* Bleu par défaut */
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.features-list li:hover i {
+  color: var(--accent); /* Rouge au survol */
+  animation: checkmark-pulse 1.5s infinite ease-in-out;
+}
+
 /* Animation de pulsation pour les checkmarks */
 @keyframes checkmark-pulse {
   0% { transform: scale(1); }
@@ -559,4 +591,26 @@ body.dark-mode .tech-item:hover,
 body.dark-mode .approach-item:hover,
 body.dark-mode .outcomes-list li:hover {
   box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+/* Annuler la règle générale pour les features-list */
+.card-base:hover,
+.project-card:hover,
+.skill-card:hover,
+.language-card:hover,
+.tech-item:hover,
+.approach-item:hover,
+.outcomes-list li:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+  z-index: 1;
+}
+
+/* Exception pour features-list */
+.features-list li:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: auto;
 }

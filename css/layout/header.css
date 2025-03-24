@@ -43,6 +43,7 @@ header.scrolled {
   height: 100%;
 }
 
+/* Style unifié pour le logo */
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
@@ -54,6 +55,18 @@ header.scrolled {
   position: relative;
   z-index: 100;
   padding-bottom: 3px;
+  text-decoration: none;
+}
+
+/* Assurer que les deux lignes ont le même espacement */
+.logo span {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Garantir que l'espacement est cohérent */
+.logo span + span {
+  margin-top: 2px;
 }
 
 .logo::after {

@@ -135,8 +135,6 @@ Le portfolio peut être déployé de plusieurs façons:
    ```
 
 3. Le site sera disponible sur `http://localhost`
-4. Le site sera disponible sur `http://localhost`
-   ./deploy.sh
 
 ### Déploiement manuel
 
@@ -148,16 +146,12 @@ Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur
 
 Pour maintenir ce projet, assurez-vous de vérifier régulièrement les mises à jour des dépendances et de tester les nouvelles fonctionnalités dans un environnement de développement avant de les déployer en production.
 
-## Contactio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
+## Contact
 
-- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)rs vers votre serveur web.
+- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
 - **LinkedIn**: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
 - **GitHub**: [github.com/CLecart](https://github.com/CLecart)
 - **Portfolio**: [clecart.fr](https://clecart.fr)
-- **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
-  ---\*LinkedIn\*\*: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
-- **GitHub**: [github.com/CLecart](https://github.com/CLecart)
-  © 2025 Christophe Lecart. Tous droits réservés.r)
 
 ---
 

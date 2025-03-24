@@ -1,78 +1,83 @@
 /**
- * Module pour gérer le comportement des vidéos, optimisé pour mobile
- * Version: 2023-11-15
+ * Module optimisé pour la gestion des vidéos
  */
 export function initVideoHandler() {
-  // Sélectionner toutes les vidéos
   const videos = document.querySelectorAll("video");
   const isMobile =
     /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
 
-  videos.forEach((video) => {
-    // Configuration commune pour tous les appareils
-    video.setAttribute("playsinline", ""); // Toujours ajouter playsinline
-    video.setAttribute("disablePictureInPicture", ""); // Désactiver PiP
+  // Initialiser la gestion des vidéos après le chargement principal de la page
+  window.addEventListener("load", () => {
+    setupVideos();
+  });
 
-    // Remplacer l'autoplay par le chargement contrôlé si sur mobile
-    if (isMobile && video.hasAttribute("autoplay")) {
-      video.removeAttribute("autoplay");
-      video.setAttribute("preload", "metadata");
-    }
+  function setupVideos() {
+    videos.forEach((video) => {
+      // Configuration commune
+      video.setAttribute("playsinline", "");
+      video.setAttribute("disablePictureInPicture", "");
 
-    // Éviter le préchargement complet sur mobile pour économiser la bande passante
-    if (isMobile && video.getAttribute("preload") === "auto") {
-      video.setAttribute("preload", "metadata");
-    }
-
-    // Ajouter un fond de couleur pendant le chargement
-    if (!video.poster) {
-      const parent = video.parentElement;
-      if (parent && parent.classList.contains("project-thumb")) {
-        parent.style.backgroundColor = "#14141e";
-      }
-    }
-
-    // Gestion spécifique mobile
-    if (isMobile) {
-      // Bloquer l'auto-démarrage et prévenir le plein écran
-      video.addEventListener("loadedmetadata", () => {
-        if (!video.hasAttribute("autoplay")) {
-          video.pause();
+      // Vérifier et corriger les sources vidéo si nécessaire
+      const sources = video.querySelectorAll("source");
+      sources.forEach((source) => {
+        const src = source.getAttribute("src");
+        if (src && src.includes("assets/images/") && src.endsWith(".mp4")) {
+          // Corriger les références qui pointent encore vers assets/images/ au lieu de assets/videos/
+          const correctedSrc = src.replace("assets/images/", "assets/videos/");
+          source.setAttribute("src", correctedSrc);
+          console.log(`Référence vidéo corrigée: ${src} -> ${correctedSrc}`);
         }
       });
 
-      // Remplacer le comportement tactile par défaut
-      video.addEventListener(
-        "touchstart",
-        (e) => {
-          if (e.target === video && !video.controls) {
-            e.preventDefault(); // Ne pas déclencher le plein écran
-            if (video.paused) {
-              video.play();
-            } else {
-              video.pause();
-            }
-          }
-        },
-        { passive: false }
-      );
+      // Gestion du préchargement sur mobile
+      if (isMobile) {
+        if (video.hasAttribute("autoplay")) {
+          video.removeAttribute("autoplay");
+          video.setAttribute("preload", "metadata");
+        }
 
-      // Empêcher le zoom sur double tap
-      video.addEventListener("dblclick", (e) => {
-        e.preventDefault();
-        return false;
-      });
+        if (video.getAttribute("preload") === "auto") {
+          video.setAttribute("preload", "metadata");
+        }
+
+        // Ajout d'un fond de chargement pour les vidéos
+        addLoadingBackground(video);
+      }
+
+      // Observer l'intersection pour optimiser les performances
+      observeVideoVisibility(video);
+
+      // Gestion des interactions tactiles
+      setupTouchInteractions(video);
+    });
+  }
+
+  function addLoadingBackground(video) {
+    const parent = video.parentElement;
+    if (parent && parent.classList.contains("project-thumb") && !video.poster) {
+      parent.style.backgroundColor = "#14141e";
     }
+  }
 
-    // Libérer les ressources vidéo quand elles ne sont plus visibles
+  function observeVideoVisibility(video) {
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            // Pauser les vidéos hors écran pour économiser des ressources
             if (!entry.isIntersecting && !video.paused) {
               video.pause();
+            } else if (
+              entry.isIntersecting &&
+              video.paused &&
+              video.hasAttribute("autoplay")
+            ) {
+              // Tenter de lire les vidéos autoplay lorsque visibles
+              video.play().catch(() => {
+                // Ignorer les erreurs de lecture automatique (restrictions navigateur)
+              });
             }
           });
         },
@@ -80,5 +85,38 @@ export function initVideoHandler() {
       );
       observer.observe(video);
     }
-  });
+  }
+
+  function setupTouchInteractions(video) {
+    if (!isMobile) return;
+
+    // Prévenir le plein écran non désiré sur mobile
+    video.addEventListener("loadedmetadata", () => {
+      if (!video.hasAttribute("autoplay")) {
+        video.pause();
+      }
+    });
+
+    // Toggle play/pause au toucher
+    video.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.target === video && !video.controls) {
+          e.preventDefault();
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { passive: false }
+    );
+
+    // Empêcher le zoom sur double-tap
+    video.addEventListener("dblclick", (e) => {
+      e.preventDefault();
+      return false;
+    });
+  }
 }

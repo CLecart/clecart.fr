@@ -1,18 +1,23 @@
 # Configuration Apache optimisée
 
-# Ajouter les types MIME manquants
+# Types MIME
 <IfModule mod_mime.c>
   AddType application/javascript .js
   AddType text/css .css
   AddType image/svg+xml .svg
+  AddType video/mp4 .mp4
 </IfModule>
 
-# Activer la compression GZIP
+# Compression GZIP améliorée
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|mp4)$ no-gzip
 </IfModule>
 
-# Définir les en-têtes de sécurité
+# En-têtes de sécurité renforcés
 <IfModule mod_headers.c>
   Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.emailjs.com 'unsafe-inline'; connect-src https://api.emailjs.com; style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://cdn.jsdelivr.net data:; frame-src 'none'"
   Header set X-Content-Type-Options "nosniff"
@@ -20,6 +25,20 @@
   Header set X-XSS-Protection "1; mode=block"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  
+  # Cache-Control optimisé par type de contenu
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(js|css|svg)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  <FilesMatch "\.(jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  <FilesMatch "\.(mp4)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
 </IfModule>
 
 # Mise en cache
@@ -39,3 +58,6 @@
 #   RewriteCond %{HTTPS} off
 #   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # </IfModule>
+
+# Performance - Disable ETags
+FileETag None

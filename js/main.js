@@ -1,5 +1,6 @@
 /**
  * Point d'entrée JavaScript - Initialisation des modules
+ * Optimisé et harmonisé
  */
 import { initDarkMode } from "./modules/darkmode.js";
 import { initAnimations } from "./modules/animations.js";
@@ -9,23 +10,30 @@ import { initGDPRBanner } from "./utils/gdpr.js";
 import { initModals } from "./utils/modal.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
+import { initVideoHandler } from "./modules/videoHandler.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Mode sombre (prioritaire)
+  // Interface critique (prioritaire)
   initDarkMode();
-
-  // Interface
-  initAnimations();
   initNavigation();
-  initFormEnhancements();
 
-  // Fonctionnalités
-  initContactForm();
-  initGDPRBanner();
-  initModals();
+  // Optimisation chargement
+  setTimeout(() => {
+    // Fonctionnalités secondaires
+    initAnimations();
+    initFormEnhancements();
+    initGDPRBanner();
+    initModals();
 
-  // Navigation projets (conditionnelle)
-  if (document.querySelector(".project-navigation")) {
-    initProjectNavigation();
-  }
+    // Fonctionnalités conditionnelles
+    if (document.querySelector(".project-navigation")) {
+      initProjectNavigation();
+    }
+
+    // Formulaire de contact
+    initContactForm();
+
+    // Gestion optimisée des vidéos
+    initVideoHandler();
+  }, 100);
 });

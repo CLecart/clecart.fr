@@ -16,7 +16,7 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: var(--btn-transition);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
 }
 
 .btn:hover,

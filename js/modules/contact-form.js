@@ -24,8 +24,8 @@ export function initContactForm() {
 function renderContactAlternative(form) {
   form.innerHTML = `
     <p class="gdpr-message">
-      Le formulaire de contact a été désactivé car vous avez refusé notre politique de confidentialité. 
-      Vous pouvez me contacter directement par email à 
+      The contact form has been disabled because you declined our privacy policy. 
+      You can contact me directly by email at 
       <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
     </p>`;
 }
@@ -47,7 +47,7 @@ function setupFormSubmissionHandling(form, statusElement) {
       submitButton,
       statusElement,
       "sending",
-      "Envoi de votre message..."
+      "Sending your message..."
     );
 
     try {
@@ -64,7 +64,7 @@ function setupFormSubmissionHandling(form, statusElement) {
 
       // Vérification que le service EmailJS est disponible
       if (typeof emailjs === "undefined") {
-        throw new Error("Service d'email non disponible");
+        throw new Error("Email service unavailable");
       }
 
       // Envoi du message
@@ -76,17 +76,17 @@ function setupFormSubmissionHandling(form, statusElement) {
         submitButton,
         statusElement,
         "success",
-        "Message envoyé avec succès!"
+        "Message sent successfully!"
       );
       form.reset();
     } catch (error) {
-      console.error("Erreur d'envoi:", error);
+      console.error("Sending error:", error);
       setFormState(
         form,
         submitButton,
         statusElement,
         "error",
-        `Erreur d'envoi. Merci de me contacter directement à <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+        `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
       // Réinitialisation du formulaire après délai

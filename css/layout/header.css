@@ -141,6 +141,15 @@ nav ul li a.cv-link i {
   justify-content: center;
 }
 
+/* Amélioration du style des liens actifs dans la navigation */
+nav ul li a.active {
+  color: var(--primary-dark);
+}
+
+nav ul li a.active::after {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   header {
     height: var(--header-height-mobile);

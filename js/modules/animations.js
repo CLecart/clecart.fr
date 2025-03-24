@@ -84,6 +84,40 @@ export function initAnimations() {
       card.classList.add("fade-in");
     });
   }
+
+  // Animation spécifique pour la page portfolio-details
+  if (document.querySelector(".portfolio-details")) {
+    const portfolioSections = document.querySelectorAll(".portfolio-section");
+
+    portfolioSections.forEach((section, index) => {
+      // Ajouter un délai progressif pour une animation en cascade
+      setTimeout(() => {
+        section.classList.add("appear");
+      }, 200 * index);
+
+      // Animation au survol pour les éléments tech-item
+      const techItems = section.querySelectorAll(".tech-item");
+      techItems.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          item.style.transition =
+            "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+          item.style.transform = "translateY(-10px)";
+        });
+
+        item.addEventListener("mouseleave", () => {
+          item.style.transform = "translateY(0)";
+        });
+      });
+    });
+
+    // Animation pour la liste des résultats d'apprentissage
+    const outcomeItems = document.querySelectorAll(".outcomes-list li");
+    outcomeItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add("appear-outcome");
+      }, 100 * index);
+    });
+  }
 }
 
 /**

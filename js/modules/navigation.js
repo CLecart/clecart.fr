@@ -104,14 +104,32 @@ export function initNavigation() {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
+          // Calcul précis de la position
           const headerHeight = document.querySelector("header").offsetHeight;
           const targetPosition =
             targetElement.getBoundingClientRect().top + window.pageYOffset;
 
+          // Ajout d'une marge de sécurité variable selon la taille de l'écran
+          const buffer = window.innerWidth <= 768 ? 15 : 25;
+
+          // Éviter les conflits avec d'autres animations
+          document.documentElement.classList.add("scrolling-in-progress");
+
+          // Animation fluide avec retrait du flag une fois terminée
           window.scrollTo({
-            top: targetPosition - headerHeight - 20,
+            top: targetPosition - headerHeight - buffer,
             behavior: "smooth",
           });
+
+          // Fournir un retour visuel immédiat
+          const navLinks = document.querySelectorAll("nav ul li a");
+          navLinks.forEach((link) => link.classList.remove("active"));
+          this.classList.add("active");
+
+          // Garantir que les événements de défilement ne viennent pas interférer
+          setTimeout(() => {
+            document.documentElement.classList.remove("scrolling-in-progress");
+          }, 1000); // Temps suffisant pour la plupart des défilements
         }
       });
     });

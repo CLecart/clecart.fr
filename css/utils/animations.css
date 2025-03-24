@@ -113,6 +113,37 @@ section.section-active .section-header {
   animation-delay: 0s;
 }
 
+/* Ajout d'un style pour l'état de défilement en cours */
+html.scrolling-in-progress {
+  scroll-behavior: auto; /* Désactiver le défilement standard du navigateur */
+}
+
+html.scrolling-in-progress * {
+  pointer-events: none !important; /* Bloquer toutes les interactions pendant l'animation */
+  user-select: none !important; /* Empêcher la sélection de texte pendant l'animation */
+}
+
+/* Permettre uniquement les interactions avec l'en-tête */
+html.scrolling-in-progress header,
+html.scrolling-in-progress header * {
+  pointer-events: auto !important;
+}
+
+/* Animation plus lisse pour les liens actifs */
+nav ul li a {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a.active {
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Exception pour permettre le clic sur le bouton retour du navigateur */
+html.scrolling-in-progress .header-content * {
+  pointer-events: auto;
+}
+
 /* Keyframes préexistants */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

@@ -2,12 +2,14 @@
  * Module pour les animations
  */
 export function initAnimations() {
+  // Configuration pour animations existantes
   const observerOptions = {
     root: null,
     rootMargin: "0px",
     threshold: 0.1,
   };
 
+  // Observateur principal pour animations existantes
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -18,23 +20,74 @@ export function initAnimations() {
     });
   }, observerOptions);
 
+  // Nouvel observateur pour titres de section avec effet spécial
+  const sectionHeaderObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("title-animate");
+        } else {
+          entry.target.classList.remove("title-animate");
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: "-10% 0px",
+      threshold: 0.1,
+    }
+  );
+
+  // Nouvel observateur pour sections complètes
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const direction = entry.boundingClientRect.y < 0 ? "up" : "down";
+
+        if (entry.isIntersecting) {
+          entry.target.classList.add("section-active");
+          entry.target.setAttribute("data-scroll-direction", direction);
+        } else {
+          entry.target.classList.remove("section-active");
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: "-20% 0px",
+      threshold: 0.1,
+    }
+  );
+
+  // Animation des éléments existants
   const animatedElements = document.querySelectorAll(
     ".fade-in, .slide-left, .slide-right, .project.description.card-base"
   );
-
   animatedElements.forEach((element) => observer.observe(element));
 
-  // Initialisation du typewriter intégré ici plutôt que dans un fichier séparé
+  // Animation des titres de sections spécifiques (Skills, Projects)
+  const sectionHeaders = document.querySelectorAll(
+    "#skills .section-header h2, #projects .section-header h2"
+  );
+  sectionHeaders.forEach((header) => sectionHeaderObserver.observe(header));
+
+  // Animation au défilement pour toutes les sections
+  const sections = document.querySelectorAll("section");
+  sections.forEach((section) => sectionObserver.observe(section));
+
+  // Initialisation de l'effet machine à écrire
   initTypewriterEffect();
 
+  // Comportement spécifique pour la page projets
   if (document.querySelector(".project-navigation")) {
-    const projectCards = document.querySelectorAll(".project.description");
-    projectCards.forEach((card) => card.classList.add("fade-in"));
+    document.querySelectorAll(".project.description").forEach((card) => {
+      card.classList.add("fade-in");
+    });
   }
 }
 
 /**
- * Effet machine à écrire intégré
+ * Effet machine à écrire
  */
 function initTypewriterEffect() {
   const typewriterElement = document.getElementById("typewriter");

@@ -1,6 +1,6 @@
-/* Styles pour les animations - Optimisés */
+/* Styles pour les animations */
 
-/* Classes d'animation simplifiées et unifiées */
+/* Classes d'animation de base (existantes) */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -19,7 +19,7 @@
   transition: var(--transition-slow);
 }
 
-/* Application uniforme des effets d'apparition */
+/* Application des effets d'apparition (existant) */
 .fade-in.appear, 
 .slide-left.appear, 
 .slide-right.appear {
@@ -27,7 +27,73 @@
   transform: translateX(0) translateY(0);
 }
 
-/* Exclusion ciblée pour éviter interférences avec l'UI fixe */
+/* NOUVELLES ANIMATIONS DE DÉFILEMENT */
+
+/* Animation des titres de sections spécifiques */
+#skills .section-header h2,
+#projects .section-header h2 {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#skills .section-header h2.title-animate,
+#projects .section-header h2.title-animate {
+  opacity: 1;
+  transform: translateY(0);
+  animation: title-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes title-glow {
+  0% { text-shadow: 0 0 2px rgba(108, 99, 255, 0); }
+  100% { text-shadow: 0 0 8px rgba(108, 99, 255, 0.4); }
+}
+
+/* Animation des sections au défilement */
+section {
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+section.section-active {
+  z-index: 2;
+}
+
+/* Effet de transition entre sections */
+section.section-active::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-light));
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: section-line 0.8s ease forwards;
+}
+
+section.section-active[data-scroll-direction="up"]::before {
+  bottom: auto;
+  top: 0;
+}
+
+@keyframes section-line {
+  to { transform: scaleX(1); }
+}
+
+/* Animation des éléments dans les sections actives */
+section.section-active .section-header {
+  animation: fade-up-in 0.8s ease forwards;
+}
+
+@keyframes fade-up-in {
+  from { opacity: 0.8; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Optimisation - exclure éléments de l'header des animations */
 .header-content *, 
 .dark-mode-toggle, 
 .right-content *,
@@ -37,7 +103,7 @@
   transition: none;
 }
 
-/* Support pour le changement de thème sans animations */
+/* Support changement de thème */
 .theme-transitioning,
 .theme-transitioning *,
 .theme-transitioning *:before,
@@ -47,7 +113,7 @@
   animation-delay: 0s;
 }
 
-/* Keyframes centralisés et standardisés */
+/* Keyframes préexistants */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

@@ -1,4 +1,4 @@
-/* Styles pour la page détails du portfolio - nettoyés */
+/* Styles pour la page détails du portfolio - harmonisés */
 
 .portfolio-details {
   padding: 130px 0 60px;
@@ -97,8 +97,6 @@ body.dark-mode .portfolio-section:hover {
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
   transition: 
     transform 0.4s var(--ease-smooth),
     box-shadow 0.4s var(--ease-smooth),
@@ -106,20 +104,10 @@ body.dark-mode .portfolio-section:hover {
     background-color 0.4s var(--ease-smooth);
 }
 
-/* Animation d'apparition cascadée pour tech-items - plus douce */
+/* Simplifier l'apparition - uniquement visibilité */
 .portfolio-section.appear .tech-item {
-  animation: fadeInUpSmooth 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 1;
 }
-
-.portfolio-section.appear .tech-item:nth-child(1) { animation-delay: 0.1s; }
-.portfolio-section.appear .tech-item:nth-child(2) { animation-delay: 0.15s; }
-.portfolio-section.appear .tech-item:nth-child(3) { animation-delay: 0.2s; }
-.portfolio-section.appear .tech-item:nth-child(4) { animation-delay: 0.25s; }
-.portfolio-section.appear .tech-item:nth-child(5) { animation-delay: 0.3s; }
-.portfolio-section.appear .tech-item:nth-child(6) { animation-delay: 0.35s; }
-.portfolio-section.appear .tech-item:nth-child(7) { animation-delay: 0.4s; }
-.portfolio-section.appear .tech-item:nth-child(8) { animation-delay: 0.45s; }
-.portfolio-section.appear .tech-item:nth-child(9) { animation-delay: 0.5s; }
 
 @keyframes fadeInUp {
   from {
@@ -307,18 +295,10 @@ body.dark-mode .tech-item:hover {
     box-shadow 0.4s var(--ease-smooth),
     border-color 0.4s var(--ease-smooth),
     background-color 0.4s var(--ease-smooth);
-  opacity: 0;
-  transform: translateY(20px); /* Même transformation initiale que tech-item */
 }
-
-.approach-grid .approach-item:nth-child(1) { transition-delay: 0.1s; }
-.approach-grid .approach-item:nth-child(2) { transition-delay: 0.2s; }
-.approach-grid .approach-item:nth-child(3) { transition-delay: 0.3s; }
-.approach-grid .approach-item:nth-child(4) { transition-delay: 0.4s; }
 
 .portfolio-section.appear .approach-item {
   opacity: 1;
-  transform: scale(1) translateY(0);
 }
 
 .approach-item:hover {
@@ -579,37 +559,4 @@ body.dark-mode .tech-item:hover,
 body.dark-mode .approach-item:hover,
 body.dark-mode .outcomes-list li:hover {
   box-shadow: var(--card-box-shadow-hover-dark);
-}
-
-/* CORRECTION: Harmonisation des effets de survol pour que toutes les cartes montent */
-.tech-item,
-.approach-item {
-  transform: translateY(0);
-  transition: 
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
-}
-
-.tech-item:hover,
-.approach-item:hover {
-  transform: translateY(-10px); /* Force le même mouvement vers le haut au survol */
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-}
-
-/* Annulation des transformations contradictoires au survol */
-.portfolio-section.appear .tech-item,
-.portfolio-section.appear .approach-item {
-  transform: translateY(0); /* État initial réinitialisé */
-}
-
-/* Forcer le même comportement au survol pour tous les éléments */
-.portfolio-section:hover,
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover {
-  transform: translateY(-10px) !important;
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
 }

@@ -253,7 +253,7 @@ body.dark-mode .code-block {
 }
 
 .outcomes-list li::before {
-  content: "\f00c";
+  content: "\f005"; /* Changement de l'icône de coche vers une étoile */
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
   position: absolute;

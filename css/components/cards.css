@@ -1,21 +1,21 @@
-/* Styles pour les cartes - nettoyés des doublons */
+/**
+ * Système de cartes unifié et optimisé
+ */
 
 /* Base commune pour toutes les cartes */
 .card-base {
   background-color: var(--card-bg);
   color: var(--card-color);
-  border-radius: var(--card-border-radius);
+  border-radius: var(--card-radius);
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
-  transition: 
-    transform 0.5s var(--ease-smooth),
-    box-shadow 0.5s var(--ease-smooth),
-    border-color 0.5s var(--ease-smooth);
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth),
+              border-color var(--duration-normal) var(--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
   position: relative;
-  /* will-change supprimé pour réduire la consommation mémoire */
 }
 
 /* Mode sombre pour les cartes */
@@ -40,10 +40,9 @@ body.dark-mode .card-base:hover {
 }
 
 .skill-icon {
-  font-size: 2.5rem;
+  font-size: var(--icon-size-large);
   margin-bottom: 15px;
   color: var(--card-icon-color);
-  transition: var(--card-icon-transition);
 }
 
 .skill-card:hover .skill-icon {
@@ -222,10 +221,18 @@ body.dark-mode .language-icon img {
 .approach-item:hover,
 .outcomes-list li:hover,
 .features-list li:hover {
-  transform: translateY(-10px);
+  transform: var(--card-hover-transform);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
   z-index: 1;
+}
+
+/* Exception pour les éléments non-carte (comme features-list) */
+.features-list li:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: auto;
 }
 
 /* Animation des icônes au survol */

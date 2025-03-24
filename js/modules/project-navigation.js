@@ -20,6 +20,12 @@ export function initProjectNavigation() {
       if (targetProject && targetProject.classList.contains("project")) {
         showProject(hash.substring(1));
         shown = true;
+
+        // Forcer le défilement au début de la page
+        window.scrollTo({
+          top: 0,
+          behavior: "auto", // Évite l'animation de défilement initiale
+        });
       }
     }
 
@@ -80,28 +86,29 @@ export function initProjectNavigation() {
 
       history.pushState(null, null, `#${targetId}`);
 
-      // Correction de l'offset de défilement
-      const headerHeight = document.querySelector("header").offsetHeight;
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        // Utiliser un plus grand buffer pour s'assurer que le contenu commence plus haut
-        const buffer = window.innerWidth <= 768 ? 25 : 40;
-
-        window.scrollTo({
-          top: targetElement.offsetTop - headerHeight - buffer,
-          behavior: "smooth",
-        });
-      }
+      // MODIFICATION: Forcer le défilement en haut de la page pour tous les projets
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
   });
 
   // Initialiser la visibilité des projets et gérer les changements d'URL
   showInitialProject();
 
+  // Assurer également un comportement cohérent lors de l'accès direct via URL hash
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash;
     if (hash && hash.length > 1) {
-      showProject(hash.substring(1));
+      const projectId = hash.substring(1);
+      showProject(projectId);
+
+      // MODIFICATION: Assurer le défilement en haut de page sur hashchange
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
   });
 }

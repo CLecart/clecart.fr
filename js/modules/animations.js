@@ -9,7 +9,7 @@ export function initAnimations() {
     threshold: 0.1,
   };
 
-  // Observateur principal pour animations existantes
+  // Observatesur principal pour animations existantes
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -105,9 +105,9 @@ export function initAnimations() {
                 item.classList.add("appear-outcome");
               }, 100 * index);
             });
-          } else {
-            // Cette ligne est optionnelle selon votre comportement préféré
-            // entry.target.classList.remove("section-active");
+
+            // S'assurer que les cartes tech-item et approach-item apparaissent correctement
+            // Animation déjà gérée via CSS avec la classe .appear ajoutée au parent
           }
         });
       },

@@ -114,11 +114,13 @@
   --card-border-dark: 1px solid var(--border-dark);
   
   /* TRANSITIONS & ANIMATIONS */
-  --transition: all 0.3s ease;
-  --transition-slow: all 0.6s ease;
-  --animation-duration-short: 0.3s;
-  --animation-duration-medium: 0.5s;
+  --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-slow: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animation-duration-short: 0.4s;
+  --animation-duration-medium: 0.6s;
   --animation-duration-long: 1s;
+  --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
   
   /* Effets au survol */
   --hover-scale: scale(1.05);
@@ -132,8 +134,8 @@
   --card-icon-hover-transform: scale(1.1);
   --card-icon-color: var(--primary);
   --card-icon-hover-color: var(--accent);
-  --card-transition: transform 0.3s ease;
-  --card-icon-transition: transform 0.4s ease, color 0.4s ease;
+  --card-transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --card-icon-transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   
   /* HEADER DIMENSIONS */
   --header-height: 80px;

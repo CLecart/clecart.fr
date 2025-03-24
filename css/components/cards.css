@@ -8,13 +8,14 @@
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
   transition: 
-    transform var(--animation-duration-short) ease,
-    box-shadow var(--animation-duration-short) ease,
-    border-color var(--animation-duration-short) ease;
+    transform 0.5s var(--ease-smooth),
+    box-shadow 0.5s var(--ease-smooth),
+    border-color 0.5s var(--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
   position: relative;
+  will-change: transform, box-shadow;
 }
 
 .card-base:hover {
@@ -211,16 +212,10 @@ body.dark-mode .language-icon img {
   height: 100%;
 }
 
-/* Animation de pulsation pour icônes */
-@keyframes subtle-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
+/* Animation spécifique des cartes langue */
 .language-card:hover .language-icon img,
 .skill-card:hover .skill-icon {
-  animation: subtle-pulse 2s infinite ease-in-out;
+  animation: subtle-pulse 2.5s infinite var(--ease-smooth);
 }
 
 /* Assurer que les cartes restent dans leur conteneur sur mobile */
@@ -288,4 +283,12 @@ body.dark-mode .language-icon img {
     width: 70px;
     height: 70px;
   }
+}
+
+/* Animation de pulsation douce pour icônes */
+@keyframes subtle-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.05); }
+  60% { transform: scale(1.05); }  
+  100% { transform: scale(1); }
 }

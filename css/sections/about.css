@@ -76,7 +76,20 @@
   padding: 10px 0;
   margin: 20px auto;
   max-width: 90%;
-  overflow: visible;
+}
+
+/* Support de grid bien centré pour les icônes */
+@media (max-width: 768px) {
+  .languages-grid {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .languages-grid {
+    gap: 10px;
+    max-width: 95%;
+  }
 }
 
 /* Responsive */

@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 /* Fix FOUC sans utiliser !important - utiliser la spécificité des sélecteurs à la place */
@@ -29,6 +30,12 @@ html.js-loading [class*="slide"] {
   transition-property: none;
   transform: none;
   opacity: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 body {

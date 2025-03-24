@@ -75,6 +75,16 @@
     width: 100%;
     justify-content: center;
   }
+
+  /* Éviter les écarts horizontaux sur mobile */
+  .projects-grid,
+  .languages-grid,
+  .skills-container,
+  .contact-container {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* Mobiles */
@@ -122,6 +132,7 @@
   /* Pas de débordements horizontaux */
   * {
     box-sizing: border-box;
+    max-width: 100vw; /* Empêcher explicitement tout élément de dépasser la largeur */
   }
   
   body {
@@ -131,6 +142,10 @@
   .container {
     padding: 0 8px;
     width: 100%;
+    max-width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow-x: hidden;
   }
   
   /* Éléments media responsifs */
@@ -147,6 +162,16 @@
   .project-navigation {
     margin-top: 10px;
     padding-top: 0;
+  }
+
+  /* Forcer les conteneurs flex et grid à respecter la largeur */
+  .contact-container,
+  .about-content,
+  .projects-grid,
+  .languages-grid,
+  .skills-container {
+    width: 100%;
+    max-width: 100%;
   }
 }
 

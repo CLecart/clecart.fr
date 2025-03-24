@@ -1,27 +1,28 @@
 /**
- * Variables CSS globales - Optimisées et nettoyées des doublons
+ * Variables CSS globales - Organisation optimisée
  */
 :root {
-  /* Couleurs principales - Système harmonisé */
+  /* COULEURS - Système cohérent */
+  /* Couleurs primaires */
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
-  --primary-opacity: rgba(108, 99, 255, 0.8);
   --primary-light: rgba(108, 99, 255, 0.1);
   --primary-light-15: rgba(108, 99, 255, 0.15);
   --primary-light-20: rgba(108, 99, 255, 0.2);
   --primary-light-30: rgba(108, 99, 255, 0.3);
+  --primary-opacity: rgba(108, 99, 255, 0.8);
   
   /* Couleurs secondaires */
   --secondary: #4ecdc4;
   --secondary-dark: #3db8b0;
-  --secondary-opacity: rgba(78, 205, 196, 0.8);
   --secondary-light: rgba(78, 205, 196, 0.1);
+  --secondary-opacity: rgba(78, 205, 196, 0.8);
   
   /* Couleur d'accent */
   --accent: #ff6b6b;
   --accent-dark: #e95f5f;
-  --accent-opacity: rgba(255, 107, 107, 0.3);
   --accent-light: rgba(255, 107, 107, 0.2);
+  --accent-opacity: rgba(255, 107, 107, 0.3);
   
   /* Mode sombre */
   --dark: #1a1a2e;
@@ -29,20 +30,20 @@
   --card-dark: #2a2a42;
   --form-bg-dark: #2a2a3a;
   --form-border-dark: #3e3e50;
-  --light: #f8f9fa;
   
-  /* Textes */
+  /* Couleurs neutres */
+  --white: #ffffff;
+  --light: #f8f9fa;
+  --light-gray: #f0f0f0;
+  --black: #000000;
+  
+  /* Couleurs texte */
   --text-color: #2d334a;
   --text-light: #6c757d;
   --text-dark: #f4f4f4;
   --text-gray-dark: #d1d1d1;
   
-  /* Neutres et transparences */
-  --white: #ffffff;
-  --black: #000000;
-  --light-gray: #f0f0f0;
-  --border-light: rgba(0, 0, 0, 0.05);
-  --border-dark: rgba(255, 255, 255, 0.05);
+  /* Couleurs semi-transparentes */
   --white-opacity-10: rgba(255, 255, 255, 0.1);
   --white-opacity-20: rgba(255, 255, 255, 0.2);
   --white-opacity-80: rgba(255, 255, 255, 0.8);
@@ -50,43 +51,41 @@
   --black-opacity-30: rgba(0, 0, 0, 0.3);
   --black-opacity-80: rgba(0, 0, 0, 0.8);
   --black-opacity-90: rgba(0, 0, 0, 0.9);
+  --border-light: rgba(0, 0, 0, 0.05);
+  --border-dark: rgba(255, 255, 255, 0.05);
   
-  /* Dégradés */
+  /* DÉGRADÉS */
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
   --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
   --gradient-1-light: linear-gradient(135deg, rgba(108, 99, 255, 0.03), rgba(78, 205, 196, 0.03));
   --gradient-dark: linear-gradient(135deg, var(--darker), var(--dark));
   
-  /* Patterns SVG */
-  --hero-gradient-light: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.1" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
-  --hero-gradient-dark: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%236c63ff" fill-opacity="0.2" d="M0,128L48,144C96,160,192,192,288,176C384,160,480,96,576,90.7C672,85,768,139,864,144C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
-  
-  /* Système unifié d'ombres et de lueurs */
+  /* OMBRES */
   --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px var(--glow-primary-light);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
   --shadow-dark: 0 8px 25px var(--black-opacity-30);
   --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   
-  /* Effets de lueur pour les cartes */
+  /* Effets de lueur */
+  --glow-primary: rgba(108, 99, 255, 0.3);
   --glow-primary-light: rgba(108, 99, 255, 0.2);
   --glow-primary-medium: rgba(108, 99, 255, 0.35);
-  --glow-primary-dark: rgba(108, 99, 255, 0.3);
-  --glow-primary-dark-hover: rgba(108, 99, 255, 0.45);
   
-  /* Ombres spécifiques aux cartes */
-  --card-box-shadow: var(--shadow-lg);
-  --card-box-shadow-dark: var(--shadow-dark);
-  --card-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px var(--glow-primary-medium);
-  --card-box-shadow-hover-dark: 0 15px 35px rgba(0, 0, 0, 0.3), 0 10px 30px var(--glow-primary-dark-hover);
+  /* Ombres des cartes */
+  --card-box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  --card-box-shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --card-box-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px var(--glow-primary-light);
+  --card-box-shadow-hover-dark: 0 15px 35px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(108, 99, 255, 0.25);
   
+  /* COMPOSANTS UI */
   /* Boutons */
   --btn-padding: 12px 28px;
   --btn-radius: 50px;
   --btn-font-weight: 500;
-  --btn-transition: all 0.4s ease;
+  --btn-transition: all 0.3s ease;
   --btn-shadow: 0 4px 15px var(--primary-light);
   --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
   --btn-secondary-shadow: 0 4px 15px var(--accent-light);
@@ -107,44 +106,57 @@
   --card-radius: 15px;
   --card-border: 1px solid var(--border-light);
   --card-bg: var(--white);
-  --card-bg-dark: var(--card-dark);
   --card-color: var(--text-color);
-  --card-color-dark: var(--text-dark);
-  --card-margin: 0 auto;
+  --card-margin: 0;
   --card-border-radius: 15px;
+  --card-bg-dark: var(--card-dark);
+  --card-color-dark: var(--text-dark);
   --card-border-dark: 1px solid var(--border-dark);
-  --card-border-hover: 1px solid var(--primary);
-  --card-transition: var(--transition);
   
-  /* Effets d'animation */
-  --card-hover-transform: translateY(-10px);
-  --card-hover-scale: scale(1.05);
-  --card-icon-hover-transform: scale(1.1);
-  --card-icon-color: var(--primary);
-  --card-icon-hover-color: var(--accent);
-  --card-transition-timing: 0.3s ease;
-  --card-hover-transition: all 0.3s ease;
-  --card-icon-transition: transform 0.4s ease, color 0.4s ease;
-  
-  /* Transitions et animations - Système unifié */
+  /* TRANSITIONS & ANIMATIONS */
   --transition: all 0.3s ease;
-  --transition-slow: all 0.6s ease-out;
-  --transition-fast: all 0.2s ease;
+  --transition-slow: all 0.6s ease;
+  --animation-duration-short: 0.3s;
+  --animation-duration-medium: 0.5s;
+  --animation-duration-long: 1s;
+  
+  /* Effets au survol */
   --hover-scale: scale(1.05);
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
   
-  /* Animations préconfigurées pour réutilisation */  
-  --animation-duration-short: 0.3s;
-  --animation-duration-medium: 0.5s;
-  --animation-duration-long: 1s;
-  --animation-timing-function: ease;
-  --skill-progress-animation: skill-animation 1.5s ease forwards;
-  --fade-in-animation: fadeIn var(--animation-duration-medium) ease forwards;
-  --modal-animation: modalFadeIn var(--animation-duration-short) ease-in-out;
+  /* Effets spéciaux */
+  --card-hover-transform: translateY(-10px);
+  --card-hover-scale: scale(1.05);
+  --card-icon-hover-transform: scale(1.1);
+  --card-icon-color: var(--primary);
+  --card-icon-hover-color: var(--accent);
+  --card-transition: transform 0.3s ease;
+  --card-icon-transition: transform 0.4s ease, color 0.4s ease;
   
-  /* États de formulaire */
+  /* HEADER DIMENSIONS */
+  --header-height: 80px;
+  --header-height-scrolled: 60px;
+  --header-height-mobile: 60px;
+  --toggle-height: 36px;
+  --toggle-width: 36px;
+  --toggle-radius: 4px;
+  
+  /* ESPACEMENT */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 25px;
+  --spacing-xl: 40px;
+  --spacing-mobile: 10px;
+  
+  /* ICÔNES */
+  --icon-size-small: 0.9rem;
+  --icon-size-medium: 1.5rem;
+  --icon-size-large: 2.5rem;
+  
+  /* ÉTATS FORMULAIRE */
   --status-success-bg: rgba(76, 175, 80, 0.15);
   --status-success-color: #2e7d32;
   --status-success-border: rgba(76, 175, 80, 0.3);
@@ -154,48 +166,4 @@
   --status-info-bg: rgba(3, 169, 244, 0.15);
   --status-info-color: #0288d1;
   --status-info-border: rgba(3, 169, 244, 0.3);
-  
-  /* Variables header */
-  --header-height: 80px;
-  --header-height-scrolled: 60px;
-  --header-height-mobile: 60px;
-  --header-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  
-  /* Dimensions d'UI */
-  --toggle-height: 36px;
-  --toggle-width: 36px;
-  --toggle-mobile-height: 32px;
-  --toggle-mobile-width: 32px;
-  --toggle-radius: 4px;
-  --toggle-padding: 8px;
-  --dark-toggle-radius: 50%;
-  --dark-toggle-size: 36px;
-  --dark-toggle-mobile-size: 32px;
-  
-  /* Dimensions normalisées pour responsive */
-  --spacing-xs: 5px;
-  --spacing-sm: 10px;
-  --spacing-md: 15px;
-  --spacing-lg: 25px;
-  --spacing-xl: 40px;
-  --spacing-2xl: 60px;
-  --spacing-3xl: 100px;
-  
-  /* Variables de typographie à ajouter */
-  --font-size-base: 1rem;
-  --font-size-small: 0.9rem;
-  --font-size-smaller: 0.8rem;
-  --font-size-medium: 1.2rem;
-  --font-size-large: 1.5rem;
-  --font-size-xl: 2rem;
-  --font-size-xxl: 2.5rem;
-  --font-size-heading: 3.5rem;
-  
-  /* Variables d'espacement plus complètes */
-  --spacing-mobile: 10px;
-  
-  /* Variables pour les icônes */
-  --icon-size-small: 0.9rem;
-  --icon-size-medium: 1.5rem;
-  --icon-size-large: 2.5rem;
 }

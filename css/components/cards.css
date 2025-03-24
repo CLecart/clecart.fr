@@ -178,16 +178,15 @@ body.dark-mode .project-content p {
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
+  width: 40px;
+  height: 40px; /* Hauteur fixe pour garantir l'uniformité */
 }
 
 .language-icon img {
   width: 40px;
   height: 40px;
-  transition: var(--card-transition);
-}
-
-.language-card:hover .language-icon img {
-  transform: var(--card-icon-hover-transform);
+  object-fit: contain; /* Garantit que l'image est contenue sans déformation */
+  transition: var(--transition);
 }
 
 .language-card span {
@@ -222,4 +221,71 @@ body.dark-mode .language-icon img {
 .language-card:hover .language-icon img,
 .skill-card:hover .skill-icon {
   animation: subtle-pulse 2s infinite ease-in-out;
+}
+
+/* Assurer que les cartes restent dans leur conteneur sur mobile */
+@media (max-width: 480px) {
+  .card-base {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+  
+  .project-card,
+  .skill-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .project-content {
+    padding: 15px 10px;
+  }
+  
+  /* Empêcher le débordement des textes longs */
+  .project-content h3,
+  .project-content p,
+  .skill-card h3,
+  .skill-card p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .language-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .language-icon img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .language-card {
+    width: 80px;
+    height: 80px;
+    padding: 10px 8px;
+  }
+  
+  .language-card span {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .language-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .language-icon img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .language-card {
+    width: 70px;
+    height: 70px;
+  }
 }

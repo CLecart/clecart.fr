@@ -14,6 +14,7 @@
 - [Structure du projet](#structure-du-projet)
 - [Configuration locale](#configuration-locale)
 - [Déploiement](#déploiement)
+- [Maintenance](#maintenance)
 - [Contact](#contact)
 
 ## À propos
@@ -51,7 +52,7 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 
 ## Structure du projet
 
-````
+```
 /home/student/dev/clecart.fr/
 ├── css/
 │   ├── base/
@@ -81,66 +82,71 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 │   │   ├── gdpr.js
 │   │   ├── modal.js
 │   │   └── typewriter.js
-│   └── main.jstact-form.js
-├── PICTURES/orm-enhancements.js
-│   ├── profile.jpgion.js
-│   ├── Groupie-Tracker.mp4ion.js
+│   └── main.js
+├── PICTURES/
+│   ├── profile.jpg
+│   ├── Groupie-Tracker.mp4
 │   ├── BombermanDX.mp4
 │   └── forum.png
-├── files/ofile.jpg
+├── files/
 │   └── CV_Christophe_Lecart.pdf
-├── index.htmlmanDX.mp4
+├── index.html
 ├── descriptions-projects.html
 ├── privacy-policy.html
-├── styles.cssistophe_Lecart.pdf
+├── styles.css
 ├── favicon.ico
-├── images/tions-projects.html
-│   ├── favicon.pnghtml
-│   └── apple-touch-icon.png
-``` favicon.ico
 ├── images/
-## Configuration locale
+│   ├── favicon.png
 │   └── apple-touch-icon.png
+```
+
+## Configuration locale
+
 Pour exécuter ce projet localement:
 
-1. Clonez le dépôt:cale
+1. Clonez le dépôt:
 
-   ```bashter ce projet localement:
+   ```bash
    git clone https://github.com/CLecart/portfolio.git
-   cd portfoliopôt:
-````
+   cd portfolio
+   ```
 
-````bash
 2. Ouvrez le fichier index.html dans votre navigateur, ou utilisez un serveur local:
-cd portfolio
-```bash
-# Si vous avez Python installé
-python -m http.serverex.html dans votre navigateur, ou utilisez un serveur local:
-# Puis accédez à http://localhost:8000
-```bash
-# Si vous avez Python installé
+
+   ```bash
+   # Si vous avez Python installé
+   python -m http.server
+   # Puis accédez à http://localhost:8000
+   ```
+
 3. Pour le développement, toute modification des fichiers CSS ou JS sera visible après rafraîchissement de la page.
-# Puis accédez à http://localhost:8000
+
 ## Déploiement
 
-Le portfolio peut être déployé de plusieurs façons:chiers CSS ou JS sera visible après rafraîchissement de la page.
+Le portfolio peut être déployé de plusieurs façons:
 
 ### Déploiement avec Docker
 
 1. Assurez-vous que Docker est installé sur votre système
 2. Exécutez le script de déploiement:
-### Déploiement avec Docker
-```bash
-./deploy.shs que Docker est installé sur votre système
-```cutez le script de déploiement:
+
+   ```bash
+   ./deploy.sh
+   ```
 
 3. Le site sera disponible sur `http://localhost`
-./deploy.sh
+4. Le site sera disponible sur `http://localhost`
+   ./deploy.sh
+
 ### Déploiement manuel
 
 Le portfolio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
 
 Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur web.
+
+## Maintenance
+
+Pour maintenir ce projet, assurez-vous de vérifier régulièrement les mises à jour des dépendances et de tester les nouvelles fonctionnalités dans un environnement de développement avant de les déployer en production.
 
 ## Contactio est actuellement déployé sur [clecart.fr](https://clecart.fr) via un hébergement optimisé pour les performances et la sécurité.
 
@@ -149,11 +155,14 @@ Pour un déploiement manuel, il suffit de copier les fichiers vers votre serveur
 - **GitHub**: [github.com/CLecart](https://github.com/CLecart)
 - **Portfolio**: [clecart.fr](https://clecart.fr)
 - **Email**: [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
----*LinkedIn**: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
+  ---\*LinkedIn\*\*: [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
 - **GitHub**: [github.com/CLecart](https://github.com/CLecart)
-© 2025 Christophe Lecart. Tous droits réservés.r)
+  © 2025 Christophe Lecart. Tous droits réservés.r)
 
 ---
 
 © 2025 Christophe Lecart. Tous droits réservés.
-````
+
+```
+
+```

@@ -98,6 +98,26 @@ body.dark-mode .card-base:hover {
   transition: var(--card-transition);
 }
 
+/* Éviter le mode plein écran automatique sur mobile */
+.mobile-friendly-video {
+  object-fit: contain;
+  background-color: black;
+  display: block;
+  max-height: 100%;
+}
+
+@media (max-width: 768px) {
+  .mobile-friendly-video {
+    object-fit: contain;
+    background: black;
+  }
+
+  /* Désactiver le pointer sur les vidéos pour éviter le plein écran automatique */
+  .project-thumb {
+    cursor: default;
+  }
+}
+
 .project-card:hover .project-thumb img,
 .project-card:hover .project-thumb video {
   transform: var(--card-hover-scale);

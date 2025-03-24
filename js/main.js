@@ -9,6 +9,7 @@ import { initGDPRBanner } from "./utils/gdpr.js";
 import { initModals } from "./utils/modal.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
+import { initVideoHandler } from "./modules/videoHandler.js"; // Nouveau module
 
 document.addEventListener("DOMContentLoaded", () => {
   // Mode sombre (prioritaire)
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
   initNavigation();
   initFormEnhancements();
+  initVideoHandler(); // Initialiser le gestionnaire de vidéos
 
   // Fonctionnalités
   initContactForm();

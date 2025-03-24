@@ -104,35 +104,62 @@ export function initNavigation() {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-          // Calcul précis de la position
+          // 1. Empêcher de nouvelles interactions pendant le défilement
+          document.documentElement.classList.add("scrolling-in-progress");
+
+          // 2. Marquer le lien actif immédiatement pour un retour visuel
+          document.querySelectorAll("nav a").forEach((link) => {
+            link.classList.remove("active");
+            link.setAttribute("tabindex", "-1"); // Désactiver la focalisation pendant l'animation
+          });
+          this.classList.add("active");
+
+          // 3. Calculer la position avec précision
           const headerHeight = document.querySelector("header").offsetHeight;
           const targetPosition =
             targetElement.getBoundingClientRect().top + window.pageYOffset;
-
-          // Ajout d'une marge de sécurité variable selon la taille de l'écran
           const buffer = window.innerWidth <= 768 ? 15 : 25;
 
-          // Éviter les conflits avec d'autres animations
-          document.documentElement.classList.add("scrolling-in-progress");
+          // 4. Utiliser requestAnimationFrame pour une animation plus fluide
+          smoothScrollTo(
+            window.pageYOffset,
+            targetPosition - headerHeight - buffer,
+            600 // Durée en ms
+          );
 
-          // Animation fluide avec retrait du flag une fois terminée
-          window.scrollTo({
-            top: targetPosition - headerHeight - buffer,
-            behavior: "smooth",
-          });
-
-          // Fournir un retour visuel immédiat
-          const navLinks = document.querySelectorAll("nav ul li a");
-          navLinks.forEach((link) => link.classList.remove("active"));
-          this.classList.add("active");
-
-          // Garantir que les événements de défilement ne viennent pas interférer
+          // 5. Restaurer les interactions après une durée suffisante
           setTimeout(() => {
             document.documentElement.classList.remove("scrolling-in-progress");
-          }, 1000); // Temps suffisant pour la plupart des défilements
+            document.querySelectorAll("nav a").forEach((link) => {
+              link.removeAttribute("tabindex");
+            });
+          }, 650); // Légèrement plus que la durée d'animation
         }
       });
     });
+
+  // Fonction de défilement doux optimisée avec requestAnimationFrame
+  function smoothScrollTo(startY, endY, duration) {
+    const startTime = performance.now();
+    const difference = endY - startY;
+
+    function scroll(timestamp) {
+      const timeElapsed = timestamp - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const easeInOutCubic =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      window.scrollTo(0, startY + difference * easeInOutCubic);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(scroll);
+      }
+    }
+
+    requestAnimationFrame(scroll);
+  }
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {

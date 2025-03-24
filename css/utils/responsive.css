@@ -1,9 +1,18 @@
 /**
- * Styles responsives - nettoyés et organisés
+ * Styles responsifs - Optimisés
  */
 
+/* Variables de breakpoints pour la cohérence */
+:root {
+  --breakpoint-xs: 380px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
 /* Grands écrans et tablettes */
-@media (max-width: 992px) {
+@media (max-width: var(--breakpoint-lg)) {
   .container {
     width: 95%;
     padding: 0 15px;
@@ -24,7 +33,7 @@
 }
 
 /* Tablettes et mobiles larges */
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-md)) {
   header {
     height: var(--header-height);
     padding: 0;
@@ -69,7 +78,7 @@
 }
 
 /* Mobiles */
-@media (max-width: 480px) {
+@media (max-width: var(--breakpoint-sm)) {
   .container {
     padding: 0 var(--spacing-mobile);
   }
@@ -103,7 +112,7 @@
 }
 
 /* Très petits écrans */
-@media screen and (max-width: 380px) {
+@media screen and (max-width: var(--breakpoint-xs)) {
   html, body {
     width: 100%;
     max-width: 100%;

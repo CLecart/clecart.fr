@@ -46,7 +46,7 @@
 
 .portfolio-section h2 i {
   color: var(--card-icon-color);
-  font-size: 1.5rem;
+  font-size: var(--icon-size-medium);
   transition: var(--card-icon-transition);
 }
 
@@ -298,10 +298,10 @@ body.dark-mode .code-block {
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
   position: absolute;
-  left: 18px;
-  top: 18px;
+  left: var(--spacing-md);
+  top: var(--spacing-md);
   color: var(--primary);
-  font-size: 1.1rem;
+  font-size: var(--font-size-small);
   transition: var(--card-icon-transition);
 }
 

@@ -1,6 +1,6 @@
 /* Styles pour les animations */
 
-/* Classes d'animation de base (existantes) */
+/* Classes d'animation de base */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -19,7 +19,7 @@
   transition: var(--transition-slow);
 }
 
-/* Application des effets d'apparition (existant) */
+/* Application des effets d'apparition */
 .fade-in.appear, 
 .slide-left.appear, 
 .slide-right.appear {
@@ -27,9 +27,7 @@
   transform: translateX(0) translateY(0);
 }
 
-/* NOUVELLES ANIMATIONS DE DÉFILEMENT */
-
-/* Animation des titres de sections spécifiques */
+/* Animation des titres de sections */
 #skills .section-header h2,
 #projects .section-header h2 {
   opacity: 0;
@@ -113,7 +111,7 @@ section.section-active .section-header {
   animation-delay: 0s;
 }
 
-/* Ajout d'un style pour l'état de défilement en cours */
+/* État de défilement en cours */
 html.scrolling-in-progress {
   scroll-behavior: auto; /* Désactiver le défilement standard du navigateur */
 }

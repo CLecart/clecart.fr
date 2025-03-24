@@ -212,6 +212,42 @@ body.dark-mode .language-icon img {
   animation: subtle-pulse 2.5s infinite var(--ease-smooth);
 }
 
+/* HARMONISATION DES ANIMATIONS AU SURVOL */
+/* Cette section simple garantit que toutes les cartes ont la même animation */
+.card-base:hover,
+.project-card:hover,
+.skill-card:hover,
+.language-card:hover,
+.tech-item:hover,
+.approach-item:hover,
+.outcomes-list li:hover,
+.features-list li:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+  z-index: 1;
+}
+
+/* Animation des icônes au survol */
+.skill-card:hover .skill-icon,
+.language-card:hover .language-icon img,
+.tech-item:hover h3,
+.approach-item:hover h3,
+.features-list li:hover i {
+  color: var(--card-icon-hover-color);
+  transform: scale(1.1);
+  animation: subtle-pulse 2.5s infinite ease-in-out;
+}
+
+/* Version mode sombre des survols */
+body.dark-mode .card-base:hover,
+body.dark-mode .project-card:hover,
+body.dark-mode .tech-item:hover,
+body.dark-mode .approach-item:hover,
+body.dark-mode .outcomes-list li:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
 /* Assurer que les cartes restent dans leur conteneur sur mobile */
 @media (max-width: 480px) {
   .card-base {

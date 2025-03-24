@@ -8,6 +8,7 @@
 @import './css/utils/animations.css';
 @import './css/utils/responsive.css';
 @import './css/utils/modals.css';
+/* Import hover-effects.css supprimé pour éviter les duplications */
 
 /* Composants */
 @import './css/components/buttons.css';

@@ -1,9 +1,9 @@
 /**
- * Variables CSS globales - Organisation optimisée
+ * Variables CSS globales
  */
 :root {
   /* COULEURS - Système cohérent */
-  /* Couleurs primaires */
+  /* Palette primaire */
   --primary: #6c63ff;
   --primary-dark: #5a52d9;
   --primary-light: rgba(108, 99, 255, 0.1);
@@ -12,13 +12,11 @@
   --primary-light-30: rgba(108, 99, 255, 0.3);
   --primary-opacity: rgba(108, 99, 255, 0.8);
   
-  /* Couleurs secondaires */
+  /* Palette secondaire et accent */
   --secondary: #4ecdc4;
   --secondary-dark: #3db8b0;
   --secondary-light: rgba(78, 205, 196, 0.1);
   --secondary-opacity: rgba(78, 205, 196, 0.8);
-  
-  /* Couleur d'accent */
   --accent: #ff6b6b;
   --accent-dark: #e95f5f;
   --accent-light: rgba(255, 107, 107, 0.2);
@@ -31,19 +29,15 @@
   --form-bg-dark: #2a2a3a;
   --form-border-dark: #3e3e50;
   
-  /* Couleurs neutres */
+  /* Neutres et semi-transparents */
   --white: #ffffff;
   --light: #f8f9fa;
   --light-gray: #f0f0f0;
   --black: #000000;
-  
-  /* Couleurs texte */
   --text-color: #2d334a;
   --text-light: #6c757d;
   --text-dark: #f4f4f4;
   --text-gray-dark: #d1d1d1;
-  
-  /* Couleurs semi-transparentes */
   --white-opacity-10: rgba(255, 255, 255, 0.1);
   --white-opacity-20: rgba(255, 255, 255, 0.2);
   --white-opacity-80: rgba(255, 255, 255, 0.8);

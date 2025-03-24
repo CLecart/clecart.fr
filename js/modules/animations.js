@@ -1,16 +1,23 @@
 /**
- * Module pour les animations
+ * Module pour gérer les animations du site
  */
 export function initAnimations() {
-  // Configuration pour animations existantes
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.1,
+  // Configuration IntersectionObserver partagée
+  const createObserver = (callback, options = {}) => {
+    return new IntersectionObserver(
+      callback,
+      Object.assign(
+        {
+          root: null,
+          threshold: 0.1,
+        },
+        options
+      )
+    );
   };
 
-  // Observatesur principal pour animations existantes
-  const observer = new IntersectionObserver((entries) => {
+  // Observer principal pour animations standard
+  const observer = createObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
@@ -18,10 +25,10 @@ export function initAnimations() {
         entry.target.classList.remove("appear");
       }
     });
-  }, observerOptions);
+  });
 
-  // Nouvel observateur pour titres de section avec effet spécial
-  const sectionHeaderObserver = new IntersectionObserver(
+  // Observer spécifique pour les titres de sections
+  const sectionHeaderObserver = createObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -31,11 +38,7 @@ export function initAnimations() {
         }
       });
     },
-    {
-      root: null,
-      rootMargin: "-10% 0px",
-      threshold: 0.1,
-    }
+    { rootMargin: "-10% 0px" }
   );
 
   // Nouvel observateur pour sections complètes
@@ -85,58 +88,60 @@ export function initAnimations() {
     });
   }
 
-  // Animation spécifique pour la page portfolio-details
+  // Gestion spécifique de la page portfolio-details
   if (document.querySelector(".portfolio-details")) {
+    handlePortfolioDetailsAnimations();
+  }
+
+  /**
+   * Configure les animations pour la page portfolio-details
+   */
+  function handlePortfolioDetailsAnimations() {
     const portfolioSections = document.querySelectorAll(".portfolio-section");
 
-    // Utiliser IntersectionObserver pour les sections portfolio
-    const portfolioObserver = new IntersectionObserver(
+    const portfolioObserver = createObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("appear");
-            entry.target.classList.add("section-active"); // Ajoute la classe utilisée sur les autres pages
+            entry.target.classList.add("appear", "section-active");
 
-            // Animation des éléments enfants après l'apparition de la section
-            const outcomeItems =
-              entry.target.querySelectorAll(".outcomes-list li");
-            outcomeItems.forEach((item, index) => {
-              setTimeout(() => {
-                item.classList.add("appear-outcome");
-              }, 100 * index);
-            });
-
-            // S'assurer que les cartes tech-item et approach-item apparaissent correctement
-            // Animation déjà gérée via CSS avec la classe .appear ajoutée au parent
+            // Animation séquentielle des éléments enfants
+            animateChildElements(
+              entry.target,
+              ".outcomes-list li",
+              "appear-outcome"
+            );
           }
         });
       },
-      {
-        threshold: 0.15,
-        rootMargin: "-10% 0px",
-      }
+      { threshold: 0.15, rootMargin: "-10% 0px" }
     );
 
-    // Observer toutes les sections portfolio
-    portfolioSections.forEach((section) => {
-      portfolioObserver.observe(section);
-    });
+    portfolioSections.forEach((section) => portfolioObserver.observe(section));
 
-    // Animation de la section CTA - harmonisation avec les autres pages
+    // Animer la section CTA si présente
     const ctaSection = document.querySelector(".cta-section");
     if (ctaSection) {
-      const ctaObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("appear");
-            }
-          });
-        },
+      createObserver(
+        (entries) =>
+          entries[0].isIntersecting &&
+          entries[0].target.classList.add("appear"),
         { threshold: 0.5 }
-      );
-      ctaObserver.observe(ctaSection);
+      ).observe(ctaSection);
     }
+  }
+
+  /**
+   * Anime les éléments enfants avec un délai progressif
+   * @param {Element} parent - Élément parent
+   * @param {string} selector - Sélecteur pour les enfants
+   * @param {string} className - Classe à ajouter
+   */
+  function animateChildElements(parent, selector, className) {
+    const elements = parent.querySelectorAll(selector);
+    elements.forEach((item, index) => {
+      setTimeout(() => item.classList.add(className), 100 * index);
+    });
   }
 }
 

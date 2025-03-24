@@ -1,14 +1,20 @@
 /**
  * Module pour la navigation entre projets
+ * @function initProjectNavigation - Configure la navigation entre projets
  */
 export function initProjectNavigation() {
   const navButtons = document.querySelectorAll(".nav-buttons a");
   const projects = document.querySelectorAll(".project");
 
+  /**
+   * Affiche le projet initial basé sur le hash URL ou le premier projet
+   * @function showInitialProject
+   */
   function showInitialProject() {
     const hash = window.location.hash;
     let shown = false;
 
+    // Vérifier si le hash correspond à un projet
     if (hash && hash.length > 1) {
       const targetProject = document.querySelector(hash);
       if (targetProject && targetProject.classList.contains("project")) {
@@ -17,14 +23,13 @@ export function initProjectNavigation() {
       }
     }
 
+    // Afficher le premier projet si aucun n'est spécifié
     if (!shown && projects.length > 0) {
-      // Hide all projects first
       projects.forEach((p) => {
         p.style.display = "none";
         p.classList.remove("active");
       });
 
-      // Show only the first project
       projects[0].style.display = "block";
       projects[0].classList.add("active");
 
@@ -75,20 +80,24 @@ export function initProjectNavigation() {
 
       history.pushState(null, null, `#${targetId}`);
 
+      // Correction de l'offset de défilement
       const headerHeight = document.querySelector("header").offsetHeight;
-      window.scrollTo({
-        top:
-          document.querySelector(".project-navigation").offsetTop -
-          headerHeight,
-        behavior: "smooth",
-      });
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        // Utiliser un plus grand buffer pour s'assurer que le contenu commence plus haut
+        const buffer = window.innerWidth <= 768 ? 25 : 40;
+
+        window.scrollTo({
+          top: targetElement.offsetTop - headerHeight - buffer,
+          behavior: "smooth",
+        });
+      }
     });
   });
 
-  // Initialize project visibility
+  // Initialiser la visibilité des projets et gérer les changements d'URL
   showInitialProject();
 
-  // Handle hash changes (e.g., from back button)
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash;
     if (hash && hash.length > 1) {

@@ -2,6 +2,9 @@
  * Module pour la navigation et le menu mobile
  */
 export function initNavigation() {
+  // Constante pour la durée de transition du menu - facilite la maintenance
+  const MENU_TRANSITION_DURATION = 300;
+
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector("nav ul");
   const menuIcon = navToggle?.querySelector("i");
@@ -48,7 +51,7 @@ export function initNavigation() {
         if (!navMenu.classList.contains("active")) {
           navMenu.style.visibility = "hidden";
         }
-      }, 300);
+      }, MENU_TRANSITION_DURATION);
     }
   });
 
@@ -62,7 +65,7 @@ export function initNavigation() {
           if (!navMenu.classList.contains("active")) {
             navMenu.style.visibility = "hidden";
           }
-        }, 300);
+        }, MENU_TRANSITION_DURATION);
       }
     });
   });
@@ -81,7 +84,7 @@ export function initNavigation() {
         if (!navMenu.classList.contains("active")) {
           navMenu.style.visibility = "hidden";
         }
-      }, 300);
+      }, MENU_TRANSITION_DURATION);
     }
   });
 
@@ -161,10 +164,13 @@ export function initNavigation() {
     requestAnimationFrame(scroll);
   }
 
+  // Remplacer seulement la fonction de défilement
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
+    // Ajouter un seuil minimum pour éviter le tremblement
+    if (window.scrollY > 5) {
       header.classList.add("scrolled");
-    } else {
+    } else if (window.scrollY === 0) {
+      // S'assurer qu'on est vraiment au sommet
       header.classList.remove("scrolled");
     }
   });

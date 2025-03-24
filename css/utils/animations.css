@@ -1,54 +1,28 @@
-/* Styles pour les animations */
+/* Styles pour les animations - optimisés */
 
-/* Classes d'animation de base */
-.fade-in {
+/* Classes d'animation de base avec propriétés communes */
+.fade-in, .slide-left, .slide-right {
   opacity: 0;
-  transform: translateY(20px);
   transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+  will-change: opacity, transform;
 }
 
-.slide-left {
-  opacity: 0;
-  transform: translateX(-50px);
-  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-}
+/* Propriétés spécifiques pour chaque direction */
+.fade-in { transform: translateY(20px); }
+.slide-left { transform: translateX(-50px); }
+.slide-right { transform: translateX(50px); }
 
-.slide-right {
-  opacity: 0;
-  transform: translateX(50px);
-  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-}
-
-/* Animation plus fluide avec petit effet de rebond */
+/* État final unifié */
 .fade-in.appear, 
 .slide-left.appear, 
 .slide-right.appear {
   opacity: 1;
-  transform: translateX(0) translateY(0);
-  animation: smoothAppear 0.6s var(--ease-smooth);
+  transform: translate(0, 0);
 }
 
 @keyframes smoothAppear {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-5px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Application des effets d'apparition */
-.fade-in.appear, 
-.slide-left.appear, 
-.slide-right.appear {
-  opacity: 1;
-  transform: translateX(0) translateY(0);
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Animation des titres de sections */
@@ -56,8 +30,7 @@
 #projects .section-header h2 {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
-              transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
 }
 
 #skills .section-header h2.title-animate,

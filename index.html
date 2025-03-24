@@ -395,5 +395,21 @@
         </div>
     </div>
 
+    <script>
+        window.addEventListener('load', function() {
+            document.documentElement.classList.remove('js-loading');
+            
+            // Optimiser les vidéos après chargement principal
+            setTimeout(function() {
+                document.querySelectorAll('video').forEach(function(video) {
+                    if (video.hasAttribute('autoplay')) {
+                        video.play().catch(function() { 
+                            // Ignorer les erreurs de lecture automatique 
+                        });
+                    }
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>

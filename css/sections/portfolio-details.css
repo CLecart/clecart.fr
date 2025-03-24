@@ -139,11 +139,7 @@ body.dark-mode .portfolio-section:hover {
     opacity: 0;
     transform: translateY(25px);
   }
-  60% {
-    opacity: 1;
-    transform: translateY(-5px); /* Léger effet de rebond */
-  }
-  100% {
+  100% { /* Enlèvement de l'effet de rebond */
     opacity: 1;
     transform: translateY(0);
   }

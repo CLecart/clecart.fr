@@ -10,6 +10,8 @@ header {
   box-shadow: var(--header-shadow);
   transition: var(--transition);
   height: var(--header-height);
+  transform: translateZ(0); /* Force la stabilisation */
+  will-change: height, padding; /* Optimisation des propriétés animées */
 }
 
 header::after {

@@ -1,10 +1,11 @@
-/* Styles pour la section Projets */
+/* Styles pour la section Projets - optimisés */
 
 #projects {
   padding: 100px 0;
   background-color: var(--light);
 }
 
+/* Organisation des projets en grille */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -17,6 +18,7 @@ body.dark-mode #projects {
   background-color: var(--darker);
 }
 
+/* Styles spécifiques pour les descriptions de projets */
 .description {
   max-width: 900px;
   margin: 40px auto 30px; /* Reduced top margin */
@@ -26,10 +28,10 @@ body.dark-mode #projects {
 }
 
 .project {
-  scroll-margin-top: 150px;
+  scroll-margin-top: 120px; /* Augmentation significative */
 }
 
-/* Improved project visibility control */
+/* Gestion de la visibilité des projets */
 .project {
   display: none;
   opacity: 0;
@@ -67,10 +69,12 @@ body.dark-mode #projects {
   margin-bottom: 10px;
 }
 
+/* Navigation entre projets */
 .project-navigation {
   margin-top: 80px; /* Reduced from 120px to make it visible immediately */
   margin-bottom: 30px;
-  padding: 15px 0;
+  padding-top: 100px; /* Espacement suffisant pour éviter que les boutons soient coupés */
+  padding-bottom: 15px;
   border-bottom: 1px solid var(--light-gray);
   display: flex;
   flex-direction: column; 
@@ -154,6 +158,10 @@ body.dark-mode .card-base.description:hover {
 }
 
 .project.description.card-base {
+  scroll-margin-top: 120px; /* Identique pour cohérence */
+  margin-top: 30px; /* Ajouter de l'espace en haut */
+  position: relative; /* S'assurer que le positionnement est correct */
+  z-index: 1;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   will-change: transform;
 }
@@ -192,6 +200,11 @@ html body .project.active#project3.description.card-base:hover {
   .description {
     margin-top: 40px; /* Reduced from 140px */
     padding: 25px 20px;
+  }
+  
+  .project, 
+  .project.description.card-base {
+    scroll-margin-top: 100px; /* Valeur adaptée pour mobile */
   }
   
   .project-navigation {

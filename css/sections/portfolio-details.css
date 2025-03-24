@@ -173,6 +173,18 @@ body.dark-mode .tech-item:hover {
   border-color: var(--primary);
 }
 
+.approach-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--primary);
+  transition: var(--card-icon-transition);
+}
+
+.approach-item:hover h3 {
+  color: var(--card-icon-hover-color);
+  animation: subtle-pulse 2s infinite ease-in-out;
+}
+
 /* Section CTA */
 .cta-section {
   display: flex;

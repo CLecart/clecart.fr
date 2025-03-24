@@ -4,7 +4,6 @@
 .fade-in, .slide-left, .slide-right {
   opacity: 0;
   transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-  will-change: opacity, transform;
 }
 
 /* Propriétés spécifiques pour chaque direction */

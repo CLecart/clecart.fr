@@ -36,7 +36,6 @@
     transform 0.8s var(--ease-smooth),
     box-shadow 0.4s var(--ease-smooth), 
     border-color 0.4s var(--ease-smooth);
-  will-change: transform, opacity, box-shadow, border-color;
 }
 
 /* Animation d'apparition plus fluide */
@@ -105,7 +104,6 @@ body.dark-mode .portfolio-section:hover {
     box-shadow 0.4s var(--ease-smooth),
     border-color 0.4s var(--ease-smooth),
     background-color 0.4s var(--ease-smooth);
-  will-change: transform, opacity, box-shadow, border-color;
 }
 
 /* Animation d'apparition cascadée pour tech-items - plus douce */
@@ -311,7 +309,6 @@ body.dark-mode .tech-item:hover {
     background-color 0.4s var(--ease-smooth);
   opacity: 0;
   transform: translateY(20px); /* Même transformation initiale que tech-item */
-  will-change: transform, opacity;
 }
 
 .approach-grid .approach-item:nth-child(1) { transition-delay: 0.1s; }
@@ -540,15 +537,6 @@ body.dark-mode .outcomes-list li:hover {
     transform 0.5s var(--ease-smooth),
     box-shadow 0.5s var(--ease-smooth),
     border-color 0.5s var(--ease-smooth);
-  will-change: transform, box-shadow, border-color;
-}
-
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover {
-  transform: translateY(-10px);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
 }
 
 /* Garantir le même état de départ pour tous les éléments */
@@ -601,7 +589,6 @@ body.dark-mode .outcomes-list li:hover {
     transform 0.4s var(--ease-smooth),
     box-shadow 0.4s var(--ease-smooth),
     border-color 0.4s var(--ease-smooth);
-  will-change: transform, box-shadow, border-color;
 }
 
 .tech-item:hover,

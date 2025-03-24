@@ -41,6 +41,7 @@
 
 .contact-text {
   background: transparent;
+  width: 100%; /* Assurer que le texte prend toute la largeur disponible */
 }
 
 .contact-text h4 {
@@ -54,6 +55,11 @@
   color: var(--primary);
   background: transparent;
   font-weight: 500;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word; /* Permettre la coupure des mots longs */
 }
 
 .contact-text a:hover {
@@ -110,5 +116,29 @@ body.dark-mode .contact-text a {
   .contact-info,
   .contact-form {
     padding: 25px;
+  }
+}
+
+/* Adaptation spécifique pour iPhone SE et écrans très étroits */
+@media (max-width: 380px) {
+  .contact-icon {
+    width: 40px; /* Réduction de la taille de l'icône */
+    height: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+  }
+  
+  .contact-text h4 {
+    font-size: 1rem;
+  }
+  
+  .contact-text a {
+    font-size: 0.9rem; /* Police légèrement réduite */
+    line-height: 1.4; /* Hauteur de ligne optimisée */
+  }
+  
+  /* Réduction du padding pour les cartes de contact sur très petits écrans */
+  .contact-info {
+    padding: 20px 15px;
   }
 }

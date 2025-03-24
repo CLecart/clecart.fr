@@ -15,13 +15,6 @@
   margin: var(--card-margin);
   overflow: hidden;
   position: relative;
-  will-change: transform, box-shadow;
-}
-
-.card-base:hover {
-  transform: var(--hover-y-offset);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
 }
 
 /* Mode sombre pour les cartes */
@@ -145,7 +138,6 @@ body.dark-mode .project-content p {
 
 /* Cartes spécifiques: descriptions de projets */
 .project.description.card-base {
-  will-change: transform; /* Optimisation GPU */
   position: relative;
   z-index: 0;
 }

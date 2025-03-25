@@ -1,5 +1,5 @@
 /**
- * Module optimisé pour la gestion des vidéos
+ * Module optimisé pour la gestion des vidéos avec intersection observer et lazy loading
  */
 export function initVideoHandler() {
   const videos = document.querySelectorAll("video");
@@ -46,8 +46,12 @@ export function initVideoHandler() {
         addLoadingBackground(video);
       }
 
-      // Observer l'intersection pour optimiser les performances
-      observeVideoVisibility(video);
+      // Optimisation critique: chargement progressif des vidéos
+      if (video.dataset.src && !video.src) {
+        observeLazyLoad(video);
+      } else {
+        observeVideoVisibility(video);
+      }
 
       // Gestion des interactions tactiles
       setupTouchInteractions(video);
@@ -84,6 +88,39 @@ export function initVideoHandler() {
         { threshold: 0.2 }
       );
       observer.observe(video);
+    }
+  }
+
+  // Nouvelle fonction: observer pour lazy loading
+  function observeLazyLoad(video) {
+    if ("IntersectionObserver" in window) {
+      const lazyObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (video.dataset.src) {
+                video.src = video.dataset.src;
+                video.removeAttribute("data-src");
+              }
+
+              if (video.querySelector("source[data-src]")) {
+                const sources = video.querySelectorAll("source[data-src]");
+                sources.forEach((source) => {
+                  source.src = source.dataset.src;
+                  source.removeAttribute("data-src");
+                });
+                video.load();
+              }
+
+              lazyObserver.unobserve(video);
+              // Observer pour le contrôle de lecture après le chargement
+              observeVideoVisibility(video);
+            }
+          });
+        },
+        { rootMargin: "200px" } // Charger la vidéo avant qu'elle n'entre dans le viewport
+      );
+      lazyObserver.observe(video);
     }
   }
 

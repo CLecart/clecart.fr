@@ -11,7 +11,7 @@
   box-shadow: var(--card-box-shadow);
   transition: transform var(--duration-normal) var(--ease-smooth),
               box-shadow var(--duration-normal) var(--ease-smooth),
-              border-color var(--duration-normal) var(--ease-smooth);
+              border-color var(--duration-normal) var (--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
@@ -328,4 +328,64 @@ body.dark-mode .outcomes-list li:hover {
   40% { transform: scale(1.05); }
   60% { transform: scale(1.05); }  
   100% { transform: scale(1); }
+}
+
+/* SOLUTION ANTI-YOYO OPTIMISÉE - Basée sur pointer-events */
+.card-base,
+.project-card,
+.skill-card,
+.language-card,
+.tech-item,
+.approach-item,
+.outcomes-list li {
+  position: relative;
+  transition: transform 0.4s var(--ease-smooth),
+              box-shadow 0.4s var(--ease-smooth),
+              border-color 0.4s var(--ease-smooth);
+}
+
+/* Créer une zone tampon invisible autour de chaque élément */
+.card-base::before,
+.project-card::before,
+.skill-card::before,
+.language-card::before,
+.tech-item::before,
+.approach-item::before,
+.outcomes-list li::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  z-index: -1;
+  pointer-events: auto;
+}
+
+/* Optimisation critique: utiliser le groupe de propriétés 'will-change' uniquement où nécessaire */
+.card-base:hover,
+.project-card:hover,
+.skill-card:hover,
+.language-card:hover,
+.tech-item:hover,
+.approach-item:hover,
+.outcomes-list li:hover {
+  will-change: transform, box-shadow;
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+  z-index: 2; /* Z-index supérieur pour éviter les problèmes d'empilement */
+}
+
+/* Correction pour retirer la zone tampon des éléments features-list */
+.features-list li::before {
+  display: none;
+}
+
+/* Utiliser contain pour optimiser la performance de rendu */
+.card-base,
+.project-card,
+.skill-card,
+.language-card {
+  contain: content; /* Optimisation du rendu pour les navigateurs modernes */
 }

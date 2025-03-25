@@ -10,6 +10,8 @@ export function initAnimations() {
         {
           root: null,
           threshold: 0.1,
+          // Ajouter une marge pour éviter l'effet yoyo au scroll
+          rootMargin: "-10% 0px -10% 0px",
         },
         options
       )
@@ -17,24 +19,34 @@ export function initAnimations() {
   };
 
   // Observer principal pour animations standard
-  const observer = createObserver((entries) => {
+  const observer = createObserver((entries, observer) => {
     entries.forEach((entry) => {
+      // Seulement ajouter/supprimer la classe au franchissement complet du seuil
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
-      } else {
-        entry.target.classList.remove("appear");
+
+        // Option: Arrêter d'observer pour éviter l'effet yoyo pendant scroll rapide
+        if (
+          entry.target.classList.contains("project-card") ||
+          entry.target.closest("#projects")
+        ) {
+          observer.unobserve(entry.target);
+        }
       }
     });
   });
 
-  // Observer spécifique pour les titres de sections
+  // Observer spécifique pour les titres de sections - MODIFIÉ
   const sectionHeaderObserver = createObserver(
-    (entries) => {
+    (entries, observer) => {
       entries.forEach((entry) => {
+        // Seulement ajouter la classe title-animate, ne jamais la retirer
+        // pour éviter l'effet yoyo sur les titres de sections
         if (entry.isIntersecting) {
           entry.target.classList.add("title-animate");
-        } else {
-          entry.target.classList.remove("title-animate");
+
+          // Arrêter d'observer après la première animation pour éviter l'effet yoyo
+          observer.unobserve(entry.target);
         }
       });
     },
@@ -68,18 +80,11 @@ export function initAnimations() {
   );
   animatedElements.forEach((element) => observer.observe(element));
 
-  // Animation des titres de sections spécifiques (Skills, Projects)
+  // Animation des titres de sections spécifiques (Skills, Projects) - Ciblage précis
   const sectionHeaders = document.querySelectorAll(
     "#skills .section-header h2, #projects .section-header h2"
   );
   sectionHeaders.forEach((header) => sectionHeaderObserver.observe(header));
-
-  // Animation au défilement pour toutes les sections
-  const sections = document.querySelectorAll("section");
-  sections.forEach((section) => sectionObserver.observe(section));
-
-  // Initialisation de l'effet machine à écrire
-  initTypewriterEffect();
 
   // Comportement spécifique pour la page projets
   if (document.querySelector(".project-navigation")) {

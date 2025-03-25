@@ -1,0 +1,68 @@
+/* Styles pour les notifications système */
+
+.app-update-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--btn-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow);
+  z-index: 9999;
+  max-width: 90%;
+  animation: slide-up 0.3s var(--ease-smooth) forwards;
+}
+
+.app-update-notification p {
+  margin: 0;
+  padding: 0;
+}
+
+.app-update-notification button {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.app-update-notification button:hover {
+  background: var(--light);
+  transform: scale(1.05);
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 100px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* Mode sombre */
+body.dark-mode .app-update-notification {
+  background-color: var(--card-dark);
+  box-shadow: var(--shadow-dark);
+  border: 1px solid var(--primary);
+}
+
+body.dark-mode .app-update-notification button {
+  background: var(--primary);
+  color: white;
+}
+
+body.dark-mode .app-update-notification button:hover {
+  background: var(--primary-dark);
+}

@@ -32,6 +32,7 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 - **UX/UI :** Mode sombre/clair, transitions fluides, expérience utilisateur intuitive
 - **Outils :** API EmailJS, Git, intégration CI/CD
 - **Backend :** Projets présentés avec Go, SQLite, architecture RESTful
+- **PWA :** Fonctionnalités Progressive Web App avec Service Worker
 
 ## Caractéristiques principales
 
@@ -42,6 +43,7 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 - **Conformité RGPD** avec bannière de consentement
 - **Optimisation SEO** avec balises méta appropriées
 - **Performance optimisée** pour des temps de chargement rapides
+- **Support hors ligne** grâce aux fonctionnalités PWA
 
 ## Projets présentés
 

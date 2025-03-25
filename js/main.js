@@ -10,8 +10,9 @@ import { initModals } from "./utils/modal.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
 import { initVideoHandler } from "./modules/videoHandler.js";
+import { registerServiceWorker } from "./utils/sw-register.js";
 
-// Exécution optimisée en deux phases
+// Exécution optimisée en trois phases
 document.addEventListener("DOMContentLoaded", () => {
   // Phase 1: Interface critique (immédiate)
   initDarkMode();
@@ -32,7 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       initContactForm();
-      initVideoHandler();
     }, 100);
+  });
+
+  // Phase 3: Fonctionnalités non-critiques (après chargement complet)
+  window.addEventListener("load", () => {
+    initVideoHandler();
+    registerServiceWorker();
   });
 });

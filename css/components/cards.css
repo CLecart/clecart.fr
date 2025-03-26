@@ -216,11 +216,7 @@ body.dark-mode .language-icon img {
 .card-base:hover,
 .project-card:hover,
 .skill-card:hover,
-.language-card:hover,
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover,
-.features-list li:hover {
+.language-card:hover {
   transform: var(--card-hover-transform);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
@@ -229,10 +225,10 @@ body.dark-mode .language-icon img {
 
 /* Exception pour les éléments non-carte (comme features-list) */
 .features-list li:hover {
-  transform: none;
-  border-color: transparent;
-  box-shadow: none;
-  z-index: auto;
+  transform: none !important; /* Priorité pour éviter le conflit */
+  border-color: transparent !important;
+  box-shadow: none !important;
+  z-index: auto !important;
 }
 
 /* Animation des icônes au survol */

@@ -48,16 +48,18 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Stratégie de cache: Network First pour le contenu dynamique, Cache First pour les assets statiques
+// Stratégie de cache avec gestion d'erreur sécurisée
 self.addEventListener("fetch", (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) return;
 
+  // Vérification sécurisée de l'en-tête Accept
+  const acceptHeader = event.request.headers.get("Accept") || "";
+  const isHTMLRequest = acceptHeader.includes("text/html");
+  const isJSONRequest = event.request.url.includes(".json");
+
   // Network first for HTML and JSON
-  if (
-    event.request.headers.get("Accept").includes("text/html") ||
-    event.request.url.includes(".json")
-  ) {
+  if (isHTMLRequest || isJSONRequest) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -103,7 +105,7 @@ self.addEventListener("fetch", (event) => {
 
 // Permet la mise à jour du contenu offline
 self.addEventListener("message", (event) => {
-  if (event.data.action === "skipWaiting") {
+  if (event.data && event.data.action === "skipWaiting") {
     self.skipWaiting();
   }
 });

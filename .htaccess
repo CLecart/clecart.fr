@@ -52,12 +52,12 @@
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# Redirection vers HTTPS (à activer en production)
-# <IfModule mod_rewrite.c>
-#   RewriteEngine On
-#   RewriteCond %{HTTPS} off
-#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
+# Redirection vers HTTPS (activée pour la sécurité)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
 
 # Performance - Disable ETags
 FileETag None

@@ -40,6 +40,16 @@ function setupFormSubmissionHandling(form, statusElement) {
     // Éviter les soumissions multiples
     if (form.classList.contains("sending")) return;
 
+    // Sanitization des entrées utilisateur
+    const sanitizeInput = (input) => {
+      if (!input) return "";
+      return input
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    };
+
     // UI feedback immédiat
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
@@ -51,14 +61,14 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      // Récupération des données dans un format adapté à EmailJS
+      // Récupération et sanitization des données
       const formData = new FormData(form);
       const templateParams = {
-        from_name: formData.get("from_name"),
-        user_name: formData.get("from_name"),
-        email: formData.get("email"),
+        from_name: sanitizeInput(formData.get("from_name")),
+        user_name: sanitizeInput(formData.get("from_name")),
+        email: formData.get("email"), // Les emails n'ont pas besoin de sanitization HTML
         user_email: formData.get("email"),
-        message: formData.get("message"),
+        message: sanitizeInput(formData.get("message")),
         to_name: "Christophe",
       };
 

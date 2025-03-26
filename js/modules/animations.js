@@ -153,7 +153,7 @@ export function initAnimations() {
 /**
  * Effet machine à écrire
  */
-function initTypewriterEffect() {
+export function initTypewriterEffect() {
   const typewriterElement = document.getElementById("typewriter");
   if (!typewriterElement) return;
 

@@ -2,7 +2,7 @@
  * Point d'entrée JavaScript - Organisation optimisée
  */
 import { initDarkMode } from "./modules/darkmode.js";
-import { initAnimations } from "./modules/animations.js";
+import { initAnimations, initTypewriterEffect } from "./modules/animations.js";
 import { initNavigation } from "./modules/navigation.js";
 import { initContactForm } from "./modules/contact-form.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       // Fonctionnalités communes
       initAnimations();
+      initTypewriterEffect(); // Appel de la fonction exportée
       initFormEnhancements();
       initGDPRBanner();
       initModals();

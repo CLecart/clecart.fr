@@ -91,6 +91,12 @@ nav ul {
   padding: 0;
 }
 
+/* Suppression du soulignement rouge pour les liens du header */
+header nav ul li a::after {
+  display: none;
+}
+
+/* Style spécifique pour les liens de navigation */
 nav ul li a {
   color: var(--white);
   font-weight: 500;
@@ -104,6 +110,13 @@ nav ul li a:hover {
   color: var(--primary-dark);
 }
 
+/* Nouveau style pour l'indicateur de lien actif sans soulignement rouge */
+nav ul li a.active {
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Reste du style de hover personnalisé pour les liens de navigation */
 nav ul li a::after {
   content: '';
   position: absolute;
@@ -111,7 +124,7 @@ nav ul li a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--accent);
+  background: var(--primary-dark); /* Changé de accent à primary-dark */
   transition: width 0.3s ease;
 }
 

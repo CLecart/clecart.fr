@@ -11,12 +11,14 @@ import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
 import { initVideoHandler } from "./modules/videoHandler.js";
 import { registerServiceWorker } from "./utils/sw-register.js";
+import { initPerformanceOptimizations } from "./utils/performance.js"; // Add this import
 
 // Exécution optimisée en trois phases
 document.addEventListener("DOMContentLoaded", () => {
   // Phase 1: Interface critique (immédiate)
   initDarkMode();
   initNavigation();
+  initPerformanceOptimizations(); // Add this line
 
   // Phase 2: Fonctionnalités secondaires (différées)
   requestAnimationFrame(() => {

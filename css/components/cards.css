@@ -212,7 +212,6 @@ body.dark-mode .language-icon img {
 }
 
 /* HARMONISATION DES ANIMATIONS AU SURVOL */
-/* Cette section simple garantit que toutes les cartes ont la même animation */
 .card-base:hover,
 .project-card:hover,
 .skill-card:hover,

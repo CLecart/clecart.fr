@@ -1,15 +1,15 @@
-/* Styles pour la section Projets - optimisés */
-
+/* Styles pour la section Projets */
 #projects {
   padding: 100px 0;
   background-color: var(--light);
+  position: relative;
 }
 
 /* Organisation des projets en grille */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
   align-items: stretch;
   justify-content: center;
 }
@@ -70,29 +70,18 @@ body.dark-mode #projects {
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets */
+/* Navigation des projets */
 .project-navigation {
-  margin-top: 80px; /* Reduced from 120px to make it visible immediately */
-  margin-bottom: 30px;
-  padding-top: 100px; /* Espacement suffisant pour éviter que les boutons soient coupés */
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--light-gray);
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  justify-content: center;
+  padding: 120px 0 30px;
   text-align: center;
-  position: relative;
 }
 
 .nav-buttons {
   display: flex;
-  gap: 15px;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
-  position: relative;
-  margin: 0 auto;
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
 .nav-btn {

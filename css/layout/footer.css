@@ -42,7 +42,7 @@ footer a {
 }
 
 footer a:hover {
-  color: var(--secondary);
+  color: var(--primary-dark); /* Changer --secondary à --primary-dark pour correspondre à la couleur du header */
 }
 
 footer a::after {
@@ -58,6 +58,15 @@ footer a::after {
 
 footer a:hover::after {
   width: 100%;
+}
+
+/* Exception pour le lien de politique de confidentialité - pas de soulignement mais même couleur au survol */
+footer a[href="privacy-policy.html"]::after {
+  display: none;
+}
+
+footer a[href="privacy-policy.html"]:hover {
+  color: var(--primary-dark); /* Assure que ce lien spécifique utilise la même couleur */
 }
 
 /* Mode sombre */

@@ -84,21 +84,23 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 │   │   ├── modal.js
 │   │   └── typewriter.js
 │   └── main.js
-├── PICTURES/
-│   ├── profile.jpg
-│   ├── Groupie-Tracker.mp4
-│   ├── BombermanDX.mp4
-│   └── forum.png
-├── files/
-│   └── CV_Christophe_Lecart.pdf
+├── assets/
+│   ├── documents/
+│   │   └── CV_Christophe_Lecart.pdf
+│   ├── images/
+│   │   ├── profile.jpg
+│   │   ├── favicon.png
+│   │   └── apple-touch-icon.png
+│   ├── videos/
+│   │   ├── Groupie-Tracker.mp4
+│   │   └── BombermanDX.mp4
+│   └── screenshots/
+│       └── forum.png
 ├── index.html
 ├── descriptions-projects.html
 ├── privacy-policy.html
 ├── styles.css
 ├── favicon.ico
-├── images/
-│   ├── favicon.png
-│   └── apple-touch-icon.png
 ```
 
 ## Configuration locale

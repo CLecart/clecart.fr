@@ -48,28 +48,6 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
-    <!-- Script to prevent FOUC and suppress Font Awesome warnings -->
-    <script>
-        // Ajouter une classe js-loading à html (pas à body)
-        document.documentElement.className = 'js-loading';
-        
-        // Firefox Font Awesome warning suppression
-        if (navigator.userAgent.indexOf("Firefox") !== -1) {
-            const originalConsoleError = console.error;
-            console.error = function(msg) {
-                if (typeof msg === 'string' && msg.indexOf('Glyph bbox was incorrect') !== -1) {
-                    return;
-                }
-                originalConsoleError.apply(console, arguments);
-            };
-        }
-        
-        // Retirer la classe js-loading quand tout est chargé
-        window.addEventListener('load', function() {
-            document.documentElement.classList.remove('js-loading');
-        });
-    </script>
-    
     <!-- Preconnect to external services -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.emailjs.com">
@@ -416,22 +394,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('load', function() {
-            document.documentElement.classList.remove('js-loading');
-            
-            // Optimiser les vidéos après chargement principal
-            setTimeout(function() {
-                document.querySelectorAll('video').forEach(function(video) {
-                    if (video.hasAttribute('autoplay')) {
-                        video.play().catch(function() { 
-                            // Ignorer les erreurs de lecture automatique 
-                        });
-                    }
-                });
-            }, 100);
-        });
-    </script>
 </body>
 </html>

@@ -1,77 +1,107 @@
 /**
- * Module pour gérer la navigation entre projets
+ * Module pour la navigation entre projets
+ * @function initProjectNavigation - Configure la navigation entre projets
  */
 export function initProjectNavigation() {
-  const navButtons = document.querySelectorAll(".nav-btn");
-  const projectSections = document.querySelectorAll(".project.description");
-
-  if (!navButtons.length || !projectSections.length) return;
-
-  // Activer le bouton correspondant au hash actuel
-  activateButtonFromHash();
-
-  // Gérer les clics sur les boutons de navigation
-  navButtons.forEach((button) => {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      // Mettre à jour l'état actif des boutons
-      navButtons.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
-
-      // Mise à jour de l'URL sans rechargement
-      const targetId = this.getAttribute("href");
-      history.pushState(null, "", targetId);
-
-      // Défiler jusqu'au projet
-      scrollToProject(targetId);
-    });
-  });
-
-  // Gérer la navigation par l'historique du navigateur
-  window.addEventListener("popstate", () => {
-    activateButtonFromHash();
-    scrollToProject(window.location.hash);
-  });
+  const navButtons = document.querySelectorAll(".nav-buttons a");
+  const projects = document.querySelectorAll(".project");
 
   /**
-   * Fait défiler la page jusqu'au projet spécifié
-   * @param {string} targetId - ID de l'élément cible
+   * Affiche le projet initial basé sur le hash URL ou le premier projet
+   * @function showInitialProject
    */
-  function scrollToProject(targetId) {
-    const targetElement = document.querySelector(targetId);
+  function showInitialProject() {
+    const hash = window.location.hash;
+    let shown = false;
 
-    if (targetElement) {
-      // Calculer la position en tenant compte du header fixe
-      const headerHeight = document.querySelector("header").offsetHeight;
-      const buffer = 20; // Espace supplémentaire pour l'esthétique
+    // Vérifier si le hash correspond à un projet
+    if (hash && hash.length > 1) {
+      const targetProject = document.querySelector(hash);
+      if (targetProject && targetProject.classList.contains("project")) {
+        showProject(hash.substring(1));
+        shown = true;
+      }
+    }
 
-      window.scrollTo({
-        top: targetElement.offsetTop - headerHeight - buffer,
-        behavior: "smooth",
+    // Afficher le premier projet si aucun n'est spécifié
+    if (!shown && projects.length > 0) {
+      projects.forEach((p) => {
+        p.style.display = "none";
+        p.classList.remove("active");
       });
+
+      projects[0].style.display = "block";
+      projects[0].classList.add("active");
+
+      if (navButtons.length > 0) {
+        navButtons[0].classList.add("active");
+      }
     }
   }
 
-  /**
-   * Active le bouton correspondant au fragment d'URL actuel
-   */
-  function activateButtonFromHash() {
-    const hash = window.location.hash;
+  function showProject(projectId) {
+    // Hide all projects
+    projects.forEach((project) => {
+      project.style.display = "none";
+      project.classList.remove("active");
+    });
 
-    // Si pas de hash, activer le premier bouton
-    if (!hash && navButtons.length > 0) {
-      navButtons.forEach((btn) => btn.classList.remove("active"));
-      navButtons[0].classList.add("active");
-      return;
-    }
-
-    // Activer le bouton correspondant au hash actuel
+    // Remove active class from all buttons
     navButtons.forEach((button) => {
       button.classList.remove("active");
-      if (button.getAttribute("href") === hash) {
-        button.classList.add("active");
+    });
+
+    // Show the target project
+    const targetProject = document.getElementById(projectId);
+    const targetButton = document.querySelector(
+      `.nav-buttons a[href="#${projectId}"]`
+    );
+
+    if (targetProject) {
+      targetProject.style.display = "block";
+      targetProject.classList.add("active");
+
+      // Ensure the project is visible with animation
+      setTimeout(() => {
+        targetProject.style.opacity = "1";
+      }, 50);
+    }
+
+    if (targetButton) {
+      targetButton.classList.add("active");
+    }
+  }
+
+  navButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = button.getAttribute("href").substring(1);
+      showProject(targetId);
+
+      history.pushState(null, null, `#${targetId}`);
+
+      // Correction de l'offset de défilement
+      const headerHeight = document.querySelector("header").offsetHeight;
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        // Utiliser un plus grand buffer pour s'assurer que le contenu commence plus haut
+        const buffer = window.innerWidth <= 768 ? 25 : 40;
+
+        window.scrollTo({
+          top: targetElement.offsetTop - headerHeight - buffer,
+          behavior: "smooth",
+        });
       }
     });
-  }
+  });
+
+  // Initialiser la visibilité des projets et gérer les changements d'URL
+  showInitialProject();
+
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      showProject(hash.substring(1));
+    }
+  });
 }

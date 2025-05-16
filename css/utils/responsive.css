@@ -1,8 +1,3 @@
-/**
- * Styles responsifs - Optimisés
- */
-
-/* Variables de breakpoints pour la cohérence */
 :root {
   --breakpoint-xs: 380px;
   --breakpoint-sm: 480px;
@@ -11,72 +6,69 @@
   --breakpoint-xl: 1200px;
 }
 
-/* Grands écrans et tablettes */
 @media (max-width: var(--breakpoint-lg)) {
   .container {
     width: 95%;
     padding: 0 15px;
   }
-  
-  h1 { font-size: 2.5rem; }
-  h2 { font-size: 2rem; }
-  
-  /* Layout grids */
+
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+
   .about-content,
   .contact-container {
     grid-template-columns: 1fr;
   }
-  
+
   .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }
 
-/* Tablettes et mobiles larges */
 @media (max-width: var(--breakpoint-md)) {
   header {
     height: var(--header-height);
     padding: 0;
   }
-  
+
   .header-content {
     height: var(--header-height);
   }
-  
+
   .header-buttons {
     margin-left: auto;
   }
-  
-  /* Mode sombre navigation */
+
   body.dark-mode nav ul {
     background-color: var(--card-dark);
     border: 1px solid var(--border-dark);
   }
-  
-  /* Pages projets */
-  .tech-grid, 
+
+  .tech-grid,
   .approach-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .cta-section {
     flex-direction: column;
     align-items: center;
   }
-  
-  /* GDPR */
+
   .gdpr-content {
     flex-direction: column;
     text-align: center;
     padding: 15px 10px;
   }
-  
+
   .gdpr-buttons {
     width: 100%;
     justify-content: center;
   }
 
-  /* Éviter les écarts horizontaux sur mobile */
   .projects-grid,
   .languages-grid,
   .skills-container,
@@ -87,58 +79,58 @@
   }
 }
 
-/* Mobiles */
 @media (max-width: var(--breakpoint-sm)) {
   .container {
     padding: 0 var(--spacing-mobile);
   }
-  
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.75rem; }
-  
-  /* Cartes et contenus */
+
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+
   .card-base {
     padding: 15px;
   }
-  
+
   .skill-card {
     height: auto;
     min-height: 250px;
   }
-  
+
   .project-card {
     min-height: auto;
   }
-  
-  /* Boutons GDPR */
+
   .gdpr-buttons {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .gdpr-buttons button {
     width: 100%;
   }
 }
 
-/* Très petits écrans */
 @media screen and (max-width: var(--breakpoint-xs)) {
-  html, body {
+  html,
+  body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
   }
-  
-  /* Pas de débordements horizontaux */
+
   * {
     box-sizing: border-box;
-    max-width: 100vw; /* Empêcher explicitement tout élément de dépasser la largeur */
+    max-width: 100vw;
   }
-  
+
   body {
     font-size: 14px;
   }
-  
+
   .container {
     padding: 0 8px;
     width: 100%;
@@ -147,24 +139,23 @@
     padding-right: 8px;
     overflow-x: hidden;
   }
-  
-  /* Éléments media responsifs */
-  img, video, iframe {
+
+  img,
+  video,
+  iframe {
     max-width: 100%;
     height: auto;
   }
-  
-  /* Pages projets */
+
   body:not(.homepage) main {
     margin-top: 70px;
   }
-  
+
   .project-navigation {
     margin-top: 10px;
     padding-top: 0;
   }
 
-  /* Forcer les conteneurs flex et grid à respecter la largeur */
   .contact-container,
   .about-content,
   .projects-grid,
@@ -175,23 +166,19 @@
   }
 }
 
-/* Styles spécifiques pour très petits écrans (moins de 404px) */
 @media (max-width: 404px) {
-  /* Améliorations des boutons de projet */
   .project-buttons {
     display: grid;
-    grid-template-columns: 1fr auto; /* Une colonne plus large pour le bouton View Details, une plus étroite pour GitHub */
+    grid-template-columns: 1fr auto;
     gap: 10px;
     width: 100%;
     align-items: center;
   }
-  
-  /* S'assurer que les projets ont un espacement correct */
+
   .project-content {
     padding-bottom: 15px;
   }
-  
-  /* Réduire légèrement certaines marges pour économiser de l'espace */
+
   .project-content p {
     margin-bottom: 15px;
   }

@@ -1,5 +1,3 @@
-/* Styles pour les notifications système */
-
 .app-update-notification {
   position: fixed;
   bottom: 20px;
@@ -51,7 +49,6 @@
   }
 }
 
-/* Mode sombre */
 body.dark-mode .app-update-notification {
   background-color: var(--card-dark);
   box-shadow: var(--shadow-dark);

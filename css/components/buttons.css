@@ -1,6 +1,6 @@
 /* Styles pour les boutons */
 
-.btn, 
+.btn,
 .project-btn,
 .github-btn,
 .back-btn,
@@ -16,7 +16,8 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  transition: transform 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth);
 }
 
 .btn:hover,
@@ -42,13 +43,18 @@
 .github-btn::before,
 .back-btn::before,
 .nav-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, var(--white-opacity-20), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--white-opacity-20),
+    transparent
+  );
   transition: left 0.7s ease;
 }
 
@@ -160,7 +166,7 @@
     width: 55px;
     font-size: 0.8rem;
   }
-  
+
   .header-buttons {
     gap: 5px;
   }
@@ -204,7 +210,7 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .github-btn {
     padding: 0;
     width: 38px;

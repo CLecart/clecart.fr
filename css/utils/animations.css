@@ -1,6 +1,3 @@
-/* Styles pour les animations - optimisés */
-
-/* Classes d'animation de base avec propriétés communes */
 .fade-in,
 .slide-left,
 .slide-right {
@@ -9,18 +6,18 @@
     transform var(--duration-slow) var(--ease-smooth);
 }
 
-/* Propriétés spécifiques pour chaque direction */
 .fade-in {
   transform: translateY(20px);
 }
+
 .slide-left {
   transform: translateX(-50px);
 }
+
 .slide-right {
   transform: translateX(50px);
 }
 
-/* État final unifié */
 .fade-in.appear,
 .slide-left.appear,
 .slide-right.appear {
@@ -39,7 +36,6 @@
   }
 }
 
-/* Animation des titres de sections */
 #skills .section-header h2,
 #projects .section-header h2 {
   opacity: 0;
@@ -64,7 +60,6 @@
   }
 }
 
-/* Animation des sections au défilement */
 section {
   position: relative;
   transition: var(--transition);
@@ -74,7 +69,6 @@ section.section-active {
   z-index: 2;
 }
 
-/* Restauration des barres bleues entre les sections */
 section::after {
   content: "";
   position: absolute;
@@ -91,12 +85,10 @@ section::after {
   opacity: 0.7;
 }
 
-/* Exception pour la dernière section - pas de barre en bas */
 section:last-of-type::after {
   display: none;
 }
 
-/* Effet de transition entre sections */
 section.section-active::before {
   content: "";
   position: absolute;
@@ -126,7 +118,6 @@ section.section-active[data-scroll-direction="up"]::before {
   }
 }
 
-/* Animation des éléments dans les sections actives */
 section.section-active .section-header {
   animation: fade-up-in 0.8s ease forwards;
 }
@@ -142,7 +133,6 @@ section.section-active .section-header {
   }
 }
 
-/* Optimisation - exclure éléments de l'header des animations */
 .header-content *,
 .dark-mode-toggle,
 .right-content *,
@@ -152,7 +142,6 @@ section.section-active .section-header {
   transition: none;
 }
 
-/* Support changement de thème */
 .theme-transitioning,
 .theme-transitioning *,
 .theme-transitioning *:before,
@@ -162,23 +151,20 @@ section.section-active .section-header {
   animation-delay: 0s;
 }
 
-/* État de défilement en cours */
 html.scrolling-in-progress {
-  scroll-behavior: auto; /* Désactiver le défilement standard du navigateur */
+  scroll-behavior: auto;
 }
 
 html.scrolling-in-progress * {
-  pointer-events: none; /* Bloquer toutes les interactions pendant l'animation */
-  user-select: none; /* Empêcher la sélection de texte pendant l'animation */
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Permettre uniquement les interactions avec l'en-tête */
 html.scrolling-in-progress header,
 html.scrolling-in-progress header * {
   pointer-events: auto;
 }
 
-/* Animation plus lisse pour les liens actifs */
 nav ul li a {
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -188,12 +174,10 @@ nav ul li a.active {
   transform: translateY(-2px);
 }
 
-/* Exception pour permettre le clic sur le bouton retour du navigateur */
 html.scrolling-in-progress .header-content * {
   pointer-events: auto;
 }
 
-/* Keyframes préexistants */
 @keyframes fadeIn {
   from {
     opacity: 0;

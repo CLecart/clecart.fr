@@ -1,5 +1,3 @@
-/* Styles pour la bannière GDPR */
-
 .gdpr-banner {
   position: fixed;
   bottom: 0;
@@ -41,7 +39,6 @@
   max-width: 300px;
 }
 
-/* Styles des boutons pour la bannière GDPR */
 .gdpr-buttons button {
   min-width: 120px;
   padding: 12px 24px;
@@ -53,7 +50,6 @@
   transition: all 0.3s ease;
 }
 
-/* Style pour le message de refus GDPR */
 .gdpr-message {
   padding: 15px 20px;
   background-color: var(--primary-light);
@@ -75,7 +71,6 @@
   color: var(--primary-dark);
 }
 
-/* Mode sombre */
 body.dark-mode .gdpr-banner {
   background-color: var(--card-dark);
   box-shadow: var(--shadow-up-dark);
@@ -85,7 +80,6 @@ body.dark-mode .gdpr-content p {
   color: var(--text-dark);
 }
 
-/* Mode sombre pour le message */
 body.dark-mode .gdpr-message {
   background-color: var(--primary-light-15);
   border-color: var(--primary-dark);
@@ -100,18 +94,15 @@ body.dark-mode .gdpr-message a:hover {
   color: var(--primary);
 }
 
-/* Adaptations pour mobile */
 @media (max-width: 768px) {
   .gdpr-buttons {
     gap: 15px;
   }
-  
   .gdpr-content {
     width: 100%;
     padding: 15px 10px;
     box-sizing: border-box;
   }
-  
   .gdpr-content p {
     margin-bottom: 15px;
     width: 100%;
@@ -126,7 +117,6 @@ body.dark-mode .gdpr-message a:hover {
     gap: 10px;
     width: 80%;
   }
-  
   .gdpr-buttons button {
     width: 100%;
   }

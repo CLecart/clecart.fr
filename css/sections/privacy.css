@@ -1,83 +1,42 @@
 /* Styles pour la page de politique de confidentialité */
 
-/* Styles de base pour la description */
-.description {
+#privacy {
   max-width: 900px;
-  margin: 120px auto 30px;
+  margin: 60px auto 0;
+  padding: 40px 30px;
   background: var(--white);
-  padding: 30px 40px;
-  border-radius: 15px;
-  box-shadow: var(--shadow);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-box-shadow);
   color: var(--text-color);
 }
 
-/* Style pour les titres de la description */
-.description h2 {
+#privacy h2 {
   color: var(--primary);
   margin-bottom: 20px;
 }
 
-.description h3 {
+#privacy h3 {
   margin-top: 30px;
   margin-bottom: 15px;
   color: var(--text-color);
 }
 
-/* Style cohérent pour tous les liens de la politique de confidentialité - aligné avec les liens du header */
-.description a {
-  color: var(--primary);
-  font-weight: 500;
-  position: relative;
-  transition: var(--transition);
-  text-decoration: none;
-}
-
-.description a:hover {
-  color: var(--primary-dark);
-}
-
-/* Add the consistent underline effect */
-.description a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s ease;
-  opacity: 0.8;
-}
-
-.description a:hover::after {
-  width: 100%;
-}
-
-/* Mode sombre - tous les liens */
-body.dark-mode .description a {
-  color: var(--secondary);
-}
-
-body.dark-mode .description a:hover {
-  color: var(--primary);
-}
-
-body.dark-mode .description a::after {
-  background: var(--accent);
-}
-
-/* Exception pour les boutons qui ne doivent pas avoir de soulignement */
-.description .btn::after,
-.description .back-btn::after {
-  display: none;
-}
-
-/* Styles pour les listes */
-.description ul {
+#privacy ul {
   margin-left: 20px;
   margin-bottom: 20px;
 }
 
-.description ul li {
+#privacy ul li {
   margin-bottom: 10px;
+}
+
+body.dark-mode #privacy {
+  background: var(--card-dark);
+  color: var(--text-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
+body.dark-mode #privacy h2,
+body.dark-mode #privacy h3 {
+  color: var(--primary);
 }

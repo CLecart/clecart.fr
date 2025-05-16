@@ -10,8 +10,8 @@
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
   transition: transform var(--duration-normal) var(--ease-smooth),
-              box-shadow var(--duration-normal) var(--ease-smooth),
-              border-color var(--duration-normal) var (--ease-smooth);
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var (--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
@@ -224,10 +224,10 @@ body.dark-mode .language-icon img {
 
 /* Exception pour les éléments non-carte (comme features-list) */
 .features-list li:hover {
-  transform: none !important; /* Priorité pour éviter le conflit */
-  border-color: transparent !important;
-  box-shadow: none !important;
-  z-index: auto !important;
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: auto;
 }
 
 /* Animation des icônes au survol */
@@ -258,17 +258,17 @@ body.dark-mode .outcomes-list li:hover {
     margin-right: 0;
     max-width: 100%;
   }
-  
+
   .project-card,
   .skill-card {
     width: 100%;
     max-width: 100%;
   }
-  
+
   .project-content {
     padding: 15px 10px;
   }
-  
+
   /* Empêcher le débordement des textes longs */
   .project-content h3,
   .project-content p,
@@ -278,23 +278,23 @@ body.dark-mode .outcomes-list li:hover {
     overflow-wrap: break-word;
     hyphens: auto;
   }
-  
+
   .language-icon {
     width: 36px;
     height: 36px;
   }
-  
+
   .language-icon img {
     width: 36px;
     height: 36px;
   }
-  
+
   .language-card {
     width: 80px;
     height: 80px;
     padding: 10px 8px;
   }
-  
+
   .language-card span {
     font-size: 0.7rem;
   }
@@ -305,12 +305,12 @@ body.dark-mode .outcomes-list li:hover {
     width: 32px;
     height: 32px;
   }
-  
+
   .language-icon img {
     width: 32px;
     height: 32px;
   }
-  
+
   .language-card {
     width: 70px;
     height: 70px;
@@ -319,10 +319,18 @@ body.dark-mode .outcomes-list li:hover {
 
 /* Animation de pulsation douce pour icônes */
 @keyframes subtle-pulse {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.05); }
-  60% { transform: scale(1.05); }  
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* SOLUTION ANTI-YOYO OPTIMISÉE - Basée sur pointer-events */
@@ -335,8 +343,7 @@ body.dark-mode .outcomes-list li:hover {
 .outcomes-list li {
   position: relative;
   transition: transform 0.4s var(--ease-smooth),
-              box-shadow 0.4s var(--ease-smooth),
-              border-color 0.4s var(--ease-smooth);
+    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
 }
 
 /* Créer une zone tampon invisible autour de chaque élément */
@@ -347,7 +354,7 @@ body.dark-mode .outcomes-list li:hover {
 .tech-item::before,
 .approach-item::before,
 .outcomes-list li::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -15px;
   left: -15px;

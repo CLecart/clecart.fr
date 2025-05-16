@@ -107,41 +107,35 @@ export function initNavigation() {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-          // 1. Empêcher de nouvelles interactions pendant le défilement
           document.documentElement.classList.add("scrolling-in-progress");
 
-          // 2. Marquer le lien actif immédiatement pour un retour visuel
           document.querySelectorAll("nav a").forEach((link) => {
             link.classList.remove("active");
-            link.setAttribute("tabindex", "-1"); // Désactiver la focalisation pendant l'animation
+            link.setAttribute("tabindex", "-1");
           });
           this.classList.add("active");
 
-          // 3. Calculer la position avec précision
           const headerHeight = document.querySelector("header").offsetHeight;
           const targetPosition =
             targetElement.getBoundingClientRect().top + window.pageYOffset;
           const buffer = window.innerWidth <= 768 ? 15 : 25;
 
-          // 4. Utiliser requestAnimationFrame pour une animation plus fluide
           smoothScrollTo(
             window.pageYOffset,
             targetPosition - headerHeight - buffer,
-            600 // Durée en ms
+            600
           );
 
-          // 5. Restaurer les interactions après une durée suffisante
           setTimeout(() => {
             document.documentElement.classList.remove("scrolling-in-progress");
             document.querySelectorAll("nav a").forEach((link) => {
               link.removeAttribute("tabindex");
             });
-          }, 650); // Légèrement plus que la durée d'animation
+          }, 650);
         }
       });
     });
 
-  // Fonction de défilement doux optimisée avec requestAnimationFrame
   function smoothScrollTo(startY, endY, duration) {
     const startTime = performance.now();
     const difference = endY - startY;
@@ -164,13 +158,10 @@ export function initNavigation() {
     requestAnimationFrame(scroll);
   }
 
-  // Remplacer seulement la fonction de défilement
   window.addEventListener("scroll", () => {
-    // Ajouter un seuil minimum pour éviter le tremblement
     if (window.scrollY > 5) {
       header.classList.add("scrolled");
     } else if (window.scrollY === 0) {
-      // S'assurer qu'on est vraiment au sommet
       header.classList.remove("scrolled");
     }
   });

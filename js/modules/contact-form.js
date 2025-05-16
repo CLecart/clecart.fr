@@ -1,26 +1,18 @@
-/**
- * Module pour le formulaire de contact avec EmailJS
- */
 export function initContactForm() {
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("form-status");
 
   if (!contactForm) return;
 
-  // Vérification du consentement GDPR et adaptation de l'interface
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     renderContactAlternative(contactForm);
     return;
   }
 
-  // Configuration du comportement du formulaire
   setupFormSubmissionHandling(contactForm, formStatus);
 }
 
-/**
- * Affiche une alternative au formulaire quand le GDPR est refusé
- */
 function renderContactAlternative(form) {
   form.innerHTML = `
     <p class="gdpr-message">
@@ -30,17 +22,11 @@ function renderContactAlternative(form) {
     </p>`;
 }
 
-/**
- * Configure la gestion de soumission du formulaire
- */
 function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
-
-    // Éviter les soumissions multiples
     if (form.classList.contains("sending")) return;
 
-    // Sanitization des entrées utilisateur
     const sanitizeInput = (input) => {
       if (!input) return "";
       return input
@@ -50,7 +36,6 @@ function setupFormSubmissionHandling(form, statusElement) {
         .replace(/'/g, "&#039;");
     };
 
-    // UI feedback immédiat
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
       form,
@@ -61,26 +46,22 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      // Récupération et sanitization des données
       const formData = new FormData(form);
       const templateParams = {
         from_name: sanitizeInput(formData.get("from_name")),
         user_name: sanitizeInput(formData.get("from_name")),
-        email: formData.get("email"), // Les emails n'ont pas besoin de sanitization HTML
+        email: formData.get("email"),
         user_email: formData.get("email"),
         message: sanitizeInput(formData.get("message")),
         to_name: "Christophe",
       };
 
-      // Vérification que le service EmailJS est disponible
       if (typeof emailjs === "undefined") {
         throw new Error("Email service unavailable");
       }
 
-      // Envoi du message
       await emailjs.send("service_lokewrs", "template_2ov9l9i", templateParams);
 
-      // Succès
       setFormState(
         form,
         submitButton,
@@ -90,7 +71,6 @@ function setupFormSubmissionHandling(form, statusElement) {
       );
       form.reset();
     } catch (error) {
-      console.error("Sending error:", error);
       setFormState(
         form,
         submitButton,
@@ -99,7 +79,6 @@ function setupFormSubmissionHandling(form, statusElement) {
         `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
-      // Réinitialisation du formulaire après délai
       setTimeout(() => {
         form.classList.remove("sending");
         if (submitButton) submitButton.disabled = false;
@@ -108,9 +87,6 @@ function setupFormSubmissionHandling(form, statusElement) {
   });
 }
 
-/**
- * Met à jour l'état visuel du formulaire
- */
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");
   if (button) button.disabled = true;

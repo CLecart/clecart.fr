@@ -1,8 +1,4 @@
-/**
- * Module pour gérer les fenêtres modales
- */
 export function initModals() {
-  // Créer une modal pour les images des projets
   document.querySelectorAll(".project-thumb img").forEach((image) => {
     image.addEventListener("click", function () {
       createImageModal(this.src, this.alt);
@@ -10,13 +6,11 @@ export function initModals() {
   });
 
   function createImageModal(src, alt) {
-    // Vérifier si une modal existe déjà et la supprimer
     const existingModal = document.querySelector(".modal-overlay");
     if (existingModal) {
       existingModal.remove();
     }
 
-    // Créer les éléments de la modal
     const modalOverlay = document.createElement("div");
     modalOverlay.className = "modal-overlay";
 
@@ -32,18 +26,15 @@ export function initModals() {
     closeButton.innerHTML = "&times;";
     closeButton.setAttribute("aria-label", "Close modal");
 
-    // Assembler la modal
     modalContent.appendChild(modalImage);
     modalContent.appendChild(closeButton);
     modalOverlay.appendChild(modalContent);
     document.body.appendChild(modalOverlay);
 
-    // Ajouter l'animation
     setTimeout(() => {
       modalOverlay.classList.add("active");
     }, 10);
 
-    // Gérer la fermeture
     closeButton.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", function (e) {
       if (e.target === modalOverlay) {
@@ -51,7 +42,6 @@ export function initModals() {
       }
     });
 
-    // Fermeture avec la touche Echap
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
         closeModal();

@@ -1,6 +1,3 @@
-/* Remove previous font import as we're now using the link in the HTML */
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); */
-
 * {
   margin: 0;
   padding: 0;
@@ -8,16 +5,13 @@
   max-width: 100%;
 }
 
-/* Fix FOUC sans utiliser !important - utiliser la spécificité des sélecteurs à la place */
 html.js-loading,
 html.js-loading body {
-  /* Bloquer le rendu jusqu'à ce que tout soit chargé */
   visibility: hidden;
 }
 
 html.js-loading .js-loading-visible,
 html.js-loading #splash-screen {
-  /* Éléments spécifiques qu'on veut rendre visibles pendant le chargement */
   visibility: visible;
 }
 
@@ -25,22 +19,22 @@ html.js-loading [class*="animate"],
 html.js-loading [class*="transition"],
 html.js-loading [class*="fade"],
 html.js-loading [class*="slide"] {
-  /* Désactiver les animations pendant le chargement avec une spécificité plus élevée */
   animation-name: none;
   transition-property: none;
   transform: none;
   opacity: 0;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
   position: relative;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  font-display: swap; /* Improve font display performance */
+  font-family: "Poppins", sans-serif;
+  font-display: swap;
   line-height: 1.6;
   color: var(--text-color);
   overflow-x: hidden;
@@ -54,7 +48,6 @@ body {
   padding: 0 20px;
 }
 
-/* Style de lien uniforme à travers tout le site */
 a {
   text-decoration: none;
   color: var(--primary);
@@ -66,9 +59,8 @@ a:hover {
   color: var(--primary-dark);
 }
 
-/* Effet de soulignement uniforme */
 a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -83,7 +75,6 @@ a:hover::after {
   width: 100%;
 }
 
-/* Exception pour les boutons et logo - pas de soulignement */
 .btn::after,
 .project-btn::after,
 .github-btn::after,
@@ -103,7 +94,12 @@ ul {
   list-style: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 0.5em;
@@ -125,7 +121,8 @@ p {
   margin-bottom: 1rem;
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
   display: block;

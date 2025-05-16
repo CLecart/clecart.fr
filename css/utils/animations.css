@@ -1,28 +1,42 @@
 /* Styles pour les animations - optimisés */
 
 /* Classes d'animation de base avec propriétés communes */
-.fade-in, .slide-left, .slide-right {
+.fade-in,
+.slide-left,
+.slide-right {
   opacity: 0;
-  transition: opacity var(--duration-slow) var(--ease-smooth), 
-              transform var(--duration-slow) var(--ease-smooth);
+  transition: opacity var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth);
 }
 
 /* Propriétés spécifiques pour chaque direction */
-.fade-in { transform: translateY(20px); }
-.slide-left { transform: translateX(-50px); }
-.slide-right { transform: translateX(50px); }
+.fade-in {
+  transform: translateY(20px);
+}
+.slide-left {
+  transform: translateX(-50px);
+}
+.slide-right {
+  transform: translateX(50px);
+}
 
 /* État final unifié */
-.fade-in.appear, 
-.slide-left.appear, 
+.fade-in.appear,
+.slide-left.appear,
 .slide-right.appear {
   opacity: 1;
   transform: translate(0, 0);
 }
 
 @keyframes smoothAppear {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Animation des titres de sections */
@@ -30,8 +44,8 @@
 #projects .section-header h2 {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-slow) var(--ease-smooth), 
-              transform var(--duration-slow) var(--ease-smooth);
+  transition: opacity var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth);
 }
 
 #skills .section-header h2.title-animate,
@@ -42,8 +56,12 @@
 }
 
 @keyframes title-glow {
-  0% { text-shadow: 0 0 2px rgba(108, 99, 255, 0); }
-  100% { text-shadow: 0 0 8px rgba(108, 99, 255, 0.4); }
+  0% {
+    text-shadow: 0 0 2px rgba(108, 99, 255, 0);
+  }
+  100% {
+    text-shadow: 0 0 8px rgba(108, 99, 255, 0.4);
+  }
 }
 
 /* Animation des sections au défilement */
@@ -58,13 +76,18 @@ section.section-active {
 
 /* Restauration des barres bleues entre les sections */
 section::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-light));
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--primary),
+    var(--primary-light)
+  );
   opacity: 0.7;
 }
 
@@ -75,13 +98,18 @@ section:last-of-type::after {
 
 /* Effet de transition entre sections */
 section.section-active::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-light));
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--primary),
+    var(--primary-light)
+  );
   transform: scaleX(0);
   transform-origin: center;
   animation: section-line 0.8s var(--ease-smooth) forwards;
@@ -93,7 +121,9 @@ section.section-active[data-scroll-direction="up"]::before {
 }
 
 @keyframes section-line {
-  to { transform: scaleX(1); }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* Animation des éléments dans les sections actives */
@@ -102,13 +132,19 @@ section.section-active .section-header {
 }
 
 @keyframes fade-up-in {
-  from { opacity: 0.8; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0.8;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Optimisation - exclure éléments de l'header des animations */
-.header-content *, 
-.dark-mode-toggle, 
+.header-content *,
+.dark-mode-toggle,
 .right-content *,
 .nav-toggle {
   opacity: 1;
@@ -121,9 +157,9 @@ section.section-active .section-header {
 .theme-transitioning *,
 .theme-transitioning *:before,
 .theme-transitioning *:after {
-  transition: none !important;
-  animation-duration: 0s !important;
-  animation-delay: 0s !important;
+  transition: none;
+  animation-duration: 0s;
+  animation-delay: 0s;
 }
 
 /* État de défilement en cours */
@@ -132,14 +168,14 @@ html.scrolling-in-progress {
 }
 
 html.scrolling-in-progress * {
-  pointer-events: none !important; /* Bloquer toutes les interactions pendant l'animation */
-  user-select: none !important; /* Empêcher la sélection de texte pendant l'animation */
+  pointer-events: none; /* Bloquer toutes les interactions pendant l'animation */
+  user-select: none; /* Empêcher la sélection de texte pendant l'animation */
 }
 
 /* Permettre uniquement les interactions avec l'en-tête */
 html.scrolling-in-progress header,
 html.scrolling-in-progress header * {
-  pointer-events: auto !important;
+  pointer-events: auto;
 }
 
 /* Animation plus lisse pour les liens actifs */
@@ -159,23 +195,41 @@ html.scrolling-in-progress .header-content * {
 
 /* Keyframes préexistants */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes skill-animation {
-  to { transform: scaleX(1); }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 @keyframes subtle-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeInUpSmooth {
@@ -201,14 +255,28 @@ html.scrolling-in-progress .header-content * {
 }
 
 @keyframes subtle-pulse-smooth {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.03); }
-  60% { transform: scale(1.03); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.03);
+  }
+  60% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes checkmark-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

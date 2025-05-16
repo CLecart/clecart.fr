@@ -45,10 +45,21 @@
   border: 1px solid var(--border-light);
 }
 
+.portfolio-section.card-base:hover {
+  box-shadow: var(--neon-shadow);
+  border-color: var(--primary);
+}
+
 body.dark-mode .portfolio-section.card-base {
   background: var(--card-dark);
   box-shadow: var(--card-box-shadow-dark);
   border-color: var(--border-dark);
+  border: 1px solid var(--border-dark);
+}
+
+body.dark-mode .portfolio-section.card-base:hover {
+  box-shadow: var(--neon-shadow-dark);
+  border-color: var(--primary);
 }
 
 /* Animation d'apparition plus fluide */
@@ -396,10 +407,20 @@ body.dark-mode .features-list li {
   transition: var(--card-transition);
 }
 
+.approach-item.card-base:hover {
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
 body.dark-mode .approach-item.card-base {
   background: var(--card-dark);
   box-shadow: var(--card-box-shadow-dark);
   border-color: var(--border-dark);
+}
+
+body.dark-mode .approach-item.card-base:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+  border-color: var(--primary);
 }
 
 .portfolio-section.appear .approach-item {

@@ -11,26 +11,21 @@ import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initFormEnhancements } from "./modules/form-enhancements.js";
 import { initVideoHandler } from "./modules/videoHandler.js";
 import { registerServiceWorker } from "./utils/sw-register.js";
-import { initPerformanceOptimizations } from "./utils/performance.js"; // Add this import
+import { initPerformanceOptimizations } from "./utils/performance.js";
 
-// Exécution optimisée en trois phases
 document.addEventListener("DOMContentLoaded", () => {
-  // Phase 1: Interface critique (immédiate)
   initDarkMode();
   initNavigation();
-  initPerformanceOptimizations(); // Add this line
+  initPerformanceOptimizations();
 
-  // Phase 2: Fonctionnalités secondaires (différées)
   requestAnimationFrame(() => {
     setTimeout(() => {
-      // Fonctionnalités communes
       initAnimations();
-      initTypewriterEffect(); // Appel de la fonction exportée
+      initTypewriterEffect();
       initFormEnhancements();
       initGDPRBanner();
       initModals();
 
-      // Fonctionnalités conditionnelles
       if (document.querySelector(".project-navigation")) {
         initProjectNavigation();
       }
@@ -39,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   });
 
-  // Phase 3: Fonctionnalités non-critiques (après chargement complet)
   window.addEventListener("load", () => {
     initVideoHandler();
     registerServiceWorker();

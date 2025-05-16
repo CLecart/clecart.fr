@@ -138,7 +138,6 @@ body.dark-mode .project-content p {
 
 /* Cartes spécifiques: descriptions de projets */
 .project.description.card-base {
-  /* will-change supprimé */
   position: relative;
   z-index: 0;
 }
@@ -173,13 +172,13 @@ body.dark-mode .project-content p {
   justify-content: center;
   margin-bottom: 8px;
   width: 40px;
-  height: 40px; /* Hauteur fixe pour garantir l'uniformité */
+  height: 40px;
 }
 
 .language-icon img {
   width: 40px;
   height: 40px;
-  object-fit: contain; /* Garantit que l'image est contenue sans déformation */
+  object-fit: contain;
   transition: var(--transition);
 }
 
@@ -376,7 +375,7 @@ body.dark-mode .outcomes-list li:hover {
   transform: translateY(-10px);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
-  z-index: 2; /* Z-index supérieur pour éviter les problèmes d'empilement */
+  z-index: 2;
 }
 
 /* Correction pour retirer la zone tampon des éléments features-list */
@@ -389,5 +388,5 @@ body.dark-mode .outcomes-list li:hover {
 .project-card,
 .skill-card,
 .language-card {
-  contain: content; /* Optimisation du rendu pour les navigateurs modernes */
+  contain: content;
 }

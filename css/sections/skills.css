@@ -1,5 +1,3 @@
-/* Styles pour la section Compétences */
-
 #skills {
   padding: 100px 0;
   background-color: var(--light);
@@ -11,18 +9,15 @@
   gap: 30px;
 }
 
-/* Application des styles de carte unifiés */
 #skills .skill-card {
   height: 310px;
   min-height: 310px;
 }
 
-/* Masquer les barres de niveau de compétence */
 .skill-level {
   display: none;
 }
 
-/* Mode sombre */
 body.dark-mode #skills {
   background-color: var(--darker);
 }

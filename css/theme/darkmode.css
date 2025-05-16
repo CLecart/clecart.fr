@@ -1,17 +1,12 @@
-/**
- * Styles du mode sombre - nettoyés
- */
 body.dark-mode {
   background-color: var(--dark);
   color: var(--text-dark);
 }
 
-/* Header et navigation */
 body.dark-mode header {
   background: var(--gradient-dark);
 }
 
-/* Menu mobile en mode sombre */
 @media (max-width: 768px) {
   body.dark-mode nav ul {
     background-color: var(--card-dark);
@@ -19,7 +14,6 @@ body.dark-mode header {
   }
 }
 
-/* Sections et conteneurs */
 body.dark-mode #hero,
 body.dark-mode #about,
 body.dark-mode #languages {
@@ -35,7 +29,6 @@ body.dark-mode #contact {
   background: var(--gradient-dark);
 }
 
-/* Typographie */
 body.dark-mode a,
 body.dark-mode p,
 body.dark-mode h1,
@@ -49,7 +42,6 @@ body.dark-mode h3 {
   color: var(--primary);
 }
 
-/* Formulaires */
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
@@ -58,38 +50,32 @@ body.dark-mode select {
   color: var(--text-dark);
 }
 
-/* Footer */
 body.dark-mode footer {
   color: var(--white);
   opacity: 0.9;
 }
 
-/* Amélioration du contraste pour l'accessibilité */
-
 body.dark-mode .text-light {
-  color: rgba(255, 255, 255, 0.9); /* Augmentation du contraste */
+  color: rgba(255, 255, 255, 0.9);
 }
 
 body.dark-mode p {
-  color: rgba(255, 255, 255, 0.9); /* Contenu texte principal plus lisible */
+  color: rgba(255, 255, 255, 0.9);
 }
 
 body.dark-mode .card-base p {
-  color: rgba(244, 244, 244, 0.95); /* Texte dans les cartes plus contrasté */
+  color: rgba(244, 244, 244, 0.95);
 }
 
-/* Taille minimale des polices sur mobile pour lisibilité */
 @media (max-width: 480px) {
   body.dark-mode {
-    font-size: 16px; /* Taille minimale garantie */
+    font-size: 16px;
   }
-  
-  body.dark-mode p, 
-  body.dark-mode .text-light, 
+  body.dark-mode p,
+  body.dark-mode .text-light,
   body.dark-mode label,
   body.dark-mode .form-group input,
   body.dark-mode .form-group textarea {
-    font-size: 1rem; /* Jamais moins de 16px */
+    font-size: 1rem;
   }
 }
-

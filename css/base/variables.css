@@ -134,4 +134,6 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
+  --neon-shadow: 0 0 24px 4px var(--primary);
+  --neon-shadow-dark: 0 0 32px 6px var(--primary);
 }

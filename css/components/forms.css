@@ -16,7 +16,6 @@
   background: transparent;
 }
 
-/* Champs de formulaire - état par défaut avec ombre plus visible en mode clair */
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -29,11 +28,10 @@
   color: var(--input-color);
   background-color: var(--input-bg);
   background-clip: padding-box;
-  box-shadow: var(--shadow-sm); /* Ajout d'une ombre légère par défaut */
+  box-shadow: var(--shadow-sm);
   appearance: none;
 }
 
-/* Styles pour les champs avec focus - renforcer l'effet */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
@@ -43,7 +41,6 @@
   transform: var(--hover-y-tiny);
 }
 
-/* Focus visible amélioré pour accessibilité */
 .form-group input:focus-visible,
 .form-group textarea:focus-visible {
   outline: 2px solid var(--primary);
@@ -51,21 +48,18 @@
   box-shadow: var(--input-focus-shadow);
 }
 
-/* Styles pour les champs qui ont du contenu */
 .form-group input:not(:placeholder-shown),
 .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
   background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
 }
 
-/* Indicateur required */
 .form-group label.required::after {
   content: "*";
   color: var(--accent);
   margin-left: 4px;
 }
 
-/* Animation de validation optimisée */
 .form-group input:valid:not(:placeholder-shown),
 .form-group textarea:valid:not(:placeholder-shown) {
   border-color: var(--status-success-color);
@@ -76,31 +70,27 @@
   padding-right: 40px;
 }
 
-/* Intégration avec l'animation des cartes */
 .contact-form:hover .form-group input:focus,
 .contact-form:hover .form-group textarea:focus {
   border-color: var(--primary);
   box-shadow: var(--input-focus-shadow);
 }
 
-/* Optimisation des styles du formulaire de contact */
 body .contact-form,
 body .contact-form * {
   background-color: transparent;
 }
 
-/* Mode sombre */
 body.dark-mode .form-group label {
   color: var(--text-dark);
 }
 
-/* Mode sombre - adaptation des styles */
 body.dark-mode .form-group input,
 body.dark-mode .form-group textarea {
   background-color: var(--form-bg-dark);
   border-color: var(--form-border-dark);
   color: var(--text-dark);
-  box-shadow: var(--shadow-dark); /* Ombre adaptée au mode sombre */
+  box-shadow: var(--shadow-dark);
 }
 
 body.dark-mode .form-group input:focus,
@@ -112,7 +102,6 @@ body.dark-mode .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
 }
 
-/* États du formulaire */
 .form-status {
   margin-top: 20px;
   padding: 12px 15px;
@@ -152,7 +141,6 @@ body.dark-mode .form-group textarea:not(:placeholder-shown) {
   transform: translateY(0);
 }
 
-/* Animation de chargement pour les formulaires */
 form.sending button[type="submit"] {
   position: relative;
   pointer-events: none;
@@ -172,6 +160,10 @@ form.sending button[type="submit"]::after {
 }
 
 @keyframes loading-spinner {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

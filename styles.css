@@ -1,34 +1,32 @@
-/* Organisation des imports CSS */
-
 /* Base */
-@import './css/base/variables.css';
-@import './css/base/reset.css';
+@import "./css/base/variables.css";
+@import "./css/base/reset.css";
 
 /* Utils */
-@import './css/utils/animations.css';
-@import './css/utils/responsive.css';
-@import './css/utils/modals.css';
+@import "./css/utils/animations.css";
+@import "./css/utils/responsive.css";
+@import "./css/utils/modals.css";
 
 /* Composants */
-@import './css/components/buttons.css';
-@import './css/components/cards.css';
-@import './css/components/forms.css';
-@import './css/components/gdpr.css';
-@import './css/components/dark-mode-toggle.css';
-@import './css/components/notifications.css'; /* Nouveau composant */
+@import "./css/components/buttons.css";
+@import "./css/components/cards.css";
+@import "./css/components/forms.css";
+@import "./css/components/gdpr.css";
+@import "./css/components/dark-mode-toggle.css";
+@import "./css/components/notifications.css";
 
 /* Layout */
-@import './css/layout/header.css';
-@import './css/layout/footer.css';
+@import "./css/layout/header.css";
+@import "./css/layout/footer.css";
 
 /* Sections */
-@import './css/sections/hero.css';
-@import './css/sections/about.css';
-@import './css/sections/skills.css';
-@import './css/sections/projects.css';
-@import './css/sections/contact.css';
-@import './css/sections/privacy.css';
-@import './css/sections/portfolio-details.css';
+@import "./css/sections/hero.css";
+@import "./css/sections/about.css";
+@import "./css/sections/skills.css";
+@import "./css/sections/projects.css";
+@import "./css/sections/contact.css";
+@import "./css/sections/privacy.css";
+@import "./css/sections/portfolio-details.css";
 
 /* Thème - toujours en dernier pour écraser les styles si nécessaire */
-@import './css/theme/darkmode.css';
+@import "./css/theme/darkmode.css";

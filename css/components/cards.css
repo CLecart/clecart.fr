@@ -1,6 +1,7 @@
-/**
- * Système de cartes unifié et optimisé
- */
+/* cards.css
+   Styles pour les différents types de cartes (projets, compétences, langues, etc.) du portfolio
+   Organisation : base commune, variantes, responsive et animations
+*/
 
 /* Base commune pour toutes les cartes */
 .card-base {
@@ -204,13 +205,13 @@ body.dark-mode .language-icon img {
   height: 100%;
 }
 
-/* Animation spécifique des cartes langue */
+/* Animation spécifique des cartes langue et compétences */
 .language-card:hover .language-icon img,
 .skill-card:hover .skill-icon {
   animation: subtle-pulse 2.5s infinite var(--ease-smooth);
 }
 
-/* HARMONISATION DES ANIMATIONS AU SURVOL */
+/* Harmonisation des animations au survol */
 .card-base:hover,
 .project-card:hover,
 .skill-card:hover,
@@ -332,7 +333,7 @@ body.dark-mode .outcomes-list li:hover {
   }
 }
 
-/* SOLUTION ANTI-YOYO OPTIMISÉE - Basée sur pointer-events */
+/* Solution anti-yoyo optimisée - zone tampon invisible */
 .card-base,
 .project-card,
 .skill-card,
@@ -363,7 +364,7 @@ body.dark-mode .outcomes-list li:hover {
   pointer-events: auto;
 }
 
-/* Optimisation critique: utiliser le groupe de propriétés 'will-change' uniquement où nécessaire */
+/* Optimisation : will-change uniquement où nécessaire */
 .card-base:hover,
 .project-card:hover,
 .skill-card:hover,
@@ -378,7 +379,7 @@ body.dark-mode .outcomes-list li:hover {
   z-index: 2;
 }
 
-/* Correction pour retirer la zone tampon des éléments features-list */
+/* Correction pour retirer la zone tampon des features-list */
 .features-list li::before {
   display: none;
 }

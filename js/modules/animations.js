@@ -1,7 +1,11 @@
+// animations.js
+// Module dédié à la gestion des animations d'apparition et d'effets visuels sur le site
+
 /**
- * Module pour gérer les animations du site
+ * Initialise les animations d'apparition sur les éléments observés
  */
 export function initAnimations() {
+  // Création d'observateurs pour déclencher les animations lors de l'entrée dans le viewport
   const createObserver = (callback, options = {}) => {
     return new IntersectionObserver(
       callback,
@@ -31,6 +35,7 @@ export function initAnimations() {
     });
   });
 
+  // Observer pour les titres de section
   const sectionHeaderObserver = createObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
@@ -43,6 +48,7 @@ export function initAnimations() {
     { rootMargin: "-10% 0px" }
   );
 
+  // Observer pour les sections entières (effet d'activation)
   const sectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -63,6 +69,7 @@ export function initAnimations() {
     }
   );
 
+  // Application des observateurs sur les éléments cibles
   const animatedElements = document.querySelectorAll(
     ".fade-in, .slide-left, .slide-right, .project.description.card-base"
   );
@@ -83,7 +90,9 @@ export function initAnimations() {
     handlePortfolioDetailsAnimations();
   }
 
+  // Gestion spécifique pour les pages de navigation projet et portfolio
   function handlePortfolioDetailsAnimations() {
+    // Animation des sections de détails du portfolio
     const portfolioSections = document.querySelectorAll(".portfolio-section");
 
     const portfolioObserver = createObserver(
@@ -114,16 +123,20 @@ export function initAnimations() {
         { threshold: 0.5 }
       ).observe(ctaSection);
     }
-  }
 
-  function animateChildElements(parent, selector, className) {
-    const elements = parent.querySelectorAll(selector);
-    elements.forEach((item, index) => {
-      setTimeout(() => item.classList.add(className), 100 * index);
-    });
+    function animateChildElements(parent, selector, className) {
+      // Animation séquentielle des enfants d'un parent
+      const elements = parent.querySelectorAll(selector);
+      elements.forEach((item, index) => {
+        setTimeout(() => item.classList.add(className), 100 * index);
+      });
+    }
   }
 }
 
+/**
+ * Effet machine à écrire sur l'élément #typewriter
+ */
 export function initTypewriterEffect() {
   const typewriterElement = document.getElementById("typewriter");
   if (!typewriterElement) return;

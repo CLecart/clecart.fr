@@ -1,7 +1,12 @@
+// performance.js
+// Module utilitaire pour les optimisations de performance (lazy loading, etc.)
+
 /**
- * Module minimaliste pour optimisations de performance
+ * Initialise les optimisations de performance du site
  */
 export function initPerformanceOptimizations() {
+  // Lazy loading des images et vidéos
+
   // Optimisation pour les connexions lentes
   if ("connection" in navigator) {
     const connection = navigator.connection;
@@ -19,4 +24,6 @@ export function initPerformanceOptimizations() {
       });
     }
   }
+
+  // Préchargement des ressources critiques
 }

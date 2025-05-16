@@ -1,3 +1,9 @@
+/* hero.css
+   Styles pour la section d'accueil (hero) du portfolio
+   Organisation : conteneur principal, titre, sous-titre, boutons, responsive
+*/
+
+/* Conteneur principal du hero */
 #hero {
   height: 100vh;
   display: flex;
@@ -23,6 +29,7 @@
   z-index: -1;
 }
 
+/* Titre principal et sous-titre */
 .hero-content {
   max-width: 800px;
   margin: 60px auto 0;
@@ -54,6 +61,7 @@
   color: var(--primary);
 }
 
+/* Boutons d'action du hero */
 .hero-buttons {
   margin-top: 30px;
   background-color: transparent;
@@ -65,6 +73,7 @@
   margin: 10px 8px;
 }
 
+/* Animation d'apparition du hero */
 body.dark-mode #hero::before {
   background-image: radial-gradient(
     var(--primary-light-20) 1px,
@@ -82,6 +91,7 @@ body.dark-mode .hero-content {
   color: var(--white);
 }
 
+/* Responsive : ajustements pour tablettes et mobiles */
 @media (max-width: 768px) {
   .hero-content {
     margin-top: 40px;

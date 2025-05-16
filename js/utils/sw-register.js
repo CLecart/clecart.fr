@@ -1,7 +1,11 @@
+// sw-register.js
+// Module utilitaire pour l'enregistrement du Service Worker (PWA)
+
 /**
- * Enregistrement du Service Worker pour fonctionnalités PWA
+ * Enregistre le Service Worker pour activer le mode PWA
  */
 export function registerServiceWorker() {
+  // Vérification de la compatibilité et enregistrement du SW
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
@@ -13,6 +17,7 @@ export function registerServiceWorker() {
             registration.scope
           );
 
+          // Gestion des événements d'installation et de mise à jour
           // Vérifier les mises à jour
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;

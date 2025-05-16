@@ -1,10 +1,14 @@
+// navigation.js
+// Module de gestion de la navigation principale et du menu responsive
+
 /**
- * Module pour la navigation et le menu mobile
+ * Initialise la navigation principale et le menu mobile
  */
 export function initNavigation() {
   // Constante pour la durée de transition du menu - facilite la maintenance
   const MENU_TRANSITION_DURATION = 300;
 
+  // Sélection des éléments du menu et du bouton toggle
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector("nav ul");
   const menuIcon = navToggle?.querySelector("i");
@@ -31,6 +35,7 @@ export function initNavigation() {
     }
   }
 
+  // Gestion de l'ouverture/fermeture du menu mobile
   navToggle.addEventListener("click", () => {
     navMenu.classList.toggle("active");
 
@@ -55,6 +60,7 @@ export function initNavigation() {
     }
   });
 
+  // Gestion de l'activation des liens de navigation
   document.querySelectorAll("nav ul li a").forEach((link) => {
     link.addEventListener("click", () => {
       if (window.innerWidth <= 768) {
@@ -70,6 +76,7 @@ export function initNavigation() {
     });
   });
 
+  // Fermeture du menu lors de la navigation sur mobile
   document.addEventListener("click", (e) => {
     if (
       window.innerWidth <= 768 &&

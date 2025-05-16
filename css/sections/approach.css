@@ -1,0 +1,26 @@
+/* approach.css
+   Styles pour la section "Approche" du portfolio
+   Organisation : grille, items approche, responsive
+*/
+
+/* Grille d'approche */
+.grid-approach {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Items approche */
+.item-approach {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  .grid-approach {
+    grid-template-columns: 1fr;
+  }
+}

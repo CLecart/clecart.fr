@@ -1,8 +1,11 @@
+// project-navigation.js
+// Module de gestion de la navigation entre les projets du portfolio
+
 /**
- * Module pour la navigation entre projets
- * @function initProjectNavigation - Configure la navigation entre projets
+ * Initialise la navigation entre les projets (boutons, affichage dynamique)
  */
 export function initProjectNavigation() {
+  // Sélection des boutons de navigation et des projets
   const navButtons = document.querySelectorAll(".nav-btn");
   const projects = document.querySelectorAll(".project");
 
@@ -61,7 +64,7 @@ export function initProjectNavigation() {
   // Exécuter l'initialisation
   showInitialProject();
 
-  // Événements sur les boutons de navigation
+  // Gestion du clic sur les boutons pour afficher le projet correspondant
   navButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();

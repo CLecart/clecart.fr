@@ -1,4 +1,11 @@
+// form-enhancements.js
+// Module d'améliorations UX pour les formulaires (focus, validation, etc.)
+
+/**
+ * Initialise les améliorations UX sur les formulaires
+ */
 export function initFormEnhancements() {
+  // Ajout d'effets de focus et de validation sur les champs de formulaire
   const formInputs = document.querySelectorAll(
     ".form-group input, .form-group textarea"
   );
@@ -21,6 +28,7 @@ export function initFormEnhancements() {
     });
   });
 
+  // Gestion de l'affichage des erreurs de validation
   function checkInputContent(input) {
     if (input.value && input.value.trim() !== "") {
       input.classList.add("has-content");

@@ -1,18 +1,32 @@
+// contact-form.js
+// Module de gestion du formulaire de contact et de l'envoi des messages
+
+/**
+ * Initialise la gestion du formulaire de contact
+ */
 export function initContactForm() {
+  // Sélection du formulaire et des éléments de statut
   const contactForm = document.getElementById("contactForm");
   const formStatus = document.getElementById("form-status");
 
   if (!contactForm) return;
 
+  // Gestion de la soumission du formulaire
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     renderContactAlternative(contactForm);
     return;
   }
 
+  // Affichage des messages de statut (succès, erreur, envoi)
   setupFormSubmissionHandling(contactForm, formStatus);
+  // Réinitialisation du formulaire après envoi
 }
 
+/**
+ * Affiche une alternative au formulaire de contact si la politique de confidentialité est refusée
+ * @param {HTMLElement} form - Élément du formulaire de contact
+ */
 function renderContactAlternative(form) {
   form.innerHTML = `
     <p class="gdpr-message">
@@ -22,6 +36,11 @@ function renderContactAlternative(form) {
     </p>`;
 }
 
+/**
+ * Configure la gestion de la soumission du formulaire
+ * @param {HTMLFormElement} form - Élément du formulaire de contact
+ * @param {HTMLElement} statusElement - Élément d'affichage du statut
+ */
 function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -87,6 +106,14 @@ function setupFormSubmissionHandling(form, statusElement) {
   });
 }
 
+/**
+ * Met à jour l'état du formulaire et affiche un message de statut
+ * @param {HTMLFormElement} form - Élément du formulaire de contact
+ * @param {HTMLButtonElement} button - Bouton de soumission du formulaire
+ * @param {HTMLElement} statusElement - Élément d'affichage du statut
+ * @param {string} state - État du formulaire (sending, success, error)
+ * @param {string} message - Message à afficher
+ */
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");
   if (button) button.disabled = true;

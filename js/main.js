@@ -1,6 +1,10 @@
 /**
- * Point d'entrée JavaScript - Organisation optimisée
+ * main.js
+ * Point d'entrée principal du JavaScript du site portfolio
+ * Gère l'initialisation des modules et des fonctionnalités globales
  */
+
+// Importation des modules nécessaires
 import { initDarkMode } from "./modules/darkmode.js";
 import { initAnimations, initTypewriterEffect } from "./modules/animations.js";
 import { initNavigation } from "./modules/navigation.js";
@@ -14,12 +18,14 @@ import { registerServiceWorker } from "./utils/sw-register.js";
 import { initPerformanceOptimizations } from "./utils/performance.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialisation des fonctionnalités de base au chargement du DOM
   initDarkMode();
   initNavigation();
   initPerformanceOptimizations();
 
   requestAnimationFrame(() => {
     setTimeout(() => {
+      // Initialisation différée des animations et modules non critiques
       initAnimations();
       initTypewriterEffect();
       initFormEnhancements();
@@ -27,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       initModals();
 
       if (document.querySelector(".project-navigation")) {
+        // Initialisation de la navigation entre projets si présente
         initProjectNavigation();
       }
 
@@ -35,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   window.addEventListener("load", () => {
+    // Initialisation des fonctionnalités dépendantes du chargement complet
     initVideoHandler();
     registerServiceWorker();
   });

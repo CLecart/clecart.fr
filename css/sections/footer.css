@@ -1,0 +1,35 @@
+/* footer.css
+   Styles pour le pied de page du portfolio
+   Organisation : conteneur principal, liens, responsive
+*/
+
+/* Conteneur principal du footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Liens et informations du footer */
+footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  footer {
+    font-size: 14px;
+  }
+
+  footer a {
+    display: block;
+    margin: 5px 0;
+  }
+}

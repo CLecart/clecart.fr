@@ -1,48 +1,75 @@
-// gdpr.js
-// Module utilitaire pour la gestion de la bannière et du consentement RGPD
+/**
+ * @fileoverview Module de gestion de la conformité RGPD
+ * @description Gère la bannière de consentement et les choix utilisateur selon le RGPD
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
 
 /**
- * Initialise la bannière RGPD et gère le consentement utilisateur
+ * Initialise la bannière RGPD et configure la gestion du consentement
+ * @function initGDPRBanner
+ * @description Configure l'affichage de la bannière et les handlers de consentement RGPD
+ * @returns {void}
+ * @example
+ * // Activer la gestion RGPD
+ * initGDPRBanner();
+ *
+ * @see {@link https://gdpr.eu/} Règlement général sur la protection des données
  */
 export function initGDPRBanner() {
-  // Sélection de la bannière et des boutons d'action
+  /**
+   * Éléments DOM de la bannière RGPD
+   * @type {HTMLElement|null}
+   */
   const gdprBanner = document.getElementById("gdpr-banner");
   const acceptBtn = document.getElementById("gdpr-accept");
   const declineBtn = document.getElementById("gdpr-decline");
 
-  // Vérifier si l'utilisateur a déjà fait un choix
+  /**
+   * Vérification du choix utilisateur précédent
+   * @type {string|null}
+   * @description Récupère le consentement stocké localement ('accepted' | 'declined' | null)
+   */
   const gdprChoice = localStorage.getItem("gdpr-choice");
 
-  // Affichage de la bannière si nécessaire
+  /**
+   * Affichage conditionnel de la bannière RGPD
+   * @description Affiche uniquement si aucun choix n'a été enregistré
+   */
   if (!gdprChoice) {
-    // Afficher la bannière si aucun choix n'a été fait
     if (gdprBanner) {
       gdprBanner.style.display = "block";
     }
   }
 
-  // Gestion du consentement (accept/refuse)
-  // Gérer l'acceptation
+  /**
+   * Gestionnaire d'acceptation du consentement RGPD
+   * @description Enregistre l'acceptation et masque la bannière
+   */
   if (acceptBtn) {
     acceptBtn.addEventListener("click", () => {
       localStorage.setItem("gdpr-choice", "accepted");
-      // Masquage de la bannière après choix
       if (gdprBanner) {
         gdprBanner.style.display = "none";
       }
     });
   }
 
-  // Gérer le refus
+  /**
+   * Gestionnaire de refus du consentement RGPD
+   * @description Enregistre le refus, masque la bannière et désactive le formulaire
+   */
   if (declineBtn) {
     declineBtn.addEventListener("click", () => {
       localStorage.setItem("gdpr-choice", "declined");
-      // Masquage de la bannière après choix
       if (gdprBanner) {
         gdprBanner.style.display = "none";
       }
 
-      // Désactiver le formulaire de contact si présent
+      /**
+       * Désactivation du formulaire de contact après refus
+       * @description Remplace le formulaire par un message d'information
+       */
       const contactForm = document.getElementById("contactForm");
       if (contactForm) {
         contactForm.innerHTML =

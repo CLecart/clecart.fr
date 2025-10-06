@@ -1,6 +1,37 @@
-// analytics.js - Privacy-friendly analytics
+/**
+ * @fileoverview Système d'analytics respectueux de la vie privée
+ * @description Analytics RGPD-compliant avec consentement utilisateur et données anonymisées
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
+
+/**
+ * Classe de gestion d'analytics privacy-first
+ * @class PrivacyAnalytics
+ * @description Collecte des métriques de performance et d'usage en respectant la vie privée
+ * @example
+ * // Initialiser l'analytics
+ * const analytics = new PrivacyAnalytics();
+ *
+ * // Tracker un événement
+ * analytics.trackEvent('Navigation', 'Click', 'Header Menu');
+ */
 class PrivacyAnalytics {
+  /**
+   * Constructeur de la classe PrivacyAnalytics
+   * @constructor
+   * @description Initialise les données de session et vérifie le consentement RGPD
+   */
   constructor() {
+    /**
+     * Données de session utilisateur
+     * @type {Object}
+     * @property {number} startTime - Timestamp de début de session
+     * @property {number} pageViews - Nombre de pages vues
+     * @property {number} interactions - Nombre d'interactions utilisateur
+     * @property {number} scrollDepth - Profondeur de scroll maximale (%)
+     * @property {number} timeOnPage - Temps passé sur la page (ms)
+     */
     this.sessionData = {
       startTime: Date.now(),
       pageViews: 0,
@@ -9,6 +40,11 @@ class PrivacyAnalytics {
       timeOnPage: 0,
     };
 
+    /**
+     * État du consentement RGPD
+     * @type {boolean}
+     * @description Vérifie si l'utilisateur a accepté le tracking
+     */
     this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
 
     if (this.consentGiven) {
@@ -16,28 +52,52 @@ class PrivacyAnalytics {
     }
   }
 
+  /**
+   * Initialise tous les trackers d'analytics
+   * @method init
+   * @description Configure les event listeners et démarre la collecte de données
+   * @returns {void}
+   */
   init() {
     this.trackPageView();
     this.trackScrollDepth();
     this.trackInteractions();
     this.trackPerformance();
 
-    // Send data before page unload
+    /**
+     * Envoi des données avant déchargement de la page
+     * @description Utilise beforeunload pour capturer les sessions courtes
+     */
     window.addEventListener("beforeunload", () => {
       this.sendAnalytics();
     });
 
-    // Send data every 30 seconds for long sessions
+    /**
+     * Envoi périodique des données pour les sessions longues
+     * @description Intervalle de 30 secondes pour éviter la perte de données
+     */
     setInterval(() => {
       this.sendAnalytics();
     }, 30000);
   }
 
+  /**
+   * Enregistre une vue de page
+   * @method trackPageView
+   * @description Incrémente le compteur de pages vues pour la session
+   * @returns {void}
+   */
   trackPageView() {
     this.sessionData.pageViews++;
     console.log("Page view tracked:", window.location.pathname);
   }
 
+  /**
+   * Suit la profondeur de scroll de l'utilisateur
+   * @method trackScrollDepth
+   * @description Calcule le pourcentage de scroll maximum atteint
+   * @returns {void}
+   */
   trackScrollDepth() {
     let maxScroll = 0;
 
@@ -95,9 +155,35 @@ class PrivacyAnalytics {
     }
   }
 
+  /**
+   * Enregistre un événement utilisateur personnalisé
+   * @method trackEvent
+   * @description Collecte des événements avec catégorisation pour analyse comportementale
+   * @param {string} category - Catégorie de l'événement (ex: 'Navigation', 'Interaction')
+   * @param {string} action - Action effectuée (ex: 'Click', 'Download')
+   * @param {string|null} [label=null] - Label optionnel pour plus de contexte
+   * @param {number|null} [value=null] - Valeur numérique associée à l'événement
+   * @returns {void}
+   * @example
+   * // Tracker un clic sur bouton
+   * trackEvent('UI', 'Button Click', 'Contact Form Submit');
+   *
+   * // Tracker un téléchargement avec valeur
+   * trackEvent('Download', 'PDF', 'CV_Download', 1);
+   */
   trackEvent(category, action, label = null, value = null) {
     if (!this.consentGiven) return;
 
+    /**
+     * Structure de données d'événement
+     * @type {Object}
+     * @property {string} category - Catégorie de l'événement
+     * @property {string} action - Action effectuée
+     * @property {string|null} label - Label descriptif
+     * @property {number|null} value - Valeur numérique
+     * @property {number} timestamp - Horodatage de l'événement
+     * @property {string} url - URL de la page où l'événement s'est produit
+     */
     const eventData = {
       category,
       action,
@@ -109,10 +195,13 @@ class PrivacyAnalytics {
 
     console.log("Event tracked:", eventData);
 
-    // Store in local storage for later sending
+    /**
+     * Stockage local des événements pour envoi différé
+     * @description Conserve les 50 derniers événements pour éviter la surcharge
+     */
     const events = JSON.parse(localStorage.getItem("analytics_events") || "[]");
     events.push(eventData);
-    localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50))); // Keep last 50 events
+    localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50)));
   }
 
   sendAnalytics() {
@@ -148,6 +237,19 @@ class PrivacyAnalytics {
     localStorage.removeItem("analytics_events");
   }
 
+  /**
+   * Met à jour le statut de consentement RGPD
+   * @method updateConsent
+   * @description Gère l'activation/désactivation du tracking selon le consentement
+   * @param {boolean} hasConsent - État du consentement utilisateur
+   * @returns {void}
+   * @example
+   * // Activer le tracking après consentement
+   * analytics.updateConsent(true);
+   *
+   * // Désactiver et nettoyer les données
+   * analytics.updateConsent(false);
+   */
   updateConsent(hasConsent) {
     this.consentGiven = hasConsent;
 
@@ -155,7 +257,10 @@ class PrivacyAnalytics {
       this.init();
       this.initialized = true;
     } else if (!hasConsent) {
-      // Clear analytics data
+      /**
+       * Nettoyage des données analytics lors du retrait de consentement
+       * @description Supprime toutes les données collectées et réinitialise la session
+       */
       localStorage.removeItem("analytics_events");
       this.sessionData = {
         startTime: Date.now(),
@@ -168,5 +273,8 @@ class PrivacyAnalytics {
   }
 }
 
-// Export for use in main application
+/**
+ * Export de la classe PrivacyAnalytics pour utilisation dans l'application principale
+ * @exports PrivacyAnalytics
+ */
 export default PrivacyAnalytics;

@@ -1,0 +1,47 @@
+{
+  "name": "clecart-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio professionnel de Christophe Lecart - Développeur Full Stack",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "docker:build": "docker build -t clecart-portfolio .",
+    "docker:run": "docker run -d -p 8080:80 --name clecart-portfolio-container clecart-portfolio",
+    "docker:stop": "docker stop clecart-portfolio-container && docker rm clecart-portfolio-container",
+    "docker:logs": "docker logs clecart-portfolio-container",
+    "validate:html": "echo 'HTML validation - use https://validator.w3.org/'",
+    "validate:css": "echo 'CSS validation - use https://jigsaw.w3.org/css-validator/'",
+    "lighthouse": "lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
+    "deploy": "./deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CLecart/clecart.fr.git"
+  },
+  "keywords": [
+    "portfolio",
+    "javascript",
+    "css3",
+    "html5",
+    "responsive",
+    "performance",
+    "accessibility",
+    "pwa"
+  ],
+  "author": "Christophe Lecart <contact@clecart.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CLecart/clecart.fr/issues"
+  },
+  "homepage": "https://clecart.fr",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

@@ -1,26 +1,83 @@
 {
-  "name": "Christophe Lecart Portfolio",
+  "name": "Christophe Lecart - Portfolio Professionnel",
   "short_name": "CL Portfolio",
+  "description": "Portfolio professionnel de Christophe Lecart - Développeur Full Stack spécialisé en JavaScript, Go et technologies web modernes",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#6c63ff",
+  "background_color": "#ffffff",
+  "lang": "fr",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/assets/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/assets/icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/",
-  "theme_color": "#6c63ff",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "orientation": "portrait",
-  "lang": "fr",
-  "dir": "ltr",
-  "description": "Portfolio professionnel de Christophe Lecart - Développeur Web et Mobile"
+  "categories": ["business", "developer", "portfolio", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Contactez-moi directement",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/assets/icons/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Projets",
+      "short_name": "Projets",
+      "description": "Découvrez mes projets",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "/assets/icons/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vue d'ensemble du portfolio"
+    },
+    {
+      "src": "/assets/images/screenshot-narrow.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Version mobile du portfolio"
+    }
+  ]
 }

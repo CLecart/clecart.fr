@@ -12,6 +12,13 @@
     "validate:html": "echo 'HTML validation - use https://validator.w3.org/'",
     "validate:css": "echo 'CSS validation - use https://jigsaw.w3.org/css-validator/'",
     "lighthouse": "lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
+    "docs:generate": "jsdoc -c jsdoc.json",
+    "docs:serve": "python3 -m http.server 8001 --directory docs/jsdoc",
+    "docs:clean": "rm -rf docs/jsdoc",
+    "jsdoc:convert": "./scripts/convert-to-jsdoc.sh",
+    "lint": "eslint js/**/*.js",
+    "lint:fix": "eslint js/**/*.js --fix",
+    "format": "prettier --write js/**/*.js",
     "deploy": "./deploy.sh"
   },
   "repository": {

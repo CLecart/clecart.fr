@@ -1,25 +1,44 @@
-// critical.js - Critical path JavaScript inlined in HTML head
-// This loads immediately to prevent FOUC and setup essential functionality
+/**
+ * @fileoverview Critical path JavaScript inlined in HTML head
+ * @description Loads immediately to prevent FOUC and setup essential functionality
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
 
 (function () {
   "use strict";
 
-  // Prevent FOUC - remove js-loading class as soon as possible
+  /**
+   * Prevents Flash of Unstyled Content by removing loading class
+   * @description Removes js-loading class as soon as possible to show content
+   */
   document.documentElement.classList.remove("js-loading");
 
-  // Critical theme detection - must be sync to prevent flash
+  /**
+   * Critical theme detection and application
+   * @description Must be synchronous to prevent theme flashing
+   * @returns {void}
+   */
   const isDarkMode = localStorage.getItem("dark-mode") !== "disabled";
   if (isDarkMode) {
     document.body.classList.add("dark-mode");
   }
 
-  // Critical performance - preload key resources
+  /**
+   * Preload critical resources for performance optimization
+   * @type {string[]} Array of resource URLs to preload
+   */
   const preloadResources = [
     "/assets/icons/android-chrome-192x192.png",
     "/css/components/dark-mode-toggle.css",
     "/js/modules/darkmode.js",
   ];
 
+  /**
+   * Creates and appends preload links for critical resources
+   * @param {string} resource - The resource URL to preload
+   * @returns {void}
+   */
   preloadResources.forEach((resource) => {
     const link = document.createElement("link");
     link.rel = "preload";
@@ -32,7 +51,11 @@
     document.head.appendChild(link);
   });
 
-  // Performance observer for Core Web Vitals
+  /**
+   * Performance observer for Core Web Vitals monitoring
+   * @description Tracks LCP, FID, and CLS metrics for performance optimization
+   * @see {@link https://web.dev/vitals/} Core Web Vitals documentation
+   */
   if ("PerformanceObserver" in window) {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {

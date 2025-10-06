@@ -1,8 +1,18 @@
-// form-enhancements.js
-// Module d'améliorations UX pour les formulaires (focus, validation, etc.)
+/**
+ * @fileoverview Module d'améliorations UX pour les formulaires
+ * @description Gère la validation en temps réel, les effets visuels et l'autocomplétion
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
 
 /**
- * Initialise les améliorations UX sur les formulaires
+ * Initialise les améliorations UX sur tous les formulaires de la page
+ * @function initFormEnhancements
+ * @description Configure la validation en temps réel avec coches vertes et détection d'autocomplétion
+ * @returns {void}
+ * @example
+ * // Activer les améliorations de formulaire
+ * initFormEnhancements();
  */
 export function initFormEnhancements() {
   // Ajout d'effets de focus et de validation sur les champs de formulaire

@@ -1,5 +1,19 @@
 /**
- * Module de gestion du mode sombre - optimisé et robuste
+ * @fileoverview Module de gestion du mode sombre optimisé et robuste
+ * @description Gère le basculement entre thème clair et sombre avec persistance
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
+
+/**
+ * Initialise le système de gestion du mode sombre
+ * @function initDarkMode
+ * @description Configure le toggle de thème avec détection système et persistance localStorage
+ * @returns {void}
+ * @throws {Error} Si le toggle du mode sombre n'est pas trouvé dans le DOM
+ * @example
+ * // Initialiser le mode sombre
+ * initDarkMode();
  */
 export function initDarkMode() {
   const body = document.body;

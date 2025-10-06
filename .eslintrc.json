@@ -42,7 +42,28 @@
     "no-implied-eval": "error",
     "no-new-func": "error",
     "prefer-template": "error",
-    "template-curly-spacing": ["error", "never"]
+    "template-curly-spacing": ["error", "never"],
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireReturn": false,
+        "requireReturnDescription": false,
+        "requireParamDescription": true,
+        "requireReturnType": false
+      }
+    ],
+    "require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+        }
+      }
+    ]
   },
   "globals": {
     "emailjs": "readonly",

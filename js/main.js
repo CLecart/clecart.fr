@@ -1,10 +1,31 @@
 /**
- * main.js
- * Point d'entrée principal du JavaScript du site portfolio
- * Gère l'initialisation des modules et des fonctionnalités globales
+ * @fileoverview Point d'entrée principal du JavaScript du site portfolio
+ * @description Gère l'initialisation des modules et des fonctionnalités globales
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
  */
 
-// Importation des modules nécessaires
+/**
+ * @namespace MainApp
+ * @description Namespace principal de l'application portfolio
+ */
+
+/**
+ * Import des modules requis pour l'initialisation de l'application
+ * @requires ./modules/darkmode.js
+ * @requires ./modules/navigation.js
+ * @requires ./modules/animations.js
+ * @requires ./modules/contact-form.js
+ * @requires ./modules/form-enhancements.js
+ * @requires ./modules/project-navigation.js
+ * @requires ./modules/videoHandler.js
+ * @requires ./utils/gdpr.js
+ * @requires ./utils/modal.js
+ * @requires ./utils/performance.js
+ * @requires ./utils/sw-register.js
+ * @requires ./utils/webvitals.js
+ * @requires ./utils/analytics.js
+ */
 import { initDarkMode } from "./modules/darkmode.js";
 import { initNavigation } from "./modules/navigation.js";
 import { initAnimations, initTypewriterEffect } from "./modules/animations.js";
@@ -19,19 +40,34 @@ import { registerServiceWorker } from "./utils/sw-register.js";
 import { initWebVitals } from "./utils/webvitals.js";
 import PrivacyAnalytics from "./utils/analytics.js";
 
+/**
+ * Gestionnaire d'événement pour l'initialisation de l'application
+ * @description Initialise tous les modules dans l'ordre optimal pour les performances
+ * @listens DOMContentLoaded
+ */
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialisation des fonctionnalités critiques au chargement du DOM
+  /**
+   * Phase 1: Initialisation des fonctionnalités critiques
+   * @description Modules essentiels chargés immédiatement au DOM ready
+   */
   initDarkMode();
   initNavigation();
   initPerformanceOptimizations();
-  initWebVitals(); // Core Web Vitals monitoring
+  initWebVitals();
 
-  // Initialize privacy-friendly analytics
+  /**
+   * Initialisation des analytics respectueux de la vie privée
+   * @type {PrivacyAnalytics}
+   * @global
+   */
   window.analytics = new PrivacyAnalytics();
 
+  /**
+   * Phase 2: Initialisation différée pour optimiser le temps de chargement
+   * @description Utilise requestAnimationFrame + timeout pour éviter le blocking
+   */
   requestAnimationFrame(() => {
     setTimeout(() => {
-      // Initialisation différée des animations et modules non critiques
       initAnimations();
       initTypewriterEffect();
       initFormEnhancements();
@@ -42,22 +78,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   });
 
+  /**
+   * Phase 3: Initialisation post-chargement complet
+   * @description Fonctionnalités dépendantes du chargement de toutes les ressources
+   * @listens load
+   */
   window.addEventListener("load", () => {
-    // Initialisation des fonctionnalités dépendantes du chargement complet
     initVideoHandler();
     registerServiceWorker();
 
-    // Performance monitoring after load
+    /**
+     * Monitoring des performances après chargement complet
+     * @description Délai de 1s pour permettre la stabilisation des métriques
+     */
     setTimeout(() => {
       reportLoadPerformance();
     }, 1000);
   });
 });
 
-// Report load performance metrics
+/**
+ * Collecte et rapport des métriques de performance de chargement
+ * @function reportLoadPerformance
+ * @description Utilise l'API Navigation Timing pour mesurer les performances
+ * @returns {void}
+ * @see {@link https://developer.mozilla.org/docs/Web/API/Navigation_timing_API} Navigation Timing API
+ */
 function reportLoadPerformance() {
   const navigation = performance.getEntriesByType("navigation")[0];
   if (navigation) {
+    /**
+     * Métriques de performance calculées
+     * @type {Object}
+     * @property {number} dns - Temps de résolution DNS en millisecondes
+     * @property {number} connection - Temps d'établissement de connexion en ms
+     * @property {number} ttfb - Time To First Byte en millisecondes
+     * @property {number} download - Temps de téléchargement en millisecondes
+     * @property {number} domReady - Temps jusqu'au DOM ready en millisecondes
+     * @property {number} windowLoad - Temps total de chargement en millisecondes
+     */
     const metrics = {
       dns: Math.round(
         navigation.domainLookupEnd - navigation.domainLookupStart
@@ -75,6 +134,10 @@ function reportLoadPerformance() {
 
     console.log("Load Performance:", metrics);
 
+    /**
+     * Envoi des métriques vers le système d'analytics si disponible
+     * @description Utilise l'analytics privacy-friendly pour le tracking
+     */
     if (window.analytics) {
       window.analytics.trackEvent(
         "Performance",

@@ -165,37 +165,73 @@
             <h2><i class="fas fa-folder-open"></i> Project Structure</h2>
             <div class="code-block">
               <pre><code>
-/home/student/dev/clecart.fr/
-├── css/
-│   ├── base/         # Reset, variables
-│   ├── components/   # Buttons, cards, forms, gdpr, dark-mode-toggle
-│   ├── layout/       # Header, footer
-│   ├── sections/     # Page-specific styles (hero, about, projects, etc.)
-│   ├── theme/        # Darkmode styles
-│   └── utils/        # Animations, responsive, modals
-├── js/
-│   ├── modules/      # Feature modules
+clecart.fr/
+├── assets/                      # Ressources optimisées
+│   ├── documents/
+│   │   └── CV_Christophe_Lecart.pdf
+│   ├── icons/                   # PWA + favicons
+│   │   ├── android-chrome-*.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── favicon*.png|ico
+│   │   └── rust-icon.svg
+│   ├── images/                  # Images du site
+│   │   ├── profile.jpg
+│   │   └── forum.png
+│   ├── manifest/                # Configuration PWA
+│   │   ├── site.webmanifest
+│   │   └── browserconfig.xml
+│   └── videos/                  # Démos projets
+│       ├── BombermanDX.mp4
+│       └── Groupie-Tracker.mp4
+├── css/                         # Architecture SMACSS
+│   ├── base/                    # Fondations
+│   ├── components/              # Composants réutilisables
+│   ├── layout/                  # Structure générale
+│   ├── sections/                # Sections spécifiques
+│   ├── theme/                   # Gestion thèmes
+│   ├── utils/                   # Utilitaires
+│   └── critical.css             # CSS critique
+├── js/                          # JavaScript modulaire
+│   ├── modules/                 # Fonctionnalités métier
 │   │   ├── animations.js
 │   │   ├── contact-form.js
 │   │   ├── darkmode.js
 │   │   ├── form-enhancements.js
 │   │   ├── navigation.js
-│   │   └── project-navigation.js
-│   ├── utils/        # Utility modules
+│   │   ├── project-navigation.js
+│   │   └── videoHandler.js
+│   ├── utils/                   # Utilitaires techniques
+│   │   ├── analytics.js
 │   │   ├── gdpr.js
-│   │   └── modal.js
-│   └── main.js       # Entry point
-├── assets/images/         # Media assets
-├── assets/documents/            # Downloadable resources (CV)
-├── index.html
-├── about-portfolio.html
-├── descriptions-projects.html
-├── privacy-policy.html
-├── styles.css
-├── .htaccess
-├── nginx.conf
-├── Dockerfile
-└── deploy.sh</code></pre>
+│   │   ├── modal.js
+│   │   ├── performance.js
+│   │   ├── service-worker.js
+│   │   ├── sw-advanced.js
+│   │   ├── sw-register.js
+│   │   └── webvitals.js
+│   ├── main.js                  # Point d'entrée
+│   └── critical.js              # JS critique
+├── .vscode/                     # Configuration IDE
+│   ├── extensions.json
+│   └── settings.json
+├── .eslintrc.json               # Qualité code
+├── .prettierrc.json             # Formatage
+├── .gitignore                   # Exclusions Git
+├── docker-compose.yml           # Orchestration
+├── Dockerfile                   # Containerisation
+├── package.json                 # Scripts npm
+├── deploy.sh                    # Déploiement
+├── nginx.conf                   # Configuration serveur
+├── SECURITY.md                  # Documentation sécurité
+├── robots.txt                   # SEO directives
+├── sitemap.xml                  # Plan du site
+├── CNAME                        # Domaine personnalisé
+├── styles.css                   # Styles principaux
+├── index.html                   # Page principale
+├── about-portfolio.html         # Documentation technique
+├── descriptions-projects.html   # Détails projets
+├── privacy-policy.html          # Politique RGPD
+└── README.md                    # Documentation complète</code></pre>
             </div>
           </div>
 

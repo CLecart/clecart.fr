@@ -110,43 +110,87 @@ clecart.fr/
 │   └── package.json                 # Scripts npm et métadonnées
 │
 ├── 🎨 Frontend Architecture
-│   ├── css/                         # Architecture SMACSS
-│   │   ├── base/                    # Reset, variables, typographie
+│   ├── css/                         # Architecture SMACSS modulaire
+│   │   ├── base/                    # Fondations CSS
+│   │   │   ├── reset.css           # Normalisation navigateurs
+│   │   │   └── variables.css       # Variables CSS natives
 │   │   ├── components/              # Composants réutilisables
-│   │   ├── layout/                  # Structure page (header, footer)
-│   │   ├── sections/                # Sections spécifiques
+│   │   │   ├── buttons.css         # Styles boutons interactifs
+│   │   │   ├── cards.css           # Système de cartes
+│   │   │   ├── dark-mode-toggle.css # Toggle thème sombre/clair
+│   │   │   ├── forms.css           # Formulaires avec validation
+│   │   │   ├── gdpr.css            # Bannière consentement RGPD
+│   │   │   └── notifications.css   # Système de notifications
+│   │   ├── layout/                  # Structure générale pages
+│   │   │   ├── footer.css          # Pied de page responsive
+│   │   │   └── header.css          # Navigation principale
+│   │   ├── sections/                # Sections spécifiques pages
+│   │   │   ├── about.css           # Section à propos
+│   │   │   ├── approach.css        # Méthodologie développement
+│   │   │   ├── contact.css         # Formulaire contact
+│   │   │   ├── cta.css             # Call-to-action buttons
+│   │   │   ├── footer.css          # Styles footer global
+│   │   │   ├── gdpr.css            # Section RGPD
+│   │   │   ├── hero.css            # Section hero/bannière
+│   │   │   ├── portfolio-details.css # Détails portfolio
+│   │   │   ├── privacy.css         # Politique confidentialité
+│   │   │   ├── projects.css        # Galerie projets
+│   │   │   └── skills.css          # Compétences techniques
 │   │   ├── theme/                   # Gestion thèmes
-│   │   └── utils/                   # Utilitaires (animations, responsive)
+│   │   │   └── darkmode.css        # Thème sombre complet
+│   │   ├── utils/                   # Utilitaires transversaux
+│   │   │   ├── animations.css      # Animations CSS optimisées
+│   │   │   ├── image-fallbacks.css # Fallbacks images cassées
+│   │   │   ├── modals.css          # Système modal accessible
+│   │   │   └── responsive.css      # Media queries responsive
+│   │   └── critical.css             # CSS critique inline
 │   │
-│   ├── js/                          # Modules JavaScript ES6+
+│   ├── js/                          # Architecture JavaScript modulaire
 │   │   ├── modules/                 # Fonctionnalités métier
-│   │   │   ├── animations.js        # Intersection Observer, GSAP
+│   │   │   ├── animations.js        # Intersection Observer, transitions
 │   │   │   ├── contact-form.js      # Validation, EmailJS integration
-│   │   │   ├── darkmode.js          # Thème adaptatif système
+│   │   │   ├── darkmode.js          # Gestion thème adaptatif système
 │   │   │   ├── form-enhancements.js # UX formulaires avancée
 │   │   │   ├── navigation.js        # Menu responsive, smooth scroll
 │   │   │   ├── project-navigation.js # Navigation projets
-│   │   │   └── videoHandler.js      # Lazy loading vidéos
+│   │   │   └── videoHandler.js      # Lazy loading vidéos optimisé
 │   │   │
 │   │   ├── utils/                   # Utilitaires techniques
 │   │   │   ├── analytics.js         # Privacy-first tracking
-│   │   │   ├── gdpr.js             # Conformité RGPD
-│   │   │   ├── lighthouse.js        # Audit performance automatique
+│   │   │   ├── gdpr.js             # Conformité RGPD complète
 │   │   │   ├── modal.js            # Système modal accessible
 │   │   │   ├── performance.js       # Optimisations runtime
-│   │   │   ├── sw-advanced.js       # Service Worker stratégies cache
-│   │   │   ├── sw-register.js       # Enregistrement SW
+│   │   │   ├── service-worker.js    # Service Worker de base
+│   │   │   ├── sw-advanced.js       # SW stratégies cache avancées
+│   │   │   ├── sw-register.js       # Enregistrement Service Worker
 │   │   │   └── webvitals.js        # Core Web Vitals monitoring
 │   │   │
 │   │   ├── main.js                  # Point d'entrée application
 │   │   └── critical.js              # JavaScript critique inline
+│   │
+│   └── styles.css                   # Styles principaux (legacy)
 │
 ├── 📦 Assets Optimisés
-│   ├── documents/                   # PDF téléchargeables
-│   ├── icons/                       # Favicons PWA, icônes vectorielles
-│   ├── images/                      # Images optimisées WebP/AVIF
-│   ├── manifest/                    # PWA manifest et configuration
-│   └── videos/                      # Vidéos compressées avec fallbacks
+│   ├── documents/                   # Documents téléchargeables
+│   │   └── CV_Christophe_Lecart.pdf # CV professionnel
+│   ├── icons/                       # Système d'icônes complet
+│   │   ├── android-chrome-192x192.png # PWA icon mobile
+│   │   ├── android-chrome-512x512.png # PWA icon haute résolution
+│   │   ├── apple-touch-icon.png     # Icon iOS/Safari
+│   │   ├── favicon-16x16.png        # Favicon 16px
+│   │   ├── favicon-32x32.png        # Favicon 32px
+│   │   ├── favicon.ico              # Favicon classique
+│   │   └── rust-icon.svg            # Icône Rust vectorielle
+│   ├── images/                      # Images optimisées
+│   │   ├── favicon.ico              # Favicon alternative
+│   │   ├── forum.png                # Screenshot projet Forum
+│   │   └── profile.jpg              # Photo profil professionnelle
+│   ├── manifest/                    # Configuration PWA
+│   │   ├── browserconfig.xml        # Configuration IE/Edge
+│   │   └── site.webmanifest         # Manifest PWA complet
+│   └── videos/                      # Démos projets
+│       ├── BombermanDX.mp4          # Démo jeu Bomberman
+│       └── Groupie-Tracker.mp4      # Démo app Groupie Tracker
 │
 ├── 📄 Pages et Contenu
 │   ├── index.html                   # Page principale optimisée SEO

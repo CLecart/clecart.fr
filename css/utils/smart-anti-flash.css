@@ -1,0 +1,41 @@
+/* Smart Anti-Flash CSS - Minimal and non-intrusive */
+
+/* Smooth theme transitions without breaking existing styles */
+.dark-mode {
+  transition: background-color 0.2s ease-out;
+}
+
+/* Page leaving state - subtle indication */
+.page-leaving {
+  transition: opacity 0.1s ease-out;
+}
+
+.page-leaving body {
+  opacity: 0.95;
+}
+
+/* Ensure smooth transitions for critical elements only */
+html,
+body {
+  transition: background-color 0.2s ease-out;
+}
+
+/* Improved loading state - respects existing design */
+html.js-loading {
+  visibility: hidden;
+}
+
+html.js-loading.theme-ready {
+  visibility: visible;
+}
+
+/* Better fallback for users with reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .dark-mode,
+  html,
+  body,
+  .page-leaving,
+  .page-leaving body {
+    transition: none;
+  }
+}

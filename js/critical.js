@@ -9,20 +9,10 @@
   "use strict";
 
   /**
-   * Prevents Flash of Unstyled Content by removing loading class
-   * @description Removes js-loading class as soon as possible to show content
+   * Remove loading class - theme is already handled in HTML head
+   * @description Safe to remove loading class as theme is set before CSS loads
    */
   document.documentElement.classList.remove("js-loading");
-
-  /**
-   * Critical theme detection and application
-   * @description Must be synchronous to prevent theme flashing
-   * @returns {void}
-   */
-  const isDarkMode = localStorage.getItem("dark-mode") !== "disabled";
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-  }
 
   /**
    * Preload critical resources for performance optimization

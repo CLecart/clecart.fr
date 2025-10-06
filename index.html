@@ -2,6 +2,33 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- CRITICAL: Theme detection script - Must be first to prevent flash -->
+    <script>
+      (function () {
+        // Get theme preference immediately - before any CSS loads
+        const stored = localStorage.getItem("dark-mode");
+        const systemDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        // Determine if dark mode should be active
+        const isDark =
+          stored === "enabled" || (stored !== "disabled" && systemDark);
+
+        // Apply theme class immediately to html element
+        if (isDark) {
+          document.documentElement.classList.add("dark-mode");
+        }
+
+        // Set CSS custom property for immediate background color
+        document.documentElement.style.setProperty(
+          "--initial-bg",
+          isDark ? "#121212" : "#ffffff"
+        );
+      })();
+    </script>
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
@@ -144,6 +171,40 @@
       fetchpriority="high"
     />
 
+    <!-- CRITICAL CSS: Prevent flash with immediate background colors -->
+    <style>
+      /* Immediate background colors using CSS custom property set by script */
+      html {
+        background-color: var(--initial-bg, #ffffff);
+        color-scheme: light dark;
+      }
+
+      body {
+        background-color: var(--initial-bg, #ffffff);
+        margin: 0;
+        transition: background-color 0.2s ease;
+      }
+
+      /* Dark mode backgrounds */
+      .dark-mode {
+        color-scheme: dark;
+      }
+
+      .dark-mode body {
+        background-color: #121212;
+      }
+
+      /* Prevent flash during loading */
+      .js-loading {
+        visibility: hidden;
+      }
+
+      /* Smooth page transitions without breaking design */
+      .page-transition {
+        transition: opacity 0.15s ease-out;
+      }
+    </style>
+
     <link rel="stylesheet" href="css/critical.css" />
     <link rel="stylesheet" href="styles.css?v=2025108" />
 
@@ -170,46 +231,7 @@
       });
     </script>
 
-    <!-- Critical inline JavaScript for performance -->
-    <script>
-      // Prevent FOUC - remove js-loading class immediately
-      document.documentElement.classList.remove("js-loading");
-
-      // Enhanced theme detection with error handling
-      try {
-        const darkModePreference = localStorage.getItem("dark-mode");
-        const systemPrefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-
-        // Apply dark mode if explicitly enabled or if no preference set and system prefers dark
-        const shouldUseDarkMode =
-          darkModePreference === "enabled" ||
-          (darkModePreference === null && systemPrefersDark) ||
-          darkModePreference !== "disabled";
-
-        if (shouldUseDarkMode) {
-          document.body.classList.add("dark-mode");
-        }
-      } catch (error) {
-        console.warn("Theme detection error:", error);
-        // Fallback to light mode on error
-      }
-
-      // Image error handling for all external images
-      document.addEventListener("DOMContentLoaded", function () {
-        const images = document.querySelectorAll("img[src^='http']");
-        images.forEach((img) => {
-          if (!img.hasAttribute("onerror")) {
-            img.onerror = function () {
-              console.warn("Failed to load image:", this.src);
-              this.style.opacity = "0.5";
-              this.alt = "Image unavailable";
-            };
-          }
-        });
-      });
-    </script>
+    <!-- Image error handling moved to main.js for better organization -->
 
     <!-- JavaScript -->
     <script type="module" src="js/main.js" defer></script>

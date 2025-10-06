@@ -3,6 +3,7 @@
 @import "./css/base/reset.css";
 
 /* Utils */
+@import "./css/utils/smart-anti-flash.css";
 @import "./css/utils/animations.css";
 @import "./css/utils/responsive.css";
 @import "./css/utils/modals.css";

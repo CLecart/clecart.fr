@@ -166,4 +166,65 @@ export function initNavigation() {
   }
 
   window.addEventListener("resize", setMenuWidth);
+
+  /**
+   * Gestion propre des transitions de page selon les meilleures pratiques
+   * @description Utilise la View Transitions API quand disponible, sinon fallback élégant
+   */
+  function initPageTransitions() {
+    // Détection des liens internes
+    document.addEventListener("click", function (e) {
+      const link = e.target.closest("a[href]");
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+
+      // Vérifie si c'est un lien interne (même domaine)
+      const isInternal =
+        link.hostname === window.location.hostname ||
+        href.startsWith("/") ||
+        href.startsWith("./") ||
+        href.startsWith("../");
+
+      const isAnchor = href.startsWith("#");
+
+      if (isInternal && !isAnchor) {
+        // Utilise la View Transitions API si disponible (Chrome 111+)
+        if ("startViewTransition" in document) {
+          e.preventDefault();
+          document.startViewTransition(() => {
+            window.location.href = href;
+          });
+        } else {
+          // Fallback élégant : transition CSS simple
+          document.documentElement.classList.add("page-transition");
+
+          // Petit délai pour permettre la transition CSS
+          setTimeout(() => {
+            // La navigation se fait naturellement sans preventDefault
+          }, 50);
+        }
+      }
+    });
+
+    // Nettoyage après navigation (pour le fallback)
+    window.addEventListener("pageshow", function (event) {
+      document.documentElement.classList.remove("page-transition");
+
+      if (event.persisted) {
+        // Page restaurée depuis le cache - réapplication du thème si nécessaire
+        const stored = localStorage.getItem("dark-mode");
+        const systemDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const isDark =
+          stored === "enabled" || (stored !== "disabled" && systemDark);
+
+        document.documentElement.classList.toggle("dark-mode", isDark);
+      }
+    });
+  }
+
+  // Initialisation des transitions de page
+  initPageTransitions();
 }

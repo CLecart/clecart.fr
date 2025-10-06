@@ -1,0 +1,77 @@
+.dark-mode-toggle {
+  background: var(--white-opacity-10);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  will-change: background-color, color, transform;
+  transform: translateZ(0);
+}
+
+@media (hover: hover) {
+  .dark-mode-toggle:hover {
+    background: var(--white-opacity-20);
+    color: var(--primary-dark);
+    transform: translateZ(0) translateY(-1px);
+  }
+}
+
+@media (hover: none) {
+  .dark-mode-toggle:hover {
+    background: var(--white-opacity-10);
+  }
+}
+
+.dark-mode-toggle i,
+.dark-mode-toggle span {
+  font-size: 1rem;
+  display: block;
+  color: var(--white);
+}
+
+.dark-mode-toggle .moon-icon,
+.dark-mode-toggle .sun-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.dark-mode .dark-mode-toggle {
+  background: var(--white-opacity-10);
+  color: var(--white);
+}
+
+.dark-mode .dark-mode-toggle:hover {
+  background: var(--white-opacity-20);
+  color: var(--primary-dark);
+}
+
+.dark-mode .dark-mode-toggle i,
+.dark-mode .dark-mode-toggle span {
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dark-mode-toggle {
+    padding: 6px;
+  }
+  .dark-mode-toggle i,
+  .dark-mode-toggle span {
+    font-size: 0.9rem;
+  }
+}

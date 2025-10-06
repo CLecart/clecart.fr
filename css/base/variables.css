@@ -1,0 +1,149 @@
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #5a52d9;
+  --primary-light: rgba(108, 99, 255, 0.1);
+  --primary-light-15: rgba(108, 99, 255, 0.15);
+  --primary-light-20: rgba(108, 99, 255, 0.2);
+  --primary-light-30: rgba(108, 99, 255, 0.3);
+  --primary-opacity: rgba(108, 99, 255, 0.8);
+  --secondary: #4ecdc4;
+  --secondary-dark: #3db8b0;
+  --secondary-light: rgba(78, 205, 196, 0.1);
+  --secondary-opacity: rgba(78, 205, 196, 0.8);
+  --accent: #ff6b6b;
+  --accent-dark: #e95f5f;
+  --accent-light: rgba(255, 107, 107, 0.2);
+  --accent-opacity: rgba(255, 107, 107, 0.3);
+  --dark: #1a1a2e;
+  --darker: #14141e;
+  --card-dark: #2a2a42;
+  --form-bg-dark: #2a2a3a;
+  --form-border-dark: #3e3e50;
+  --white: #ffffff;
+  --light: #f8f9fa;
+  --light-gray: #f0f0f0;
+  --black: #000000;
+  --text-color: #2d334a;
+  --text-light: #6c757d;
+  --text-dark: #f4f4f4;
+  --text-gray-dark: #d1d1d1;
+  --white-opacity-10: rgba(255, 255, 255, 0.1);
+  --white-opacity-20: rgba(255, 255, 255, 0.2);
+  --white-opacity-80: rgba(255, 255, 255, 0.8);
+  --black-opacity-10: rgba(0, 0, 0, 0.1);
+  --black-opacity-30: rgba(0, 0, 0, 0.3);
+  --black-opacity-80: rgba(0, 0, 0, 0.8);
+  --black-opacity-90: rgba(0, 0, 0, 0.9);
+  --border-light: rgba(0, 0, 0, 0.05);
+  --border-dark: rgba(255, 255, 255, 0.05);
+  --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
+  --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  --gradient-1-light: linear-gradient(
+    135deg,
+    rgba(108, 99, 255, 0.03),
+    rgba(78, 205, 196, 0.03)
+  );
+  --gradient-dark: linear-gradient(135deg, var(--darker), var(--dark));
+  --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
+  --shadow-dark: 0 8px 25px var(--black-opacity-30);
+  --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
+  --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
+  --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  --card-box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  --card-box-shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.3);
+  --card-box-shadow-hover:
+    0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(108, 99, 255, 0.2);
+  --card-box-shadow-hover-dark:
+    0 15px 35px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(108, 99, 255, 0.25);
+  --btn-padding: 12px 28px;
+  --btn-radius: 50px;
+  --btn-font-weight: 500;
+  --btn-transition:
+    transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  --btn-shadow: 0 4px 15px var(--primary-light);
+  --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
+  --btn-secondary-shadow: 0 4px 15px var(--accent-light);
+  --btn-secondary-shadow-hover: 0 8px 20px var(--accent-opacity);
+  --input-padding: 12px 15px;
+  --input-border: 1px solid var(--light-gray);
+  --input-radius: 8px;
+  --input-focus-shadow: 0 5px 15px var(--primary-light);
+  --input-bg: var(--white);
+  --input-color: var(--text-color);
+  --input-focus-bg: rgba(240, 240, 240, 0.2);
+  --input-focus-bg-dark: rgba(60, 60, 80, 0.3);
+  --card-padding: 25px;
+  --card-radius: 15px;
+  --card-border: 1px solid var(--border-light);
+  --card-bg: var(--white);
+  --card-color: var(--text-color);
+  --card-margin: 0;
+  --card-border-radius: 15px;
+  --card-bg-dark: var(--card-dark);
+  --card-color-dark: var(--text-dark);
+  --card-border-dark: 1px solid var(--border-dark);
+  --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.3, 1.05, 0.5, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+  --transition: all var(--duration-normal) var(--ease-smooth);
+  --transition-slow: all var(--duration-slow) var(--ease-smooth);
+  --hover-scale: scale(1.05);
+  --hover-y-offset: translateY(-10px);
+  --hover-y-small: translateY(-5px);
+  --hover-y-tiny: translateY(-2px);
+  --card-hover-transform: translateY(-10px);
+  --card-hover-scale: scale(1.05);
+  --card-icon-hover-transform: scale(1.1);
+  --card-icon-color: var(--primary);
+  --card-icon-hover-color: var(--accent);
+  --card-transition:
+    transform var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
+  --card-icon-transition:
+    transform var(--duration-normal) var(--ease-smooth),
+    color var(--duration-normal) var(--ease-smooth);
+  --header-height: 80px;
+  --header-height-scrolled: 60px;
+  --header-height-mobile: 60px;
+  --toggle-height: 36px;
+  --toggle-width: 36px;
+  --toggle-radius: 4px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 25px;
+  --spacing-xl: 40px;
+  --spacing-mobile: 10px;
+  --icon-size-small: 0.9rem;
+  --icon-size-medium: 1.5rem;
+  --icon-size-large: 2.5rem;
+  --status-success-bg: rgba(76, 175, 80, 0.15);
+  --status-success-color: #2e7d32;
+  --status-success-border: rgba(76, 175, 80, 0.3);
+  --status-error-bg: rgba(244, 67, 54, 0.15);
+  --status-error-color: #d32f2f;
+  --status-error-border: rgba(244, 67, 54, 0.3);
+  --status-info-bg: rgba(3, 169, 244, 0.15);
+  --status-info-color: #0288d1;
+  --status-info-border: rgba(3, 169, 244, 0.3);
+  --breakpoint-xs: 380px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --neon-shadow: 0 0 24px 4px var(--primary);
+  --neon-shadow-dark: 0 0 32px 6px var(--primary);
+}
+
+/* Dark mode variables override */
+body.dark-mode {
+  --input-bg: var(--form-bg-dark);
+  --input-focus-bg: var(--input-focus-bg-dark);
+  --input-color: var(--text-dark);
+  --text-color: var(--text-dark);
+}

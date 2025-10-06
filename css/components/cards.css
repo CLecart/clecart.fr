@@ -1,0 +1,392 @@
+/* cards.css
+   Styles pour les différents types de cartes (projets, compétences, langues, etc.) du portfolio
+   Organisation : base commune, variantes, responsive et animations
+*/
+
+/* Base commune pour toutes les cartes */
+.card-base {
+  background-color: var(--card-bg);
+  color: var(--card-color);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var (--ease-smooth);
+  padding: var(--card-padding);
+  margin: var(--card-margin);
+  overflow: hidden;
+}
+
+/* Mode sombre pour les cartes */
+body.dark-mode .card-base {
+  background-color: var(--card-bg-dark);
+  color: var(--card-color-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
+body.dark-mode .card-base:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+  border-color: var(--primary);
+}
+
+/* Cartes de compétence */
+.skill-card {
+  height: 310px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-icon {
+  font-size: var(--icon-size-large);
+  margin-bottom: 15px;
+  color: var(--card-icon-color);
+}
+
+.skill-card:hover .skill-icon {
+  transform: var(--card-icon-hover-transform);
+  color: var(--card-icon-hover-color);
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.skill-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 60px;
+}
+
+/* Cartes de projet */
+.project-card {
+  max-width: 360px;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-thumb {
+  position: relative;
+  height: 0;
+  padding-top: 56.25%; /* Ratio 16:9 */
+  width: 100%;
+  background-color: var(--black);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.project-thumb img,
+.project-thumb video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--card-transition);
+}
+
+.project-card:hover .project-thumb img,
+.project-card:hover .project-thumb video {
+  transform: var(--card-hover-scale);
+}
+
+.project-content {
+  flex: 1;
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--card-color);
+}
+
+.project-content p {
+  height: auto;
+  margin-bottom: 20px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.project-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Mode sombre pour les cartes projet */
+body.dark-mode .project-content h3 {
+  color: var(--card-color-dark);
+}
+
+body.dark-mode .project-content p {
+  color: var(--text-gray-dark);
+}
+
+/* Cartes spécifiques: descriptions de projets */
+.project.description.card-base {
+  position: relative;
+  z-index: 0;
+}
+
+.project.description.card-base:hover {
+  z-index: 1;
+}
+
+/* Cartes de langue */
+.language-card {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 90px;
+  padding: 15px 10px;
+  margin: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-card:hover {
+  transform: var(--hover-y-small);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+.language-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.language-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  transition: var(--transition);
+}
+
+.language-card span {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* Mode sombre pour les cartes de langue */
+body.dark-mode .language-card span {
+  color: var(--card-color-dark);
+}
+
+body.dark-mode .language-icon img {
+  filter: brightness(1.1);
+}
+
+/* Cartes contact */
+.contact-info,
+.contact-form {
+  height: 100%;
+}
+
+/* Animation spécifique des cartes langue et compétences */
+.language-card:hover .language-icon img,
+.skill-card:hover .skill-icon {
+  animation: subtle-pulse 2.5s infinite var(--ease-smooth);
+}
+
+/* Harmonisation des animations au survol */
+.card-base:hover,
+.project-card:hover,
+.skill-card:hover,
+.language-card:hover {
+  transform: var(--card-hover-transform);
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+  z-index: 1;
+}
+
+/* Exception pour les éléments non-carte (comme features-list) */
+.features-list li:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: auto;
+}
+
+/* Animation des icônes au survol */
+.skill-card:hover .skill-icon,
+.language-card:hover .language-icon img,
+.tech-item:hover h3,
+.approach-item:hover h3,
+.features-list li:hover i {
+  color: var(--card-icon-hover-color);
+  transform: scale(1.1);
+  animation: subtle-pulse 2.5s infinite ease-in-out;
+}
+
+/* Version mode sombre des survols */
+body.dark-mode .card-base:hover,
+body.dark-mode .project-card:hover,
+body.dark-mode .tech-item:hover,
+body.dark-mode .approach-item:hover,
+body.dark-mode .outcomes-list li:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+/* Assurer que les cartes restent dans leur conteneur sur mobile */
+@media (max-width: 480px) {
+  .card-base {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
+
+  .project-card,
+  .skill-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-content {
+    padding: 15px 10px;
+  }
+
+  /* Empêcher le débordement des textes longs */
+  .project-content h3,
+  .project-content p,
+  .skill-card h3,
+  .skill-card p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .language-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .language-icon img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .language-card {
+    width: 80px;
+    height: 80px;
+    padding: 10px 8px;
+  }
+
+  .language-card span {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .language-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .language-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .language-card {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Animation de pulsation douce pour icônes */
+@keyframes subtle-pulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Solution anti-yoyo optimisée - zone tampon invisible */
+.card-base,
+.project-card,
+.skill-card,
+.language-card,
+.tech-item,
+.approach-item,
+.outcomes-list li {
+  position: relative;
+  transition: transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+}
+
+/* Créer une zone tampon invisible autour de chaque élément */
+.card-base::before,
+.project-card::before,
+.skill-card::before,
+.language-card::before,
+.tech-item::before,
+.approach-item::before,
+.outcomes-list li::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  z-index: -1;
+  pointer-events: auto;
+}
+
+/* Optimisation : will-change uniquement où nécessaire */
+.card-base:hover,
+.project-card:hover,
+.skill-card:hover,
+.language-card:hover,
+.tech-item:hover,
+.approach-item:hover,
+.outcomes-list li:hover {
+  will-change: transform, box-shadow;
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: var(--card-box-shadow-hover);
+  z-index: 2;
+}
+
+/* Correction pour retirer la zone tampon des features-list */
+.features-list li::before {
+  display: none;
+}
+
+/* Utiliser contain pour optimiser la performance de rendu */
+.card-base,
+.project-card,
+.skill-card,
+.language-card {
+  contain: content;
+}

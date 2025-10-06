@@ -1,0 +1,185 @@
+:root {
+  --breakpoint-xs: 380px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
+@media (max-width: var(--breakpoint-lg)) {
+  .container {
+    width: 95%;
+    padding: 0 15px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+
+  .about-content,
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: var(--breakpoint-md)) {
+  header {
+    height: var(--header-height);
+    padding: 0;
+  }
+
+  .header-content {
+    height: var(--header-height);
+  }
+
+  .header-buttons {
+    margin-left: auto;
+  }
+
+  body.dark-mode nav ul {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-dark);
+  }
+
+  .tech-grid,
+  .approach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gdpr-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 10px;
+  }
+
+  .gdpr-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .projects-grid,
+  .languages-grid,
+  .skills-container,
+  .contact-container {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .container {
+    padding: 0 var(--spacing-mobile);
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .card-base {
+    padding: 15px;
+  }
+
+  .skill-card {
+    height: auto;
+    min-height: 250px;
+  }
+
+  .project-card {
+    min-height: auto;
+  }
+
+  .gdpr-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .gdpr-buttons button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-xs)) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+    max-width: 100vw;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 8px;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  body:not(.homepage) main {
+    margin-top: 70px;
+  }
+
+  .project-navigation {
+    margin-top: 10px;
+    padding-top: 0;
+  }
+
+  .contact-container,
+  .about-content,
+  .projects-grid,
+  .languages-grid,
+  .skills-container {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 404px) {
+  .project-buttons {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .project-content {
+    padding-bottom: 15px;
+  }
+
+  .project-content p {
+    margin-bottom: 15px;
+  }
+}

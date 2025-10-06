@@ -1,0 +1,112 @@
+/* hero.css
+   Styles pour la section d'accueil (hero) du portfolio
+   Organisation : conteneur principal, titre, sous-titre, boutons, responsive
+*/
+
+/* Conteneur principal du hero */
+#hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  padding-top: var(--header-height);
+}
+
+#hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(var(--primary-light) 2px, transparent 2px);
+  background-size: 30px 30px;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Titre principal et sous-titre */
+.hero-content {
+  max-width: 800px;
+  margin: 60px auto 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  color: var(--text-color);
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+#typewriter {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Boutons d'action du hero */
+.hero-buttons {
+  margin-top: 30px;
+  background-color: transparent;
+}
+
+.hero-content .btn {
+  font-size: 1rem;
+  padding: var(--btn-padding);
+  margin: 10px 8px;
+}
+
+/* Animation d'apparition du hero */
+body.dark-mode #hero::before {
+  background-image: radial-gradient(
+    var(--primary-light-20) 1px,
+    transparent 1px
+  );
+  opacity: 0.3;
+}
+
+body.dark-mode #hero .hero-content h1,
+body.dark-mode #hero .hero-content p {
+  color: var(--text-dark);
+}
+
+body.dark-mode .hero-content {
+  color: var(--white);
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  .hero-content {
+    margin-top: 40px;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p,
+  #typewriter {
+    font-size: 1.3rem;
+  }
+}
+
+body.dark-mode #hero {
+  background: var(--gradient-dark);
+}

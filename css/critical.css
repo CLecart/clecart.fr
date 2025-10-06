@@ -1,0 +1,103 @@
+/* Critical CSS - Inlined for fastest rendering */
+/* This should be inlined in <head> for optimal performance */
+
+/* Reset and base - critical above-the-fold styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  font-display: swap;
+  line-height: 1.6;
+  color: #2d334a;
+  background-color: #f8f9fa;
+}
+
+/* Critical header styles */
+header {
+  background: linear-gradient(135deg, #6c63ff 0%, #4ecdc4 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 80px;
+  transition: all 0.3s ease;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.logo {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Critical hero styles */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6c63ff 0%, #4ecdc4 50%, #ff6b6b 100%);
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Critical dark mode */
+body.dark-mode {
+  background-color: #14141e;
+  color: #f4f4f4;
+}
+body.dark-mode #hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* Loading state prevention */
+html.js-loading,
+html.js-loading body {
+  visibility: hidden;
+}
+html.js-loading .js-loading-visible {
+  visibility: visible;
+}
+
+/* Critical button styles */
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #6c63ff, #4ecdc4);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}

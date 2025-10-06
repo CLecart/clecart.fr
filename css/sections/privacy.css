@@ -1,0 +1,42 @@
+/* Styles pour la page de politique de confidentialité */
+
+#privacy {
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 40px 30px;
+  background: var(--white);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-box-shadow);
+  color: var(--text-color);
+}
+
+#privacy h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+#privacy h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+#privacy ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+#privacy ul li {
+  margin-bottom: 10px;
+}
+
+body.dark-mode #privacy {
+  background: var(--card-dark);
+  color: var(--text-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
+body.dark-mode #privacy h2,
+body.dark-mode #privacy h3 {
+  color: var(--primary);
+}

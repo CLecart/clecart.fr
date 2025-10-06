@@ -1,0 +1,81 @@
+body.dark-mode {
+  background-color: var(--dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode header {
+  background: var(--gradient-dark);
+}
+
+@media (max-width: 768px) {
+  body.dark-mode nav ul {
+    background-color: var(--card-dark);
+    border: 1px solid var(--border-dark);
+  }
+}
+
+body.dark-mode #hero,
+body.dark-mode #about,
+body.dark-mode #languages {
+  background-color: var(--dark);
+}
+
+body.dark-mode #skills,
+body.dark-mode #projects {
+  background-color: var(--darker);
+}
+
+body.dark-mode #contact {
+  background: var(--gradient-dark);
+}
+
+body.dark-mode a,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h4,
+body.dark-mode label {
+  color: var(--text-dark);
+}
+
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: var(--primary);
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: var(--form-bg-dark);
+  border-color: var(--form-border-dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode footer {
+  color: var(--white);
+  opacity: 0.9;
+}
+
+body.dark-mode .text-light {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .card-base p {
+  color: rgba(244, 244, 244, 0.95);
+}
+
+@media (max-width: 480px) {
+  body.dark-mode {
+    font-size: 16px;
+  }
+  body.dark-mode p,
+  body.dark-mode .text-light,
+  body.dark-mode label,
+  body.dark-mode .form-group input,
+  body.dark-mode .form-group textarea {
+    font-size: 1rem;
+  }
+}

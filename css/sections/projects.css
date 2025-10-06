@@ -1,0 +1,243 @@
+/* projects.css
+   Styles pour la section des projets du portfolio
+   Organisation : grille, cartes projet, navigation, responsive
+*/
+
+/* Grille de projets */
+#projects {
+  padding: 100px 0;
+  background-color: var(--light);
+  position: relative;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+body.dark-mode #projects {
+  background-color: var(--darker);
+}
+
+/* Cartes projet */
+.description {
+  max-width: 900px;
+  margin: 40px auto 30px;
+  padding: 30px 40px;
+  position: relative;
+  display: block;
+}
+
+/* Fix pour les pages avec header fixe (privacy-policy, descriptions-projects, about-portfolio) */
+body:not(.homepage) .description {
+  margin-top: calc(var(--header-height) + 40px);
+}
+
+@media (max-width: 768px) {
+  body:not(.homepage) .description {
+    margin-top: calc(var(--header-height-mobile) + 30px);
+  }
+}
+
+.project {
+  scroll-margin-top: 120px;
+}
+
+.project {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-smooth);
+}
+
+.project.active {
+  display: block;
+  opacity: 1;
+}
+
+#project1.project {
+  display: block;
+  opacity: 1;
+}
+
+.description h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.description h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.description ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.description ul li {
+  margin-bottom: 10px;
+}
+
+/* Navigation entre projets */
+.project-navigation {
+  padding: 120px 0 30px;
+  text-align: center;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.nav-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn.active {
+  background: var(--gradient-2);
+  box-shadow: var(--btn-shadow-hover);
+  transform: translateY(-5px);
+}
+
+body.dark-mode #projects {
+  background-color: var(--darker);
+}
+
+body.dark-mode #projects .project-card {
+  background-color: var(--card-dark);
+  border-color: var(--border-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+body.dark-mode #projects .project-content p {
+  color: var(--text-gray-dark);
+}
+
+body.dark-mode #projects .project-content h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode #projects .project-card:hover {
+  box-shadow: var(--btn-shadow-hover);
+  border-color: var(--primary);
+}
+
+body.dark-mode .description {
+  background-color: var(--dark);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+}
+
+body.dark-mode .description h2,
+body.dark-mode .description h3 {
+  color: var(--primary);
+}
+
+body.dark-mode .project-navigation {
+  border-bottom: 1px solid var(--form-border-dark);
+}
+
+.card-base.description {
+  transition: var(--card-transition);
+}
+
+.card-base.description:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+}
+
+body.dark-mode .card-base.description:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+.project.description.card-base {
+  scroll-margin-top: 120px;
+  margin-top: 30px;
+  position: relative;
+  z-index: 1;
+  transition:
+    transform 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    border-color 0.3s var(--ease-smooth);
+  will-change: transform;
+}
+
+.project.description.card-base:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+  z-index: 1;
+}
+
+body.dark-mode .project.description.card-base:hover {
+  box-shadow: var(--card-box-shadow-hover-dark);
+}
+
+body #project1.project.description.card-base:hover,
+body #project2.project.description.card-base:hover,
+body #project3.project.description.card-base:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--card-box-shadow-hover);
+  border-color: var(--primary);
+  z-index: 10;
+}
+
+body .project.active.description.card-base:hover,
+html body .project.active#project1.description.card-base:hover,
+html body .project.active#project2.description.card-base:hover,
+html body .project.active#project3.description.card-base:hover {
+  transform: translateY(-10px);
+  z-index: 10;
+}
+
+/* Animation d'apparition des projets */
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  .description {
+    margin-top: 40px;
+    padding: 25px 20px;
+  }
+
+  .project,
+  .project.description.card-base {
+    scroll-margin-top: 100px;
+  }
+
+  .project-navigation {
+    margin-top: 70px;
+    padding-top: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-buttons {
+    margin-top: 20px;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-btn {
+    width: 80%;
+    max-width: 200px;
+  }
+}

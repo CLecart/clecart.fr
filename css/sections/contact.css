@@ -1,0 +1,145 @@
+/* contact.css
+   Styles pour la section de contact du portfolio
+   Organisation : conteneur principal, formulaire, informations, responsive
+*/
+
+/* Conteneur principal de la section contact */
+#contact {
+  padding: 100px 0;
+  background: var(--gradient-1-light);
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Informations de contact (adresse, email, etc.) */
+.contact-method {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.contact-icon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  background: var(--gradient-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 15px;
+  color: var(--white);
+  font-size: 1.2rem;
+  box-shadow: var(--btn-shadow);
+}
+
+.contact-text {
+  background: transparent;
+  width: 100%;
+}
+
+.contact-text h4 {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  background: transparent;
+}
+
+.contact-text a {
+  color: var(--primary);
+  background: transparent;
+  font-weight: 500;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.contact-text a:hover {
+  color: var(--primary-dark);
+}
+
+.contact-text a::after {
+  bottom: -2px;
+  height: 2px;
+}
+
+/* Styles du formulaire de contact */
+.contact-form h3,
+.contact-info h3 {
+  margin-bottom: 25px;
+  color: var(--text-color);
+}
+
+/* Messages de statut et notifications */
+body.dark-mode #contact {
+  background: var(--gradient-dark);
+}
+
+body.dark-mode .contact-info h3,
+body.dark-mode .contact-form h3 {
+  color: var(--text-dark);
+}
+
+body.dark-mode .contact-method,
+body.dark-mode .contact-text,
+body.dark-mode .contact-text h4,
+body.dark-mode .contact-text a {
+  background: transparent;
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+
+  .contact-info,
+  .contact-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-container {
+    gap: 30px;
+  }
+
+  .contact-info,
+  .contact-form {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 380px) {
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+  }
+
+  .contact-text h4 {
+    font-size: 1rem;
+  }
+
+  .contact-text a {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .contact-info {
+    padding: 20px 15px;
+  }
+}

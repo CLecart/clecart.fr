@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="Portfolio de Christophe Lecart - Développeur Web & Mobile spécialisé en Go, JavaScript et applications modernes"
+    />
+    <meta
+      name="keywords"
+      content="développeur, web, mobile, portfolio, Go, JavaScript, HTML, CSS"
+    />
+    <meta name="author" content="Christophe Lecart" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://clecart.fr/" />
+    <meta
+      property="og:title"
+      content="Christophe Lecart - Web & Mobile Developer"
+    />
+    <meta
+      property="og:description"
+      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+    />
+    <meta
+      property="og:image"
+      content="https://clecart.fr/assets/images/profile.jpg"
+    />
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Christophe Lecart Portfolio" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://clecart.fr/" />
+    <meta
+      property="twitter:title"
+      content="Christophe Lecart - Web & Mobile Developer"
+    />
+    <meta
+      property="twitter:description"
+      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+    />
+    <meta
+      property="twitter:image"
+      content="https://clecart.fr/assets/images/profile.jpg"
+    />
+    <meta
+      property="twitter:image:alt"
+      content="Portfolio de Christophe Lecart - Développeur Web & Mobile"
+    />
+    <meta property="twitter:creator" content="@clecart" />
+    <meta property="twitter:site" content="@clecart" />
+
+    <title>Christophe Lecart - Web & Mobile Developer</title>
+
+    <!-- Favicons optimisés pour différents supports -->
+    <link rel="icon" href="assets/icons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/icons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/icons/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/icons/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="assets/manifest/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#6c63ff" />
+    <meta name="theme-color" content="#6c63ff" />
+    <meta
+      name="msapplication-config"
+      content="/assets/manifest/browserconfig.xml"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://clecart.fr/" />
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//api.emailjs.com" />
+
+    <!-- Preconnect critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Christophe Lecart",
+        "jobTitle": "Web & Mobile Developer",
+        "url": "https://clecart.fr",
+        "image": "https://clecart.fr/assets/images/profile.jpg",
+        "sameAs": [
+          "https://github.com/CLecart",
+          "https://linkedin.com/in/christophe-lecart"
+        ],
+        "knowsAbout": [
+          "Go Programming",
+          "JavaScript",
+          "Web Development",
+          "Mobile Development",
+          "Frontend Development",
+          "Backend Development"
+        ],
+        "description": "Développeur Web & Mobile passionné, spécialisé en Go, JavaScript et applications modernes. Étudiant en développement d'applications web et mobiles.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "FR"
+        }
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="preload"
+      href="assets/images/profile.jpg"
+      as="image"
+      fetchpriority="high"
+    />
+
+    <link rel="stylesheet" href="css/critical.css" />
+    <link rel="stylesheet" href="styles.css?v=2025108" />
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.emailjs.com" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+      defer
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        emailjs.init("wCnIBsLz_IoHaoFDx");
+      });
+    </script>
+
+    <!-- Critical inline JavaScript for performance -->
+    <script>
+      // Prevent FOUC - remove js-loading class immediately
+      document.documentElement.classList.remove("js-loading");
+
+      // Enhanced theme detection with error handling
+      try {
+        const darkModePreference = localStorage.getItem("dark-mode");
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        // Apply dark mode if explicitly enabled or if no preference set and system prefers dark
+        const shouldUseDarkMode =
+          darkModePreference === "enabled" ||
+          (darkModePreference === null && systemPrefersDark) ||
+          darkModePreference !== "disabled";
+
+        if (shouldUseDarkMode) {
+          document.body.classList.add("dark-mode");
+        }
+      } catch (error) {
+        console.warn("Theme detection error:", error);
+        // Fallback to light mode on error
+      }
+
+      // Image error handling for all external images
+      document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll("img[src^='http']");
+        images.forEach((img) => {
+          if (!img.hasAttribute("onerror")) {
+            img.onerror = function () {
+              console.warn("Failed to load image:", this.src);
+              this.style.opacity = "0.5";
+              this.alt = "Image unavailable";
+            };
+          }
+        });
+      });
+    </script>
+
+    <!-- JavaScript -->
+    <script type="module" src="js/main.js" defer></script>
+  </head>
+  <body class="homepage">
+    <!-- En-tête -->
+    <header>
+      <div class="container header-content">
+        <a href="index.html" class="logo">
+          <span>Christophe</span>
+          <span>Lecart</span>
+        </a>
+        <div class="right-content">
+          <nav aria-label="Navigation principale">
+            <ul id="main-navigation" role="menubar">
+              <li><a href="#hero" role="menuitem">Home</a></li>
+              <li><a href="#about" role="menuitem">About</a></li>
+              <li><a href="#skills" role="menuitem">Skills</a></li>
+              <li><a href="#projects" role="menuitem">Projects</a></li>
+              <li><a href="#contact" role="menuitem">Contact</a></li>
+              <li>
+                <a
+                  href="assets/documents/CV_Christophe_Lecart.pdf"
+                  class="cv-link"
+                  download
+                  ><i class="fas fa-file-download"></i> CV</a
+                >
+              </li>
+            </ul>
+          </nav>
+          <div class="header-buttons">
+            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+              <span class="moon-icon">🌙</span>
+            </button>
+          </div>
+          <button
+            class="nav-toggle"
+            aria-label="Ouvrir le menu de navigation"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+          >
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section id="hero">
+      <div class="container hero-content">
+        <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
+        <p class="slide-left">
+          I'm a <span id="typewriter">Web Developer</span>
+        </p>
+        <div class="fade-in hero-buttons">
+          <a href="#projects" class="btn">View My Work</a>
+          <a href="#contact" class="btn btn-secondary">Contact Me</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+          <div class="slide-right">
+            <img
+              src="assets/images/profile.jpg"
+              alt="Christophe Lecart - Développeur Web & Mobile"
+              class="profile-img"
+              width="300"
+              height="300"
+              loading="lazy"
+            />
+          </div>
+          <div class="about-text slide-left">
+            <p>
+              I am a passionate developer currently studying web and mobile
+              application development. I am pursuing a level 6 diploma in this
+              field, with expertise in building solutions using modern
+              technologies.
+            </p>
+            <p>
+              With a focus on creating intuitive and high-performing
+              applications, I combine technical skills with creative
+              problem-solving to deliver exceptional digital experiences.
+            </p>
+            <div class="about-buttons">
+              <a href="#contact" class="btn">Get In Touch</a>
+              <a href="about-portfolio.html" class="btn btn-secondary"
+                >For Recruiters <i class="fas fa-briefcase"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="languages">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Programming Languages</h2>
+          <p>Currently Learning</p>
+        </div>
+        <div class="languages-grid">
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+                alt="Go"
+              />
+            </div>
+            <span>Go</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                alt="HTML5"
+              />
+            </div>
+            <span>HTML5</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                alt="CSS3"
+              />
+            </div>
+            <span>CSS3</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                alt="JavaScript"
+              />
+            </div>
+            <span>JavaScript</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                alt="Java"
+              />
+            </div>
+            <span>Java</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                alt="Docker"
+              />
+            </div>
+            <span>Docker</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                alt="Git"
+              />
+            </div>
+            <span>Git</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
+                alt="SQLite"
+              />
+            </div>
+            <span>SQLite</span>
+          </div>
+          <div class="language-card card-base fade-in">
+            <div class="language-icon">
+              <i
+                class="fab fa-rust"
+                style="font-size: 48px; color: #ce422b"
+              ></i>
+            </div>
+            <span>Rust</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Skills & Expertise</h2>
+        </div>
+        <div class="skills-container">
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-code skill-icon"></i>
+            <h3 class="skill-name">Web Development</h3>
+            <p>
+              HTML, CSS, JavaScript, and modern frameworks to create responsive
+              web applications.
+            </p>
+            <div class="skill-level" data-level="90"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-mobile-alt skill-icon"></i>
+            <h3 class="skill-name">Mobile Development</h3>
+            <p>
+              Building native and cross-platform mobile applications for iOS and
+              Android.
+            </p>
+            <div class="skill-level" data-level="85"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-server skill-icon"></i>
+            <h3 class="skill-name">Backend Development</h3>
+            <p>
+              Go & Node.js for creating robust server-side applications and
+              APIs.
+            </p>
+            <div class="skill-level" data-level="88"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-database skill-icon"></i>
+            <h3 class="skill-name">Algorithm Design</h3>
+            <p>
+              Creating efficient algorithms for complex problem-solving
+              scenarios.
+            </p>
+            <div class="skill-level" data-level="80"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-shield-alt skill-icon"></i>
+            <h3 class="skill-name">Security</h3>
+            <p>
+              Implementing secure coding practices and system security
+              fundamentals.
+            </p>
+            <div class="skill-level" data-level="75"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-network-wired skill-icon"></i>
+            <h3 class="skill-name">Network Architecture</h3>
+            <p>Designing and implementing efficient network solutions.</p>
+            <div class="skill-level" data-level="78"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-database skill-icon"></i>
+            <h3 class="skill-name">Database Management</h3>
+            <p>
+              Design, optimization and management of relational databases with
+              SQLite.
+            </p>
+            <div class="skill-level" data-level="82"></div>
+          </div>
+
+          <div class="skill-card card-base fade-in">
+            <i class="fas fa-cloud skill-icon"></i>
+            <h3 class="skill-name">DevOps & CI/CD</h3>
+            <p>
+              Implementation of pipelines with Docker, Kubernetes, GitHub
+              Actions or GitLab CI/CD for continuous deployment.
+            </p>
+            <div class="skill-level" data-level="80"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Featured Projects</h2>
+        </div>
+        <div class="projects-grid">
+          <!-- Projet 1 : Groupie-Tracker -->
+          <div class="project-card card-base fade-in">
+            <div class="project-thumb">
+              <video
+                autoplay
+                loop
+                muted
+                controls
+                loading="lazy"
+                width="400"
+                height="225"
+                poster=""
+              >
+                <source
+                  src="assets/videos/Groupie-Tracker.mp4"
+                  type="video/mp4"
+                />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
+            </div>
+            <div class="project-content">
+              <h3>Groupie-Tracker</h3>
+              <p>
+                A Go web application that visualizes music artist data from a
+                REST API. It allows searching and filtering groups by name,
+                dates, or concert locations with an optimized interactive
+                interface.
+              </p>
+              <div class="project-buttons">
+                <a
+                  href="descriptions-projects.html#project1"
+                  class="project-btn"
+                  >View Details</a
+                >
+                <a
+                  href="https://github.com/CLecart/groupie-tracker"
+                  class="github-btn"
+                  target="_blank"
+                  title="View on GitHub"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projet 2 : BombermanDX -->
+          <div class="project-card card-base fade-in">
+            <div class="project-thumb">
+              <video
+                autoplay
+                loop
+                muted
+                controls
+                loading="lazy"
+                width="400"
+                height="225"
+                poster=""
+              >
+                <source src="assets/videos/BombermanDX.mp4" type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
+            </div>
+            <div class="project-content">
+              <h3>BombermanDX</h3>
+              <p>
+                A browser game inspired by the classic Bomberman, developed with
+                JavaScript and DOM manipulation. Includes progressive levels,
+                different AI enemies, and power-ups, all with optimized
+                performance management.
+              </p>
+              <div class="project-buttons">
+                <a
+                  href="descriptions-projects.html#project2"
+                  class="project-btn"
+                  >View Details</a
+                >
+                <a
+                  href="https://github.com/SpauriRosso/bomberman-dx"
+                  class="github-btn"
+                  target="_blank"
+                  title="View on GitHub"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projet 3 : Forum -->
+          <div class="project-card card-base fade-in">
+            <div class="project-thumb" title="Click to enlarge">
+              <img
+                src="assets/images/forum.png"
+                alt="Forum Project Screenshot"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Forum</h3>
+              <p>
+                A complete discussion platform with user authentication, thread
+                creation and management, and real-time features. Uses Go for the
+                backend, SQLite for the database, and WebSockets for instant
+                notifications.
+              </p>
+              <div class="project-buttons">
+                <a
+                  href="descriptions-projects.html#project3"
+                  class="project-btn"
+                  >View Details</a
+                >
+                <a
+                  href="https://github.com/nicgen/forum"
+                  class="github-btn"
+                  target="_blank"
+                  title="View on GitHub"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Get In Touch</h2>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info card-base slide-right">
+            <h3>Contact Information</h3>
+            <div class="contact-method">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                <h4>Email</h4>
+                <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="contact-icon">
+                <i class="fab fa-github"></i>
+              </div>
+              <div class="contact-text">
+                <h4>GitHub</h4>
+                <a href="https://github.com/CLecart" target="_blank"
+                  >github.com/CLecart</a
+                >
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="contact-icon">
+                <i class="fab fa-linkedin"></i>
+              </div>
+              <div class="contact-text">
+                <h4>LinkedIn</h4>
+                <a
+                  href="https://www.linkedin.com/in/christophe-lecart-cl15121981/"
+                  target="_blank"
+                  >linkedin.com/in/christophe-lecart</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulaire de contact -->
+          <div class="contact-form card-base slide-left">
+            <h3>Send Me a Message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="from_name">Your Name</label>
+                <input
+                  type="text"
+                  id="from_name"
+                  name="from_name"
+                  required
+                  placeholder=" "
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder=" "
+                />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder=" "
+                ></textarea>
+              </div>
+              <input type="hidden" name="to_name" value="Christophe" />
+              <button type="submit" class="btn">Send Message</button>
+              <div id="form-status" class="form-status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2025 Christophe Lecart. All rights reserved. |
+          <a href="privacy-policy.html">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bannière GDPR -->
+    <div id="gdpr-banner" class="gdpr-banner">
+      <div class="gdpr-content">
+        <p>
+          This site uses third-party services to process the contact form. By
+          continuing, you accept our
+          <a href="privacy-policy.html">privacy policy</a>.
+        </p>
+        <div class="gdpr-buttons">
+          <button id="gdpr-accept" class="btn">Accept</button>
+          <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

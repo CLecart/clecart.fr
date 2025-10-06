@@ -1,0 +1,75 @@
+/* gdpr.css
+   Styles pour la bannière RGPD du portfolio
+   Organisation : bannière, boutons, responsive
+*/
+
+/* Bannière RGPD */
+.gdpr-banner {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.gdpr-banner p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.gdpr-banner a {
+  color: #0078d7;
+  text-decoration: none;
+}
+
+.gdpr-banner a:hover {
+  text-decoration: underline;
+}
+
+/* Boutons de la bannière RGPD */
+.gdpr-banner .gdpr-button {
+  background-color: #0078d7;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.gdpr-banner .gdpr-button:hover {
+  background-color: #005a9e;
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  .gdpr-banner {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .gdpr-banner .gdpr-button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gdpr-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gdpr-banner p {
+    margin-bottom: 10px;
+  }
+
+  .gdpr-banner .gdpr-button {
+    margin-left: 0;
+    margin-bottom: 5px;
+  }
+}

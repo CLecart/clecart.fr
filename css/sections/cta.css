@@ -1,0 +1,44 @@
+/* cta.css
+   Styles pour la section d'appel à l'action (CTA) du portfolio
+   Organisation : conteneur principal, boutons, responsive
+*/
+
+/* Conteneur principal de la section CTA */
+.cta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Boutons d'action de la section CTA */
+.cta-button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive : ajustements pour tablettes et mobiles */
+@media (max-width: 768px) {
+  .cta-container {
+    flex-direction: column;
+  }
+
+  .cta-button {
+    width: 100%;
+    margin: 10px 0;
+  }
+}

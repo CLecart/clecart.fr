@@ -3,30 +3,14 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- CRITICAL: Theme detection script - Must be first to prevent flash -->
     <script>
-      (function () {
-        // Get theme preference immediately - before any CSS loads
-        const stored = localStorage.getItem("dark-mode");
-        const systemDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-
-        // Determine if dark mode should be active
-        const isDark =
-          stored === "enabled" || (stored !== "disabled" && systemDark);
-
-        // Apply theme class immediately to html element
-        if (isDark) {
-          document.documentElement.classList.add("dark-mode");
-        }
-
-        // Set CSS custom property for immediate background color
-        document.documentElement.style.setProperty(
-          "--initial-bg",
-          isDark ? "#121212" : "#ffffff"
-        );
-      })();
+      const stored = localStorage.getItem("dark-mode");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+        document.documentElement.classList.add("dark-mode");
+      }
     </script>
 
     <meta
@@ -171,41 +155,6 @@
       fetchpriority="high"
     />
 
-    <!-- CRITICAL CSS: Prevent flash with immediate background colors -->
-    <style>
-      /* Immediate background colors using CSS custom property set by script */
-      html {
-        background-color: var(--initial-bg, #ffffff);
-        color-scheme: light dark;
-      }
-
-      body {
-        background-color: var(--initial-bg, #ffffff);
-        margin: 0;
-        transition: background-color 0.2s ease;
-      }
-
-      /* Dark mode backgrounds */
-      .dark-mode {
-        color-scheme: dark;
-      }
-
-      .dark-mode body {
-        background-color: #121212;
-      }
-
-      /* Prevent flash during loading */
-      .js-loading {
-        visibility: hidden;
-      }
-
-      /* Smooth page transitions without breaking design */
-      .page-transition {
-        transition: opacity 0.15s ease-out;
-      }
-    </style>
-
-    <link rel="stylesheet" href="css/critical.css" />
     <link rel="stylesheet" href="styles.css?v=2025108" />
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
@@ -412,10 +361,7 @@
           </div>
           <div class="language-card card-base fade-in">
             <div class="language-icon">
-              <i
-                class="fab fa-rust"
-                style="font-size: 48px; color: #ce422b"
-              ></i>
+              <i class="fab fa-rust rust-icon"></i>
             </div>
             <span>Rust</span>
           </div>
@@ -553,6 +499,7 @@
                   href="https://github.com/CLecart/groupie-tracker"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -595,6 +542,7 @@
                   href="https://github.com/SpauriRosso/bomberman-dx"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -629,6 +577,7 @@
                   href="https://github.com/nicgen/forum"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -662,7 +611,10 @@
               </div>
               <div class="contact-text">
                 <h4>GitHub</h4>
-                <a href="https://github.com/CLecart" target="_blank"
+                <a
+                  href="https://github.com/CLecart"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >github.com/CLecart</a
                 >
               </div>
@@ -676,6 +628,7 @@
                 <a
                   href="https://www.linkedin.com/in/christophe-lecart-cl15121981/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   >linkedin.com/in/christophe-lecart</a
                 >
               </div>

@@ -184,7 +184,10 @@ export function initNavigation() {
         link.hostname === window.location.hostname ||
         href.startsWith("/") ||
         href.startsWith("./") ||
-        href.startsWith("../");
+        href.startsWith("../") ||
+        (!href.includes("://") &&
+          !href.startsWith("mailto:") &&
+          !href.startsWith("tel:"));
 
       const isAnchor = href.startsWith("#");
 

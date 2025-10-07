@@ -11,6 +11,16 @@
 
     <title>Privacy Policy - Christophe Lecart</title>
 
+    <script>
+      const stored = localStorage.getItem("dark-mode");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+        document.documentElement.classList.add("dark-mode");
+      }
+    </script>
+
     <!-- Favicons optimisés pour différents supports -->
     <link rel="icon" href="assets/icons/favicon.ico" />
     <link
@@ -115,18 +125,27 @@
             <a
               href="https://www.emailjs.com/legal/privacy-policy/"
               target="_blank"
+              rel="noopener noreferrer"
               >here</a
             >.
           </li>
           <li>
             <strong>Font Awesome:</strong> For icons. Their privacy policy can
             be found
-            <a href="https://fontawesome.com/privacy" target="_blank">here</a>.
+            <a
+              href="https://fontawesome.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              >here</a
+            >.
           </li>
           <li>
             <strong>Google Fonts:</strong> For web fonts. Their privacy policy
             can be found
-            <a href="https://policies.google.com/privacy" target="_blank"
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
               >here</a
             >.
           </li>

@@ -2,6 +2,17 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+
+    <script>
+      const stored = localStorage.getItem("dark-mode");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+        document.documentElement.classList.add("dark-mode");
+      }
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"

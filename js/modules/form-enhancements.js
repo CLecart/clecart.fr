@@ -52,12 +52,18 @@ export function initFormEnhancements() {
     }, delay);
   });
 
-  // Détection d'autocomplétion avec MutationObserver
+  // Optimized autofill detection with single timeout
   formInputs.forEach((input) => {
+    let timeoutId;
+
+    const debouncedCheck = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => checkInputContent(input), 100);
+    };
+
     if (window.MutationObserver) {
       const observer = new MutationObserver(() => {
-        setTimeout(() => checkInputContent(input), 50);
-        setTimeout(() => checkInputContent(input), 200);
+        debouncedCheck();
       });
       observer.observe(input, {
         attributes: true,
@@ -67,24 +73,17 @@ export function initFormEnhancements() {
       });
     }
 
-    // Vérification sur animationstart (détecte webkit-autofill)
+    // Autofill detection via CSS animation
     input.addEventListener("animationstart", (e) => {
       if (e.animationName === "autofill-detect") {
-        setTimeout(() => checkInputContent(input), 10);
-        setTimeout(() => checkInputContent(input), 100);
-        setTimeout(() => checkInputContent(input), 300);
+        debouncedCheck();
       }
     });
 
-    // Détection supplémentaire par événements multiples avec plus de vérifications
+    // Single event listener with debounced checking
     ["input", "change", "blur", "focus", "keyup", "keydown"].forEach(
       (eventType) => {
-        input.addEventListener(eventType, () => {
-          setTimeout(() => checkInputContent(input), 10);
-          setTimeout(() => checkInputContent(input), 50);
-          setTimeout(() => checkInputContent(input), 150);
-          setTimeout(() => checkInputContent(input), 300);
-        });
+        input.addEventListener(eventType, debouncedCheck);
       }
     );
 

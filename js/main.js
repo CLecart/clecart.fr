@@ -38,7 +38,6 @@ import { initModals } from "./utils/modal.js";
 import { initPerformanceOptimizations } from "./utils/performance.js";
 import { registerServiceWorker } from "./utils/sw-register.js";
 import { initWebVitals } from "./utils/webvitals.js";
-import { initSmartAntiFlash } from "./utils/smart-anti-flash.js";
 import PrivacyAnalytics from "./utils/analytics.js";
 
 /**
@@ -51,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
    * Phase 1: Initialisation des fonctionnalités critiques
    * @description Modules essentiels chargés immédiatement au DOM ready
    */
-  initSmartAntiFlash();
   initDarkMode();
   initNavigation();
   initPerformanceOptimizations();

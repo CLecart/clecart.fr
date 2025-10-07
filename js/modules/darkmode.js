@@ -22,6 +22,7 @@ export function initDarkMode() {
   const darkModeToggle = document.querySelector(".dark-mode-toggle");
 
   if (!darkModeToggle) {
+    // Use console.error for critical errors that should always be shown
     console.error("Dark mode toggle not found in HTML");
     return;
   }

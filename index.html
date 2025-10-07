@@ -1,15 +1,19 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
 
     <script>
       const stored = localStorage.getItem("dark-mode");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+      if (
+        stored === "enabled" ||
+        (stored !== "disabled" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
         document.documentElement.classList.add("dark-mode");
+        document.documentElement.style.colorScheme = "dark";
+      } else {
+        document.documentElement.style.colorScheme = "light";
       }
     </script>
 
@@ -19,11 +23,11 @@
     />
     <meta
       name="description"
-      content="Portfolio de Christophe Lecart - Développeur Web & Mobile spécialisé en Go, JavaScript et applications modernes"
+      content="Christophe Lecart Portfolio - Web & Mobile Developer specialized in Go, JavaScript and modern applications"
     />
     <meta
       name="keywords"
-      content="développeur, web, mobile, portfolio, Go, JavaScript, HTML, CSS"
+      content="developer, web, mobile, portfolio, Go, JavaScript, HTML, CSS"
     />
     <meta name="author" content="Christophe Lecart" />
     <meta name="robots" content="index, follow" />
@@ -37,7 +41,7 @@
     />
     <meta
       property="og:description"
-      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+      content="Professional Portfolio of Christophe Lecart - Web & Mobile Developer"
     />
     <meta
       property="og:image"
@@ -58,7 +62,7 @@
     />
     <meta
       property="twitter:description"
-      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+      content="Professional Portfolio of Christophe Lecart - Web & Mobile Developer"
     />
     <meta
       property="twitter:image"
@@ -66,14 +70,14 @@
     />
     <meta
       property="twitter:image:alt"
-      content="Portfolio de Christophe Lecart - Développeur Web & Mobile"
+      content="Christophe Lecart - Web & Mobile Developer"
     />
     <meta property="twitter:creator" content="@clecart" />
     <meta property="twitter:site" content="@clecart" />
 
     <title>Christophe Lecart - Web & Mobile Developer</title>
 
-    <!-- Favicons optimisés pour différents supports -->
+    <!-- Optimized favicons for different platforms -->
     <link rel="icon" href="assets/icons/favicon.ico" />
     <link
       rel="icon"
@@ -134,7 +138,7 @@
           "Frontend Development",
           "Backend Development"
         ],
-        "description": "Développeur Web & Mobile passionné, spécialisé en Go, JavaScript et applications modernes. Étudiant en développement d'applications web et mobiles.",
+        "description": "Passionate Web & Mobile Developer, specialized in Go, JavaScript and modern applications. Student in web and mobile application development.",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "FR"
@@ -186,7 +190,7 @@
     <script type="module" src="js/main.js" defer></script>
   </head>
   <body class="homepage">
-    <!-- En-tête -->
+    <!-- Header -->
     <header>
       <div class="container header-content">
         <a href="index.html" class="logo">
@@ -232,7 +236,7 @@
       <div class="container hero-content">
         <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
         <p class="slide-left">
-          I'm a <span id="typewriter">Web Developer</span>
+          I'm a <span class="typewriter-text">Web Developer</span>
         </p>
         <div class="fade-in hero-buttons">
           <a href="#projects" class="btn">View My Work</a>
@@ -250,7 +254,7 @@
           <div class="slide-right">
             <img
               src="assets/images/profile.jpg"
-              alt="Christophe Lecart - Développeur Web & Mobile"
+              alt="Christophe Lecart - Web & Mobile Developer"
               class="profile-img"
               width="300"
               height="300"
@@ -478,7 +482,7 @@
                   src="assets/videos/Groupie-Tracker.mp4"
                   type="video/mp4"
                 />
-                Votre navigateur ne supporte pas la lecture de vidéos.
+                Your browser does not support video playback.
               </video>
             </div>
             <div class="project-content">
@@ -521,7 +525,7 @@
                 poster=""
               >
                 <source src="assets/videos/BombermanDX.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture de vidéos.
+                Your browser does not support video playback.
               </video>
             </div>
             <div class="project-content">
@@ -638,13 +642,13 @@
           <!-- Formulaire de contact -->
           <div class="contact-form card-base slide-left">
             <h3>Send Me a Message</h3>
-            <form id="contactForm">
+            <form id="contact-form">
               <div class="form-group">
                 <label for="from_name">Your Name</label>
                 <input
                   type="text"
                   id="from_name"
-                  name="from_name"
+                  name="name"
                   required
                   placeholder=" "
                 />
@@ -671,7 +675,7 @@
               </div>
               <input type="hidden" name="to_name" value="Christophe" />
               <button type="submit" class="btn">Send Message</button>
-              <div id="form-status" class="form-status"></div>
+              <div class="form-status"></div>
             </form>
           </div>
         </div>
@@ -688,7 +692,7 @@
       </div>
     </footer>
 
-    <!-- Bannière GDPR -->
+    <!-- GDPR Banner -->
     <div id="gdpr-banner" class="gdpr-banner">
       <div class="gdpr-content">
         <p>

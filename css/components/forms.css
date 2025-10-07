@@ -1,4 +1,4 @@
-/* Styles pour les formulaires */
+/* Form components styles */
 
 .form-group {
   margin-bottom: 25px;
@@ -16,7 +16,6 @@
   background: transparent;
 }
 
-/* Champs de formulaire - état par défaut avec ombre plus visible en mode clair */
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -29,11 +28,10 @@
   color: var(--input-color);
   background-color: var(--input-bg);
   background-clip: padding-box;
-  box-shadow: var(--shadow-sm); /* Ajout d'une ombre légère par défaut */
+  box-shadow: var(--shadow-sm);
   appearance: none;
 }
 
-/* Styles pour les champs avec focus - renforcer l'effet */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
@@ -43,14 +41,12 @@
   transform: var(--hover-y-tiny);
 }
 
-/* Styles pour les champs qui ont du contenu */
 .form-group input:not(:placeholder-shown),
 .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
   background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
 }
 
-/* Coche verte + encadré vert pour tous les champs valides - SPÉCIFICITÉ ÉLEVÉE */
 body .form-group input[type="text"].has-content,
 body .form-group input[type="email"].email-valid,
 body .form-group textarea.has-content {
@@ -62,14 +58,12 @@ body .form-group textarea.has-content {
   padding-right: 45px;
 }
 
-/* Garder le border vert même avec focus */
 body .form-group input[type="text"].has-content:focus,
 body .form-group input[type="email"].email-valid:focus,
 body .form-group textarea.has-content:focus {
   border-color: var(--status-success-color);
 }
 
-/* Correction de l'autocomplétion du navigateur */
 .form-group input:-webkit-autofill,
 .form-group input:-webkit-autofill:hover,
 .form-group input:-webkit-autofill:focus,
@@ -81,12 +75,8 @@ body .form-group textarea.has-content:focus {
 }
 
 @keyframes autofill-detect {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0.99; }
+  to { opacity: 1; }
 }
 
 body .form-group input[type="text"]:-webkit-autofill.has-content,
@@ -104,46 +94,37 @@ body .form-group input[type="email"]:-webkit-autofill:active.email-valid {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Autocomplétion avec background-image (pas ::after qui ne marche pas sur input) */
 body .form-group input[type="text"]:-webkit-autofill.has-content,
 body .form-group input[type="email"]:-webkit-autofill.email-valid {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M9 16.17l-4.24-4.24a1 1 0 0 0-1.42 1.42l5 5a1 1 0 0 0 1.42 0l11-11a1 1 0 0 0-1.42-1.42L9 16.17z'/%3E%3C/svg%3E"),
     linear-gradient(var(--input-bg), var(--input-bg));
   background-repeat: no-repeat, no-repeat;
-  background-position:
-    right 15px center,
-    0 0;
-  background-size:
-    20px 20px,
-    100% 100%;
+  background-position: right 15px center, 0 0;
+  background-size: 20px 20px, 100% 100%;
 }
 
-/* Intégration avec l'animation des cartes */
 .contact-form:hover .form-group input:focus,
 .contact-form:hover .form-group textarea:focus {
   border-color: var(--primary);
   box-shadow: var(--input-focus-shadow);
 }
 
-/* Optimisation des styles du formulaire de contact */
 body .contact-form,
 body .contact-form * {
   background-color: transparent;
 }
 
-/* Mode sombre */
 body.dark-mode .form-group label {
   color: var(--text-dark);
 }
 
-/* Mode sombre - adaptation des styles */
 body.dark-mode .form-group input,
 body.dark-mode .form-group textarea {
   background-color: var(--form-bg-dark);
   border-color: var(--form-border-dark);
   color: var(--text-dark);
-  box-shadow: var(--shadow-dark); /* Ombre adaptée au mode sombre */
+  box-shadow: var(--shadow-dark);
 }
 
 body.dark-mode .form-group input:focus,
@@ -155,7 +136,6 @@ body.dark-mode .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
 }
 
-/* Mode sombre - Garder le border vert pour les champs valides */
 body.dark-mode .form-group input[type="text"].has-content,
 body.dark-mode .form-group input[type="email"].email-valid,
 body.dark-mode .form-group textarea.has-content {
@@ -168,7 +148,6 @@ body.dark-mode .form-group textarea.has-content:focus {
   border-color: var(--status-success-color);
 }
 
-/* Correction de l'autocomplétion en mode sombre */
 body.dark-mode .form-group input:-webkit-autofill,
 body.dark-mode .form-group input:-webkit-autofill:hover,
 body.dark-mode .form-group input:-webkit-autofill:focus,
@@ -178,27 +157,14 @@ body.dark-mode .form-group input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Autocomplétion avec champs valides en mode sombre - GARDER encadré vert + coche */
 body.dark-mode .form-group input[type="text"]:-webkit-autofill.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:hover.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:focus.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:active.has-content,
+body.dark-mode .form-group input[type="text"]:-webkit-autofill:hover.has-content,
+body.dark-mode .form-group input[type="text"]:-webkit-autofill:focus.has-content,
+body.dark-mode .form-group input[type="text"]:-webkit-autofill:active.has-content,
 body.dark-mode .form-group input[type="email"]:-webkit-autofill.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:hover.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:focus.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:active.email-valid {
+body.dark-mode .form-group input[type="email"]:-webkit-autofill:hover.email-valid,
+body.dark-mode .form-group input[type="email"]:-webkit-autofill:focus.email-valid,
+body.dark-mode .form-group input[type="email"]:-webkit-autofill:active.email-valid {
   -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
   -webkit-text-fill-color: var(--text-dark);
   border-color: var(--status-success-color);
@@ -206,22 +172,16 @@ body.dark-mode
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Autocomplétion mode sombre avec background-image */
 body.dark-mode .form-group input[type="text"]:-webkit-autofill.has-content,
 body.dark-mode .form-group input[type="email"]:-webkit-autofill.email-valid {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M9 16.17l-4.24-4.24a1 1 0 0 0-1.42 1.42l5 5a1 1 0 0 0 1.42 0l11-11a1 1 0 0 0-1.42-1.42L9 16.17z'/%3E%3C/svg%3E"),
     linear-gradient(var(--form-bg-dark), var(--form-bg-dark));
   background-repeat: no-repeat, no-repeat;
-  background-position:
-    right 15px center,
-    0 0;
-  background-size:
-    20px 20px,
-    100% 100%;
+  background-position: right 15px center, 0 0;
+  background-size: 20px 20px, 100% 100%;
 }
 
-/* États du formulaire */
 .form-status {
   margin-top: 20px;
   padding: 12px 15px;

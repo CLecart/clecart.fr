@@ -1,9 +1,9 @@
 /* projects.css
-   Styles pour la section des projets du portfolio
+   Styles for portfolio projects section
    Organisation : grille, cartes projet, navigation, responsive
 */
 
-/* Grille de projets */
+/* Projects grid */
 #projects {
   padding: 100px 0;
   background-color: var(--light);
@@ -82,7 +82,7 @@ body:not(.homepage) .description {
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets */
+/* Project navigation */
 .project-navigation {
   padding: 120px 0 30px;
   text-align: center;
@@ -199,7 +199,7 @@ html body .project.active#project3.description.card-base:hover {
   z-index: 10;
 }
 
-/* Animation d'apparition des projets */
+/* Project appearance animation */
 
 /* Responsive : ajustements pour tablettes et mobiles */
 @media (max-width: 768px) {

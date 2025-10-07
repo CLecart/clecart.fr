@@ -1,37 +1,32 @@
 /**
- * @fileoverview Système de monitoring et optimisation des Core Web Vitals
- * @description Surveillance en temps réel des métriques de performance web avec optimisations automatiques
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Core Web Vitals monitoring and optimization system
+ * @fileoverview Real-time web performance metrics monitoring with automatic optimizations
+ * @author Christophe Lecart
  */
 
 /**
- * Initialise le monitoring des Core Web Vitals avec optimisations automatiques
+ * Initializes Core Web Vitals monitoring with automatic optimizations
  * @function initWebVitals
- * @description Configure la surveillance LCP, FID, CLS, FCP, TTFB avec déclenchement d'optimisations
+ * @description Configures LCP, FID, CLS, FCP, TTFB monitoring with optimization triggers
  * @returns {void}
- * @example
- * // Activer le monitoring des Web Vitals
- * initWebVitals();
  */
 export function initWebVitals() {
   /**
-   * Vérification du support des APIs de performance
-   * @description Validation de la compatibilité du navigateur avec PerformanceObserver
+   * Performance APIs support check
+   * @description Validates browser compatibility with PerformanceObserver
    */
   if (!("PerformanceObserver" in window)) {
-    console.warn("PerformanceObserver not supported");
     return;
   }
 
   /**
-   * Objet de stockage des données de métriques Web Vitals
+   * Web Vitals metrics data storage object
    * @type {object}
-   * @property {number|null} lcp - Largest Contentful Paint en millisecondes
-   * @property {number|null} fid - First Input Delay en millisecondes
-   * @property {number|null} cls - Cumulative Layout Shift (sans unité)
-   * @property {number|null} fcp - First Contentful Paint en millisecondes
-   * @property {number|null} ttfb - Time to First Byte en millisecondes
+   * @property {number|null} lcp - Largest Contentful Paint in milliseconds
+   * @property {number|null} fid - First Input Delay in milliseconds
+   * @property {number|null} cls - Cumulative Layout Shift (unitless)
+   * @property {number|null} fcp - First Contentful Paint in milliseconds
+   * @property {number|null} ttfb - Time to First Byte in milliseconds
    */
   const vitalsData = {
     lcp: null,
@@ -42,8 +37,8 @@ export function initWebVitals() {
   };
 
   /**
-   * Monitoring du Largest Contentful Paint (LCP)
-   * @description Surveille le temps de rendu du plus grand élément de contenu visible
+   * Largest Contentful Paint (LCP) monitoring
+   * @description Monitors render time of largest visible content element
    */
   const lcpObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
@@ -51,41 +46,37 @@ export function initWebVitals() {
     vitalsData.lcp = Math.round(lastEntry.startTime);
 
     /**
-     * Déclenchement d'optimisations si LCP est mauvais (>2.5s)
-     * @description Applique automatiquement des optimisations de chargement
+     * Trigger optimizations if LCP is poor (>2.5s)
+     * @description Automatically applies loading optimizations
      */
     if (vitalsData.lcp > 2500) {
       optimizeLCP();
     }
-
-    console.log("LCP:", vitalsData.lcp + "ms");
   });
   lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
 
   /**
-   * Monitoring du First Input Delay (FID)
-   * @description Surveille le délai entre la première interaction utilisateur et la réponse
+   * First Input Delay (FID) monitoring
+   * @description Monitors delay between first user interaction and response
    */
   const fidObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       vitalsData.fid = Math.round(entry.processingStart - entry.startTime);
 
       /**
-       * Déclenchement d'optimisations si FID est mauvais (>100ms)
-       * @description Applique des optimisations de réactivité de l'interface
+       * Trigger optimizations if FID is poor (>100ms)
+       * @description Applies interface responsiveness optimizations
        */
       if (vitalsData.fid > 100) {
         optimizeFID();
       }
-
-      console.log("FID:", vitalsData.fid + "ms");
     }
   });
   fidObserver.observe({ entryTypes: ["first-input"] });
 
   /**
-   * Monitoring du Cumulative Layout Shift (CLS)
-   * @description Surveille les décalages de mise en page non intentionnels
+   * Cumulative Layout Shift (CLS) monitoring
+   * @description Monitors unintentional layout shifts
    */
   let clsValue = 0;
   const clsObserver = new PerformanceObserver((list) => {
@@ -97,52 +88,48 @@ export function initWebVitals() {
     }
 
     /**
-     * Déclenchement d'optimisations si CLS est mauvais (>0.1)
-     * @description Applique des corrections de stabilité visuelle
+     * Trigger optimizations if CLS is poor (>0.1)
+     * @description Applies visual stability corrections
      */
     if (vitalsData.cls > 0.1) {
       optimizeCLS();
     }
-
-    console.log("CLS:", vitalsData.cls);
   });
   clsObserver.observe({ entryTypes: ["layout-shift"] });
 
   /**
-   * Monitoring du First Contentful Paint (FCP)
-   * @description Surveille le temps d'affichage du premier contenu visible
+   * First Contentful Paint (FCP) monitoring
+   * @description Monitors time to first visible content display
    */
   const navigationObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.name === "first-contentful-paint") {
         vitalsData.fcp = Math.round(entry.startTime);
-        console.log("FCP:", vitalsData.fcp + "ms");
       }
     }
   });
   navigationObserver.observe({ entryTypes: ["paint"] });
 
   /**
-   * Calcul du Time to First Byte (TTFB)
-   * @description Mesure le temps de réponse initial du serveur
+   * Time to First Byte (TTFB) calculation
+   * @description Measures initial server response time
    */
   const navTiming = performance.getEntriesByType("navigation")[0];
   if (navTiming) {
     vitalsData.ttfb = Math.round(
       navTiming.responseStart - navTiming.requestStart
     );
-    console.log("TTFB:", vitalsData.ttfb + "ms");
   }
 
   /**
-   * Activation du monitoring des ressources pour optimisation
-   * @description Surveille les performances de chargement des ressources
+   * Resource timing monitoring activation for optimization
+   * @description Monitors resource loading performance
    */
   monitorResourceTiming();
 
   /**
-   * Génération du rapport final des Web Vitals après chargement complet
-   * @description Délai de 1s pour assurer la capture de toutes les métriques
+   * Final Web Vitals report generation after complete loading
+   * @description 1s delay to ensure all metrics are captured
    */
   window.addEventListener("load", () => {
     setTimeout(() => {
@@ -152,20 +139,15 @@ export function initWebVitals() {
 }
 
 /**
- * Optimise le Largest Contentful Paint (LCP)
+ * Optimizes Largest Contentful Paint (LCP)
  * @function optimizeLCP
- * @description Applique des optimisations de chargement pour améliorer le LCP
+ * @description Applies loading optimizations to improve LCP
  * @returns {void}
- * @example
- * // Déclenchée automatiquement si LCP > 2.5s
- * optimizeLCP();
  */
 function optimizeLCP() {
-  console.warn("LCP is poor, applying optimizations...");
-
   /**
-   * Préchargement des images candidates LCP
-   * @description Convertit les 2 premières images lazy en eager loading
+   * LCP candidate image preloading
+   * @description Converts first 2 lazy images to eager loading
    */
   const images = document.querySelectorAll(
     'img[loading="lazy"]:not([data-optimized])'
@@ -173,8 +155,8 @@ function optimizeLCP() {
   images.forEach((img, index) => {
     if (index < 2) {
       /**
-       * Optimisation pour les images au-dessus de la ligne de flottaison
-       * @description Seules les 2 premières images sont optimisées
+       * Above-the-fold image optimization
+       * @description Only first 2 images are optimized
        */
       img.loading = "eager";
       img.setAttribute("data-optimized", "true");
@@ -182,8 +164,8 @@ function optimizeLCP() {
   });
 
   /**
-   * Différement du CSS non critique
-   * @description Charge le CSS non essentiel de manière asynchrone
+   * Non-critical CSS deferring
+   * @description Loads non-essential CSS asynchronously
    */
   const stylesheets = document.querySelectorAll(
     'link[rel="stylesheet"]:not([data-critical])'
@@ -199,27 +181,22 @@ function optimizeLCP() {
 }
 
 /**
- * Optimise le First Input Delay (FID)
+ * Optimizes First Input Delay (FID)
  * @function optimizeFID
- * @description Améliore la réactivité en différant les tâches JavaScript lourdes
+ * @description Improves responsiveness by deferring heavy JavaScript tasks
  * @returns {void}
- * @example
- * // Déclenchée automatiquement si FID > 100ms
- * optimizeFID();
  */
 function optimizeFID() {
-  console.warn("FID is poor, deferring JavaScript...");
-
   /**
-   * Fractionnement des tâches longues avec Scheduler API
-   * @description Utilise l'API scheduler moderne ou setTimeout en fallback
+   * Long task chunking with Scheduler API
+   * @description Uses modern scheduler API or setTimeout fallback
    */
   if ("scheduler" in window) {
     window.scheduler.postTask(
       () => {
         /**
-         * Différement des calculs lourds en arrière-plan
-         * @description Priorité background pour éviter le blocage de l'UI
+         * Heavy computation deferring in background
+         * @description Background priority to avoid UI blocking
          */
         optimizeAnimations();
       },
@@ -231,9 +208,6 @@ function optimizeFID() {
 }
 
 function optimizeCLS() {
-  console.warn("CLS is poor, stabilizing layout...");
-
-  // Add dimensions to images without them
   const images = document.querySelectorAll("img:not([width]):not([height])");
   images.forEach((img) => {
     img.style.aspectRatio = "auto";
@@ -241,7 +215,6 @@ function optimizeCLS() {
     img.style.height = "auto";
   });
 
-  // Preload fonts to prevent FOIT
   const fontPreloads = [
     "/fonts/poppins-regular.woff2",
     "/fonts/poppins-bold.woff2",
@@ -287,18 +260,12 @@ function optimizeAnimations() {
 function monitorResourceTiming() {
   const resourceObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
-      // Alert for slow resources (>1s)
       if (entry.duration > 1000) {
-        console.warn(
-          `Slow resource: ${entry.name} took ${Math.round(entry.duration)}ms`
-        );
+        // Slow resource detected
       }
 
-      // Alert for large resources (>500KB)
       if (entry.transferSize > 500000) {
-        console.warn(
-          `Large resource: ${entry.name} is ${Math.round(entry.transferSize / 1024)}KB`
-        );
+        // Large resource detected
       }
     }
   });
@@ -307,16 +274,8 @@ function monitorResourceTiming() {
 }
 
 function reportVitals(vitals) {
-  // Calculate performance score
   const score = calculatePerformanceScore(vitals);
 
-  console.log("Web Vitals Report:", {
-    ...vitals,
-    score: score,
-    rating: getPerformanceRating(score),
-  });
-
-  // Send to analytics (if consent given)
   if (window.analytics) {
     window.analytics.trackEvent(
       "Performance",

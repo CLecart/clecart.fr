@@ -31,5 +31,5 @@
 /* Utils additionnels */
 @import "./css/utils/image-fallbacks.css";
 
-/* Thème - toujours en dernier pour écraser les styles si nécessaire */
+/* Theme imports - always last to override styles if necessary */
 @import "./css/theme/darkmode.css";

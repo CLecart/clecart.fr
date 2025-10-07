@@ -1,80 +1,102 @@
 /**
- * @fileoverview Module de gestion de la conformité RGPD
- * @description Gère la bannière de consentement et les choix utilisateur selon le RGPD
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * GDPR compliance module for privacy management
+ * @module GDPR
+ * @description Handles user consent for analytics and form functionality
  */
 
 /**
- * Initialise la bannière RGPD et configure la gestion du consentement
+ * Initialize GDPR banner with user consent management
  * @function initGDPRBanner
- * @description Configure l'affichage de la bannière et les handlers de consentement RGPD
+ * @description Shows banner only if no previous choice was made
  * @returns {void}
- * @example
- * // Activer la gestion RGPD
- * initGDPRBanner();
- *
- * @see {@link https://gdpr.eu/} Règlement général sur la protection des données
  */
 export function initGDPRBanner() {
-  /**
-   * Éléments DOM de la bannière RGPD
-   * @type {HTMLElement|null}
-   */
-  const gdprBanner = document.getElementById("gdpr-banner");
-  const acceptBtn = document.getElementById("gdpr-accept");
-  const declineBtn = document.getElementById("gdpr-decline");
+  const banner = document.getElementById("gdpr-banner");
+  const acceptBtn = document.getElementById("accept-btn");
+  const declineBtn = document.getElementById("decline-btn");
+
+  if (!banner) return;
 
   /**
-   * Vérification du choix utilisateur précédent
-   * @type {string|null}
-   * @description Récupère le consentement stocké localement ('accepted' | 'declined' | null)
+   * Check for previous user consent choice
+   * @function getConsentStatus
+   * @description Retrieves locally stored consent ('accepted' | 'declined' | null)
+   * @returns {string|null} User consent status
    */
-  const gdprChoice = localStorage.getItem("gdpr-choice");
+  function getConsentStatus() {
+    return localStorage.getItem("gdpr-consent");
+  }
 
   /**
-   * Affichage conditionnel de la bannière RGPD
-   * @description Affiche uniquement si aucun choix n'a été enregistré
+   * Conditional GDPR banner display
+   * @description Shows only if no choice has been recorded
    */
-  if (!gdprChoice) {
-    if (gdprBanner) {
-      gdprBanner.style.display = "block";
+  const consentStatus = getConsentStatus();
+  if (consentStatus === null) {
+    banner.classList.remove("hidden");
+  }
+
+  /**
+   * Handle consent acceptance
+   * @function handleAccept
+   * @description Records acceptance and hides banner
+   */
+  function handleAccept() {
+    localStorage.setItem("gdpr-consent", "accepted");
+    banner.classList.add("hidden");
+    if (window.analytics) {
+      window.analytics.enableTracking();
     }
   }
 
   /**
-   * Gestionnaire d'acceptation du consentement RGPD
-   * @description Enregistre l'acceptation et masque la bannière
+   * Handle consent decline
+   * @function handleDecline
+   * @description Records refusal, hides banner and disables form
    */
-  if (acceptBtn) {
-    acceptBtn.addEventListener("click", () => {
-      localStorage.setItem("gdpr-choice", "accepted");
-      if (gdprBanner) {
-        gdprBanner.style.display = "none";
+  function handleDecline() {
+    localStorage.setItem("gdpr-consent", "declined");
+    banner.classList.add("hidden");
+    if (window.analytics) {
+      window.analytics.disableTracking();
+    }
+
+    /**
+     * Contact form deactivation after refusal
+     */
+    const contactForm = document.querySelector("#contact-form");
+    if (contactForm) {
+      const inputs = contactForm.querySelectorAll("input, textarea, button");
+      inputs.forEach((input) => {
+        input.disabled = true;
+      });
+
+      const formContainer = contactForm.closest(".contact-form");
+      if (formContainer) {
+        formContainer.style.opacity = "0.5";
+        formContainer.style.pointerEvents = "none";
       }
-    });
+    }
   }
 
-  /**
-   * Gestionnaire de refus du consentement RGPD
-   * @description Enregistre le refus, masque la bannière et désactive le formulaire
-   */
-  if (declineBtn) {
-    declineBtn.addEventListener("click", () => {
-      localStorage.setItem("gdpr-choice", "declined");
-      if (gdprBanner) {
-        gdprBanner.style.display = "none";
-      }
+  if (acceptBtn && declineBtn) {
+    acceptBtn.addEventListener("click", handleAccept);
+    declineBtn.addEventListener("click", handleDecline);
+  }
 
-      /**
-       * Désactivation du formulaire de contact après refus
-       * @description Remplace le formulaire par un message d'information
-       */
-      const contactForm = document.getElementById("contactForm");
-      if (contactForm) {
-        contactForm.innerHTML =
-          '<p class="gdpr-message">The contact form has been disabled because you declined our privacy policy. You can contact me directly by email at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.</p>';
+  if (consentStatus === "declined") {
+    const contactForm = document.querySelector("#contact-form");
+    if (contactForm) {
+      const inputs = contactForm.querySelectorAll("input, textarea, button");
+      inputs.forEach((input) => {
+        input.disabled = true;
+      });
+
+      const formContainer = contactForm.closest(".contact-form");
+      if (formContainer) {
+        formContainer.style.opacity = "0.5";
+        formContainer.style.pointerEvents = "none";
       }
-    });
+    }
   }
 }

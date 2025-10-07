@@ -1,9 +1,8 @@
-/* cards.css
-   Styles pour les différents types de cartes (projets, compétences, langues, etc.) du portfolio
-   Organisation : base commune, variantes, responsive et animations
-*/
+/**
+ * Card components with unified styling
+ * @description Base card styles with variants, responsive design and animations
+ */
 
-/* Base commune pour toutes les cartes */
 .card-base {
   background-color: var(--card-bg);
   color: var(--card-color);
@@ -12,13 +11,12 @@
   box-shadow: var(--card-box-shadow);
   transition: transform var(--duration-normal) var(--ease-smooth),
     box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var (--ease-smooth);
+    border-color var(--duration-normal) var(--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
 }
 
-/* Mode sombre pour les cartes */
 body.dark-mode .card-base {
   background-color: var(--card-bg-dark);
   color: var(--card-color-dark);
@@ -31,7 +29,6 @@ body.dark-mode .card-base:hover {
   border-color: var(--primary);
 }
 
-/* Cartes de compétence */
 .skill-card {
   height: 310px;
   position: relative;
@@ -62,7 +59,6 @@ body.dark-mode .card-base:hover {
   margin-bottom: 60px;
 }
 
-/* Cartes de projet */
 .project-card {
   max-width: 360px;
   width: 100%;
@@ -74,7 +70,7 @@ body.dark-mode .card-base:hover {
 .project-thumb {
   position: relative;
   height: 0;
-  padding-top: 56.25%; /* Ratio 16:9 */
+  padding-top: 56.25%;
   width: 100%;
   background-color: var(--black);
   overflow: hidden;
@@ -127,7 +123,6 @@ body.dark-mode .card-base:hover {
   width: 100%;
 }
 
-/* Mode sombre pour les cartes projet */
 body.dark-mode .project-content h3 {
   color: var(--card-color-dark);
 }
@@ -136,17 +131,6 @@ body.dark-mode .project-content p {
   color: var(--text-gray-dark);
 }
 
-/* Cartes spécifiques: descriptions de projets */
-.project.description.card-base {
-  position: relative;
-  z-index: 0;
-}
-
-.project.description.card-base:hover {
-  z-index: 1;
-}
-
-/* Cartes de langue */
 .language-card {
   flex: 0 0 auto;
   width: 90px;
@@ -189,7 +173,6 @@ body.dark-mode .project-content p {
   margin: 0;
 }
 
-/* Mode sombre pour les cartes de langue */
 body.dark-mode .language-card span {
   color: var(--card-color-dark);
 }
@@ -198,19 +181,6 @@ body.dark-mode .language-icon img {
   filter: brightness(1.1);
 }
 
-/* Cartes contact */
-.contact-info,
-.contact-form {
-  height: 100%;
-}
-
-/* Animation spécifique des cartes langue et compétences */
-.language-card:hover .language-icon img,
-.skill-card:hover .skill-icon {
-  animation: subtle-pulse 2.5s infinite var(--ease-smooth);
-}
-
-/* Harmonisation des animations au survol */
 .card-base:hover,
 .project-card:hover,
 .skill-card:hover,
@@ -221,35 +191,18 @@ body.dark-mode .language-icon img {
   z-index: 1;
 }
 
-/* Exception pour les éléments non-carte (comme features-list) */
-.features-list li:hover {
-  transform: none;
-  border-color: transparent;
-  box-shadow: none;
-  z-index: auto;
-}
-
-/* Animation des icônes au survol */
 .skill-card:hover .skill-icon,
-.language-card:hover .language-icon img,
-.tech-item:hover h3,
-.approach-item:hover h3,
-.features-list li:hover i {
-  color: var(--card-icon-hover-color);
-  transform: scale(1.1);
+.language-card:hover .language-icon img {
   animation: subtle-pulse 2.5s infinite ease-in-out;
 }
 
-/* Version mode sombre des survols */
-body.dark-mode .card-base:hover,
-body.dark-mode .project-card:hover,
-body.dark-mode .tech-item:hover,
-body.dark-mode .approach-item:hover,
-body.dark-mode .outcomes-list li:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
+@keyframes subtle-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.05); }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-/* Assurer que les cartes restent dans leur conteneur sur mobile */
 @media (max-width: 480px) {
   .card-base {
     width: 100%;
@@ -264,129 +217,9 @@ body.dark-mode .outcomes-list li:hover {
     max-width: 100%;
   }
 
-  .project-content {
-    padding: 15px 10px;
-  }
-
-  /* Empêcher le débordement des textes longs */
-  .project-content h3,
-  .project-content p,
-  .skill-card h3,
-  .skill-card p {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-
-  .language-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .language-icon img {
-    width: 36px;
-    height: 36px;
-  }
-
   .language-card {
     width: 80px;
     height: 80px;
     padding: 10px 8px;
   }
-
-  .language-card span {
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .language-icon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .language-icon img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .language-card {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-/* Animation de pulsation douce pour icônes */
-@keyframes subtle-pulse {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.05);
-  }
-  60% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Solution anti-yoyo optimisée - zone tampon invisible */
-.card-base,
-.project-card,
-.skill-card,
-.language-card,
-.tech-item,
-.approach-item,
-.outcomes-list li {
-  position: relative;
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
-}
-
-/* Créer une zone tampon invisible autour de chaque élément */
-.card-base::before,
-.project-card::before,
-.skill-card::before,
-.language-card::before,
-.tech-item::before,
-.approach-item::before,
-.outcomes-list li::before {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  right: -15px;
-  bottom: -15px;
-  z-index: -1;
-  pointer-events: auto;
-}
-
-/* Optimisation : will-change uniquement où nécessaire */
-.card-base:hover,
-.project-card:hover,
-.skill-card:hover,
-.language-card:hover,
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover {
-  will-change: transform, box-shadow;
-  transform: translateY(-10px);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-  z-index: 2;
-}
-
-/* Correction pour retirer la zone tampon des features-list */
-.features-list li::before {
-  display: none;
-}
-
-/* Utiliser contain pour optimiser la performance de rendu */
-.card-base,
-.project-card,
-.skill-card,
-.language-card {
-  contain: content;
 }

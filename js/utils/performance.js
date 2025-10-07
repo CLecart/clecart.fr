@@ -1,53 +1,52 @@
 /**
- * @fileoverview Module utilitaire pour les optimisations de performance
- * @description Gère le lazy loading, l'optimisation réseau et le préchargement des ressources
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Performance optimization module
+ * @module Performance
+ * @description Handles lazy loading, network optimization and resource preloading
  */
 
 /**
- * Initialise les optimisations de performance adaptées à la connexion utilisateur
+ * Initialize performance optimizations based on user connection
  * @function initPerformanceOptimizations
- * @description Optimise automatiquement le chargement selon la qualité de connexion détectée
+ * @description Automatically optimizes loading based on detected connection quality
  * @returns {void}
- * @example
- * // Activer les optimisations performance
- * initPerformanceOptimizations();
- *
- * @see {@link https://developer.mozilla.org/docs/Web/API/Network_Information_API} Network Information API
  */
 export function initPerformanceOptimizations() {
-  /**
-   * Détection et optimisation pour les connexions lentes
-   * @description Utilise l'API Network Information pour adapter les performances
-   */
-  if ("connection" in navigator) {
+  if ('connection' in navigator) {
     const connection = navigator.connection;
+    optimizeForConnection(connection);
+    
+    connection.addEventListener('change', () => {
+      optimizeForConnection(connection);
+    });
+  }
 
-    /**
-     * Conditions de connexion lente détectées
-     * @type {boolean}
-     * @description Vérifie saveData ou type de connexion 2G/3G
-     */
-    if (
-      connection &&
-      (connection.saveData ||
-        ["slow-2g", "2g", "3g"].includes(connection.effectiveType))
-    ) {
+  /**
+   * Connection detection and optimization for slow connections
+   */
+  function optimizeForConnection(connection) {
+    const slowConnection = connection.saveData || 
+                          ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+    
+    if (slowConnection) {
       /**
-       * Optimisation du préchargement vidéo pour connexions lentes
-       * @description Change preload="auto" vers preload="metadata" pour économiser la bande passante
+       * Slow connection conditions detected
+       * @description Checks saveData or 2G/3G connection type
        */
-      document.querySelectorAll("video").forEach((video) => {
-        if (video.preload === "auto") {
-          video.preload = "metadata";
-        }
+      document.documentElement.classList.add('slow-connection');
+      
+      /**
+       * Video preload optimization for slow connections
+       * @description Changes preload="auto" to preload="metadata" to save bandwidth
+       */
+      const videos = document.querySelectorAll('video[preload="auto"]');
+      videos.forEach(video => {
+        video.setAttribute('preload', 'metadata');
       });
     }
   }
 
   /**
-   * @todo Implémenter le préchargement intelligent des ressources critiques
-   * @description Précharger les assets selon la priorité et la connexion
+   * @todo Implement intelligent preloading of critical resources
+   * @description Preload assets based on priority and connection
    */
 }

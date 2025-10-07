@@ -1,8 +1,7 @@
 /**
- * @fileoverview Critical path JavaScript inlined in HTML head
- * @description Loads immediately to prevent FOUC and setup essential functionality
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Critical path JavaScript inlined in HTML head
+ * @fileoverview Loads immediately to prevent FOUC and setup essential functionality
+ * @author Christophe Lecart
  */
 
 (function () {
@@ -50,14 +49,14 @@
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === "largest-contentful-paint") {
-          console.log("LCP:", entry.startTime);
+          // LCP tracked: entry.startTime
         }
         if (entry.entryType === "first-input-delay") {
-          console.log("FID:", entry.processingStart - entry.startTime);
+          // FID tracked: entry.processingStart - entry.startTime
         }
         if (entry.entryType === "layout-shift") {
           if (!entry.hadRecentInput) {
-            console.log("CLS:", entry.value);
+            // CLS tracked: entry.value
           }
         }
       }

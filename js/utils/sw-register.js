@@ -1,42 +1,21 @@
 /**
- * @fileoverview Enregistrement et gestion du Service Worker PWA
- * @description Module de configuration PWA avec gestion des mises à jour automatiques
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Service Worker registration and PWA management
+ * @fileoverview Handles service worker registration with update notifications
+ * @author Christophe Lecart
  */
 
 /**
- * Enregistre le Service Worker pour activer les fonctionnalités PWA
+ * Registers the service worker for PWA functionality
  * @function registerServiceWorker
- * @description Configure l'enregistrement SW avec gestion des mises à jour et notifications
+ * @description Configures service worker registration with automatic update handling
  * @returns {void}
- * @example
- * // Activer le Service Worker PWA
- * registerServiceWorker();
  */
 export function registerServiceWorker() {
-  /**
-   * Vérification de la compatibilité Service Worker
-   * @description Teste le support du navigateur avant enregistrement
-   */
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        /**
-         * Enregistrement du Service Worker principal
-         * @description Chemin vers le fichier SW principal avec gestion d'erreurs
-         */
         .register("/js/utils/service-worker.js")
         .then((registration) => {
-          console.log(
-            "Service Worker registered with scope:",
-            registration.scope
-          );
-
-          /**
-           * Gestionnaire de détection des mises à jour
-           * @description Écoute les nouveaux SW et déclenche les notifications
-           */
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
             newWorker.addEventListener("statechange", () => {
@@ -49,34 +28,27 @@ export function registerServiceWorker() {
             });
           });
         })
-        .catch((error) => {
-          console.log("Service Worker registration failed:", error);
+        .catch(() => {
+          // Service Worker registration failed
         });
     });
   }
 
   /**
-   * Affiche une notification de mise à jour PWA
+   * Shows update notification when new service worker version is available
    * @function showUpdateNotification
-   * @description Crée une notification interactive pour les mises à jour SW
+   * @description Creates interactive notification for service worker updates
    * @returns {void}
-   * @example
-   * // Déclenchée automatiquement lors de nouvelles versions
-   * showUpdateNotification();
    */
   function showUpdateNotification() {
     const notification = document.createElement("div");
     notification.className = "app-update-notification";
     notification.innerHTML = `
-      <p>Une nouvelle version est disponible !</p>
-      <button id="update-app">Mettre à jour</button>
+      <p>New version available!</p>
+      <button id="update-app">Update</button>
     `;
     document.body.appendChild(notification);
 
-    /**
-     * Gestionnaire de clic sur le bouton de mise à jour
-     * @description Force l'activation du nouveau SW et recharge la page
-     */
     document.getElementById("update-app").addEventListener("click", () => {
       navigator.serviceWorker.getRegistration().then((reg) => {
         if (reg.waiting) {
@@ -89,8 +61,8 @@ export function registerServiceWorker() {
   }
 
   /**
-   * Gestion automatique des changements de contrôleur SW
-   * @description Évite les rechargements multiples lors des mises à jour
+   * Prevents multiple reloads during service worker updates
+   * @description Handles controller change events with refresh guard
    */
   let refreshing = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {

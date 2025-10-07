@@ -2,8 +2,17 @@
 .slide-left,
 .slide-right {
   opacity: 0;
-  transition: opacity var(--duration-slow) var(--ease-smooth),
+  transition:
+    opacity var(--duration-slow) var(--ease-smooth),
     transform var(--duration-slow) var(--ease-smooth);
+}
+
+/* Fallback for when JavaScript is disabled */
+.no-js .fade-in,
+.no-js .slide-left,
+.no-js .slide-right {
+  opacity: 1;
+  transform: none;
 }
 
 .fade-in {
@@ -40,7 +49,8 @@
 #projects .section-header h2 {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-slow) var(--ease-smooth),
+  transition:
+    opacity var(--duration-slow) var(--ease-smooth),
     transform var(--duration-slow) var(--ease-smooth);
 }
 
@@ -166,7 +176,9 @@ html.scrolling-in-progress header * {
 }
 
 nav ul li a {
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 nav ul li a.active {

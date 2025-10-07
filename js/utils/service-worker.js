@@ -1,175 +1,172 @@
 /**
- * @fileoverview Service Worker pour Progressive Web App
- * @description Gestion du cache, stratégies de récupération et fonctionnalités offline
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Service Worker for caching and offline functionality
+ * @fileoverview Service Worker implementation
+ * @description Handles cache, fetch strategies and offline features
  */
 
-/**
- * Nom de version du cache principal
- * @constant {string}
- * @description Identifiant unique pour la gestion des versions de cache
- */
-const CACHE_NAME = "clecart-portfolio-v1";
+const CACHE_NAME = 'portfolio-cache-v2';
+const CACHE_FALLBACK = 'portfolio-fallback-v1';
 
 /**
- * URLs des ressources statiques à mettre en cache
- * @constant {string[]}
- * @description Liste des fichiers essentiels pour le fonctionnement offline
+ * Static resources URLs to cache
  */
-const STATIC_CACHE_URLS = [
-  "/",
-  "/index.html",
-  "/styles.css",
-  "/js/main.js",
-  "/js/modules/darkmode.js",
-  "/js/modules/animations.js",
-  "/js/modules/navigation.js",
-  "/js/modules/contact-form.js",
-  "/js/utils/gdpr.js",
-  "/js/utils/modal.js",
-  "/assets/icons/favicon.ico",
-  "/assets/icons/apple-touch-icon.png",
-  "/assets/icons/favicon-16x16.png",
-  "/assets/icons/favicon-32x32.png",
-  "/assets/manifest/site.webmanifest",
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/js/main.js',
+  '/js/critical.js',
+  '/css/critical.css',
+  '/assets/images/profile.jpg',
+  '/assets/icons/favicon.ico',
+  '/assets/icons/apple-touch-icon.png',
+  '/assets/icons/android-chrome-192x192.png',
+  '/assets/icons/android-chrome-512x512.png',
+  '/assets/manifest/site.webmanifest'
 ];
 
+const offlinePage = '/offline.html';
+const offlineImage = '/assets/images/offline-fallback.svg';
+
 /**
- * Gestionnaire d'installation du Service Worker
+ * Service Worker installation event
  * @event install
- * @description Met en cache les ressources statiques et active immédiatement
+ * @description Caches static resources and activates immediately
  */
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => {
+    (async () => {
+      try {
+        const cache = await caches.open(CACHE_NAME);
         /**
-         * Mise en cache des ressources statiques essentielles
-         * @description Télécharge et stocke tous les fichiers critiques
+         * @description Downloads and stores all critical files
          */
-        return cache.addAll(STATIC_CACHE_URLS);
-      })
-      .then(() => self.skipWaiting())
+        await cache.addAll(urlsToCache);
+        await self.skipWaiting();
+      } catch (error) {
+        console.error('Cache installation failed:', error);
+      }
+    })()
   );
 });
 
 /**
- * Gestionnaire d'activation du Service Worker
+ * Service Worker activation event
  * @event activate
- * @description Nettoie les anciens caches et prend le contrôle des clients
+ * @description Cleans old caches and takes control of clients
  */
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((cacheNames) => {
+    (async () => {
+      try {
         /**
-         * Suppression des anciens caches obsolètes
-         * @description Conserve uniquement le cache de version actuelle
+         * Remove obsolete old caches
          */
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-      .then(() => self.clients.claim())
+        const cacheNames = await caches.keys();
+        const cacheDeletePromises = cacheNames
+          .filter(name => name !== CACHE_NAME && name !== CACHE_FALLBACK)
+          .map(name => caches.delete(name));
+        
+        await Promise.all(cacheDeletePromises);
+        await self.clients.claim();
+      } catch (error) {
+        console.error('Cache activation failed:', error);
+      }
+    })()
   );
 });
 
 /**
- * Gestionnaire de récupération avec stratégies de cache intelligentes
+ * Fetch handler with intelligent cache strategies
  * @event fetch
- * @description Implémente Network-First pour HTML/JSON et Cache-First pour assets
+ * @description Implements Network-First for HTML/JSON and Cache-First for assets
  */
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', (event) => {
   /**
-   * Filtrage des requêtes cross-origin
-   * @description Ignore les requêtes externes pour éviter les erreurs CORS
+   * Cross-origin request filtering
+   * @description Ignores external requests to avoid CORS errors
    */
   if (!event.request.url.startsWith(self.location.origin)) return;
 
   /**
-   * Analyse du type de requête basée sur les en-têtes
-   * @description Détermine la stratégie de cache appropriée
+   * Request type analysis based on headers
+   * @description Determines appropriate cache strategy
    */
-  const acceptHeader = event.request.headers.get("Accept") || "";
-  const isHTMLRequest = acceptHeader.includes("text/html");
-  const isJSONRequest = event.request.url.includes(".json");
+  const isNavigationRequest = event.request.mode === 'navigate';
+  const isImageRequest = event.request.destination === 'image';
+  const isStyleRequest = event.request.destination === 'style';
+  const isScriptRequest = event.request.destination === 'script';
 
-  /**
-   * Stratégie Network-First pour HTML et JSON
-   * @description Privilégie le réseau pour le contenu dynamique
-   */
-  if (isHTMLRequest || isJSONRequest) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          let responseToCache = response.clone();
-          caches
-            .open(CACHE_NAME)
-            .then((cache) => cache.put(event.request, responseToCache));
-          return response;
-        })
-        .catch(() => {
-          /**
-           * Fallback vers le cache en cas d'échec réseau
-           * @description Assure la disponibilité offline
-           */
-          return caches.match(event.request);
-        })
-    );
-    return;
+  if (isNavigationRequest) {
+    event.respondWith(handleNavigationRequest(event.request));
+  } else if (isImageRequest) {
+    event.respondWith(handleImageRequest(event.request));
+  } else if (isStyleRequest || isScriptRequest) {
+    event.respondWith(handleAssetRequest(event.request));
   }
-
-  /**
-   * Stratégie Cache-First pour les assets statiques
-   * @description Optimise les performances en servant depuis le cache
-   */
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request).then((fetchResponse) => {
-        /**
-         * Validation de la réponse avant mise en cache
-         * @description Vérifie status, type et méthode HTTP
-         */
-        if (
-          !fetchResponse ||
-          fetchResponse.status !== 200 ||
-          fetchResponse.type !== "basic" ||
-          event.request.method !== "GET"
-        ) {
-          return fetchResponse;
-        }
-
-        let responseToCache = fetchResponse.clone();
-        caches
-          .open(CACHE_NAME)
-          .then((cache) => cache.put(event.request, responseToCache));
-        return fetchResponse;
-      });
-    })
-  );
 });
 
 /**
- * Gestionnaire de messages pour mise à jour forcée
- * @event message
- * @description Permet le skipWaiting pour activation immédiate des mises à jour
+ * Navigation request handler (Network-First strategy)
+ * @param {Request} request - Navigation request
+ * @returns {Promise<Response>} Response from network or cache
  */
-self.addEventListener("message", (event) => {
-  /**
-   * Traitement du message skipWaiting
-   * @description Active immédiatement le nouveau Service Worker
-   */
-  if (event.data && event.data.action === "skipWaiting") {
-    self.skipWaiting();
+async function handleNavigationRequest(request) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    throw new Error('Network response not ok');
+  } catch (error) {
+    const cachedResponse = await caches.match(request);
+    return cachedResponse || caches.match('/index.html');
   }
-});
+}
+
+/**
+ * Image request handler (Cache-First with fallback)
+ * @param {Request} request - Image request
+ * @returns {Promise<Response>} Response from cache, network or fallback
+ */
+async function handleImageRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) return cachedResponse;
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    throw new Error('Network response not ok');
+  } catch (error) {
+    return caches.match(offlineImage);
+  }
+}
+
+/**
+ * Asset request handler (Cache-First strategy)
+ * @param {Request} request - Asset request (CSS/JS)
+ * @returns {Promise<Response>} Response from cache or network
+ */
+async function handleAssetRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) return cachedResponse;
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    return networkResponse;
+  } catch (error) {
+    console.error('Asset fetch failed:', error);
+    throw error;
+  }
+}

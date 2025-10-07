@@ -1,5 +1,6 @@
 /**
- * Module optimisé pour la gestion des vidéos avec intersection observer et lazy loading
+ * Video handler module with intersection observer and lazy loading
+ * @module VideoHandler
  */
 export function initVideoHandler() {
   const videos = document.querySelectorAll("video");
@@ -8,30 +9,24 @@ export function initVideoHandler() {
       navigator.userAgent
     );
 
-  // Initialiser la gestion des vidéos après le chargement principal de la page
   window.addEventListener("load", () => {
     setupVideos();
   });
 
   function setupVideos() {
     videos.forEach((video) => {
-      // Configuration commune
       video.setAttribute("playsinline", "");
       video.setAttribute("disablePictureInPicture", "");
 
-      // Vérifier et corriger les sources vidéo si nécessaire
       const sources = video.querySelectorAll("source");
       sources.forEach((source) => {
         const src = source.getAttribute("src");
         if (src && src.includes("assets/images/") && src.endsWith(".mp4")) {
-          // Corriger les références qui pointent encore vers assets/images/ au lieu de assets/videos/
           const correctedSrc = src.replace("assets/images/", "assets/videos/");
           source.setAttribute("src", correctedSrc);
-          console.log(`Référence vidéo corrigée: ${src} -> ${correctedSrc}`);
         }
       });
 
-      // Gestion du préchargement sur mobile
       if (isMobile) {
         if (video.hasAttribute("autoplay")) {
           video.removeAttribute("autoplay");
@@ -42,18 +37,15 @@ export function initVideoHandler() {
           video.setAttribute("preload", "metadata");
         }
 
-        // Ajout d'un fond de chargement pour les vidéos
         addLoadingBackground(video);
       }
 
-      // Optimisation critique: chargement progressif des vidéos
       if (video.dataset.src && !video.src) {
         observeLazyLoad(video);
       } else {
         observeVideoVisibility(video);
       }
 
-      // Gestion des interactions tactiles
       setupTouchInteractions(video);
     });
   }
@@ -70,7 +62,6 @@ export function initVideoHandler() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            // Pauser les vidéos hors écran pour économiser des ressources
             if (!entry.isIntersecting && !video.paused) {
               video.pause();
             } else if (
@@ -78,10 +69,7 @@ export function initVideoHandler() {
               video.paused &&
               video.hasAttribute("autoplay")
             ) {
-              // Tenter de lire les vidéos autoplay lorsque visibles
-              video.play().catch(() => {
-                // Ignorer les erreurs de lecture automatique (restrictions navigateur)
-              });
+              video.play().catch(() => {});
             }
           });
         },
@@ -91,7 +79,6 @@ export function initVideoHandler() {
     }
   }
 
-  // Nouvelle fonction: observer pour lazy loading
   function observeLazyLoad(video) {
     if ("IntersectionObserver" in window) {
       const lazyObserver = new IntersectionObserver(
@@ -113,28 +100,29 @@ export function initVideoHandler() {
               }
 
               lazyObserver.unobserve(video);
-              // Observer pour le contrôle de lecture après le chargement
               observeVideoVisibility(video);
             }
           });
         },
-        { rootMargin: "200px" } // Charger la vidéo avant qu'elle n'entre dans le viewport
+        { rootMargin: "200px" }
       );
       lazyObserver.observe(video);
     }
   }
 
+  /**
+   * Setup touch interactions for mobile devices
+   * @param {HTMLVideoElement} video - Video element to setup
+   */
   function setupTouchInteractions(video) {
     if (!isMobile) return;
 
-    // Prévenir le plein écran non désiré sur mobile
     video.addEventListener("loadedmetadata", () => {
       if (!video.hasAttribute("autoplay")) {
         video.pause();
       }
     });
 
-    // Toggle play/pause au toucher
     video.addEventListener(
       "touchstart",
       (e) => {
@@ -150,7 +138,6 @@ export function initVideoHandler() {
       { passive: false }
     );
 
-    // Empêcher le zoom sur double-tap
     video.addEventListener("dblclick", (e) => {
       e.preventDefault();
       return false;

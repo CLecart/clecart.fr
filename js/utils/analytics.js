@@ -1,36 +1,32 @@
 /**
- * @fileoverview Système d'analytics respectueux de la vie privée
- * @description Analytics RGPD-compliant avec consentement utilisateur et données anonymisées
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Privacy-first analytics system
+ * @fileoverview GDPR-compliant analytics with user consent and anonymized data
+ * @author Christophe Lecart
  */
 
 /**
- * Classe de gestion d'analytics privacy-first
+ * Privacy-first analytics management class
  * @class PrivacyAnalytics
- * @description Collecte des métriques de performance et d'usage en respectant la vie privée
+ * @description Collects performance and usage metrics while respecting privacy
  * @example
- * // Initialiser l'analytics
  * const analytics = new PrivacyAnalytics();
- *
- * // Tracker un événement
  * analytics.trackEvent('Navigation', 'Click', 'Header Menu');
  */
 class PrivacyAnalytics {
   /**
-   * Constructeur de la classe PrivacyAnalytics
+   * PrivacyAnalytics class constructor
    * @constructor
-   * @description Initialise les données de session et vérifie le consentement RGPD
+   * @description Initializes session data and checks GDPR consent
    */
   constructor() {
     /**
-     * Données de session utilisateur
+     * User session data
      * @type {Object}
-     * @property {number} startTime - Timestamp de début de session
-     * @property {number} pageViews - Nombre de pages vues
-     * @property {number} interactions - Nombre d'interactions utilisateur
-     * @property {number} scrollDepth - Profondeur de scroll maximale (%)
-     * @property {number} timeOnPage - Temps passé sur la page (ms)
+     * @property {number} startTime - Session start timestamp
+     * @property {number} pageViews - Number of page views
+     * @property {number} interactions - Number of user interactions
+     * @property {number} scrollDepth - Maximum scroll depth (%)
+     * @property {number} timeOnPage - Time spent on page (ms)
      */
     this.sessionData = {
       startTime: Date.now(),
@@ -41,9 +37,9 @@ class PrivacyAnalytics {
     };
 
     /**
-     * État du consentement RGPD
+     * GDPR consent status
      * @type {boolean}
-     * @description Vérifie si l'utilisateur a accepté le tracking
+     * @description Checks if user has accepted tracking
      */
     this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
 
@@ -53,9 +49,9 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Initialise tous les trackers d'analytics
+   * Initializes all analytics trackers
    * @method init
-   * @description Configure les event listeners et démarre la collecte de données
+   * @description Sets up event listeners and starts data collection
    * @returns {void}
    */
   init() {
@@ -65,16 +61,16 @@ class PrivacyAnalytics {
     this.trackPerformance();
 
     /**
-     * Envoi des données avant déchargement de la page
-     * @description Utilise beforeunload pour capturer les sessions courtes
+     * Send data before page unload
+     * @description Uses beforeunload to capture short sessions
      */
     window.addEventListener("beforeunload", () => {
       this.sendAnalytics();
     });
 
     /**
-     * Envoi périodique des données pour les sessions longues
-     * @description Intervalle de 30 secondes pour éviter la perte de données
+     * Periodic data sending for long sessions
+     * @description 30-second interval to prevent data loss
      */
     setInterval(() => {
       this.sendAnalytics();
@@ -82,20 +78,19 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Enregistre une vue de page
+   * Records a page view
    * @method trackPageView
-   * @description Incrémente le compteur de pages vues pour la session
+   * @description Increments page view counter for session
    * @returns {void}
    */
   trackPageView() {
     this.sessionData.pageViews++;
-    console.log("Page view tracked:", window.location.pathname);
   }
 
   /**
-   * Suit la profondeur de scroll de l'utilisateur
+   * Tracks user scroll depth
    * @method trackScrollDepth
-   * @description Calcule le pourcentage de scroll maximum atteint
+   * @description Calculates maximum scroll percentage reached
    * @returns {void}
    */
   trackScrollDepth() {
@@ -156,33 +151,30 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Enregistre un événement utilisateur personnalisé
+   * Records a custom user event
    * @method trackEvent
-   * @description Collecte des événements avec catégorisation pour analyse comportementale
-   * @param {string} category - Catégorie de l'événement (ex: 'Navigation', 'Interaction')
-   * @param {string} action - Action effectuée (ex: 'Click', 'Download')
-   * @param {string|null} [label=null] - Label optionnel pour plus de contexte
-   * @param {number|null} [value=null] - Valeur numérique associée à l'événement
+   * @description Collects categorized events for behavioral analysis
+   * @param {string} category - Event category (e.g., 'Navigation', 'Interaction')
+   * @param {string} action - Action performed (e.g., 'Click', 'Download')
+   * @param {string|null} [label=null] - Optional label for additional context
+   * @param {number|null} [value=null] - Numeric value associated with event
    * @returns {void}
    * @example
-   * // Tracker un clic sur bouton
    * trackEvent('UI', 'Button Click', 'Contact Form Submit');
-   *
-   * // Tracker un téléchargement avec valeur
    * trackEvent('Download', 'PDF', 'CV_Download', 1);
    */
   trackEvent(category, action, label = null, value = null) {
     if (!this.consentGiven) return;
 
     /**
-     * Structure de données d'événement
+     * Event data structure
      * @type {Object}
-     * @property {string} category - Catégorie de l'événement
-     * @property {string} action - Action effectuée
-     * @property {string|null} label - Label descriptif
-     * @property {number|null} value - Valeur numérique
-     * @property {number} timestamp - Horodatage de l'événement
-     * @property {string} url - URL de la page où l'événement s'est produit
+     * @property {string} category - Event category
+     * @property {string} action - Action performed
+     * @property {string|null} label - Descriptive label
+     * @property {number|null} value - Numeric value
+     * @property {number} timestamp - Event timestamp
+     * @property {string} url - Page URL where event occurred
      */
     const eventData = {
       category,
@@ -193,11 +185,9 @@ class PrivacyAnalytics {
       url: window.location.pathname,
     };
 
-    console.log("Event tracked:", eventData);
-
     /**
-     * Stockage local des événements pour envoi différé
-     * @description Conserve les 50 derniers événements pour éviter la surcharge
+     * Local storage of events for deferred sending
+     * @description Keeps last 50 events to avoid overload
      */
     const events = JSON.parse(localStorage.getItem("analytics_events") || "[]");
     events.push(eventData);
@@ -231,23 +221,18 @@ class PrivacyAnalytics {
     };
 
     // In real implementation, send to your analytics endpoint
-    console.log("Analytics data ready to send:", analyticsData);
-
     // Clear sent events
     localStorage.removeItem("analytics_events");
   }
 
   /**
-   * Met à jour le statut de consentement RGPD
+   * Updates GDPR consent status
    * @method updateConsent
-   * @description Gère l'activation/désactivation du tracking selon le consentement
-   * @param {boolean} hasConsent - État du consentement utilisateur
+   * @description Manages tracking activation/deactivation based on consent
+   * @param {boolean} hasConsent - User consent status
    * @returns {void}
    * @example
-   * // Activer le tracking après consentement
    * analytics.updateConsent(true);
-   *
-   * // Désactiver et nettoyer les données
    * analytics.updateConsent(false);
    */
   updateConsent(hasConsent) {
@@ -258,8 +243,8 @@ class PrivacyAnalytics {
       this.initialized = true;
     } else if (!hasConsent) {
       /**
-       * Nettoyage des données analytics lors du retrait de consentement
-       * @description Supprime toutes les données collectées et réinitialise la session
+       * Analytics data cleanup on consent withdrawal
+       * @description Removes all collected data and resets session
        */
       localStorage.removeItem("analytics_events");
       this.sessionData = {
@@ -274,7 +259,7 @@ class PrivacyAnalytics {
 }
 
 /**
- * Export de la classe PrivacyAnalytics pour utilisation dans l'application principale
+ * Export PrivacyAnalytics class for main application use
  * @exports PrivacyAnalytics
  */
 export default PrivacyAnalytics;

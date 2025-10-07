@@ -1,7 +1,7 @@
 {
   "name": "Christophe Lecart - Portfolio Professionnel",
   "short_name": "CL Portfolio",
-  "description": "Portfolio professionnel de Christophe Lecart - Développeur Full Stack spécialisé en JavaScript, Go et technologies web modernes",
+  "description": "Professional Portfolio of Christophe Lecart - Full Stack Developer specialized in JavaScript, Go and modern web technologies",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -52,9 +52,9 @@
       ]
     },
     {
-      "name": "Projets",
-      "short_name": "Projets",
-      "description": "Découvrez mes projets",
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "Discover my projects",
       "url": "/#projects",
       "icons": [
         {

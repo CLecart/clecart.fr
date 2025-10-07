@@ -4,24 +4,22 @@
     <meta charset="UTF-8" />
 
     <script>
-      const stored = localStorage.getItem("dark-mode");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+      document.documentElement.style.colorScheme = "light dark";
+      const s = localStorage.getItem("dark-mode"),
+        p = matchMedia("(prefers-color-scheme:dark)").matches;
+      if (s === "enabled" || (s !== "disabled" && p))
         document.documentElement.classList.add("dark-mode");
-      }
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Projets de développement - Portfolio de Christophe Lecart"
+      content="Development Projects - Christophe Lecart Portfolio"
     />
 
     <title>Projects Details - Christophe Lecart</title>
 
-    <!-- Favicons optimisés pour différents supports -->
+    <!-- Optimized favicons for different platforms -->
     <link rel="icon" href="assets/icons/favicon.ico" />
     <link
       rel="icon"
@@ -85,7 +83,7 @@
       </div>
 
       <!-- Project 1: Groupie-Tracker -->
-      <div class="project description card-base fade-in" id="project1">
+      <div class="project description card-base fade-in active" id="project1">
         <h2>Groupie-Tracker</h2>
 
         <h3>Project Overview</h3>

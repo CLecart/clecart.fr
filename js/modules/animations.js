@@ -1,293 +1,240 @@
 /**
- * @fileoverview Système d'animations et effets visuels intelligents
- * @description Gestion des animations d'apparition, transitions et effets basés sur l'intersection
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Animation module with intersection observer and scroll effects
+ * @module Animations
+ * @description Handles element animations, scroll detection and typewriter effects
  */
+
+let lastScrollY = 0;
+let scrollDirection = "down";
 
 /**
- * Initialise le système d'animations basé sur l'Intersection Observer
- * @function initAnimations
- * @description Configure les observateurs pour déclencher les animations au scroll
- * @returns {void}
- * @example
- * // Activer les animations de page
- * initAnimations();
+ * Intersection observer factory for configurable observers
+ * @function createObserver
+ * @param {function} callback - Callback function for observed entries
+ * @param {object} options - Custom options for observer
+ * @returns {IntersectionObserver} Configured observer instance
+ * @description Simplifies observer creation with optimal default options
  */
-export function initAnimations() {
-  /**
-   * Factory pour créer des observateurs d'intersection configurables
-   * @function createObserver
-   * @param {function} callback - Fonction de rappel pour les entrées observées
-   * @param {object} options - Options personnalisées pour l'observateur
-   * @returns {IntersectionObserver} Instance d'observateur configurée
-   * @description Simplifie la création d'observateurs avec options par défaut optimales
-   */
-  const createObserver = (callback, options = {}) => {
-    return new IntersectionObserver(
-      callback,
-      Object.assign(
-        {
-          root: null,
-          threshold: 0.1,
-          rootMargin: "-10% 0px -10% 0px",
-        },
-        options
-      )
-    );
+function createObserver(callback, options = {}) {
+  const defaultOptions = {
+    root: null,
+    rootMargin: "0px 0px -10% 0px",
+    threshold: [0, 0.1, 0.5, 1],
   };
 
-  /**
-   * Observateur principal pour les animations d'apparition
-   * @description Déclenche la classe 'appear' lors de l'intersection avec le viewport
-   */
-  const observer = createObserver((entries, observer) => {
+  const mergedOptions = { ...defaultOptions, ...options };
+  return new IntersectionObserver(callback, mergedOptions);
+}
+
+/**
+ * Initialize scroll-triggered animations for elements
+ * @function initAnimations
+ * @description Triggers 'appear' class when intersecting with viewport
+ */
+export function initAnimations() {
+  const elementsToAnimate = document.querySelectorAll(
+    ".project-card, .skill-card, .language-card, .section-intro, .about-intro"
+  );
+
+  const animationObserver = createObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
 
-        /**
-         * Optimisation : unobserve après animation pour les cartes de projet
-         * @description Évite les calculs inutiles après la première animation
-         */
-        if (
-          entry.target.classList.contains("project-card") ||
-          entry.target.closest("#projects")
-        ) {
-          observer.unobserve(entry.target);
+        if (entry.target.classList.contains("project-card")) {
+          animationObserver.unobserve(entry.target);
         }
       }
     });
   });
 
-  /**
-   * Observateur spécialisé pour les en-têtes de section
-   * @description Applique l'animation 'title-animate' aux titres de section
-   */
-  const sectionHeaderObserver = createObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("title-animate");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: "-10% 0px" }
+  elementsToAnimate.forEach((element) => {
+    animationObserver.observe(element);
+  });
+
+  const allAnimatedElements = document.querySelectorAll(
+    ".fade-in, .slide-left, .slide-right"
   );
+  allAnimatedElements.forEach((element) => {
+    if (!element.classList.contains("appear")) {
+      animationObserver.observe(element);
+    }
+  });
 
   /**
-   * Observateur pour l'activation des sections avec détection de direction
-   * @description Gère l'état actif des sections et la direction du défilement
+   * Specialized observer for section headers
    */
-  const sectionObserver = new IntersectionObserver(
+  const sectionHeaders = document.querySelectorAll("h2, .section-title");
+  const headerObserver = createObserver(
     (entries) => {
       entries.forEach((entry) => {
-        /**
-         * Détection de la direction de défilement
-         * @description Analyse la position pour déterminer le sens de navigation
-         */
-        const direction = entry.boundingClientRect.y < 0 ? "up" : "down";
-
         if (entry.isIntersecting) {
-          entry.target.classList.add("section-active");
-          entry.target.setAttribute("data-scroll-direction", direction);
-        } else {
-          entry.target.classList.remove("section-active");
+          entry.target.classList.add("appear");
         }
       });
     },
-    {
-      root: null,
-      rootMargin: "-20% 0px",
-      threshold: 0.1,
-    }
+    { rootMargin: "0px 0px -20% 0px" }
   );
 
-  /**
-   * Application des observateurs sur les éléments animés
-   * @description Sélectionne et observe tous les éléments avec classes d'animation
-   */
-  const animatedElements = document.querySelectorAll(
-    ".fade-in, .slide-left, .slide-right, .project.description.card-base"
-  );
-  animatedElements.forEach((element) => observer.observe(element));
+  sectionHeaders.forEach((header) => {
+    headerObserver.observe(header);
+  });
 
   /**
-   * Observation des en-têtes de section pour animations spéciales
-   * @description Cible les titres des sections skills et projects
+   * Section activation observer with direction detection
+   * @description Manages active section state and scroll direction
    */
-  const sectionHeaders = document.querySelectorAll(
-    "#skills .section-header h2, #projects .section-header h2"
-  );
-  sectionHeaders.forEach((header) => sectionHeaderObserver.observe(header));
+  const sections = document.querySelectorAll("section[id]");
+  const sectionObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        /**
+         * Scroll direction detection
+         */
+        const currentScrollY = window.scrollY;
+        scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
+        lastScrollY = currentScrollY;
 
-  /**
-   * Traitement spécial pour la page de navigation des projets
-   * @description Ajoute automatiquement les classes d'animation aux cartes
-   */
-  if (document.querySelector(".project-navigation")) {
-    document.querySelectorAll(".project.description").forEach((card) => {
-      card.classList.add("fade-in");
+        entry.target.classList.add("section-active");
+
+        if (scrollDirection === "down") {
+          entry.target.setAttribute("data-scroll-direction", "down");
+        } else {
+          entry.target.setAttribute("data-scroll-direction", "up");
+        }
+      } else {
+        entry.target.classList.remove("section-active");
+      }
     });
+  });
+
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+
+  const currentPath = window.location.pathname;
+  if (
+    currentPath.includes("descriptions-projects") ||
+    currentPath.includes("project")
+  ) {
+    initProjectPageAnimations();
   }
 
-  /**
-   * Initialisation des animations spéciales pour les détails de portfolio
-   * @description Déclenche la fonction spécialisée si la page le nécessite
-   */
-  if (document.querySelector(".portfolio-details")) {
-    handlePortfolioDetailsAnimations();
-  }
-
-  /**
-   * Gestion avancée des animations pour les pages de détails de portfolio
-   * @function handlePortfolioDetailsAnimations
-   * @description Configure des animations spécialisées pour les sections de portfolio
-   * @returns {void}
-   */
-  function handlePortfolioDetailsAnimations() {
-    /**
-     * Configuration de l'observateur pour les sections de portfolio
-     * @description Anime les sections avec leurs éléments enfants séquentiellement
-     */
-    const portfolioSections = document.querySelectorAll(".portfolio-section");
-
-    const portfolioObserver = createObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("appear", "section-active");
-
-            /**
-             * Animation séquentielle des résultats/outcomes
-             * @description Déclenche l'animation des listes d'éléments avec délai
-             */
-            animateChildElements(
-              entry.target,
-              ".outcomes-list li",
-              "appear-outcome"
-            );
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "-10% 0px" }
-    );
-
-    portfolioSections.forEach((section) => portfolioObserver.observe(section));
-
-    /**
-     * Animation spéciale pour la section call-to-action
-     * @description Observer dédié avec seuil élevé pour effet dramatique
-     */
-    const ctaSection = document.querySelector(".cta-section");
-    if (ctaSection) {
-      createObserver(
-        (entries) =>
-          entries[0].isIntersecting &&
-          entries[0].target.classList.add("appear"),
-        { threshold: 0.5 }
-      ).observe(ctaSection);
-    }
-
-    /**
-     * Utilitaire d'animation séquentielle pour éléments enfants
-     * @function animateChildElements
-     * @param {Element} parent - Élément parent contenant les enfants à animer
-     * @param {string} selector - Sélecteur CSS pour les enfants cibles
-     * @param {string} className - Classe CSS à ajouter pour l'animation
-     * @returns {void}
-     * @description Anime les éléments enfants avec un délai progressif de 100ms
-     */
-    function animateChildElements(parent, selector, className) {
-      const elements = parent.querySelectorAll(selector);
-      elements.forEach((item, index) => {
-        setTimeout(() => item.classList.add(className), 100 * index);
-      });
-    }
+  // Initialize Learning Outcomes animations for about-portfolio page
+  if (currentPath.includes("about-portfolio")) {
+    initLearningOutcomesAnimations();
   }
 }
 
 /**
- * Effet machine à écrire dynamique pour l'élément typewriter
+ * Initialize specialized animations for project pages
+ * @function initProjectPageAnimations
+ * @description Configures specialized animations for portfolio sections
+ */
+function initProjectPageAnimations() {
+  const projectElements = document.querySelectorAll(
+    ".project-showcase, .project-details, .tech-stack"
+  );
+
+  const projectObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("appear");
+        projectObserver.unobserve(entry.target);
+      }
+    });
+  });
+
+  projectElements.forEach((element) => {
+    projectObserver.observe(element);
+  });
+}
+
+/**
+ * Initialize animations for Learning Outcomes cards
+ * @function initLearningOutcomesAnimations
+ * @description Animates outcomes list items with staggered appear-outcome class
+ */
+function initLearningOutcomesAnimations() {
+  const outcomesList = document.querySelector(".outcomes-list");
+  if (!outcomesList) return;
+
+  const outcomesObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const listItems = entry.target.querySelectorAll("li");
+
+        // Animate each list item with staggered timing
+        listItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add("appear-outcome");
+          }, index * 100); // 100ms delay between each item
+        });
+
+        outcomesObserver.unobserve(entry.target);
+      }
+    });
+  });
+
+  outcomesObserver.observe(outcomesList);
+}
+
+/**
+ * Initialize typewriter effect for dynamic text
  * @function initTypewriterEffect
- * @description Crée un effet de frappe animé avec cycle de mots et vitesses variables
  * @returns {void}
- * @example
- * // Activer l'effet typewriter sur #typewriter
- * initTypewriterEffect();
  */
 export function initTypewriterEffect() {
-  const typewriterElement = document.getElementById("typewriter");
+  const typewriterElement = document.querySelector(".typewriter-text");
   if (!typewriterElement) return;
 
-  /**
-   * Liste des mots à afficher en rotation
-   * @constant {string[]}
-   * @description Termes professionnels affichés séquentiellement
-   */
-  const words = [
-    "Web Developer",
-    "Mobile Developer",
-    "UI Designer",
-    "Problem Solver",
+  const texts = [
+    "Web & Mobile Developer",
+    "JavaScript Specialist",
+    "Go Developer",
+    "Modern App Creator",
   ];
 
-  /**
-   * Variables d'état pour l'animation typewriter
-   * @description Contrôlent la progression de l'effet de frappe
-   */
-  let wordIndex = 0;
-  let charIndex = 0;
+  let currentTextIndex = 0;
+  let currentCharIndex = 0;
   let isDeleting = false;
-  let typeSpeed = 100;
+  const typingSpeed = 100;
+  const deletingSpeed = 50;
+  const pauseDuration = 2000;
 
-  /**
-   * Fonction récursive d'animation de frappe
-   * @function type
-   * @description Gère l'ajout/suppression de caractères avec timing variable
-   * @returns {void}
-   */
-  function type() {
-    const currentWord = words[wordIndex];
+  function typeEffect() {
+    const currentText = texts[currentTextIndex];
 
-    if (isDeleting) {
-      /**
-       * Mode suppression : retire les caractères rapidement
-       * @description Vitesse accélérée pour l'effacement (50ms)
-       */
-      typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-      charIndex--;
-      typeSpeed = 50;
+    if (!isDeleting) {
+      typewriterElement.textContent = currentText.substring(
+        0,
+        currentCharIndex + 1
+      );
+      currentCharIndex++;
+
+      if (currentCharIndex === currentText.length) {
+        setTimeout(() => {
+          isDeleting = true;
+          typeEffect();
+        }, pauseDuration);
+        return;
+      }
     } else {
-      /**
-       * Mode écriture : ajoute les caractères progressivement
-       * @description Vitesse normale pour la frappe (100ms)
-       */
-      typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-      charIndex++;
-      typeSpeed = 100;
+      typewriterElement.textContent = currentText.substring(
+        0,
+        currentCharIndex - 1
+      );
+      currentCharIndex--;
+
+      if (currentCharIndex === 0) {
+        isDeleting = false;
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+      }
     }
 
-    /**
-     * Gestion des transitions entre modes écriture/suppression
-     * @description Logique de basculement avec pauses appropriées
-     */
-    if (!isDeleting && charIndex === currentWord.length) {
-      isDeleting = true;
-      typeSpeed = 1000; // Pause après mot complet
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      typeSpeed = 500; // Pause avant nouveau mot
-    }
-
-    setTimeout(type, typeSpeed);
+    const speed = isDeleting ? deletingSpeed : typingSpeed;
+    setTimeout(typeEffect, speed);
   }
 
-  /**
-   * Démarrage de l'effet avec délai initial
-   * @description Permet le chargement complet avant début de l'animation
-   */
-  setTimeout(type, 1000);
+  typeEffect();
 }

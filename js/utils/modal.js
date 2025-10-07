@@ -1,12 +1,12 @@
 /**
- * @fileoverview Module de gestion des modales accessibles
- * @description Gère l'ouverture, fermeture et animations des modales avec support d'accessibilité
+ * @fileoverview Accessible modal management module
+ * @description Handles modal opening, closing and animations with accessibility support
  * @version 1.0.0
  * @author Christophe Lecart <djlike@hotmail.fr>
  */
 
 /**
- * Initialise le système de modales pour les images de projet
+ * Initialize modal system for project images
  * @function initModals
  * @description Configure les event listeners pour l'ouverture des modales d'images
  * @returns {void}
@@ -16,7 +16,7 @@
  */
 export function initModals() {
   /**
-   * Configuration des déclencheurs de modales sur les miniatures de projets
+   * Modal trigger configuration on project thumbnails
    * @description Ajoute des event listeners de clic sur toutes les images de projets
    */
   document.querySelectorAll(".project-thumb img").forEach((image) => {
@@ -83,7 +83,7 @@ export function initModals() {
     }, 10);
 
     /**
-     * Configuration des gestionnaires de fermeture de modale
+     * Modal close handlers configuration
      * @description Multiple méthodes de fermeture pour une meilleure UX
      */
     closeButton.addEventListener("click", closeModal);

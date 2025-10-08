@@ -588,7 +588,8 @@ body.dark-mode .outcomes-list li:hover {
 
 @media (max-width: 600px) {
   .portfolio-section.card-base {
-    padding: 15px 5px;
+    padding: 20px 15px;
+    margin: 0 10px;
   }
 
   .features-list li {
@@ -752,6 +753,11 @@ body.dark-mode .outcomes-list li:hover {
 }
 
 @media (max-width: 480px) {
+  .portfolio-section.card-base {
+    padding: 20px 10px;
+    margin: 0 5px;
+  }
+
   .features-list li {
     margin-bottom: 24px;
     padding: 0;

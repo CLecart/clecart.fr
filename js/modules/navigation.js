@@ -92,22 +92,41 @@ export function initNavigation() {
     }
   });
 
-  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute("href");
-      const targetElement = document.querySelector(targetId);
+  document
+    .querySelectorAll('a[href^="#"]:not([href="#"])')
+    .forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href");
+        const targetElement = document.querySelector(targetId);
 
-      if (targetElement) {
-        const headerHeight = document.querySelector("header").offsetHeight;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-        const buffer = window.innerWidth <= 768 ? 15 : 25;
-        
-        window.scrollTo({
-          top: targetPosition - headerHeight - buffer,
-          behavior: 'smooth'
-        });
-      }
+        if (targetElement) {
+          const header = document.querySelector("header");
+          const headerHeight = header.offsetHeight;
+          const targetPosition =
+            targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+          // Alignement parfait : le trait de section doit se confondre avec celui du header
+          // Header trait à bottom: -3px, donc on ajuste pour que les traits soient alignés
+          const headerTraitOffset = 3; // Le trait du header descend de 3px sous le header
+
+          // Ajustement spécial pour la section skills pour centrer les cards
+          let additionalOffset = 0;
+          if (targetId === "#skills") {
+            additionalOffset = 50; // Remonte la section de 50px pour centrer les cards
+          }
+
+          const scrollTarget =
+            targetPosition -
+            headerHeight +
+            headerTraitOffset +
+            additionalOffset;
+
+          window.scrollTo({
+            top: Math.max(0, scrollTarget),
+            behavior: "smooth",
+          });
+        }
+      });
     });
-  });
 }

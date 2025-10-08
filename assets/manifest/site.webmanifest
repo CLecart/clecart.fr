@@ -42,7 +42,7 @@
     {
       "name": "Contact",
       "short_name": "Contact",
-      "description": "Contactez-moi directement",
+      "description": "Contact me directly",
       "url": "/#contact",
       "icons": [
         {
@@ -70,14 +70,14 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Vue d'ensemble du portfolio"
+      "label": "Portfolio overview"
     },
     {
       "src": "/assets/images/screenshot-narrow.png",
       "sizes": "720x1280",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Version mobile du portfolio"
+      "label": "Mobile portfolio version"
     }
   ]
 }

@@ -1,4 +1,4 @@
-# Sécurité - Portfolio Clecart.fr
+# Security - Portfolio Clecart.fr
 
 ## 🛡️ Mesures de Sécurité Implémentées
 
@@ -30,7 +30,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' c
 - **Aucune authentification requise** - Site statique public
 - **Pas de stockage de données sensibles** côté client
 
-### Gestion des Formulaires
+### Form Management
 
 - **Validation côté client ET serveur** (EmailJS)
 - **Sanitisation des entrées** avant envoi
@@ -39,7 +39,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' c
 
 ### Docker et Infrastructure
 
-#### Sécurité des Conteneurs
+#### Container Security
 
 ```dockerfile
 # Utilisateur non-root
@@ -152,7 +152,7 @@ testssl.sh clecart.fr
 
 - [ ] Pentest externe (si budget)
 - [ ] Review de la CSP
-- [ ] Mise à jour documentation
+- [ ] Documentation update
 - [ ] Formation équipe
 
 ### Annuel

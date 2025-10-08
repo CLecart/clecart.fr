@@ -85,6 +85,7 @@
   --card-bg-dark: var(--card-dark);
   --card-color-dark: var(--text-dark);
   --card-border-dark: 1px solid var(--border-dark);
+  --accent-line-thickness: 2px;
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-bounce: cubic-bezier(0.3, 1.05, 0.5, 1);
   --duration-fast: 0.2s;
@@ -138,6 +139,8 @@
   --breakpoint-xl: 1200px;
   --neon-shadow: 0 0 24px 4px var(--primary);
   --neon-shadow-dark: 0 0 32px 6px var(--primary);
+  --input-focus-shadow-dark: 0 5px 15px rgba(108, 99, 255, 0.2);
+  --input-focus-bg-dark: rgba(60, 60, 80, 0.3);
 }
 
 /* Dark mode variables override */

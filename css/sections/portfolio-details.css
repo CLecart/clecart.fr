@@ -1,4 +1,4 @@
-/* Styles pour la page détails du portfolio - harmonisés */
+/** Portfolio details page styles - harmonized */
 
 .portfolio-details {
   padding: 130px 0 60px;
@@ -31,8 +31,11 @@
   border: var(--card-border);
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+  transition:
+    opacity 0.8s var(--ease-smooth),
+    transform 0.8s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 .portfolio-section.card-base {
@@ -73,7 +76,8 @@ body.dark-mode .portfolio-section.card-base:hover {
   transform: var(--card-hover-transform);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
     border-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -120,8 +124,10 @@ body.dark-mode .portfolio-section:hover {
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth),
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
     background-color 0.4s var(--ease-smooth);
 }
 
@@ -162,8 +168,10 @@ body.dark-mode .tech-item {
   transform: var(--card-hover-transform);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 body.dark-mode .tech-item:hover {
@@ -230,7 +238,8 @@ body.dark-mode .features-list li {
 .features-list li {
   opacity: 0;
   transform: translateX(-20px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
     transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -294,7 +303,9 @@ body.dark-mode .features-list li {
   left: 0;
   top: 4px;
   color: var(--primary); /* Bleu par défaut */
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
   font-size: 1.1rem;
 }
 
@@ -327,7 +338,9 @@ body.dark-mode .features-list li {
   left: 0;
   top: 4px;
   color: var(--primary); /* Bleu par défaut */
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
   font-size: 1.1rem;
 }
 
@@ -357,7 +370,9 @@ body.dark-mode .features-list li {
   margin: 20px 0;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
 .portfolio-section.appear .code-block {
@@ -393,8 +408,10 @@ body.dark-mode .features-list li {
   border-radius: 10px;
   border: 1px solid transparent;
   box-shadow: var(--shadow);
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth),
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
     background-color 0.4s var(--ease-smooth);
 }
 
@@ -431,8 +448,10 @@ body.dark-mode .approach-item.card-base:hover {
   transform: var(--card-hover-transform);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 .approach-item h3 {
@@ -457,7 +476,8 @@ body.dark-mode .approach-item.card-base:hover {
   align-items: center;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
     transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -507,8 +527,10 @@ body.dark-mode .outcomes-list li:hover {
   transform: var(--card-hover-transform);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 /* Animation cohérente des titres au survol dans toutes les cartes */
@@ -540,6 +562,10 @@ body.dark-mode .outcomes-list li:hover {
   .cta-section .btn {
     width: 100%;
     max-width: 250px;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
   }
 
   .portfolio-section {
@@ -564,10 +590,45 @@ body.dark-mode .outcomes-list li:hover {
   .portfolio-section.card-base {
     padding: 15px 5px;
   }
+
+  .features-list li {
+    margin-bottom: 18px;
+    padding-left: 30px;
+    font-size: 0.9rem;
+  }
+
+  .features-list i {
+    font-size: 1.1rem;
+  }
+
   .cta-section {
     flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .cta-section .btn {
+    width: 100%;
+    max-width: 280px;
+    min-width: unset;
+    padding: 20px 30px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cta-section .btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .cta-section .btn i {
+    font-size: 1.2rem;
+    margin-right: 8px;
   }
 }
 
@@ -600,8 +661,10 @@ body.dark-mode .outcomes-list li {
   border-radius: 10px;
   padding: 18px 20px 18px 50px;
   position: relative;
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth),
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth),
     opacity 0.7s var(--ease-smooth);
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
@@ -631,8 +694,10 @@ body.dark-mode .outcomes-list li {
   transform: var(--card-hover-transform);
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
-  transition: transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+  transition:
+    transform 0.4s var(--ease-smooth),
+    box-shadow 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 .outcomes-list li:hover::before {
@@ -652,6 +717,77 @@ body.dark-mode .outcomes-list li:hover {
 @media (max-width: 768px) {
   .outcomes-list {
     grid-template-columns: 1fr;
+  }
+
+  .features-list li {
+    margin-bottom: 25px;
+    padding: 20px 15px;
+    line-height: 1.6;
+    font-size: 1rem;
+    background: rgba(var(--primary-rgb), 0.05);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+    position: relative;
+    padding-left: 15px;
+  }
+
+  .features-list li strong {
+    display: inline-block;
+    margin-left: 35px;
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.3;
+  }
+
+  .features-list i {
+    font-size: 1.4rem;
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    color: var(--primary);
+  }
+}
+
+@media (max-width: 480px) {
+  .features-list li {
+    margin-bottom: 25px;
+    padding: 18px 15px;
+    font-size: 0.95rem;
+    border-radius: 15px;
+    border-left: 5px solid var(--primary);
+    background: rgba(var(--primary-rgb), 0.08);
+  }
+
+  .features-list li strong {
+    display: block;
+    margin-left: 40px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .features-list i {
+    font-size: 1.5rem;
+    top: 18px;
+    left: 15px;
+    color: var(--primary);
+  }
+
+  /* Texte descriptif sous le titre */
+  .features-list li strong + * {
+    margin-left: 0;
+    padding-left: 0;
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
+  .portfolio-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
   }
 }
 
@@ -675,8 +811,10 @@ body.dark-mode .outcomes-list li:hover {
 .approach-item,
 .outcomes-list li {
   transform: translateY(0);
-  transition: transform 0.5s var(--ease-smooth),
-    box-shadow 0.5s var(--ease-smooth), border-color 0.5s var(--ease-smooth);
+  transition:
+    transform 0.5s var(--ease-smooth),
+    box-shadow 0.5s var(--ease-smooth),
+    border-color 0.5s var(--ease-smooth);
 }
 
 /* Garantir le même état de départ pour tous les éléments */

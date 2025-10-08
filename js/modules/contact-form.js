@@ -1,125 +1,122 @@
 /**
- * Contact form module with validation and submission
+ * Contact form module with EmailJS integration
  * @module ContactForm
- * @description Handles form submission, validation and user feedback
- */
-
-/**
- * Initialize contact form functionality
- * @function initContactForm
- * @description Sets up form validation, submission and error handling
- * @returns {void}
  */
 export function initContactForm() {
-  const form = document.getElementById("contact-form");
-  const statusDiv = document.querySelector(".form-status");
+  const contactForm = document.getElementById("contact-form");
+  const formStatus = document.querySelector(".form-status");
 
-  /**
-   * DOM elements selection for form handling
-   */
-  if (!form || !statusDiv) return;
+  if (!contactForm) return;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // Check GDPR consent and adapt interface
+  const gdprChoice = localStorage.getItem("gdpr-choice");
+  if (gdprChoice === "declined") {
+    renderContactAlternative(contactForm);
+    return;
+  }
 
-    const submitBtn = form.querySelector("button[type='submit']");
-    const formData = new FormData(form);
+  // Configure form behavior
+  setupFormSubmissionHandling(contactForm, formStatus);
+}
 
-    const data = {
-      name: sanitizeInput(formData.get("name")),
-      email: sanitizeInput(formData.get("email")),
-      message: sanitizeInput(formData.get("message")),
-    };
+/**
+ * Display alternative when GDPR is declined
+ * @param {HTMLElement} form - Form element
+ */
+function renderContactAlternative(form) {
+  form.innerHTML = `
+    <p class="gdpr-message">
+      The contact form has been disabled because you declined our privacy policy.
+      You can contact me directly by email at
+      <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
+    </p>`;
+}
 
-    if (!validateForm(data)) {
-      showStatus("error", "Please fill in all fields correctly.");
-      return;
-    }
+/**
+ * Configure form submission handling
+ * @param {HTMLElement} form - Form element
+ * @param {HTMLElement} statusElement - Status display element
+ */
+function setupFormSubmissionHandling(form, statusElement) {
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    // Prevent multiple submissions
+    if (form.classList.contains("sending")) return;
+
+    // Immediate UI feedback
+    const submitButton = form.querySelector('button[type="submit"]');
+    setFormState(
+      form,
+      submitButton,
+      statusElement,
+      "sending",
+      "Sending your message..."
+    );
 
     try {
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending...";
-      showStatus("sending", "Sending your message...");
+      // Get data in EmailJS format
+      const formData = new FormData(form);
+      const templateParams = {
+        from_name: formData.get("from_name"),
+        user_name: formData.get("from_name"),
+        email: formData.get("email"),
+        user_email: formData.get("email"),
+        message: formData.get("message"),
+        to_name: "Christophe",
+      };
 
-      const response = await fetch("https://formspree.io/f/xdkogwqb", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        showStatus("success", "Message sent successfully! I'll get back to you soon.");
-        form.reset();
-
-        const inputs = form.querySelectorAll("input, textarea");
-        inputs.forEach((input) => {
-          input.classList.remove("has-content", "email-valid");
-        });
-
-        if (window.analytics) {
-          window.analytics.trackEvent("Contact", "FormSubmit", "Success");
-        }
-      } else {
-        throw new Error("Form submission failed");
+      // Check EmailJS service availability
+      if (typeof emailjs === "undefined") {
+        throw new Error("Email service unavailable");
       }
+
+      // Send message
+      await emailjs.send("service_lokewrs", "template_2ov9l9i", templateParams);
+
+      // Success
+      setFormState(
+        form,
+        submitButton,
+        statusElement,
+        "success",
+        "Message sent successfully!"
+      );
+      form.reset();
     } catch (error) {
-      showStatus("error", "Failed to send message. Please try again later.");
-      
-      if (window.analytics) {
-        window.analytics.trackEvent("Contact", "FormSubmit", "Error");
-      }
+      console.error("Sending error:", error);
+      setFormState(
+        form,
+        submitButton,
+        statusElement,
+        "error",
+        `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+      );
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send Message";
+      // Reset form after delay
+      setTimeout(() => {
+        form.classList.remove("sending");
+        if (submitButton) submitButton.disabled = false;
+      }, 3000);
     }
   });
+}
 
-  /**
-   * Form validation function
-   * @param {Object} data - Form data to validate
-   * @returns {boolean} Validation result
-   */
-  function validateForm(data) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return (
-      data.name.trim().length >= 2 &&
-      emailRegex.test(data.email) &&
-      data.message.trim().length >= 10
-    );
-  }
+/**
+ * Update form visual state
+ * @param {HTMLElement} form - Form element
+ * @param {HTMLElement} button - Submit button
+ * @param {HTMLElement} statusElement - Status element
+ * @param {string} state - State name
+ * @param {string} message - Status message
+ */
+function setFormState(form, button, statusElement, state, message) {
+  form.classList.add("sending");
+  if (button) button.disabled = true;
 
-  /**
-   * Input sanitization function
-   * @param {string} input - Input string to sanitize
-   * @returns {string} Sanitized string
-   * @description Escapes dangerous HTML characters for security
-   */
-  function sanitizeInput(input) {
-    if (!input) return "";
-    return input
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#x27;")
-      .replace(/\//g, "&#x2F;");
-  }
-
-  /**
-   * Status display function
-   * @param {string} type - Status type (success, error, sending)
-   * @param {string} message - Status message to display
-   */
-  function showStatus(type, message) {
-    statusDiv.className = `form-status ${type}`;
-    statusDiv.textContent = message;
-
-    setTimeout(() => {
-      if (type !== "success") {
-        statusDiv.className = "form-status";
-        statusDiv.textContent = "";
-      }
-    }, 5000);
+  if (statusElement) {
+    statusElement.innerHTML = message;
+    statusElement.className = `form-status ${state}`;
+    statusElement.style.display = "block";
   }
 }

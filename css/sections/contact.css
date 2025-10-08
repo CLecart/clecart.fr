@@ -1,9 +1,9 @@
 /* contact.css
-   Styles pour la section de contact du portfolio
+   Contact section styles for portfolio
    Organisation : conteneur principal, formulaire, informations, responsive
 */
 
-/* Conteneur principal de la section contact */
+/** Contact section main container */
 #contact {
   padding: 100px 0;
   background: var(--gradient-1-light);
@@ -71,7 +71,7 @@
 
 .contact-text a::after {
   bottom: -2px;
-  height: 2px;
+  height: var(--accent-line-thickness);
 }
 
 /* Styles du formulaire de contact */

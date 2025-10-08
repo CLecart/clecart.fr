@@ -1,5 +1,4 @@
 * {
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
   max-width: 100%;
@@ -65,7 +64,7 @@ a::after {
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: var(--accent-line-thickness);
   background: var(--accent);
   transition: width 0.3s ease;
   opacity: 0.8;

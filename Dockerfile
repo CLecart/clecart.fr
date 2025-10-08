@@ -1,4 +1,4 @@
-# Multi-stage build pour optimiser la taille
+# Multi-stage build for size optimization
 FROM nginx:alpine
 
 # Labels for metadata
@@ -10,7 +10,7 @@ LABEL version="1.0.0"
 RUN addgroup -g 1001 -S nginx-user && \
     adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx-user -g nginx-user nginx-user
 
-# Copier les fichiers du site
+# Copy website files
 COPY --chown=nginx-user:nginx-user . /usr/share/nginx/html
 
 # Copy optimized nginx configuration

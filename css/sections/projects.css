@@ -6,7 +6,7 @@
 /* Projects grid */
 #projects {
   padding: 100px 0;
-  background-color: var(--light);
+  background-color: var(-- /** Responsive breakpoints */ ight);
   position: relative;
 }
 
@@ -31,7 +31,7 @@ body.dark-mode #projects {
   display: block;
 }
 
-/* Fix pour les pages avec header fixe (privacy-policy, descriptions-projects, about-portfolio) */
+/* Fixed header pages compensation */
 body:not(.homepage) .description {
   margin-top: calc(var(--header-height) + 40px);
 }
@@ -84,7 +84,7 @@ body:not(.homepage) .description {
 
 /* Project navigation */
 .project-navigation {
-  padding: 120px 0 30px;
+  padding: 120px 0 80px;
   text-align: center;
 }
 

@@ -11,7 +11,6 @@ import { initDarkMode } from "./modules/darkmode.js";
 import { initNavigation } from "./modules/navigation.js";
 import { initAnimations, initTypewriterEffect } from "./modules/animations.js";
 import { initContactForm } from "./modules/contact-form.js";
-import { initFormEnhancements } from "./modules/form-enhancements.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initVideoHandler } from "./modules/videoHandler.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
@@ -42,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(() => {
     initAnimations();
     initTypewriterEffect();
-    initFormEnhancements();
     initGDPRBanner();
     initModals();
     initContactForm();

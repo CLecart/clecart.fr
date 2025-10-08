@@ -28,7 +28,7 @@ services:
 networks:
   portfolio-network:
     driver: bridge
-# Pour production avec monitoring (optionnel)
+# For production with monitoring (optional)
 # services:
 #   portfolio-monitoring:
 #     image: prom/prometheus:latest

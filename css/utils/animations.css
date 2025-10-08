@@ -47,15 +47,6 @@
 
 #skills .section-header h2,
 #projects .section-header h2 {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity var(--duration-slow) var(--ease-smooth),
-    transform var(--duration-slow) var(--ease-smooth);
-}
-
-#skills .section-header h2.title-animate,
-#projects .section-header h2.title-animate {
   opacity: 1;
   transform: translateY(0);
   animation: title-glow 2s ease-in-out infinite alternate;
@@ -97,14 +88,6 @@ section::after {
 
 section:last-of-type::after {
   display: none;
-}
-
-#about::after {
-  bottom: -50px;
-}
-
-#languages::after {
-  bottom: -50px;
 }
 
 section.section-active::before {

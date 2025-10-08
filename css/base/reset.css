@@ -119,10 +119,3 @@ h3 {
 p {
   margin-bottom: 1rem;
 }
-
-img,
-video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}

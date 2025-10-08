@@ -4,12 +4,6 @@
   padding: 130px 0 60px;
 }
 
-/* Ajustement position projets pour navigation uniforme */
-#project2,
-#project3 {
-  scroll-margin-top: 120px;
-}
-
 .portfolio-details .section-header {
   margin-bottom: 40px;
   text-align: center;

@@ -9,11 +9,34 @@ export function initProjectNavigation() {
 
   if (!navButtons.length || !projects.length) return;
 
-  projects.forEach((project) => project.classList.remove("active"));
+  // Hide all projects and remove active classes first
+  projects.forEach((project) => {
+    project.classList.remove("active");
+    project.style.display = "none";
+  });
   navButtons.forEach((btn) => btn.classList.remove("active"));
 
-  if (projects[0]) projects[0].classList.add("active");
-  if (navButtons[0]) navButtons[0].classList.add("active");
+  // Check for hash in URL to show the correct project
+  const hash = window.location.hash;
+  let activeProject = null;
+  let activeButton = null;
+
+  if (hash) {
+    activeProject = document.querySelector(hash);
+    activeButton = document.querySelector(`a[href="${hash}"]`);
+  }
+
+  // If no hash or invalid hash, default to first project
+  if (!activeProject) {
+    activeProject = projects[0];
+    activeButton = navButtons[0];
+  }
+
+  if (activeProject) {
+    activeProject.classList.add("active");
+    activeProject.style.display = "block";
+  }
+  if (activeButton) activeButton.classList.add("active");
 
   navButtons.forEach((button) => {
     button.addEventListener("click", (e) => {

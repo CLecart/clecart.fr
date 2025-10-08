@@ -6,12 +6,18 @@ incipal, boutons, responsive
 
 /** Section header styles */
 #about {
-  padding: 60px 0 100px;
+  padding: 80px 0 120px;
 }
 
+/* Règle globale pour tous les section-header */
 .section-header {
   text-align: center;
   margin-bottom: 60px;
+}
+
+/* Règle spécifique pour About uniquement */
+#about .section-header {
+  padding-top: 40px;
 }
 
 .section-header h2 {
@@ -70,7 +76,7 @@ incipal, boutons, responsive
 
 /** Languages section */
 #languages {
-  padding: 60px 0 100px;
+  padding: 80px 0 120px;
 }
 
 /** Languages grid */

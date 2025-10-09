@@ -19,6 +19,7 @@ import { initPerformanceOptimizations } from "./utils/performance.js";
 import { registerServiceWorker } from "./utils/sw-register.js";
 import { initWebVitals } from "./utils/webvitals.js";
 import PrivacyAnalytics from "./utils/analytics.js";
+import { loadRuntimeConfig } from "./utils/config.js";
 
 /**
  * Application initialization event handler
@@ -50,6 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("load", () => {
     initVideoHandler();
     registerServiceWorker();
+
+    // Initialize EmailJS from runtime config if provided (avoids committing tokens)
+    (async function initEmailJSFromConfig() {
+      const cfg = await loadRuntimeConfig();
+      if (
+        cfg &&
+        cfg.emailjs &&
+        cfg.emailjs.user &&
+        typeof emailjs !== "undefined"
+      ) {
+        try {
+          emailjs.init(cfg.emailjs.user);
+        } catch (e) {
+          // ignore init errors
+        }
+      }
+    })();
 
     setTimeout(() => {
       const criticalElements = document.querySelectorAll(

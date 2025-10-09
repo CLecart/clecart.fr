@@ -1,0 +1,7 @@
+{
+  "emailjs": {
+    "user": "YOUR_EMAILJS_USER_ID",
+    "service": "your_service_id",
+    "template": "your_template_id"
+  }
+}

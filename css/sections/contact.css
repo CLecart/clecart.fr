@@ -7,6 +7,13 @@
 #contact {
   padding: 80px 0 120px;
   background: var(--gradient-1-light);
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+@media (max-width: 768px) {
+  #contact {
+    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
+  }
 }
 
 .contact-container {

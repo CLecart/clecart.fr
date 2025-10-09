@@ -8,6 +8,13 @@
   padding: 80px 0 120px;
   background-color: var(--light);
   position: relative;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+@media (max-width: 768px) {
+  #projects {
+    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
+  }
 }
 
 .projects-grid {
@@ -40,10 +47,6 @@ body:not(.homepage) .description {
   body:not(.homepage) .description {
     margin-top: calc(var(--header-height-mobile) + 30px);
   }
-}
-
-.project {
-  scroll-margin-top: 120px;
 }
 
 .project {
@@ -160,7 +163,6 @@ body.dark-mode .card-base.description:hover {
 }
 
 .project.description.card-base {
-  scroll-margin-top: 120px;
   margin-top: 30px;
   position: relative;
   z-index: 1;
@@ -206,11 +208,6 @@ html body .project.active#project3.description.card-base:hover {
   .description {
     margin-top: 40px;
     padding: 25px 20px;
-  }
-
-  .project,
-  .project.description.card-base {
-    scroll-margin-top: 100px;
   }
 
   .project-navigation {

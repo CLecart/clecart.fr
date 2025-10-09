@@ -6,14 +6,20 @@
 /* Projects grid */
 #projects {
   padding: 80px 0 120px;
-  background-color: var(-- /** Responsive breakpoints */ ight);
+  background-color: var(--light);
   position: relative;
+}
+
+#projects .section-header {
+  text-align: center;
+  margin-bottom: var(--section-title-spacing);
 }
 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
+  margin-top: var(--section-content-spacing);
   align-items: stretch;
   justify-content: center;
 }
@@ -202,8 +208,6 @@ html body .project.active#project3.description.card-base:hover {
     margin-top: 40px;
     padding: 25px 20px;
   }
-
-
 
   .project-navigation {
     margin-top: 70px;

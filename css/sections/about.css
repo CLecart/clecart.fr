@@ -12,12 +12,12 @@ incipal, boutons, responsive
 /* Règle globale pour tous les section-header */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: var(--section-title-spacing);
 }
 
-/* Règle spécifique pour About uniquement */
-#about .section-header {
-  padding-top: 40px;
+/* Espacement harmonisé du contenu */
+.about-content {
+  margin-top: var(--section-content-spacing);
 }
 
 .section-header h2 {

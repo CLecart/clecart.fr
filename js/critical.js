@@ -1,40 +1,44 @@
 /**
- * @fileoverview Critical path JavaScript inlined in HTML head
- * @description Loads immediately to prevent FOUC and setup essential functionality
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Critical path JavaScript inlined in HTML head
+ * @fileoverview Loads immediately to prevent FOUC and setup essential functionality
+ * @author Christophe Lecart
  */
 
 (function () {
   "use strict";
 
   /**
-   * Prevents Flash of Unstyled Content by removing loading class
-   * @description Removes js-loading class as soon as possible to show content
+   * Remove loading class - theme is already handled in HTML head
+   * @description Safe to remove loading class as theme is set before CSS loads
    */
   document.documentElement.classList.remove("js-loading");
 
   /**
-   * Critical theme detection and application
-   * @description Must be synchronous to prevent theme flashing
-   * @returns {void}
+   * Preload critical resources for performance optimization
+   * @type {string[]} Array of resource URLs to preload
    */
-  const isDarkMode = localStorage.getItem("dark-mode") !== "disabled";
-  if (isDarkMode) {
-    // Wait for DOM to be ready before accessing body
-    if (document.body) {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add("dark-mode");
-      });
-    }
-  }
+  const preloadResources = [
+    "/assets/icons/android-chrome-192x192.png",
+    "/css/components/dark-mode-toggle.css",
+    "/js/modules/darkmode.js",
+  ];
 
   /**
-   * Note: Removed unnecessary preloads to avoid console warnings
-   * Resources are loaded when needed by the main application
+   * Creates and appends preload links for critical resources
+   * @param {string} resource - The resource URL to preload
+   * @returns {void}
    */
+  preloadResources.forEach((resource) => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = resource.endsWith(".css")
+      ? "style"
+      : resource.endsWith(".js")
+        ? "script"
+        : "image";
+    link.href = resource;
+    document.head.appendChild(link);
+  });
 
   /**
    * Performance observer for Core Web Vitals monitoring
@@ -45,14 +49,14 @@
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === "largest-contentful-paint") {
-          console.log("LCP:", entry.startTime);
+          // LCP tracked: entry.startTime
         }
         if (entry.entryType === "first-input-delay") {
-          console.log("FID:", entry.processingStart - entry.startTime);
+          // FID tracked: entry.processingStart - entry.startTime
         }
         if (entry.entryType === "layout-shift") {
           if (!entry.hadRecentInput) {
-            console.log("CLS:", entry.value);
+            // CLS tracked: entry.value
           }
         }
       }

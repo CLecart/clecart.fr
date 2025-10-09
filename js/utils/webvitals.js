@@ -1,11 +1,33 @@
-// webvitals.js - Core Web Vitals monitoring and optimization
+/**
+ * Core Web Vitals monitoring and optimization system
+ * @fileoverview Real-time web performance metrics monitoring with automatic optimizations
+ * @author Christophe Lecart
+ */
+
+/**
+ * Initializes Core Web Vitals monitoring with automatic optimizations
+ * @function initWebVitals
+ * @description Configures LCP, FID, CLS, FCP, TTFB monitoring with optimization triggers
+ * @returns {void}
+ */
 export function initWebVitals() {
-  // Only run if browser supports the APIs
+  /**
+   * Performance APIs support check
+   * @description Validates browser compatibility with PerformanceObserver
+   */
   if (!("PerformanceObserver" in window)) {
-    console.warn("PerformanceObserver not supported");
     return;
   }
 
+  /**
+   * Web Vitals metrics data storage object
+   * @type {object}
+   * @property {number|null} lcp - Largest Contentful Paint in milliseconds
+   * @property {number|null} fid - First Input Delay in milliseconds
+   * @property {number|null} cls - Cumulative Layout Shift (unitless)
+   * @property {number|null} fcp - First Contentful Paint in milliseconds
+   * @property {number|null} ttfb - Time to First Byte in milliseconds
+   */
   const vitalsData = {
     lcp: null,
     fid: null,
@@ -14,37 +36,48 @@ export function initWebVitals() {
     ttfb: null,
   };
 
-  // Largest Contentful Paint (LCP)
+  /**
+   * Largest Contentful Paint (LCP) monitoring
+   * @description Monitors render time of largest visible content element
+   */
   const lcpObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
     const lastEntry = entries[entries.length - 1];
     vitalsData.lcp = Math.round(lastEntry.startTime);
 
-    // Trigger optimization if LCP is poor (>2.5s)
+    /**
+     * Trigger optimizations if LCP is poor (>2.5s)
+     * @description Automatically applies loading optimizations
+     */
     if (vitalsData.lcp > 2500) {
       optimizeLCP();
     }
-
-    console.log("LCP:", vitalsData.lcp + "ms");
   });
   lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
 
-  // First Input Delay (FID)
+  /**
+   * First Input Delay (FID) monitoring
+   * @description Monitors delay between first user interaction and response
+   */
   const fidObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       vitalsData.fid = Math.round(entry.processingStart - entry.startTime);
 
-      // Trigger optimization if FID is poor (>100ms)
+      /**
+       * Trigger optimizations if FID is poor (>100ms)
+       * @description Applies interface responsiveness optimizations
+       */
       if (vitalsData.fid > 100) {
         optimizeFID();
       }
-
-      console.log("FID:", vitalsData.fid + "ms");
     }
   });
   fidObserver.observe({ entryTypes: ["first-input"] });
 
-  // Cumulative Layout Shift (CLS)
+  /**
+   * Cumulative Layout Shift (CLS) monitoring
+   * @description Monitors unintentional layout shifts
+   */
   let clsValue = 0;
   const clsObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
@@ -54,39 +87,50 @@ export function initWebVitals() {
       }
     }
 
-    // Trigger optimization if CLS is poor (>0.1)
+    /**
+     * Trigger optimizations if CLS is poor (>0.1)
+     * @description Applies visual stability corrections
+     */
     if (vitalsData.cls > 0.1) {
       optimizeCLS();
     }
-
-    console.log("CLS:", vitalsData.cls);
   });
   clsObserver.observe({ entryTypes: ["layout-shift"] });
 
-  // First Contentful Paint (FCP)
+  /**
+   * First Contentful Paint (FCP) monitoring
+   * @description Monitors time to first visible content display
+   */
   const navigationObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.name === "first-contentful-paint") {
         vitalsData.fcp = Math.round(entry.startTime);
-        console.log("FCP:", vitalsData.fcp + "ms");
       }
     }
   });
   navigationObserver.observe({ entryTypes: ["paint"] });
 
-  // Time to First Byte (TTFB)
+  /**
+   * Time to First Byte (TTFB) calculation
+   * @description Measures initial server response time
+   */
   const navTiming = performance.getEntriesByType("navigation")[0];
   if (navTiming) {
     vitalsData.ttfb = Math.round(
       navTiming.responseStart - navTiming.requestStart
     );
-    console.log("TTFB:", vitalsData.ttfb + "ms");
   }
 
-  // Resource timing for optimization
+  /**
+   * Resource timing monitoring activation for optimization
+   * @description Monitors resource loading performance
+   */
   monitorResourceTiming();
 
-  // Report vitals after page load
+  /**
+   * Final Web Vitals report generation after complete loading
+   * @description 1s delay to ensure all metrics are captured
+   */
   window.addEventListener("load", () => {
     setTimeout(() => {
       reportVitals(vitalsData);
@@ -94,22 +138,35 @@ export function initWebVitals() {
   });
 }
 
+/**
+ * Optimizes Largest Contentful Paint (LCP)
+ * @function optimizeLCP
+ * @description Applies loading optimizations to improve LCP
+ * @returns {void}
+ */
 function optimizeLCP() {
-  console.warn("LCP is poor, applying optimizations...");
-
-  // Preload LCP candidate images
+  /**
+   * LCP candidate image preloading
+   * @description Converts first 2 lazy images to eager loading
+   */
   const images = document.querySelectorAll(
     'img[loading="lazy"]:not([data-optimized])'
   );
   images.forEach((img, index) => {
     if (index < 2) {
-      // Only first 2 images above fold
+      /**
+       * Above-the-fold image optimization
+       * @description Only first 2 images are optimized
+       */
       img.loading = "eager";
       img.setAttribute("data-optimized", "true");
     }
   });
 
-  // Defer non-critical CSS
+  /**
+   * Non-critical CSS deferring
+   * @description Loads non-essential CSS asynchronously
+   */
   const stylesheets = document.querySelectorAll(
     'link[rel="stylesheet"]:not([data-critical])'
   );
@@ -123,14 +180,24 @@ function optimizeLCP() {
   });
 }
 
+/**
+ * Optimizes First Input Delay (FID)
+ * @function optimizeFID
+ * @description Improves responsiveness by deferring heavy JavaScript tasks
+ * @returns {void}
+ */
 function optimizeFID() {
-  console.warn("FID is poor, deferring JavaScript...");
-
-  // Break up long tasks
+  /**
+   * Long task chunking with Scheduler API
+   * @description Uses modern scheduler API or setTimeout fallback
+   */
   if ("scheduler" in window) {
     window.scheduler.postTask(
       () => {
-        // Defer heavy computations
+        /**
+         * Heavy computation deferring in background
+         * @description Background priority to avoid UI blocking
+         */
         optimizeAnimations();
       },
       { priority: "background" }
@@ -141,9 +208,6 @@ function optimizeFID() {
 }
 
 function optimizeCLS() {
-  console.warn("CLS is poor, stabilizing layout...");
-
-  // Add dimensions to images without them
   const images = document.querySelectorAll("img:not([width]):not([height])");
   images.forEach((img) => {
     img.style.aspectRatio = "auto";
@@ -151,7 +215,6 @@ function optimizeCLS() {
     img.style.height = "auto";
   });
 
-  // Preload fonts to prevent FOIT
   const fontPreloads = [
     "/fonts/poppins-regular.woff2",
     "/fonts/poppins-bold.woff2",
@@ -197,18 +260,12 @@ function optimizeAnimations() {
 function monitorResourceTiming() {
   const resourceObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
-      // Alert for slow resources (>1s)
       if (entry.duration > 1000) {
-        console.warn(
-          `Slow resource: ${entry.name} took ${Math.round(entry.duration)}ms`
-        );
+        // Slow resource detected
       }
 
-      // Alert for large resources (>500KB)
       if (entry.transferSize > 500000) {
-        console.warn(
-          `Large resource: ${entry.name} is ${Math.round(entry.transferSize / 1024)}KB`
-        );
+        // Large resource detected
       }
     }
   });
@@ -217,16 +274,8 @@ function monitorResourceTiming() {
 }
 
 function reportVitals(vitals) {
-  // Calculate performance score
   const score = calculatePerformanceScore(vitals);
 
-  console.log("Web Vitals Report:", {
-    ...vitals,
-    score: score,
-    rating: getPerformanceRating(score),
-  });
-
-  // Send to analytics (if consent given)
   if (window.analytics) {
     window.analytics.trackEvent(
       "Performance",

@@ -1,29 +1,52 @@
-// performance.js
-// Module utilitaire pour les optimisations de performance (lazy loading, etc.)
+/**
+ * Performance optimization module
+ * @module Performance
+ * @description Handles lazy loading, network optimization and resource preloading
+ */
 
 /**
- * Initialise les optimisations de performance du site
+ * Initialize performance optimizations based on user connection
+ * @function initPerformanceOptimizations
+ * @description Automatically optimizes loading based on detected connection quality
+ * @returns {void}
  */
 export function initPerformanceOptimizations() {
-  // Lazy loading des images et vidéos
-
-  // Optimisation pour les connexions lentes
-  if ("connection" in navigator) {
+  if ('connection' in navigator) {
     const connection = navigator.connection;
+    optimizeForConnection(connection);
+    
+    connection.addEventListener('change', () => {
+      optimizeForConnection(connection);
+    });
+  }
 
-    if (
-      connection &&
-      (connection.saveData ||
-        ["slow-2g", "2g", "3g"].includes(connection.effectiveType))
-    ) {
-      // Seulement optimiser le préchargement des vidéos
-      document.querySelectorAll("video").forEach((video) => {
-        if (video.preload === "auto") {
-          video.preload = "metadata";
-        }
+  /**
+   * Connection detection and optimization for slow connections
+   */
+  function optimizeForConnection(connection) {
+    const slowConnection = connection.saveData || 
+                          ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+    
+    if (slowConnection) {
+      /**
+       * Slow connection conditions detected
+       * @description Checks saveData or 2G/3G connection type
+       */
+      document.documentElement.classList.add('slow-connection');
+      
+      /**
+       * Video preload optimization for slow connections
+       * @description Changes preload="auto" to preload="metadata" to save bandwidth
+       */
+      const videos = document.querySelectorAll('video[preload="auto"]');
+      videos.forEach(video => {
+        video.setAttribute('preload', 'metadata');
       });
     }
   }
 
-  // Préchargement des ressources critiques
+  /**
+   * @todo Implement intelligent preloading of critical resources
+   * @description Preload assets based on priority and connection
+   */
 }

@@ -1,181 +1,240 @@
-// animations.js
-// Module dédié à la gestion des animations d'apparition et d'effets visuels sur le site
+/**
+ * Animation module with intersection observer and scroll effects
+ * @module Animations
+ * @description Handles element animations, scroll detection and typewriter effects
+ */
+
+let lastScrollY = 0;
+let scrollDirection = "down";
 
 /**
- * Initialise les animations d'apparition sur les éléments observés
+ * Intersection observer factory for configurable observers
+ * @function createObserver
+ * @param {function} callback - Callback function for observed entries
+ * @param {object} options - Custom options for observer
+ * @returns {IntersectionObserver} Configured observer instance
+ * @description Simplifies observer creation with optimal default options
  */
-export function initAnimations() {
-  // Création d'observateurs pour déclencher les animations lors de l'entrée dans le viewport
-  const createObserver = (callback, options = {}) => {
-    return new IntersectionObserver(
-      callback,
-      Object.assign(
-        {
-          root: null,
-          threshold: 0.1,
-          rootMargin: "-10% 0px -10% 0px",
-        },
-        options
-      )
-    );
+function createObserver(callback, options = {}) {
+  const defaultOptions = {
+    root: null,
+    rootMargin: "0px 0px -10% 0px",
+    threshold: [0, 0.1, 0.5, 1],
   };
 
-  const observer = createObserver((entries, observer) => {
+  const mergedOptions = { ...defaultOptions, ...options };
+  return new IntersectionObserver(callback, mergedOptions);
+}
+
+/**
+ * Initialize scroll-triggered animations for elements
+ * @function initAnimations
+ * @description Triggers 'appear' class when intersecting with viewport
+ */
+export function initAnimations() {
+  const elementsToAnimate = document.querySelectorAll(
+    ".project-card, .skill-card, .language-card, .section-intro, .about-intro"
+  );
+
+  const animationObserver = createObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("appear");
 
-        if (
-          entry.target.classList.contains("project-card") ||
-          entry.target.closest("#projects")
-        ) {
-          observer.unobserve(entry.target);
+        if (entry.target.classList.contains("project-card")) {
+          animationObserver.unobserve(entry.target);
         }
       }
     });
   });
 
-  // Observer pour les titres de section
-  const sectionHeaderObserver = createObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("title-animate");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: "-10% 0px" }
-  );
+  elementsToAnimate.forEach((element) => {
+    animationObserver.observe(element);
+  });
 
-  // Observer pour les sections entières (effet d'activation)
-  const sectionObserver = new IntersectionObserver(
+  const allAnimatedElements = document.querySelectorAll(
+    ".fade-in, .slide-left, .slide-right"
+  );
+  allAnimatedElements.forEach((element) => {
+    if (!element.classList.contains("appear")) {
+      animationObserver.observe(element);
+    }
+  });
+
+  /**
+   * Specialized observer for section headers
+   */
+  const sectionHeaders = document.querySelectorAll("h2, .section-title");
+  const headerObserver = createObserver(
     (entries) => {
       entries.forEach((entry) => {
-        const direction = entry.boundingClientRect.y < 0 ? "up" : "down";
-
         if (entry.isIntersecting) {
-          entry.target.classList.add("section-active");
-          entry.target.setAttribute("data-scroll-direction", direction);
-        } else {
-          entry.target.classList.remove("section-active");
+          entry.target.classList.add("appear");
         }
       });
     },
-    {
-      root: null,
-      rootMargin: "-20% 0px",
-      threshold: 0.1,
-    }
+    { rootMargin: "0px 0px -20% 0px" }
   );
 
-  // Application des observateurs sur les éléments cibles
-  const animatedElements = document.querySelectorAll(
-    ".fade-in, .slide-left, .slide-right, .project.description.card-base"
-  );
-  animatedElements.forEach((element) => observer.observe(element));
+  sectionHeaders.forEach((header) => {
+    headerObserver.observe(header);
+  });
 
-  const sectionHeaders = document.querySelectorAll(
-    "#skills .section-header h2, #projects .section-header h2"
-  );
-  sectionHeaders.forEach((header) => sectionHeaderObserver.observe(header));
+  /**
+   * Section activation observer with direction detection
+   * @description Manages active section state and scroll direction
+   */
+  const sections = document.querySelectorAll("section[id]");
+  const sectionObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        /**
+         * Scroll direction detection
+         */
+        const currentScrollY = window.scrollY;
+        scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
+        lastScrollY = currentScrollY;
 
-  if (document.querySelector(".project-navigation")) {
-    document.querySelectorAll(".project.description").forEach((card) => {
-      card.classList.add("fade-in");
+        entry.target.classList.add("section-active");
+
+        if (scrollDirection === "down") {
+          entry.target.setAttribute("data-scroll-direction", "down");
+        } else {
+          entry.target.setAttribute("data-scroll-direction", "up");
+        }
+      } else {
+        entry.target.classList.remove("section-active");
+      }
     });
+  });
+
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+
+  const currentPath = window.location.pathname;
+  if (
+    currentPath.includes("descriptions-projects") ||
+    currentPath.includes("project")
+  ) {
+    initProjectPageAnimations();
   }
 
-  if (document.querySelector(".portfolio-details")) {
-    handlePortfolioDetailsAnimations();
-  }
-
-  // Gestion spécifique pour les pages de navigation projet et portfolio
-  function handlePortfolioDetailsAnimations() {
-    // Animation des sections de détails du portfolio
-    const portfolioSections = document.querySelectorAll(".portfolio-section");
-
-    const portfolioObserver = createObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("appear", "section-active");
-
-            animateChildElements(
-              entry.target,
-              ".outcomes-list li",
-              "appear-outcome"
-            );
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "-10% 0px" }
-    );
-
-    portfolioSections.forEach((section) => portfolioObserver.observe(section));
-
-    const ctaSection = document.querySelector(".cta-section");
-    if (ctaSection) {
-      createObserver(
-        (entries) =>
-          entries[0].isIntersecting &&
-          entries[0].target.classList.add("appear"),
-        { threshold: 0.5 }
-      ).observe(ctaSection);
-    }
-
-    function animateChildElements(parent, selector, className) {
-      // Animation séquentielle des enfants d'un parent
-      const elements = parent.querySelectorAll(selector);
-      elements.forEach((item, index) => {
-        setTimeout(() => item.classList.add(className), 100 * index);
-      });
-    }
+  // Initialize Learning Outcomes animations for about-portfolio page
+  if (currentPath.includes("about-portfolio")) {
+    initLearningOutcomesAnimations();
   }
 }
 
 /**
- * Effet machine à écrire sur l'élément #typewriter
+ * Initialize specialized animations for project pages
+ * @function initProjectPageAnimations
+ * @description Configures specialized animations for portfolio sections
+ */
+function initProjectPageAnimations() {
+  const projectElements = document.querySelectorAll(
+    ".project-showcase, .project-details, .tech-stack"
+  );
+
+  const projectObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("appear");
+        projectObserver.unobserve(entry.target);
+      }
+    });
+  });
+
+  projectElements.forEach((element) => {
+    projectObserver.observe(element);
+  });
+}
+
+/**
+ * Initialize animations for Learning Outcomes cards
+ * @function initLearningOutcomesAnimations
+ * @description Animates outcomes list items with staggered appear-outcome class
+ */
+function initLearningOutcomesAnimations() {
+  const outcomesList = document.querySelector(".outcomes-list");
+  if (!outcomesList) return;
+
+  const outcomesObserver = createObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const listItems = entry.target.querySelectorAll("li");
+
+        // Animate each list item with staggered timing
+        listItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add("appear-outcome");
+          }, index * 100); // 100ms delay between each item
+        });
+
+        outcomesObserver.unobserve(entry.target);
+      }
+    });
+  });
+
+  outcomesObserver.observe(outcomesList);
+}
+
+/**
+ * Initialize typewriter effect for dynamic text
+ * @function initTypewriterEffect
+ * @returns {void}
  */
 export function initTypewriterEffect() {
-  const typewriterElement = document.getElementById("typewriter");
+  const typewriterElement = document.querySelector(".typewriter-text");
   if (!typewriterElement) return;
 
-  const words = [
-    "Web Developer",
-    "Mobile Developer",
-    "UI Designer",
-    "Problem Solver",
+  const texts = [
+    "Web & Mobile Developer",
+    "JavaScript Specialist",
+    "Go Developer",
+    "Modern App Creator",
   ];
-  let wordIndex = 0;
-  let charIndex = 0;
+
+  let currentTextIndex = 0;
+  let currentCharIndex = 0;
   let isDeleting = false;
-  let typeSpeed = 100;
+  const typingSpeed = 100;
+  const deletingSpeed = 50;
+  const pauseDuration = 2000;
 
-  function type() {
-    const currentWord = words[wordIndex];
+  function typeEffect() {
+    const currentText = texts[currentTextIndex];
 
-    if (isDeleting) {
-      typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
-      charIndex--;
-      typeSpeed = 50;
+    if (!isDeleting) {
+      typewriterElement.textContent = currentText.substring(
+        0,
+        currentCharIndex + 1
+      );
+      currentCharIndex++;
+
+      if (currentCharIndex === currentText.length) {
+        setTimeout(() => {
+          isDeleting = true;
+          typeEffect();
+        }, pauseDuration);
+        return;
+      }
     } else {
-      typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
-      charIndex++;
-      typeSpeed = 100;
+      typewriterElement.textContent = currentText.substring(
+        0,
+        currentCharIndex - 1
+      );
+      currentCharIndex--;
+
+      if (currentCharIndex === 0) {
+        isDeleting = false;
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+      }
     }
 
-    if (!isDeleting && charIndex === currentWord.length) {
-      isDeleting = true;
-      typeSpeed = 1000;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      typeSpeed = 500;
-    }
-
-    setTimeout(type, typeSpeed);
+    const speed = isDeleting ? deletingSpeed : typingSpeed;
+    setTimeout(typeEffect, speed);
   }
 
-  setTimeout(type, 1000);
+  typeEffect();
 }

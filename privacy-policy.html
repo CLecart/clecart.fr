@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Politique de confidentialité - Portfolio de Christophe Lecart"
+      content="Privacy Policy - Christophe Lecart Portfolio"
     />
     <meta name="robots" content="noindex" />
 
     <title>Privacy Policy - Christophe Lecart</title>
 
-    <!-- Favicons optimisés pour différents supports -->
+    <script>
+      document.documentElement.style.colorScheme = "light dark";
+      const s = localStorage.getItem("dark-mode"),
+        p = matchMedia("(prefers-color-scheme:dark)").matches;
+      if (s === "enabled" || (s !== "disabled" && p))
+        document.documentElement.classList.add("dark-mode");
+    </script>
+
+    <!-- Optimized favicons for different platforms -->
     <link rel="icon" href="assets/icons/favicon.ico" />
     <link
       rel="icon"
@@ -34,8 +42,7 @@
     <meta name="msapplication-TileColor" content="#6c63ff" />
     <meta name="theme-color" content="#6c63ff" />
 
-    <link rel="stylesheet" href="css/critical.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=2025108" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link
       rel="stylesheet"
@@ -45,7 +52,6 @@
       referrerpolicy="no-referrer"
     />
 
-    <script src="js/critical.js"></script>
     <script type="module" src="js/main.js" defer></script>
   </head>
   <body>
@@ -117,18 +123,27 @@
             <a
               href="https://www.emailjs.com/legal/privacy-policy/"
               target="_blank"
+              rel="noopener noreferrer"
               >here</a
             >.
           </li>
           <li>
             <strong>Font Awesome:</strong> For icons. Their privacy policy can
             be found
-            <a href="https://fontawesome.com/privacy" target="_blank">here</a>.
+            <a
+              href="https://fontawesome.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              >here</a
+            >.
           </li>
           <li>
             <strong>Google Fonts:</strong> For web fonts. Their privacy policy
             can be found
-            <a href="https://policies.google.com/privacy" target="_blank"
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
               >here</a
             >.
           </li>

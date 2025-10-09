@@ -6,20 +6,14 @@
 /* Projects grid */
 #projects {
   padding: 80px 0 120px;
-  background-color: var(--light);
+  background-color: var(-- /** Responsive breakpoints */ ight);
   position: relative;
-}
-
-#projects .section-header {
-  text-align: center;
-  margin-bottom: var(--section-title-spacing);
 }
 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  margin-top: var(--section-content-spacing);
   align-items: stretch;
   justify-content: center;
 }
@@ -46,6 +40,10 @@ body:not(.homepage) .description {
   body:not(.homepage) .description {
     margin-top: calc(var(--header-height-mobile) + 30px);
   }
+}
+
+.project {
+  scroll-margin-top: 120px;
 }
 
 .project {
@@ -162,6 +160,7 @@ body.dark-mode .card-base.description:hover {
 }
 
 .project.description.card-base {
+  scroll-margin-top: 120px;
   margin-top: 30px;
   position: relative;
   z-index: 1;
@@ -207,6 +206,11 @@ html body .project.active#project3.description.card-base:hover {
   .description {
     margin-top: 40px;
     padding: 25px 20px;
+  }
+
+  .project,
+  .project.description.card-base {
+    scroll-margin-top: 100px;
   }
 
   .project-navigation {

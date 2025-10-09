@@ -9,17 +9,11 @@
   background: var(--gradient-1-light);
 }
 
-#contact .section-header {
-  text-align: center;
-  margin-bottom: var(--section-title-spacing);
-}
-
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   max-width: 1000px;
-  margin-top: var(--section-content-spacing);
   margin: 0 auto;
 }
 

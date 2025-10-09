@@ -1,60 +1,50 @@
-// contact-form.js
-// Module de gestion du formulaire de contact et de l'envoi des messages
-
 /**
- * Initialise la gestion du formulaire de contact
+ * Contact form module with EmailJS integration
+ * @module ContactForm
  */
 export function initContactForm() {
-  // Sélection du formulaire et des éléments de statut
-  const contactForm = document.getElementById("contactForm");
-  const formStatus = document.getElementById("form-status");
+  const contactForm = document.getElementById("contact-form");
+  const formStatus = document.querySelector(".form-status");
 
   if (!contactForm) return;
 
-  // Gestion de la soumission du formulaire
+  // Check GDPR consent and adapt interface
   const gdprChoice = localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     renderContactAlternative(contactForm);
     return;
   }
 
-  // Affichage des messages de statut (succès, erreur, envoi)
+  // Configure form behavior
   setupFormSubmissionHandling(contactForm, formStatus);
-  // Réinitialisation du formulaire après envoi
 }
 
 /**
- * Affiche une alternative au formulaire de contact si la politique de confidentialité est refusée
- * @param {HTMLElement} form - Élément du formulaire de contact
+ * Display alternative when GDPR is declined
+ * @param {HTMLElement} form - Form element
  */
 function renderContactAlternative(form) {
   form.innerHTML = `
     <p class="gdpr-message">
-      The contact form has been disabled because you declined our privacy policy. 
-      You can contact me directly by email at 
+      The contact form has been disabled because you declined our privacy policy.
+      You can contact me directly by email at
       <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
     </p>`;
 }
 
 /**
- * Configure la gestion de la soumission du formulaire
- * @param {HTMLFormElement} form - Élément du formulaire de contact
- * @param {HTMLElement} statusElement - Élément d'affichage du statut
+ * Configure form submission handling
+ * @param {HTMLElement} form - Form element
+ * @param {HTMLElement} statusElement - Status display element
  */
 function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
+
+    // Prevent multiple submissions
     if (form.classList.contains("sending")) return;
 
-    const sanitizeInput = (input) => {
-      if (!input) return "";
-      return input
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    };
-
+    // Immediate UI feedback
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
       form,
@@ -65,22 +55,26 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
+      // Get data in EmailJS format
       const formData = new FormData(form);
       const templateParams = {
-        from_name: sanitizeInput(formData.get("from_name")),
-        user_name: sanitizeInput(formData.get("from_name")),
+        from_name: formData.get("from_name"),
+        user_name: formData.get("from_name"),
         email: formData.get("email"),
         user_email: formData.get("email"),
-        message: sanitizeInput(formData.get("message")),
+        message: formData.get("message"),
         to_name: "Christophe",
       };
 
+      // Check EmailJS service availability
       if (typeof emailjs === "undefined") {
         throw new Error("Email service unavailable");
       }
 
+      // Send message
       await emailjs.send("service_lokewrs", "template_2ov9l9i", templateParams);
 
+      // Success
       setFormState(
         form,
         submitButton,
@@ -90,6 +84,7 @@ function setupFormSubmissionHandling(form, statusElement) {
       );
       form.reset();
     } catch (error) {
+      console.error("Sending error:", error);
       setFormState(
         form,
         submitButton,
@@ -98,6 +93,7 @@ function setupFormSubmissionHandling(form, statusElement) {
         `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
+      // Reset form after delay
       setTimeout(() => {
         form.classList.remove("sending");
         if (submitButton) submitButton.disabled = false;
@@ -107,12 +103,12 @@ function setupFormSubmissionHandling(form, statusElement) {
 }
 
 /**
- * Met à jour l'état du formulaire et affiche un message de statut
- * @param {HTMLFormElement} form - Élément du formulaire de contact
- * @param {HTMLButtonElement} button - Bouton de soumission du formulaire
- * @param {HTMLElement} statusElement - Élément d'affichage du statut
- * @param {string} state - État du formulaire (sending, success, error)
- * @param {string} message - Message à afficher
+ * Update form visual state
+ * @param {HTMLElement} form - Form element
+ * @param {HTMLElement} button - Submit button
+ * @param {HTMLElement} statusElement - Status element
+ * @param {string} state - State name
+ * @param {string} message - Status message
  */
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");

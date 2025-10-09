@@ -1,111 +1,172 @@
-// Service Worker pour Progressive Web App
-const CACHE_NAME = "clecart-portfolio-v1";
-const STATIC_CACHE_URLS = [
-  "/",
-  "/index.html",
-  "/styles.css",
-  "/js/main.js",
-  "/js/modules/darkmode.js",
-  "/js/modules/animations.js",
-  "/js/modules/navigation.js",
-  "/js/modules/contact-form.js",
-  "/js/utils/gdpr.js",
-  "/js/utils/modal.js",
-  "/assets/icons/favicon.ico",
-  "/assets/icons/apple-touch-icon.png",
-  "/assets/icons/favicon-16x16.png",
-  "/assets/icons/favicon-32x32.png",
-  "/assets/manifest/site.webmanifest",
+/**
+ * Service Worker for caching and offline functionality
+ * @fileoverview Service Worker implementation
+ * @description Handles cache, fetch strategies and offline features
+ */
+
+const CACHE_NAME = 'portfolio-cache-v2';
+const CACHE_FALLBACK = 'portfolio-fallback-v1';
+
+/**
+ * Static resources URLs to cache
+ */
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/js/main.js',
+  '/js/critical.js',
+  '/css/critical.css',
+  '/assets/images/profile.jpg',
+  '/assets/icons/favicon.ico',
+  '/assets/icons/apple-touch-icon.png',
+  '/assets/icons/android-chrome-192x192.png',
+  '/assets/icons/android-chrome-512x512.png',
+  '/assets/manifest/site.webmanifest'
 ];
 
-// Installation du Service Worker
-self.addEventListener("install", (event) => {
+const offlinePage = '/offline.html';
+const offlineImage = '/assets/images/offline-fallback.svg';
+
+/**
+ * Service Worker installation event
+ * @event install
+ * @description Caches static resources and activates immediately
+ */
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(STATIC_CACHE_URLS);
-      })
-      .then(() => self.skipWaiting())
+    (async () => {
+      try {
+        const cache = await caches.open(CACHE_NAME);
+        /**
+         * @description Downloads and stores all critical files
+         */
+        await cache.addAll(urlsToCache);
+        await self.skipWaiting();
+      } catch (error) {
+        console.error('Cache installation failed:', error);
+      }
+    })()
   );
 });
 
-// Activation et nettoyage des anciens caches
-self.addEventListener("activate", (event) => {
+/**
+ * Service Worker activation event
+ * @event activate
+ * @description Cleans old caches and takes control of clients
+ */
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches
-      .keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-      .then(() => self.clients.claim())
+    (async () => {
+      try {
+        /**
+         * Remove obsolete old caches
+         */
+        const cacheNames = await caches.keys();
+        const cacheDeletePromises = cacheNames
+          .filter(name => name !== CACHE_NAME && name !== CACHE_FALLBACK)
+          .map(name => caches.delete(name));
+        
+        await Promise.all(cacheDeletePromises);
+        await self.clients.claim();
+      } catch (error) {
+        console.error('Cache activation failed:', error);
+      }
+    })()
   );
 });
 
-// Stratégie de cache avec gestion d'erreur sécurisée
-self.addEventListener("fetch", (event) => {
-  // Skip cross-origin requests
+/**
+ * Fetch handler with intelligent cache strategies
+ * @event fetch
+ * @description Implements Network-First for HTML/JSON and Cache-First for assets
+ */
+self.addEventListener('fetch', (event) => {
+  /**
+   * Cross-origin request filtering
+   * @description Ignores external requests to avoid CORS errors
+   */
   if (!event.request.url.startsWith(self.location.origin)) return;
 
-  // Vérification sécurisée de l'en-tête Accept
-  const acceptHeader = event.request.headers.get("Accept") || "";
-  const isHTMLRequest = acceptHeader.includes("text/html");
-  const isJSONRequest = event.request.url.includes(".json");
+  /**
+   * Request type analysis based on headers
+   * @description Determines appropriate cache strategy
+   */
+  const isNavigationRequest = event.request.mode === 'navigate';
+  const isImageRequest = event.request.destination === 'image';
+  const isStyleRequest = event.request.destination === 'style';
+  const isScriptRequest = event.request.destination === 'script';
 
-  // Network first for HTML and JSON
-  if (isHTMLRequest || isJSONRequest) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          let responseToCache = response.clone();
-          caches
-            .open(CACHE_NAME)
-            .then((cache) => cache.put(event.request, responseToCache));
-          return response;
-        })
-        .catch(() => {
-          return caches.match(event.request);
-        })
-    );
-    return;
-  }
-
-  // Cache first for static assets
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request).then((fetchResponse) => {
-        // Don't cache responses for requests that aren't GET
-        if (
-          !fetchResponse ||
-          fetchResponse.status !== 200 ||
-          fetchResponse.type !== "basic" ||
-          event.request.method !== "GET"
-        ) {
-          return fetchResponse;
-        }
-
-        let responseToCache = fetchResponse.clone();
-        caches
-          .open(CACHE_NAME)
-          .then((cache) => cache.put(event.request, responseToCache));
-        return fetchResponse;
-      });
-    })
-  );
-});
-
-// Permet la mise à jour du contenu offline
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.action === "skipWaiting") {
-    self.skipWaiting();
+  if (isNavigationRequest) {
+    event.respondWith(handleNavigationRequest(event.request));
+  } else if (isImageRequest) {
+    event.respondWith(handleImageRequest(event.request));
+  } else if (isStyleRequest || isScriptRequest) {
+    event.respondWith(handleAssetRequest(event.request));
   }
 });
+
+/**
+ * Navigation request handler (Network-First strategy)
+ * @param {Request} request - Navigation request
+ * @returns {Promise<Response>} Response from network or cache
+ */
+async function handleNavigationRequest(request) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    throw new Error('Network response not ok');
+  } catch (error) {
+    const cachedResponse = await caches.match(request);
+    return cachedResponse || caches.match('/index.html');
+  }
+}
+
+/**
+ * Image request handler (Cache-First with fallback)
+ * @param {Request} request - Image request
+ * @returns {Promise<Response>} Response from cache, network or fallback
+ */
+async function handleImageRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) return cachedResponse;
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    throw new Error('Network response not ok');
+  } catch (error) {
+    return caches.match(offlineImage);
+  }
+}
+
+/**
+ * Asset request handler (Cache-First strategy)
+ * @param {Request} request - Asset request (CSS/JS)
+ * @returns {Promise<Response>} Response from cache or network
+ */
+async function handleAssetRequest(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) return cachedResponse;
+
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    return networkResponse;
+  } catch (error) {
+    console.error('Asset fetch failed:', error);
+    throw error;
+  }
+}

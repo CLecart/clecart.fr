@@ -1,18 +1,13 @@
-// navigation.js
-// Module de gestion de la navigation principale et du menu responsive
-
 /**
- * Initialise la navigation principale et le menu mobile
+ * Navigation management
+ * @author Christophe Lecart
  */
-export function initNavigation() {
-  // Constante pour la durée de transition du menu - facilite la maintenance
-  const MENU_TRANSITION_DURATION = 300;
 
-  // Sélection des éléments du menu et du bouton toggle
+export function initNavigation() {
+  const MENU_TRANSITION_DURATION = 300;
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector("nav ul");
   const menuIcon = navToggle?.querySelector("i");
-  const header = document.querySelector("header");
 
   if (!navToggle || !navMenu) return;
 
@@ -28,14 +23,12 @@ export function initNavigation() {
         (width, link) => Math.max(width, link.scrollWidth + 30),
         0
       );
-
       navMenu.style.width = `${Math.max(maxWidth, 180)}px`;
     } else {
       navMenu.style.width = "";
     }
   }
 
-  // Gestion de l'ouverture/fermeture du menu mobile
   navToggle.addEventListener("click", () => {
     navMenu.classList.toggle("active");
 
@@ -48,7 +41,6 @@ export function initNavigation() {
     if (navMenu.classList.contains("active")) {
       navMenu.style.visibility = "visible";
       setMenuWidth();
-
       const headerHeight = document.querySelector("header").offsetHeight;
       navMenu.style.top = `${headerHeight + 5}px`;
     } else {
@@ -60,13 +52,11 @@ export function initNavigation() {
     }
   });
 
-  // Gestion de l'activation des liens de navigation
   document.querySelectorAll("nav ul li a").forEach((link) => {
     link.addEventListener("click", () => {
       if (window.innerWidth <= 768) {
         navMenu.classList.remove("active");
         if (menuIcon) menuIcon.className = "fas fa-bars";
-
         setTimeout(() => {
           if (!navMenu.classList.contains("active")) {
             navMenu.style.visibility = "hidden";
@@ -76,7 +66,6 @@ export function initNavigation() {
     });
   });
 
-  // Fermeture du menu lors de la navigation sur mobile
   document.addEventListener("click", (e) => {
     if (
       window.innerWidth <= 768 &&
@@ -86,7 +75,6 @@ export function initNavigation() {
     ) {
       navMenu.classList.remove("active");
       if (menuIcon) menuIcon.className = "fas fa-bars";
-
       setTimeout(() => {
         if (!navMenu.classList.contains("active")) {
           navMenu.style.visibility = "hidden";
@@ -97,7 +85,6 @@ export function initNavigation() {
 
   window.addEventListener("resize", () => {
     setMenuWidth();
-
     if (window.innerWidth > 768) {
       navMenu.style.visibility = "visible";
     } else if (!navMenu.classList.contains("active")) {
@@ -114,56 +101,32 @@ export function initNavigation() {
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
-          document.documentElement.classList.add("scrolling-in-progress");
-
-          document.querySelectorAll("nav a").forEach((link) => {
-            link.classList.remove("active");
-            link.setAttribute("tabindex", "-1");
-          });
-          this.classList.add("active");
-
-          const headerHeight = document.querySelector("header").offsetHeight;
+          const header = document.querySelector("header");
+          const headerHeight = header.offsetHeight;
           const targetPosition =
             targetElement.getBoundingClientRect().top + window.pageYOffset;
-          const buffer = 0; // Tangent avec header
 
-          smoothScrollTo(
-            window.pageYOffset,
-            targetPosition - headerHeight - buffer,
-            600
-          );
+          // Alignement parfait : le trait de section doit se confondre avec celui du header
+          // Header trait à bottom: -3px, donc on ajuste pour que les traits soient alignés
+          const headerTraitOffset = 3; // Le trait du header descend de 3px sous le header
 
-          setTimeout(() => {
-            document.documentElement.classList.remove("scrolling-in-progress");
-            document.querySelectorAll("nav a").forEach((link) => {
-              link.removeAttribute("tabindex");
-            });
-          }, 650);
+          // Ajustement spécial pour la section skills pour centrer les cards
+          let additionalOffset = 0;
+          if (targetId === "#skills") {
+            additionalOffset = 50; // Remonte la section de 50px pour centrer les cards
+          }
+
+          const scrollTarget =
+            targetPosition -
+            headerHeight +
+            headerTraitOffset +
+            additionalOffset;
+
+          window.scrollTo({
+            top: Math.max(0, scrollTarget),
+            behavior: "smooth",
+          });
         }
       });
     });
-
-  function smoothScrollTo(startY, endY, duration) {
-    const startTime = performance.now();
-    const difference = endY - startY;
-
-    function scroll(timestamp) {
-      const timeElapsed = timestamp - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      const easeInOutCubic =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      window.scrollTo(0, startY + difference * easeInOutCubic);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(scroll);
-      }
-    }
-
-    requestAnimationFrame(scroll);
-  }
-
-  window.addEventListener("resize", setMenuWidth);
 }

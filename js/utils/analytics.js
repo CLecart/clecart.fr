@@ -1,6 +1,33 @@
-// analytics.js - Privacy-friendly analytics
+/**
+ * Privacy-first analytics system
+ * @fileoverview GDPR-compliant analytics with user consent and anonymized data
+ * @author Christophe Lecart
+ */
+
+/**
+ * Privacy-first analytics management class
+ * @class PrivacyAnalytics
+ * @description Collects performance and usage metrics while respecting privacy
+ * @example
+ * const analytics = new PrivacyAnalytics();
+ * analytics.trackEvent('Navigation', 'Click', 'Header Menu');
+ */
 class PrivacyAnalytics {
+  /**
+   * PrivacyAnalytics class constructor
+   * @constructor
+   * @description Initializes session data and checks GDPR consent
+   */
   constructor() {
+    /**
+     * User session data
+     * @type {Object}
+     * @property {number} startTime - Session start timestamp
+     * @property {number} pageViews - Number of page views
+     * @property {number} interactions - Number of user interactions
+     * @property {number} scrollDepth - Maximum scroll depth (%)
+     * @property {number} timeOnPage - Time spent on page (ms)
+     */
     this.sessionData = {
       startTime: Date.now(),
       pageViews: 0,
@@ -9,6 +36,11 @@ class PrivacyAnalytics {
       timeOnPage: 0,
     };
 
+    /**
+     * GDPR consent status
+     * @type {boolean}
+     * @description Checks if user has accepted tracking
+     */
     this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
 
     if (this.consentGiven) {
@@ -16,28 +48,51 @@ class PrivacyAnalytics {
     }
   }
 
+  /**
+   * Initializes all analytics trackers
+   * @method init
+   * @description Sets up event listeners and starts data collection
+   * @returns {void}
+   */
   init() {
     this.trackPageView();
     this.trackScrollDepth();
     this.trackInteractions();
     this.trackPerformance();
 
-    // Send data before page unload
+    /**
+     * Send data before page unload
+     * @description Uses beforeunload to capture short sessions
+     */
     window.addEventListener("beforeunload", () => {
       this.sendAnalytics();
     });
 
-    // Send data every 30 seconds for long sessions
+    /**
+     * Periodic data sending for long sessions
+     * @description 30-second interval to prevent data loss
+     */
     setInterval(() => {
       this.sendAnalytics();
     }, 30000);
   }
 
+  /**
+   * Records a page view
+   * @method trackPageView
+   * @description Increments page view counter for session
+   * @returns {void}
+   */
   trackPageView() {
     this.sessionData.pageViews++;
-    console.log("Page view tracked:", window.location.pathname);
   }
 
+  /**
+   * Tracks user scroll depth
+   * @method trackScrollDepth
+   * @description Calculates maximum scroll percentage reached
+   * @returns {void}
+   */
   trackScrollDepth() {
     let maxScroll = 0;
 
@@ -95,9 +150,32 @@ class PrivacyAnalytics {
     }
   }
 
+  /**
+   * Records a custom user event
+   * @method trackEvent
+   * @description Collects categorized events for behavioral analysis
+   * @param {string} category - Event category (e.g., 'Navigation', 'Interaction')
+   * @param {string} action - Action performed (e.g., 'Click', 'Download')
+   * @param {string|null} [label=null] - Optional label for additional context
+   * @param {number|null} [value=null] - Numeric value associated with event
+   * @returns {void}
+   * @example
+   * trackEvent('UI', 'Button Click', 'Contact Form Submit');
+   * trackEvent('Download', 'PDF', 'CV_Download', 1);
+   */
   trackEvent(category, action, label = null, value = null) {
     if (!this.consentGiven) return;
 
+    /**
+     * Event data structure
+     * @type {Object}
+     * @property {string} category - Event category
+     * @property {string} action - Action performed
+     * @property {string|null} label - Descriptive label
+     * @property {number|null} value - Numeric value
+     * @property {number} timestamp - Event timestamp
+     * @property {string} url - Page URL where event occurred
+     */
     const eventData = {
       category,
       action,
@@ -107,12 +185,13 @@ class PrivacyAnalytics {
       url: window.location.pathname,
     };
 
-    console.log("Event tracked:", eventData);
-
-    // Store in local storage for later sending
+    /**
+     * Local storage of events for deferred sending
+     * @description Keeps last 50 events to avoid overload
+     */
     const events = JSON.parse(localStorage.getItem("analytics_events") || "[]");
     events.push(eventData);
-    localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50))); // Keep last 50 events
+    localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50)));
   }
 
   sendAnalytics() {
@@ -142,12 +221,20 @@ class PrivacyAnalytics {
     };
 
     // In real implementation, send to your analytics endpoint
-    console.log("Analytics data ready to send:", analyticsData);
-
     // Clear sent events
     localStorage.removeItem("analytics_events");
   }
 
+  /**
+   * Updates GDPR consent status
+   * @method updateConsent
+   * @description Manages tracking activation/deactivation based on consent
+   * @param {boolean} hasConsent - User consent status
+   * @returns {void}
+   * @example
+   * analytics.updateConsent(true);
+   * analytics.updateConsent(false);
+   */
   updateConsent(hasConsent) {
     this.consentGiven = hasConsent;
 
@@ -155,7 +242,10 @@ class PrivacyAnalytics {
       this.init();
       this.initialized = true;
     } else if (!hasConsent) {
-      // Clear analytics data
+      /**
+       * Analytics data cleanup on consent withdrawal
+       * @description Removes all collected data and resets session
+       */
       localStorage.removeItem("analytics_events");
       this.sessionData = {
         startTime: Date.now(),
@@ -168,5 +258,8 @@ class PrivacyAnalytics {
   }
 }
 
-// Export for use in main application
+/**
+ * Export PrivacyAnalytics class for main application use
+ * @exports PrivacyAnalytics
+ */
 export default PrivacyAnalytics;

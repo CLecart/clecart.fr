@@ -1,18 +1,33 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
+
+    <script>
+      const stored = localStorage.getItem("dark-mode");
+      if (
+        stored === "enabled" ||
+        (stored !== "disabled" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.style.colorScheme = "dark";
+      } else {
+        document.documentElement.style.colorScheme = "light";
+      }
+    </script>
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
     />
     <meta
       name="description"
-      content="Portfolio de Christophe Lecart - Développeur Web & Mobile spécialisé en Go, JavaScript et applications modernes"
+      content="Christophe Lecart Portfolio - Web & Mobile Developer specialized in Go, JavaScript and modern applications"
     />
     <meta
       name="keywords"
-      content="développeur, web, mobile, portfolio, Go, JavaScript, HTML, CSS"
+      content="developer, web, mobile, portfolio, Go, JavaScript, HTML, CSS"
     />
     <meta name="author" content="Christophe Lecart" />
     <meta name="robots" content="index, follow" />
@@ -26,7 +41,7 @@
     />
     <meta
       property="og:description"
-      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+      content="Professional Portfolio of Christophe Lecart - Web & Mobile Developer"
     />
     <meta
       property="og:image"
@@ -47,7 +62,7 @@
     />
     <meta
       property="twitter:description"
-      content="Portfolio professionnel de Christophe Lecart - Développeur Web & Mobile"
+      content="Professional Portfolio of Christophe Lecart - Web & Mobile Developer"
     />
     <meta
       property="twitter:image"
@@ -55,14 +70,14 @@
     />
     <meta
       property="twitter:image:alt"
-      content="Portfolio de Christophe Lecart - Développeur Web & Mobile"
+      content="Christophe Lecart - Web & Mobile Developer"
     />
     <meta property="twitter:creator" content="@clecart" />
     <meta property="twitter:site" content="@clecart" />
 
     <title>Christophe Lecart - Web & Mobile Developer</title>
 
-    <!-- Favicons optimisés pour différents supports -->
+    <!-- Optimized favicons for different platforms -->
     <link rel="icon" href="assets/icons/favicon.ico" />
     <link
       rel="icon"
@@ -123,7 +138,7 @@
           "Frontend Development",
           "Backend Development"
         ],
-        "description": "Développeur Web & Mobile passionné, spécialisé en Go, JavaScript et applications modernes. Étudiant en développement d'applications web et mobiles.",
+        "description": "Passionate Web & Mobile Developer, specialized in Go, JavaScript and modern applications. Student in web and mobile application development.",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "FR"
@@ -144,7 +159,6 @@
       fetchpriority="high"
     />
 
-    <link rel="stylesheet" href="css/critical.css" />
     <link rel="stylesheet" href="styles.css?v=2025108" />
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
@@ -170,12 +184,13 @@
       });
     </script>
 
+    <!-- Image error handling moved to main.js for better organization -->
+
     <!-- JavaScript -->
-    <script src="js/critical.js"></script>
     <script type="module" src="js/main.js" defer></script>
   </head>
   <body class="homepage">
-    <!-- En-tête -->
+    <!-- Header -->
     <header>
       <div class="container header-content">
         <a href="index.html" class="logo">
@@ -183,7 +198,7 @@
           <span>Lecart</span>
         </a>
         <div class="right-content">
-          <nav aria-label="Navigation principale">
+          <nav aria-label="Main navigation">
             <ul id="main-navigation" role="menubar">
               <li><a href="#hero" role="menuitem">Home</a></li>
               <li><a href="#about" role="menuitem">About</a></li>
@@ -221,7 +236,7 @@
       <div class="container hero-content">
         <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
         <p class="slide-left">
-          I'm a <span id="typewriter">Web Developer</span>
+          I'm a <span class="typewriter-text">Web Developer</span>
         </p>
         <div class="fade-in hero-buttons">
           <a href="#projects" class="btn">View My Work</a>
@@ -239,7 +254,7 @@
           <div class="slide-right">
             <img
               src="assets/images/profile.jpg"
-              alt="Christophe Lecart - Développeur Web & Mobile"
+              alt="Christophe Lecart - Web & Mobile Developer"
               class="profile-img"
               width="300"
               height="300"
@@ -350,10 +365,7 @@
           </div>
           <div class="language-card card-base fade-in">
             <div class="language-icon">
-              <i
-                class="fab fa-rust"
-                style="font-size: 48px; color: #ce422b"
-              ></i>
+              <i class="fab fa-rust rust-icon"></i>
             </div>
             <span>Rust</span>
           </div>
@@ -364,7 +376,7 @@
     <section id="skills">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Skills & Expertise</h2>
+          <h2>Skills</h2>
         </div>
         <div class="skills-container">
           <div class="skill-card card-base fade-in">
@@ -450,7 +462,7 @@
     <section id="projects">
       <div class="container">
         <div class="section-header fade-in">
-          <h2>Featured Projects</h2>
+          <h2>Projects</h2>
         </div>
         <div class="projects-grid">
           <!-- Projet 1 : Groupie-Tracker -->
@@ -470,7 +482,7 @@
                   src="assets/videos/Groupie-Tracker.mp4"
                   type="video/mp4"
                 />
-                Votre navigateur ne supporte pas la lecture de vidéos.
+                Your browser does not support video playback.
               </video>
             </div>
             <div class="project-content">
@@ -491,6 +503,7 @@
                   href="https://github.com/CLecart/groupie-tracker"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -512,7 +525,7 @@
                 poster=""
               >
                 <source src="assets/videos/BombermanDX.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture de vidéos.
+                Your browser does not support video playback.
               </video>
             </div>
             <div class="project-content">
@@ -533,6 +546,7 @@
                   href="https://github.com/SpauriRosso/bomberman-dx"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -567,6 +581,7 @@
                   href="https://github.com/nicgen/forum"
                   class="github-btn"
                   target="_blank"
+                  rel="noopener noreferrer"
                   title="View on GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
@@ -600,7 +615,10 @@
               </div>
               <div class="contact-text">
                 <h4>GitHub</h4>
-                <a href="https://github.com/CLecart" target="_blank"
+                <a
+                  href="https://github.com/CLecart"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >github.com/CLecart</a
                 >
               </div>
@@ -614,6 +632,7 @@
                 <a
                   href="https://www.linkedin.com/in/christophe-lecart-cl15121981/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   >linkedin.com/in/christophe-lecart</a
                 >
               </div>
@@ -623,50 +642,34 @@
           <!-- Formulaire de contact -->
           <div class="contact-form card-base slide-left">
             <h3>Send Me a Message</h3>
-            <form id="contactForm" autocomplete="on">
+            <form id="contact-form">
               <div class="form-group">
-                <label for="from_name">Your Name</label>
-                <input
-                  type="text"
-                  id="from_name"
-                  name="from_name"
-                  autocomplete="name"
-                  required
-                  placeholder=" "
-                />
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder=" " />
               </div>
               <div class="form-group">
                 <label for="email">Your Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  autocomplete="email"
-                  required
-                  placeholder=" "
-                />
+                <input type="email" id="email" name="email" placeholder=" " />
               </div>
               <div class="form-group">
-                <label for="message">Message</label>
+                <label for="message">Your Message</label>
                 <textarea
                   id="message"
                   name="message"
                   rows="5"
-                  autocomplete="off"
-                  required
                   placeholder=" "
                 ></textarea>
               </div>
               <input type="hidden" name="to_name" value="Christophe" />
               <button type="submit" class="btn">Send Message</button>
-              <div id="form-status" class="form-status"></div>
+              <div class="form-status"></div>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Pied de page -->
+    <!-- Footer -->
     <footer>
       <div class="container">
         <p>
@@ -676,7 +679,7 @@
       </div>
     </footer>
 
-    <!-- Bannière GDPR -->
+    <!-- GDPR Banner -->
     <div id="gdpr-banner" class="gdpr-banner">
       <div class="gdpr-content">
         <p>

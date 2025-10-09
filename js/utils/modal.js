@@ -1,11 +1,24 @@
-// modal.js
-// Module utilitaire pour la gestion des modales (ouvertures, fermetures, animations)
+/**
+ * @fileoverview Accessible modal management module
+ * @description Handles modal opening, closing and animations with accessibility support
+ * @version 1.0.0
+ * @author Christophe Lecart <djlike@hotmail.fr>
+ */
 
 /**
- * Initialise la gestion des modales sur le site
+ * Initialize modal system for project images
+ * @function initModals
+ * @description Configure les event listeners pour l'ouverture des modales d'images
+ * @returns {void}
+ * @example
+ * // Activer les modales sur les images de projet
+ * initModals();
  */
 export function initModals() {
-  // Sélection des éléments déclencheurs et des modales
+  /**
+   * Modal trigger configuration on project thumbnails
+   * @description Ajoute des event listeners de clic sur toutes les images de projets
+   */
   document.querySelectorAll(".project-thumb img").forEach((image) => {
     image.addEventListener("click", function () {
       createImageModal(this.src, this.alt);
@@ -13,18 +26,30 @@ export function initModals() {
   });
 
   /**
-   * Crée et affiche une modale d'image
-   * @param {string} src - L'URL de l'image
-   * @param {string} alt - Le texte alternatif de l'image
+   * Crée et affiche une modale d'image avec animations et accessibilité
+   * @function createImageModal
+   * @param {string} src - URL de l'image à afficher dans la modale
+   * @param {string} alt - Texte alternatif de l'image pour l'accessibilité
+   * @returns {void}
+   * @description Génère dynamiquement une modale accessible avec contrôles de fermeture
+   * @example
+   * // Ouvrir une modale d'image
+   * createImageModal('/assets/images/project.jpg', 'Capture du projet');
    */
   function createImageModal(src, alt) {
-    // Vérifie et supprime une modale existante
+    /**
+     * Nettoyage des modales existantes pour éviter les conflits
+     * @description Supprime toute modale déjà ouverte avant d'en créer une nouvelle
+     */
     const existingModal = document.querySelector(".modal-overlay");
     if (existingModal) {
       existingModal.remove();
     }
 
-    // Création des éléments de la modale
+    /**
+     * Création de la structure DOM de la modale
+     * @description Construit les éléments overlay, contenu, image et bouton de fermeture
+     */
     const modalOverlay = document.createElement("div");
     modalOverlay.className = "modal-overlay";
 
@@ -40,18 +65,27 @@ export function initModals() {
     closeButton.innerHTML = "&times;";
     closeButton.setAttribute("aria-label", "Close modal");
 
-    // Ajout des éléments à la modale
+    /**
+     * Assemblage et injection de la modale dans le DOM
+     * @description Construit la hiérarchie complète et l'ajoute au body
+     */
     modalContent.appendChild(modalImage);
     modalContent.appendChild(closeButton);
     modalOverlay.appendChild(modalContent);
     document.body.appendChild(modalOverlay);
 
-    // Animation d'apparition
+    /**
+     * Animation d'apparition avec délai pour le rendu CSS
+     * @description Petite temporisation pour permettre le calcul des styles
+     */
     setTimeout(() => {
       modalOverlay.classList.add("active");
     }, 10);
 
-    // Gestion de la fermeture des modales
+    /**
+     * Modal close handlers configuration
+     * @description Multiple méthodes de fermeture pour une meilleure UX
+     */
     closeButton.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", function (e) {
       if (e.target === modalOverlay) {
@@ -66,7 +100,10 @@ export function initModals() {
     });
 
     /**
-     * Ferme et supprime la modale
+     * Ferme la modale avec animation de sortie
+     * @function closeModal
+     * @description Anime la fermeture puis supprime l'élément du DOM
+     * @returns {void}
      */
     function closeModal() {
       modalOverlay.classList.remove("active");

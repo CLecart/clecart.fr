@@ -1,43 +1,15 @@
 /**
- * @fileoverview Module de gestion du mode sombre optimisé et robuste
- * @description Gère le basculement entre thème clair et sombre avec persistance
- * @version 1.0.0
- * @author Christophe Lecart <djlike@hotmail.fr>
+ * Dark mode management
+ * @author Christophe Lecart
  */
 
-/**
- * Initialise le système de gestion du mode sombre
- * @function initDarkMode
- * @description Configure le toggle de thème avec détection système et persistance localStorage
- * @returns {void}
- * @throws {Error} Si le toggle du mode sombre n'est pas trouvé dans le DOM
- * @example
- * // Initialiser le mode sombre
- * initDarkMode();
- */
 export function initDarkMode() {
-  const body = document.body;
-
-  // Utiliser le toggle existant dans le HTML
   const darkModeToggle = document.querySelector(".dark-mode-toggle");
-
-  if (!darkModeToggle) {
-    console.error("Dark mode toggle not found in HTML");
-    return;
-  }
+  if (!darkModeToggle) return;
 
   function applyTheme(isDark) {
-    document.documentElement.classList.add("theme-transitioning");
-
-    document
-      .querySelectorAll(
-        ".hero-content *, .fade-in, .slide-left, .slide-right, .btn, .btn-secondary, .form-group input, .form-group textarea, .contact-info, .contact-form"
-      )
-      .forEach((el) => {
-        el.classList.add("no-transition");
-        el.style.backgroundColor = "transparent";
-      });
-
+    const body = document.body;
+    
     if (isDark) {
       body.classList.add("dark-mode");
       localStorage.setItem("dark-mode", "enabled");
@@ -45,46 +17,28 @@ export function initDarkMode() {
       body.classList.remove("dark-mode");
       localStorage.setItem("dark-mode", "disabled");
     }
-
-    // Mettre à jour l'icône
+    
     updateToggleIcon(isDark);
-
-    const contactInfo = document.querySelector(".contact-info");
-    const contactForm = document.querySelector(".contact-form");
-
-    if (contactInfo) {
-      contactInfo.style.backgroundColor = isDark
-        ? "var(--card-dark)"
-        : "var(--white)";
-    }
-    if (contactForm) {
-      contactForm.style.backgroundColor = isDark
-        ? "var(--card-dark)"
-        : "var(--white)";
-    }
-
-    setTimeout(() => {
-      document.querySelectorAll(".no-transition").forEach((el) => {
-        el.classList.remove("no-transition");
-        el.style.backgroundColor = "";
-      });
-      document.documentElement.classList.remove("theme-transitioning");
-    }, 150);
   }
 
-  // Synchronisation avec l'état initial défini dans le HTML
-  const currentDarkMode = body.classList.contains("dark-mode");
-  const darkModePreference = localStorage.getItem("dark-mode");
+  function updateToggleIcon(isDark) {
+    const icon = darkModeToggle.querySelector("i") || darkModeToggle.querySelector("span");
+    if (icon) {
+      if (icon.tagName === "I") {
+        icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+      } else {
+        icon.textContent = isDark ? "☀️" : "🌙";
+      }
+    }
+  }
 
-  // Mise à jour de l'icône en fonction de l'état actuel
+  const currentDarkMode = document.body.classList.contains("dark-mode");
+  const darkModePreference = localStorage.getItem("dark-mode");
+  
   updateToggleIcon(currentDarkMode);
 
-  // Éviter de réappliquer le thème s'il est déjà correct
   if (darkModePreference === null) {
-    // Première visite - utiliser la préférence système
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (currentDarkMode !== systemPrefersDark) {
       applyTheme(systemPrefersDark);
     }
@@ -96,24 +50,7 @@ export function initDarkMode() {
   }
 
   darkModeToggle.addEventListener("click", () => {
-    const newDarkMode = !body.classList.contains("dark-mode");
+    const newDarkMode = !document.body.classList.contains("dark-mode");
     applyTheme(newDarkMode);
   });
-
-  function updateToggleIcon(isDark) {
-    const icon =
-      darkModeToggle.querySelector("i") || darkModeToggle.querySelector("span");
-    if (icon) {
-      if (icon.tagName === "I") {
-        icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-      } else {
-        icon.textContent = isDark ? "☀️" : "🌙";
-        icon.className = isDark ? "sun-icon" : "moon-icon";
-      }
-    }
-    darkModeToggle.setAttribute(
-      "aria-label",
-      isDark ? "Switch to light mode" : "Switch to dark mode"
-    );
-  }
 }

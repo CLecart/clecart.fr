@@ -1,24 +1,21 @@
-// sw-register.js
-// Module utilitaire pour l'enregistrement du Service Worker (PWA)
+/**
+ * Service Worker registration and PWA management
+ * @fileoverview Handles service worker registration with update notifications
+ * @author Christophe Lecart
+ */
 
 /**
- * Enregistre le Service Worker pour activer le mode PWA
+ * Registers the service worker for PWA functionality
+ * @function registerServiceWorker
+ * @description Configures service worker registration with automatic update handling
+ * @returns {void}
  */
 export function registerServiceWorker() {
-  // Vérification de la compatibilité et enregistrement du SW
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        // Mettre à jour le chemin vers le service worker
         .register("/js/utils/service-worker.js")
         .then((registration) => {
-          console.log(
-            "Service Worker registered with scope:",
-            registration.scope
-          );
-
-          // Gestion des événements d'installation et de mise à jour
-          // Vérifier les mises à jour
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
             newWorker.addEventListener("statechange", () => {
@@ -31,19 +28,24 @@ export function registerServiceWorker() {
             });
           });
         })
-        .catch((error) => {
-          console.log("Service Worker registration failed:", error);
+        .catch(() => {
+          // Service Worker registration failed
         });
     });
   }
 
-  // Notification de mise à jour
+  /**
+   * Shows update notification when new service worker version is available
+   * @function showUpdateNotification
+   * @description Creates interactive notification for service worker updates
+   * @returns {void}
+   */
   function showUpdateNotification() {
     const notification = document.createElement("div");
     notification.className = "app-update-notification";
     notification.innerHTML = `
-      <p>Une nouvelle version est disponible !</p>
-      <button id="update-app">Mettre à jour</button>
+      <p>New version available!</p>
+      <button id="update-app">Update</button>
     `;
     document.body.appendChild(notification);
 
@@ -58,13 +60,14 @@ export function registerServiceWorker() {
     });
   }
 
-  // Gérer les mises à jour du service worker (seulement si supporté)
-  if ("serviceWorker" in navigator) {
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
-    });
-  }
+  /**
+   * Prevents multiple reloads during service worker updates
+   * @description Handles controller change events with refresh guard
+   */
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshing) return;
+    refreshing = true;
+    window.location.reload();
+  });
 }

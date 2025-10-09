@@ -161,7 +161,7 @@ clecart.fr/
 │   │   │   ├── modal.js            # Système modal accessible
 │   │   │   ├── performance.js       # Optimisations runtime
 │   │   │   ├── service-worker.js    # Service Worker de base
-│   │   │   ├── sw-advanced.js       # SW stratégies cache avancées
+│   │   │   ├── sw-advanced.js       # SW stratégies cache avancées (optionnel — non fourni par défaut)
 │   │   │   ├── sw-register.js       # Enregistrement Service Worker
 │   │   │   └── webvitals.js        # Core Web Vitals monitoring
 │   │   │
@@ -244,10 +244,6 @@ open http://localhost:8000
 
 #### Prérequis
 
-- **Node.js** 16+ (pour les scripts npm)
-- **Python** 3.8+ (serveur développement alternatif)
-- **Docker** & **Docker Compose** (déploiement)
-- **VS Code** (recommandé avec extensions auto-configurées)
 
 #### Scripts Disponibles
 
@@ -266,6 +262,8 @@ npm run lighthouse          # Audit Lighthouse complet
 npm run deploy              # Script déploiement production
 npm run docker:stop         # Arrêt container avec cleanup
 ```
+
+Note: certains scripts/documentation (ex: `docs:generate`, `docs:serve`, `jsdoc:convert`) s'appuient sur des fichiers de configuration et scripts optionnels (jsdoc, `scripts/convert-to-jsdoc.sh`). Ces éléments ne sont pas inclus par défaut dans ce dépôt — ils peuvent être ajoutés si vous souhaitez générer la documentation avec jsdoc.
 
 ### 🔧 **Configuration IDE (VS Code)**
 

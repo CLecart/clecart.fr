@@ -105,6 +105,14 @@ body.dark-mode .hero-content {
   #typewriter {
     font-size: 1.3rem;
   }
+
+  .hero-content .btn {
+    font-size: 0.9rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    margin: var(--spacing-xs) var(--spacing-xs);
+    min-width: 120px;
+    border-radius: var(--btn-radius);
+  }
 }
 
 body.dark-mode #hero {

@@ -2,7 +2,7 @@
   background: var(--white-opacity-10);
   color: var(--white);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--toggle-radius);
   padding: 8px;
   cursor: pointer;
   transition:

@@ -2,6 +2,10 @@
  * Card components with unified styling
  * @description Base card styles with variants, responsive design and animations
  */
+/**
+ * Card components with unified styling
+ * @description Base card styles with variants, responsive design and animations
+ */
 
 .card-base {
   background-color: var(--card-bg);
@@ -9,7 +13,8 @@
   border-radius: var(--card-radius);
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
-  transition: transform var(--duration-normal) var(--ease-smooth),
+  transition:
+    transform var(--duration-normal) var(--ease-smooth),
     box-shadow var(--duration-normal) var(--ease-smooth),
     border-color var(--duration-normal) var(--ease-smooth);
   padding: var(--card-padding);
@@ -197,10 +202,18 @@ body.dark-mode .language-icon img {
 }
 
 @keyframes subtle-pulse {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.05); }
-  60% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 480px) {

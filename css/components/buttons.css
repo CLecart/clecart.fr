@@ -17,6 +17,7 @@
   transition:
     transform 0.3s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth);
+  padding: var(--btn-padding);
 }
 
 .btn:hover,
@@ -67,7 +68,6 @@
 
 .btn {
   display: inline-block;
-  padding: var(--btn-padding);
   font-size: 1rem;
 }
 
@@ -82,7 +82,6 @@
 
 .project-btn {
   display: inline-block;
-  padding: var(--btn-padding);
   font-size: 0.95rem;
 }
 
@@ -128,7 +127,6 @@
 }
 
 .nav-btn {
-  padding: var(--btn-padding);
   font-size: 0.95rem;
   text-align: center;
   min-width: 110px;
@@ -165,7 +163,6 @@
     width: 55px;
     font-size: 0.8rem;
   }
-
   .header-buttons {
     gap: 5px;
   }
@@ -204,7 +201,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .github-btn {
     padding: 0;
     width: 38px;

@@ -58,11 +58,13 @@ export function registerServiceWorker() {
     });
   }
 
-  // Gérer les mises à jour du service worker
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (refreshing) return;
-    refreshing = true;
-    window.location.reload();
-  });
+  // Gérer les mises à jour du service worker (seulement si supporté)
+  if ("serviceWorker" in navigator) {
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  }
 }

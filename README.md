@@ -244,7 +244,6 @@ open http://localhost:8000
 
 #### Prérequis
 
-
 #### Scripts Disponibles
 
 ```bash
@@ -264,6 +263,27 @@ npm run docker:stop         # Arrêt container avec cleanup
 ```
 
 Note: certains scripts/documentation (ex: `docs:generate`, `docs:serve`, `jsdoc:convert`) s'appuient sur des fichiers de configuration et scripts optionnels (jsdoc, `scripts/convert-to-jsdoc.sh`). Ces éléments ne sont pas inclus par défaut dans ce dépôt — ils peuvent être ajoutés si vous souhaitez générer la documentation avec jsdoc.
+
+### Gestion des secrets (EmailJS) — recommandation
+
+Pour éviter de committer des tokens, utilisez la méthode suivante :
+
+1. Copiez `.env.example` en `.env` et remplissez les valeurs :
+
+```
+cp .env.example .env
+# Éditez .env et entrez vos valeurs
+```
+
+2. Générez le fichier runtime `config.json` (qui est gitignored) :
+
+```
+./scripts/generate-config-from-env.sh
+```
+
+3. Déployez en veillant à ce que `config.json` soit présent à la racine (ou utilisez une étape d'entrypoint Docker qui écrit `config.json` depuis des variables d'environnement CI/CD).
+
+Ne commettez jamais votre `.env` ni `config.json` — ils sont listés dans `.gitignore`.
 
 ### 🔧 **Configuration IDE (VS Code)**
 

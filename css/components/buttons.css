@@ -14,7 +14,8 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s var(--ease-smooth),
+  transition:
+    transform 0.3s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth);
 }
 
@@ -144,13 +145,13 @@
 }
 
 .nav-toggle {
-  height: 40px;
-  width: 40px;
+  height: var(--toggle-height);
+  width: var(--toggle-width);
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--white-opacity-10);
-  border-radius: 5px;
+  border-radius: var(--toggle-radius);
 }
 
 .nav-toggle:active {

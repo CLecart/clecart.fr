@@ -68,10 +68,21 @@
 
 @media (max-width: 480px) {
   .dark-mode-toggle {
-    padding: 6px;
+    height: var(--toggle-height);
+    width: var(--toggle-width);
+    min-width: var(--toggle-width);
+    min-height: var(--toggle-height);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--toggle-radius);
+    background-color: var(--white-opacity-10);
+    font-size: 1.2rem;
   }
   .dark-mode-toggle i,
   .dark-mode-toggle span {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    margin: 0 auto;
   }
 }

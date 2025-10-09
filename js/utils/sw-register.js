@@ -65,9 +65,11 @@ export function registerServiceWorker() {
    * @description Handles controller change events with refresh guard
    */
   let refreshing = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (refreshing) return;
-    refreshing = true;
-    window.location.reload();
-  });
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("controllerchange", () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  }
 }

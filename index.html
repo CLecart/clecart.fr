@@ -170,48 +170,8 @@
       });
     </script>
 
-    <!-- Critical inline JavaScript for performance -->
-    <script>
-      // Prevent FOUC - remove js-loading class immediately
-      document.documentElement.classList.remove("js-loading");
-
-      // Enhanced theme detection with error handling
-      try {
-        const darkModePreference = localStorage.getItem("dark-mode");
-        const systemPrefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-
-        // Apply dark mode if explicitly enabled or if no preference set and system prefers dark
-        const shouldUseDarkMode =
-          darkModePreference === "enabled" ||
-          (darkModePreference === null && systemPrefersDark) ||
-          darkModePreference !== "disabled";
-
-        if (shouldUseDarkMode) {
-          document.body.classList.add("dark-mode");
-        }
-      } catch (error) {
-        console.warn("Theme detection error:", error);
-        // Fallback to light mode on error
-      }
-
-      // Image error handling for all external images
-      document.addEventListener("DOMContentLoaded", function () {
-        const images = document.querySelectorAll("img[src^='http']");
-        images.forEach((img) => {
-          if (!img.hasAttribute("onerror")) {
-            img.onerror = function () {
-              console.warn("Failed to load image:", this.src);
-              this.style.opacity = "0.5";
-              this.alt = "Image unavailable";
-            };
-          }
-        });
-      });
-    </script>
-
     <!-- JavaScript -->
+    <script src="js/critical.js"></script>
     <script type="module" src="js/main.js" defer></script>
   </head>
   <body class="homepage">
@@ -663,13 +623,14 @@
           <!-- Formulaire de contact -->
           <div class="contact-form card-base slide-left">
             <h3>Send Me a Message</h3>
-            <form id="contactForm">
+            <form id="contactForm" autocomplete="on">
               <div class="form-group">
                 <label for="from_name">Your Name</label>
                 <input
                   type="text"
                   id="from_name"
                   name="from_name"
+                  autocomplete="name"
                   required
                   placeholder=" "
                 />
@@ -680,6 +641,7 @@
                   type="email"
                   id="email"
                   name="email"
+                  autocomplete="email"
                   required
                   placeholder=" "
                 />
@@ -690,6 +652,7 @@
                   id="message"
                   name="message"
                   rows="5"
+                  autocomplete="off"
                   required
                   placeholder=" "
                 ></textarea>

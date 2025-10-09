@@ -1,6 +1,21 @@
 /* Critical CSS - Inlined for fastest rendering */
 /* This should be inlined in <head> for optimal performance */
 
+/* Critical variables */
+:root {
+  --primary: #6c63ff;
+  --primary-light: rgba(108, 99, 255, 0.1);
+  --secondary: #4ecdc4;
+  --accent: #ff6b6b;
+  --white: #ffffff;
+  --light: #f8f9fa;
+  --text-color: #2d334a;
+  --text-dark: #f4f4f4;
+  --darker: #14141e;
+  --dark: #1a1a2e;
+  --header-height: 80px;
+}
+
 /* Reset and base - critical above-the-fold styles */
 * {
   margin: 0;
@@ -17,13 +32,13 @@ body {
   font-family: "Poppins", sans-serif;
   font-display: swap;
   line-height: 1.6;
-  color: #2d334a;
-  background-color: #f8f9fa;
+  color: var(--text-color);
+  background-color: var(--light);
 }
 
 /* Critical header styles */
 header {
-  background: linear-gradient(135deg, #6c63ff 0%, #4ecdc4 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   position: fixed;
   top: 0;
   left: 0;
@@ -43,10 +58,13 @@ header {
   padding: 0 20px;
 }
 .logo {
-  color: #fff;
+  color: var(--white);
   font-size: 1.8rem;
   font-weight: 700;
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
 }
 
 /* Critical hero styles */
@@ -55,8 +73,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6c63ff 0%, #4ecdc4 50%, #ff6b6b 100%);
-  color: #fff;
+  color: var(--white);
   text-align: center;
   position: relative;
 }
@@ -72,11 +89,8 @@ header {
 
 /* Critical dark mode */
 body.dark-mode {
-  background-color: #14141e;
-  color: #f4f4f4;
-}
-body.dark-mode #hero {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-color: var(--darker);
+  color: var(--text-dark);
 }
 
 /* Loading state prevention */
@@ -92,8 +106,8 @@ html.js-loading .js-loading-visible {
 .btn {
   display: inline-block;
   padding: 12px 30px;
-  background: linear-gradient(135deg, #6c63ff, #4ecdc4);
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: var(--white);
   text-decoration: none;
   border-radius: 30px;
   font-weight: 600;

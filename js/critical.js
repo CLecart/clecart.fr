@@ -21,35 +21,20 @@
    */
   const isDarkMode = localStorage.getItem("dark-mode") !== "disabled";
   if (isDarkMode) {
-    document.body.classList.add("dark-mode");
+    // Wait for DOM to be ready before accessing body
+    if (document.body) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("dark-mode");
+      });
+    }
   }
 
   /**
-   * Preload critical resources for performance optimization
-   * @type {string[]} Array of resource URLs to preload
+   * Note: Removed unnecessary preloads to avoid console warnings
+   * Resources are loaded when needed by the main application
    */
-  const preloadResources = [
-    "/assets/icons/android-chrome-192x192.png",
-    "/css/components/dark-mode-toggle.css",
-    "/js/modules/darkmode.js",
-  ];
-
-  /**
-   * Creates and appends preload links for critical resources
-   * @param {string} resource - The resource URL to preload
-   * @returns {void}
-   */
-  preloadResources.forEach((resource) => {
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = resource.endsWith(".css")
-      ? "style"
-      : resource.endsWith(".js")
-        ? "script"
-        : "image";
-    link.href = resource;
-    document.head.appendChild(link);
-  });
 
   /**
    * Performance observer for Core Web Vitals monitoring

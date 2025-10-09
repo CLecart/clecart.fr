@@ -30,7 +30,6 @@ body {
 }
 body {
   font-family: "Poppins", sans-serif;
-  font-display: swap;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--light);

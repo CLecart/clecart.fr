@@ -125,7 +125,7 @@ export function initNavigation() {
           const headerHeight = document.querySelector("header").offsetHeight;
           const targetPosition =
             targetElement.getBoundingClientRect().top + window.pageYOffset;
-          const buffer = window.innerWidth <= 768 ? 15 : 25;
+          const buffer = 0; // Tangent avec header
 
           smoothScrollTo(
             window.pageYOffset,

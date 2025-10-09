@@ -34,7 +34,6 @@ body {
 
 body {
   font-family: "Poppins", sans-serif;
-  font-display: swap;
   line-height: 1.6;
   color: var(--text-color);
   overflow-x: hidden;
@@ -46,6 +45,13 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    padding: 0 10px;
+  }
 }
 
 a {
@@ -65,7 +71,7 @@ a::after {
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: var(--accent-line-thickness);
   background: var(--accent);
   transition: width 0.3s ease;
   opacity: 0.8;
@@ -119,11 +125,4 @@ h3 {
 
 p {
   margin-bottom: 1rem;
-}
-
-img,
-video {
-  max-width: 100%;
-  height: auto;
-  display: block;
 }

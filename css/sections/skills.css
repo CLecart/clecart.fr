@@ -1,19 +1,8 @@
-/* skills.css
-   Styles pour la section des compétences du portfolio
-   Organisation : grille, cartes compétence, animations, responsive
-*/
+/** Skills section styles */
 
-/* Grille de compétences */
 #skills {
   padding: 80px 0 120px;
   background-color: var(--light);
-  scroll-margin-top: calc(var(--header-height) + 20px);
-}
-
-@media (max-width: 768px) {
-  #skills {
-    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
-  }
 }
 
 .skills-container {
@@ -22,7 +11,6 @@
   gap: 30px;
 }
 
-/* Cartes compétence */
 #skills .skill-card {
   height: 310px;
   min-height: 310px;
@@ -32,9 +20,11 @@
   display: none;
 }
 
-/* Animation d'apparition des compétences */
+.rust-icon {
+  font-size: 48px;
+  color: #ce422b;
+}
 
-/* Responsive : ajustements pour tablettes et mobiles */
 body.dark-mode #skills {
   background-color: var(--darker);
 }

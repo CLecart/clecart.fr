@@ -1,20 +1,13 @@
 /* projects.css
-   Styles pour la section des projets du portfolio
+   Styles for portfolio projects section
    Organisation : grille, cartes projet, navigation, responsive
 */
 
-/* Grille de projets */
+/* Projects grid */
 #projects {
   padding: 80px 0 120px;
-  background-color: var(--light);
+  background-color: var(-- /** Responsive breakpoints */ ight);
   position: relative;
-  scroll-margin-top: calc(var(--header-height) + 20px);
-}
-
-@media (max-width: 768px) {
-  #projects {
-    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
-  }
 }
 
 .projects-grid {
@@ -38,7 +31,7 @@ body.dark-mode #projects {
   display: block;
 }
 
-/* Fix pour les pages avec header fixe (privacy-policy, descriptions-projects, about-portfolio) */
+/* Fixed header pages compensation */
 body:not(.homepage) .description {
   margin-top: calc(var(--header-height) + 40px);
 }
@@ -47,6 +40,10 @@ body:not(.homepage) .description {
   body:not(.homepage) .description {
     margin-top: calc(var(--header-height-mobile) + 30px);
   }
+}
+
+.project {
+  scroll-margin-top: 120px;
 }
 
 .project {
@@ -85,9 +82,9 @@ body:not(.homepage) .description {
   margin-bottom: 10px;
 }
 
-/* Navigation entre projets */
+/* Project navigation */
 .project-navigation {
-  padding: 120px 0 30px;
+  padding: 120px 0 80px;
   text-align: center;
 }
 
@@ -163,6 +160,7 @@ body.dark-mode .card-base.description:hover {
 }
 
 .project.description.card-base {
+  scroll-margin-top: 120px;
   margin-top: 30px;
   position: relative;
   z-index: 1;
@@ -201,13 +199,18 @@ html body .project.active#project3.description.card-base:hover {
   z-index: 10;
 }
 
-/* Animation d'apparition des projets */
+/* Project appearance animation */
 
 /* Responsive : ajustements pour tablettes et mobiles */
 @media (max-width: 768px) {
   .description {
     margin-top: 40px;
     padding: 25px 20px;
+  }
+
+  .project,
+  .project.description.card-base {
+    scroll-margin-top: 100px;
   }
 
   .project-navigation {

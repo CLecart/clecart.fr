@@ -1,23 +1,23 @@
 /* about.css
-   Styles pour la section "À propos" du portfolio
-   Organisation : header de section, contenu principal, boutons, responsive
+   Styles for portfolio "About" section
+   Organisation : header de section, contenu p/** Responsive breakpoints */
+incipal, boutons, responsive
 */
 
-/* Header de la section */
+/** Section header styles */
 #about {
   padding: 80px 0 120px;
-  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
-@media (max-width: 768px) {
-  #about {
-    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
-  }
-}
-
+/* Règle globale pour tous les section-header */
 .section-header {
   text-align: center;
   margin-bottom: 60px;
+}
+
+/* Règle spécifique pour About uniquement */
+#about .section-header {
+  padding-top: 40px;
 }
 
 .section-header h2 {
@@ -34,11 +34,11 @@
   left: 50%;
   transform: translateX(-50%);
   width: 50px;
-  height: 3px;
+  height: var(--accent-line-thickness);
   background: var(--secondary);
 }
 
-/* Grille de contenu principal */
+/** Main content grid */
 .about-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -54,7 +54,7 @@
   object-fit: cover;
 }
 
-/* Boutons d'action */
+/** Action buttons */
 .about-buttons {
   display: flex;
   gap: 15px;
@@ -74,12 +74,12 @@
   font-size: 0.9rem;
 }
 
-/* Section des langues */
+/** Languages section */
 #languages {
-  padding: 20px 0;
+  padding: 80px 0 120px;
 }
 
-/* Grille des langues */
+/** Languages grid */
 .languages-grid {
   display: flex;
   flex-wrap: wrap;
@@ -117,5 +117,51 @@
 
   .about-buttons {
     justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .about-buttons .btn {
+    min-width: 160px;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .about-buttons .btn i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-buttons {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .about-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+    min-width: unset;
+    padding: 20px 30px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-buttons .btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .about-buttons .btn i {
+    font-size: 1.2rem;
+    margin-right: 8px;
   }
 }

@@ -7,6 +7,14 @@
     transform var(--duration-slow) var(--ease-smooth);
 }
 
+/* Fallback for when JavaScript is disabled */
+.no-js .fade-in,
+.no-js .slide-left,
+.no-js .slide-right {
+  opacity: 1;
+  transform: none;
+}
+
 .fade-in {
   transform: translateY(20px);
 }
@@ -39,15 +47,6 @@
 
 #skills .section-header h2,
 #projects .section-header h2 {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity var(--duration-slow) var(--ease-smooth),
-    transform var(--duration-slow) var(--ease-smooth);
-}
-
-#skills .section-header h2.title-animate,
-#projects .section-header h2.title-animate {
   opacity: 1;
   transform: translateY(0);
   animation: title-glow 2s ease-in-out infinite alternate;
@@ -111,11 +110,6 @@ section.section-active::before {
   transform: scaleX(0);
   transform-origin: center;
   animation: section-line 0.8s var(--ease-smooth) forwards;
-}
-
-section.section-active[data-scroll-direction="up"]::before {
-  bottom: auto;
-  top: 0;
 }
 
 @keyframes section-line {

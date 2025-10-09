@@ -166,14 +166,6 @@
   .header-buttons {
     gap: 5px;
   }
-  .about-buttons .btn,
-  .about-buttons .btn-secondary {
-    font-size: 0.75rem;
-    padding: 5px 10px;
-    min-width: 80px;
-    margin: 2px 0;
-    border-radius: var(--btn-radius);
-  }
 }
 
 @media (max-width: 360px) {

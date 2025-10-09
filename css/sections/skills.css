@@ -3,6 +3,7 @@
 #skills {
   padding: 80px 0 120px;
   background-color: var(--light);
+  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
 .skills-container {
@@ -27,4 +28,10 @@
 
 body.dark-mode #skills {
   background-color: var(--darker);
+}
+
+@media (max-width: 768px) {
+  #skills {
+    scroll-margin-top: calc(var(--header-height-mobile) + 15px);
+  }
 }

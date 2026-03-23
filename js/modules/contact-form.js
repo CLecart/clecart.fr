@@ -56,7 +56,7 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      const emailCfg = globalThis.runtimeConfig?.emailjs || {};
+      const emailCfg = getEmailConfig(form);
       const serviceId = emailCfg.service || "service_lokewrs";
       const templateId = emailCfg.template || "template_2ov9l9i";
 
@@ -77,13 +77,25 @@ function setupFormSubmissionHandling(form, statusElement) {
 
       // Check EmailJS service availability
       if (typeof emailjs === "undefined") {
-        throw new TypeError("Email service unavailable");
+        setFormState(
+          form,
+          submitButton,
+          statusElement,
+          "error",
+          'Email service unavailable right now. Please contact me at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
+        );
+        return;
       }
 
       if (!emailCfg.user || !serviceId || !templateId) {
-        throw new TypeError(
-          "Email service is not configured yet. Missing EmailJS public key, service or template."
+        setFormState(
+          form,
+          submitButton,
+          statusElement,
+          "error",
+          'Contact form is temporarily unavailable. Please contact me at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
         );
+        return;
       }
 
       if (emailCfg.user) {
@@ -107,10 +119,7 @@ function setupFormSubmissionHandling(form, statusElement) {
       const errorMessage =
         error?.message ||
         "Sending failed. Please contact me directly by email.";
-      const isConfigError =
-        errorMessage.includes("public key") ||
-        errorMessage.includes("not configured") ||
-        errorMessage.includes("Missing EmailJS");
+      const isConfigError = errorMessage.includes("not configured");
 
       setFormState(
         form,
@@ -129,6 +138,21 @@ function setupFormSubmissionHandling(form, statusElement) {
       }, 3000);
     }
   });
+}
+
+function getEmailConfig(form) {
+  const runtimeCfg = globalThis.runtimeConfig?.emailjs || {};
+  const datasetCfg = {
+    user: form?.dataset?.emailjsUser || "",
+    service: form?.dataset?.emailjsService || "",
+    template: form?.dataset?.emailjsTemplate || "",
+  };
+
+  return {
+    user: runtimeCfg.user || datasetCfg.user || "",
+    service: runtimeCfg.service || datasetCfg.service || "",
+    template: runtimeCfg.template || datasetCfg.template || "",
+  };
 }
 
 /**

@@ -91,7 +91,7 @@ export function initAnimations() {
         /**
          * Scroll direction detection
          */
-        const currentScrollY = window.scrollY;
+        const currentScrollY = globalThis.scrollY;
         scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
         lastScrollY = currentScrollY;
 
@@ -112,7 +112,7 @@ export function initAnimations() {
     sectionObserver.observe(section);
   });
 
-  const currentPath = window.location.pathname;
+  const currentPath = globalThis.location.pathname;
   if (
     currentPath.includes("descriptions-projects") ||
     currentPath.includes("project")

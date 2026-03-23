@@ -9,7 +9,8 @@ export function initContactForm() {
   if (!contactForm) return;
 
   // Check GDPR consent and adapt interface
-  const gdprChoice = localStorage.getItem("gdpr-choice");
+  const gdprChoice =
+    localStorage.getItem("gdpr-consent") || localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
     renderContactAlternative(contactForm);
     return;
@@ -55,24 +56,42 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
+      const emailCfg = globalThis.runtimeConfig?.emailjs || {};
+      const serviceId = emailCfg.service || "service_lokewrs";
+      const templateId = emailCfg.template || "template_2ov9l9i";
+
       // Get data in EmailJS format
       const formData = new FormData(form);
+      const senderName =
+        formData.get("from_name") || formData.get("name") || "Anonymous";
+      const senderEmail =
+        formData.get("email") || formData.get("user_email") || "";
       const templateParams = {
-        from_name: formData.get("from_name"),
-        user_name: formData.get("from_name"),
-        email: formData.get("email"),
-        user_email: formData.get("email"),
+        from_name: senderName,
+        user_name: senderName,
+        email: senderEmail,
+        user_email: senderEmail,
         message: formData.get("message"),
         to_name: "Christophe",
       };
 
       // Check EmailJS service availability
       if (typeof emailjs === "undefined") {
-        throw new Error("Email service unavailable");
+        throw new TypeError("Email service unavailable");
+      }
+
+      if (!emailCfg.user || !serviceId || !templateId) {
+        throw new TypeError(
+          "Email service is not configured yet. Missing EmailJS public key, service or template."
+        );
+      }
+
+      if (emailCfg.user) {
+        emailjs.init(emailCfg.user);
       }
 
       // Send message
-      await emailjs.send("service_lokewrs", "template_2ov9l9i", templateParams);
+      await emailjs.send(serviceId, templateId, templateParams);
 
       // Success
       setFormState(
@@ -85,12 +104,22 @@ function setupFormSubmissionHandling(form, statusElement) {
       form.reset();
     } catch (error) {
       console.error("Sending error:", error);
+      const errorMessage =
+        error?.message ||
+        "Sending failed. Please contact me directly by email.";
+      const isConfigError =
+        errorMessage.includes("public key") ||
+        errorMessage.includes("not configured") ||
+        errorMessage.includes("Missing EmailJS");
+
       setFormState(
         form,
         submitButton,
         statusElement,
         "error",
-        `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+        isConfigError
+          ? `Contact form is temporarily unavailable (EmailJS configuration missing). Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.`
+          : `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
       // Reset form after delay

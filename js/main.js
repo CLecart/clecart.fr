@@ -26,7 +26,19 @@ import { loadRuntimeConfig } from "./utils/config.js";
  * @description Initializes all modules in optimal order for performance
  * @listens DOMContentLoaded
  */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Load runtime config before modules that depend on it (contact form).
+  const cfg = await loadRuntimeConfig();
+  globalThis.runtimeConfig = cfg;
+
+  if (cfg?.emailjs?.user && typeof emailjs !== "undefined") {
+    try {
+      emailjs.init(cfg.emailjs.user);
+    } catch (e) {
+      console.warn("EmailJS initialization failed:", e);
+    }
+  }
+
   initDarkMode();
   initNavigation();
   initPerformanceOptimizations();
@@ -37,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * @type {PrivacyAnalytics}
    * @global
    */
-  window.analytics = new PrivacyAnalytics();
+  globalThis.analytics = new PrivacyAnalytics();
 
   requestAnimationFrame(() => {
     initAnimations();
@@ -48,26 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initProjectNavigation();
   });
 
-  window.addEventListener("load", () => {
+  globalThis.addEventListener("load", () => {
     initVideoHandler();
     registerServiceWorker();
-
-    // Initialize EmailJS from runtime config if provided (avoids committing tokens)
-    (async function initEmailJSFromConfig() {
-      const cfg = await loadRuntimeConfig();
-      if (
-        cfg &&
-        cfg.emailjs &&
-        cfg.emailjs.user &&
-        typeof emailjs !== "undefined"
-      ) {
-        try {
-          emailjs.init(cfg.emailjs.user);
-        } catch (e) {
-          // ignore init errors
-        }
-      }
-    })();
 
     setTimeout(() => {
       const criticalElements = document.querySelectorAll(
@@ -106,12 +101,10 @@ function reportLoadPerformance() {
       ),
     };
 
-    if (window.analytics) {
-      window.analytics.trackEvent(
-        "Performance",
-        "LoadMetrics",
-        JSON.stringify(metrics)
-      );
-    }
+    globalThis.analytics?.trackEvent(
+      "Performance",
+      "LoadMetrics",
+      JSON.stringify(metrics)
+    );
   }
 }

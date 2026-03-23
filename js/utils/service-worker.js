@@ -4,36 +4,36 @@
  * @description Handles cache, fetch strategies and offline features
  */
 
-const CACHE_NAME = 'portfolio-cache-v2';
-const CACHE_FALLBACK = 'portfolio-fallback-v1';
+const CACHE_NAME = "portfolio-cache-v2";
+const CACHE_FALLBACK = "portfolio-fallback-v1";
 
 /**
  * Static resources URLs to cache
  */
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/js/main.js',
-  '/js/critical.js',
-  '/css/critical.css',
-  '/assets/images/profile.jpg',
-  '/assets/icons/favicon.ico',
-  '/assets/icons/apple-touch-icon.png',
-  '/assets/icons/android-chrome-192x192.png',
-  '/assets/icons/android-chrome-512x512.png',
-  '/assets/manifest/site.webmanifest'
+  "/",
+  "/index.html",
+  "/styles.css",
+  "/js/main.js",
+  "/js/critical.js",
+  "/css/critical.css",
+  "/assets/images/profile.webp",
+  "/assets/icons/favicon.ico",
+  "/assets/icons/apple-touch-icon.png",
+  "/assets/icons/android-chrome-192x192.png",
+  "/assets/icons/android-chrome-512x512.png",
+  "/assets/manifest/site.webmanifest",
 ];
 
-const offlinePage = '/offline.html';
-const offlineImage = '/assets/images/offline-fallback.svg';
+const offlinePage = "/offline.html";
+const offlineImage = "/assets/images/offline-fallback.svg";
 
 /**
  * Service Worker installation event
  * @event install
  * @description Caches static resources and activates immediately
  */
-self.addEventListener('install', (event) => {
+globalThis.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       try {
@@ -42,9 +42,9 @@ self.addEventListener('install', (event) => {
          * @description Downloads and stores all critical files
          */
         await cache.addAll(urlsToCache);
-        await self.skipWaiting();
+        await globalThis.skipWaiting();
       } catch (error) {
-        console.error('Cache installation failed:', error);
+        console.error("Cache installation failed:", error);
       }
     })()
   );
@@ -55,7 +55,7 @@ self.addEventListener('install', (event) => {
  * @event activate
  * @description Cleans old caches and takes control of clients
  */
-self.addEventListener('activate', (event) => {
+globalThis.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       try {
@@ -64,13 +64,13 @@ self.addEventListener('activate', (event) => {
          */
         const cacheNames = await caches.keys();
         const cacheDeletePromises = cacheNames
-          .filter(name => name !== CACHE_NAME && name !== CACHE_FALLBACK)
-          .map(name => caches.delete(name));
-        
+          .filter((name) => name !== CACHE_NAME && name !== CACHE_FALLBACK)
+          .map((name) => caches.delete(name));
+
         await Promise.all(cacheDeletePromises);
-        await self.clients.claim();
+        await globalThis.clients.claim();
       } catch (error) {
-        console.error('Cache activation failed:', error);
+        console.error("Cache activation failed:", error);
       }
     })()
   );
@@ -81,21 +81,21 @@ self.addEventListener('activate', (event) => {
  * @event fetch
  * @description Implements Network-First for HTML/JSON and Cache-First for assets
  */
-self.addEventListener('fetch', (event) => {
+globalThis.addEventListener("fetch", (event) => {
   /**
    * Cross-origin request filtering
    * @description Ignores external requests to avoid CORS errors
    */
-  if (!event.request.url.startsWith(self.location.origin)) return;
+  if (!event.request.url.startsWith(globalThis.location.origin)) return;
 
   /**
    * Request type analysis based on headers
    * @description Determines appropriate cache strategy
    */
-  const isNavigationRequest = event.request.mode === 'navigate';
-  const isImageRequest = event.request.destination === 'image';
-  const isStyleRequest = event.request.destination === 'style';
-  const isScriptRequest = event.request.destination === 'script';
+  const isNavigationRequest = event.request.mode === "navigate";
+  const isImageRequest = event.request.destination === "image";
+  const isStyleRequest = event.request.destination === "style";
+  const isScriptRequest = event.request.destination === "script";
 
   if (isNavigationRequest) {
     event.respondWith(handleNavigationRequest(event.request));
@@ -119,10 +119,11 @@ async function handleNavigationRequest(request) {
       cache.put(request, networkResponse.clone());
       return networkResponse;
     }
-    throw new Error('Network response not ok');
+    throw new Error("Network response not ok");
   } catch (error) {
+    console.warn("Navigation request failed, serving cached fallback:", error);
     const cachedResponse = await caches.match(request);
-    return cachedResponse || caches.match('/index.html');
+    return cachedResponse || caches.match("/index.html");
   }
 }
 
@@ -142,8 +143,9 @@ async function handleImageRequest(request) {
       cache.put(request, networkResponse.clone());
       return networkResponse;
     }
-    throw new Error('Network response not ok');
+    throw new Error("Network response not ok");
   } catch (error) {
+    console.warn("Image request failed, serving offline fallback:", error);
     return caches.match(offlineImage);
   }
 }
@@ -166,7 +168,7 @@ async function handleAssetRequest(request) {
     }
     return networkResponse;
   } catch (error) {
-    console.error('Asset fetch failed:', error);
+    console.error("Asset fetch failed:", error);
     throw error;
   }
 }

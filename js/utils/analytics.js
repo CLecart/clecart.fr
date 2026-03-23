@@ -64,7 +64,7 @@ class PrivacyAnalytics {
      * Send data before page unload
      * @description Uses beforeunload to capture short sessions
      */
-    window.addEventListener("beforeunload", () => {
+    globalThis.addEventListener("beforeunload", () => {
       this.sendAnalytics();
     });
 
@@ -96,9 +96,9 @@ class PrivacyAnalytics {
   trackScrollDepth() {
     let maxScroll = 0;
 
-    window.addEventListener("scroll", () => {
+    globalThis.addEventListener("scroll", () => {
       const scrollPercent = Math.round(
-        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
+        (globalThis.scrollY / (document.body.scrollHeight - globalThis.innerHeight)) *
           100
       );
 
@@ -124,7 +124,7 @@ class PrivacyAnalytics {
   }
 
   trackPerformance() {
-    if ("PerformanceObserver" in window) {
+    if ("PerformanceObserver" in globalThis) {
       // Core Web Vitals
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
@@ -182,7 +182,7 @@ class PrivacyAnalytics {
       label,
       value,
       timestamp: Date.now(),
-      url: window.location.pathname,
+      url: globalThis.location.pathname,
     };
 
     /**
@@ -208,8 +208,8 @@ class PrivacyAnalytics {
         height: screen.height,
       },
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: globalThis.innerWidth,
+        height: globalThis.innerHeight,
       },
       connection: navigator.connection
         ? {

@@ -17,7 +17,7 @@ export function initProjectNavigation() {
   navButtons.forEach((btn) => btn.classList.remove("active"));
 
   // Check for hash in URL to show the correct project
-  const hash = window.location.hash;
+  const hash = globalThis.location.hash;
   let activeProject = null;
   let activeButton = null;
 

@@ -15,7 +15,7 @@ export function initWebVitals() {
    * Performance APIs support check
    * @description Validates browser compatibility with PerformanceObserver
    */
-  if (!("PerformanceObserver" in window)) {
+  if (!("PerformanceObserver" in globalThis)) {
     return;
   }
 
@@ -131,7 +131,7 @@ export function initWebVitals() {
    * Final Web Vitals report generation after complete loading
    * @description 1s delay to ensure all metrics are captured
    */
-  window.addEventListener("load", () => {
+  globalThis.addEventListener("load", () => {
     setTimeout(() => {
       reportVitals(vitalsData);
     }, 1000);
@@ -191,8 +191,8 @@ function optimizeFID() {
    * Long task chunking with Scheduler API
    * @description Uses modern scheduler API or setTimeout fallback
    */
-  if ("scheduler" in window) {
-    window.scheduler.postTask(
+  if ("scheduler" in globalThis) {
+    globalThis.scheduler.postTask(
       () => {
         /**
          * Heavy computation deferring in background
@@ -233,7 +233,7 @@ function optimizeCLS() {
 
 function optimizeAnimations() {
   // Reduce animations for users who prefer reduced motion
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.documentElement.style.setProperty("--duration-fast", "0ms");
     document.documentElement.style.setProperty("--duration-normal", "0ms");
     document.documentElement.style.setProperty("--duration-slow", "0ms");
@@ -276,8 +276,8 @@ function monitorResourceTiming() {
 function reportVitals(vitals) {
   const score = calculatePerformanceScore(vitals);
 
-  if (window.analytics) {
-    window.analytics.trackEvent(
+  if (globalThis.analytics) {
+    globalThis.analytics.trackEvent(
       "Performance",
       "WebVitals",
       JSON.stringify(vitals)

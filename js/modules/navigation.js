@@ -13,12 +13,12 @@ export function initNavigation() {
 
   navMenu.classList.remove("active");
 
-  if (window.innerWidth <= 768) {
+  if (globalThis.innerWidth <= 768) {
     navMenu.style.visibility = "hidden";
   }
 
   function setMenuWidth() {
-    if (window.innerWidth <= 768 && navMenu.classList.contains("active")) {
+    if (globalThis.innerWidth <= 768 && navMenu.classList.contains("active")) {
       let maxWidth = Array.from(navMenu.querySelectorAll("li a")).reduce(
         (width, link) => Math.max(width, link.scrollWidth + 30),
         0
@@ -54,7 +54,7 @@ export function initNavigation() {
 
   document.querySelectorAll("nav ul li a").forEach((link) => {
     link.addEventListener("click", () => {
-      if (window.innerWidth <= 768) {
+      if (globalThis.innerWidth <= 768) {
         navMenu.classList.remove("active");
         if (menuIcon) menuIcon.className = "fas fa-bars";
         setTimeout(() => {
@@ -68,7 +68,7 @@ export function initNavigation() {
 
   document.addEventListener("click", (e) => {
     if (
-      window.innerWidth <= 768 &&
+      globalThis.innerWidth <= 768 &&
       navMenu.classList.contains("active") &&
       !e.target.closest("nav") &&
       !e.target.closest(".nav-toggle")
@@ -83,9 +83,9 @@ export function initNavigation() {
     }
   });
 
-  window.addEventListener("resize", () => {
+  globalThis.addEventListener("resize", () => {
     setMenuWidth();
-    if (window.innerWidth > 768) {
+    if (globalThis.innerWidth > 768) {
       navMenu.style.visibility = "visible";
     } else if (!navMenu.classList.contains("active")) {
       navMenu.style.visibility = "hidden";
@@ -104,7 +104,7 @@ export function initNavigation() {
           const header = document.querySelector("header");
           const headerHeight = header.offsetHeight;
           const targetPosition =
-            targetElement.getBoundingClientRect().top + window.pageYOffset;
+            targetElement.getBoundingClientRect().top + globalThis.pageYOffset;
 
           // Alignement parfait : le trait de section doit se confondre avec celui du header
           // Header trait à bottom: -3px, donc on ajuste pour que les traits soient alignés
@@ -122,7 +122,7 @@ export function initNavigation() {
             headerTraitOffset +
             additionalOffset;
 
-          window.scrollTo({
+          globalThis.scrollTo({
             top: Math.max(0, scrollTarget),
             behavior: "smooth",
           });

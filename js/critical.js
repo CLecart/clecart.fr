@@ -45,7 +45,7 @@
    * @description Tracks LCP, FID, and CLS metrics for performance optimization
    * @see {@link https://web.dev/vitals/} Core Web Vitals documentation
    */
-  if ("PerformanceObserver" in window) {
+  if ("PerformanceObserver" in globalThis) {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === "largest-contentful-paint") {

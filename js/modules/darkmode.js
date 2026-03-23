@@ -38,7 +38,7 @@ export function initDarkMode() {
   updateToggleIcon(currentDarkMode);
 
   if (darkModePreference === null) {
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const systemPrefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (currentDarkMode !== systemPrefersDark) {
       applyTheme(systemPrefersDark);
     }

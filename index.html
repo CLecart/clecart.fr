@@ -8,7 +8,7 @@
       if (
         stored === "enabled" ||
         (stored !== "disabled" &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
         document.documentElement.classList.add("dark-mode");
         document.documentElement.style.colorScheme = "dark";
@@ -45,11 +45,11 @@
     />
     <meta
       property="og:image"
-      content="https://clecart.fr/assets/images/profile.jpg"
+      content="https://clecart.fr/assets/images/profile.webp"
     />
     <meta property="og:image:width" content="300" />
     <meta property="og:image:height" content="300" />
-    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:type" content="image/webp" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="Christophe Lecart Portfolio" />
 
@@ -66,7 +66,7 @@
     />
     <meta
       property="twitter:image"
-      content="https://clecart.fr/assets/images/profile.jpg"
+      content="https://clecart.fr/assets/images/profile.webp"
     />
     <meta
       property="twitter:image:alt"
@@ -125,7 +125,7 @@
         "name": "Christophe Lecart",
         "jobTitle": "Web & Mobile Developer",
         "url": "https://clecart.fr",
-        "image": "https://clecart.fr/assets/images/profile.jpg",
+        "image": "https://clecart.fr/assets/images/profile.webp",
         "sameAs": [
           "https://github.com/CLecart",
           "https://linkedin.com/in/christophe-lecart"
@@ -154,7 +154,7 @@
     />
     <link
       rel="preload"
-      href="assets/images/profile.jpg"
+      href="assets/images/profile.webp"
       as="image"
       fetchpriority="high"
     />
@@ -195,12 +195,12 @@
         </a>
         <div class="right-content">
           <nav aria-label="Main navigation">
-            <ul id="main-navigation" role="menubar">
-              <li><a href="#hero" role="menuitem">Home</a></li>
-              <li><a href="#about" role="menuitem">About</a></li>
-              <li><a href="#skills" role="menuitem">Skills</a></li>
-              <li><a href="#projects" role="menuitem">Projects</a></li>
-              <li><a href="#contact" role="menuitem">Contact</a></li>
+            <ul id="main-navigation">
+              <li><a href="#hero">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#contact">Contact</a></li>
               <li>
                 <a
                   href="assets/documents/CV_Christophe_Lecart.pdf"
@@ -249,7 +249,7 @@
         <div class="about-content">
           <div class="slide-right">
             <img
-              src="assets/images/profile.jpg"
+              src="assets/images/profile.webp"
               alt="Christophe Lecart - Web & Mobile Developer"
               class="profile-img"
               width="300"
@@ -478,6 +478,13 @@
                   src="assets/videos/Groupie-Tracker.mp4"
                   type="video/mp4"
                 />
+                <track
+                  kind="captions"
+                  srclang="en"
+                  label="English captions"
+                  src="assets/videos/Groupie-Tracker.en.vtt"
+                  default
+                />
                 Your browser does not support video playback.
               </video>
             </div>
@@ -521,6 +528,13 @@
                 poster=""
               >
                 <source src="assets/videos/BombermanDX.mp4" type="video/mp4" />
+                <track
+                  kind="captions"
+                  srclang="en"
+                  label="English captions"
+                  src="assets/videos/BombermanDX.en.vtt"
+                  default
+                />
                 Your browser does not support video playback.
               </video>
             </div>
@@ -550,22 +564,21 @@
             </div>
           </div>
 
-          <!-- Projet 3 : Forum -->
+          <!-- Projet 3 : Social Network -->
           <div class="project-card card-base fade-in">
             <div class="project-thumb" title="Click to enlarge">
               <img
-                src="assets/images/forum.png"
-                alt="Forum Project Screenshot"
+                src="assets/images/Konekt.png"
+                alt="Social Network Project Screenshot"
                 loading="lazy"
               />
             </div>
             <div class="project-content">
-              <h3>Forum</h3>
+              <h3>Social Network</h3>
               <p>
-                A complete discussion platform with user authentication, thread
-                creation and management, and real-time features. Uses Go for the
-                backend, SQLite for the database, and WebSockets for instant
-                notifications.
+                Full-stack social network built with Next.js, React, Prisma,
+                PostgreSQL, and Redis. It includes protected APIs, real-time
+                chat, stories, groups, and event RSVP flows in one codebase.
               </p>
               <div class="project-buttons">
                 <a
@@ -574,7 +587,7 @@
                   >View Details</a
                 >
                 <a
-                  href="https://github.com/nicgen/forum"
+                  href="https://github.com/arocchet/social-network"
                   class="github-btn"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -682,7 +695,7 @@
     <footer>
       <div class="container">
         <p>
-          &copy; 2025 Christophe Lecart. All rights reserved. |
+          &copy; 2026 Christophe Lecart. All rights reserved. |
           <a href="privacy-policy.html">Privacy Policy</a>
         </p>
       </div>

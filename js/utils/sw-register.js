@@ -12,7 +12,7 @@
  */
 export function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
+    globalThis.addEventListener("load", () => {
       navigator.serviceWorker
         .register("/js/utils/service-worker.js")
         .then((registration) => {
@@ -56,7 +56,7 @@ export function registerServiceWorker() {
         }
       });
       notification.remove();
-      window.location.reload();
+      globalThis.location.reload();
     });
   }
 
@@ -66,10 +66,10 @@ export function registerServiceWorker() {
    */
   let refreshing = false;
   if ("serviceWorker" in navigator) {
-    window.addEventListener("controllerchange", () => {
+    globalThis.addEventListener("controllerchange", () => {
       if (refreshing) return;
       refreshing = true;
-      window.location.reload();
+      globalThis.location.reload();
     });
   }
 }

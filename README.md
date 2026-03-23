@@ -94,7 +94,7 @@ Le portfolio démontre ma capacité à créer des interfaces utilisateur intuiti
 
 - **Groupie-Tracker :** Application web Go visualisant des données d'API sur des artistes musicaux
 - **BombermanDX :** Jeu navigateur développé en JavaScript avec optimisation des performances
-- **Forum :** Plateforme de discussion complète avec authentification et fonctionnalités temps réel
+- **Social Network :** Réseau social full-stack avec authentification sécurisée, chat temps réel, stories, groupes et RSVP d'événements
 
 ## Architecture du Projet
 
@@ -183,8 +183,8 @@ clecart.fr/
 │   │   └── rust-icon.svg            # Icône Rust vectorielle
 │   ├── images/                      # Images optimisées
 │   │   ├── favicon.ico              # Favicon alternative
-│   │   ├── forum.png                # Screenshot projet Forum
-│   │   └── profile.jpg              # Photo profil professionnelle
+│   │   ├── Konekt.png               # Screenshot projet Social Network
+│   │   └── profile.webp             # Photo profil transparente
 │   ├── manifest/                    # Configuration PWA
 │   │   ├── browserconfig.xml        # Configuration IE/Edge
 │   │   └── site.webmanifest         # Manifest PWA complet

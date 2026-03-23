@@ -5,7 +5,7 @@
 
     <script>
       const stored = localStorage.getItem("dark-mode");
-      const prefersDark = window.matchMedia(
+      const prefersDark = globalThis.matchMedia(
         "(prefers-color-scheme: dark)"
       ).matches;
       if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
@@ -186,8 +186,8 @@ clecart.fr/
 │   │   ├── favicon*.png|ico
 │   │   └── rust-icon.svg
 │   ├── images/                  # Images du site
-│   │   ├── profile.jpg
-│   │   └── forum.png
+│   │   ├── profile.webp
+│   │   └── Konekt.png
 │   ├── manifest/                # PWA Configuration
 │   │   ├── site.webmanifest
 │   │   └── browserconfig.xml
@@ -330,7 +330,7 @@ clecart.fr/
     <footer>
       <div class="container">
         <p>
-          &copy; 2025 Christophe Lecart. All rights reserved. |
+          &copy; 2026 Christophe Lecart. All rights reserved. |
           <a href="privacy-policy.html">Privacy Policy</a>
         </p>
       </div>

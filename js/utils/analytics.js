@@ -98,7 +98,8 @@ class PrivacyAnalytics {
 
     globalThis.addEventListener("scroll", () => {
       const scrollPercent = Math.round(
-        (globalThis.scrollY / (document.body.scrollHeight - globalThis.innerHeight)) *
+        (globalThis.scrollY /
+          (document.body.scrollHeight - globalThis.innerHeight)) *
           100
       );
 
@@ -255,6 +256,18 @@ class PrivacyAnalytics {
         timeOnPage: 0,
       };
     }
+  }
+
+  /**
+   * Disables tracking when user declines consent
+   * @method disableTracking
+   * @description Stops all analytics collection and clears stored data
+   * @returns {void}
+   * @example
+   * analytics.disableTracking();
+   */
+  disableTracking() {
+    this.updateConsent(false);
   }
 }
 

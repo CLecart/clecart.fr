@@ -311,3 +311,44 @@ body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
 .form-group:focus-within .field-help {
   opacity: 1;
 }
+
+/* Stable variant used by the contact window to avoid extension icon visual conflicts. */
+.contact-form--stable .form-group input,
+.contact-form--stable .form-group textarea {
+  transition:
+    border-color var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease,
+    background-color var(--duration-fast) ease;
+}
+
+.contact-form--stable .form-group input:focus,
+.contact-form--stable .form-group textarea:focus {
+  transform: none;
+}
+
+.contact-form--stable .form-group input[type="text"].has-content,
+.contact-form--stable .form-group input[type="text"].field-valid,
+.contact-form--stable .form-group input[type="email"].email-valid,
+.contact-form--stable .form-group input[type="email"].field-valid,
+.contact-form--stable .form-group textarea.has-content,
+.contact-form--stable .form-group textarea.field-valid,
+body.dark-mode .contact-form--stable .form-group input[type="text"].has-content,
+body.dark-mode .contact-form--stable .form-group input[type="text"].field-valid,
+body.dark-mode
+  .contact-form--stable
+  .form-group
+  input[type="email"].email-valid,
+body.dark-mode
+  .contact-form--stable
+  .form-group
+  input[type="email"].field-valid,
+body.dark-mode .contact-form--stable .form-group textarea.has-content,
+body.dark-mode .contact-form--stable .form-group textarea.field-valid {
+  background-image: none;
+  padding-right: var(--input-padding);
+}
+
+.contact-form--stable .form-status {
+  transition: none;
+  transform: none;
+}

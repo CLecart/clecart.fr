@@ -64,20 +64,5 @@
       ]
     }
   ],
-  "screenshots": [
-    {
-      "src": "/assets/images/screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Portfolio overview"
-    },
-    {
-      "src": "/assets/images/screenshot-narrow.png",
-      "sizes": "720x1280",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Mobile portfolio version"
-    }
-  ]
+  "screenshots": []
 }

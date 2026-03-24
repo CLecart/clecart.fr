@@ -18,6 +18,40 @@ function getConsentStatus() {
   return typeof legacyChoice === "string" ? legacyChoice : null;
 }
 
+function ensureBannerElements() {
+  let banner = document.getElementById("gdpr-banner");
+
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "gdpr-banner";
+    banner.className = "gdpr-banner hidden";
+    banner.innerHTML = `
+      <div class="gdpr-content">
+        <p>
+          This site uses third-party services to process the contact form. By
+          continuing, you accept our
+          <a href="privacy-policy.html">privacy policy</a>.
+        </p>
+        <div class="gdpr-buttons">
+          <button id="gdpr-accept" class="btn">Accept</button>
+          <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(banner);
+  }
+
+  return {
+    banner,
+    acceptBtn:
+      document.getElementById("gdpr-accept") ||
+      document.getElementById("accept-btn"),
+    declineBtn:
+      document.getElementById("gdpr-decline") ||
+      document.getElementById("decline-btn"),
+  };
+}
+
 function showRefusalNotice() {
   const existingNotice = document.getElementById("gdpr-refusal-notice");
   if (existingNotice) {
@@ -70,13 +104,7 @@ function notifyConsentChange(status) {
 }
 
 export function initGDPRBanner() {
-  const banner = document.getElementById("gdpr-banner");
-  const acceptBtn =
-    document.getElementById("gdpr-accept") ||
-    document.getElementById("accept-btn");
-  const declineBtn =
-    document.getElementById("gdpr-decline") ||
-    document.getElementById("decline-btn");
+  const { banner, acceptBtn, declineBtn } = ensureBannerElements();
 
   if (!banner) return;
 
@@ -126,12 +154,6 @@ export function initGDPRBanner() {
       inputs.forEach((input) => {
         input.disabled = true;
       });
-
-      const formContainer = contactForm.closest(".contact-form");
-      if (formContainer) {
-        formContainer.style.opacity = "0.5";
-        formContainer.style.pointerEvents = "none";
-      }
     }
   }
 
@@ -145,12 +167,6 @@ export function initGDPRBanner() {
       inputs.forEach((input) => {
         input.disabled = true;
       });
-
-      const formContainer = contactForm.closest(".contact-form");
-      if (formContainer) {
-        formContainer.style.opacity = "0.5";
-        formContainer.style.pointerEvents = "none";
-      }
     }
   }
 }

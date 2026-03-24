@@ -56,8 +56,8 @@
 
 .gdpr-message {
   padding: 15px 20px;
-  background-color: var(--primary-light);
-  border: 1px solid var(--primary);
+  background-color: var(--light);
+  border: 1px solid var(--primary-dark);
   border-radius: 10px;
   margin: 20px 0;
   text-align: center;
@@ -125,8 +125,8 @@ body.dark-mode .gdpr-content p {
 }
 
 body.dark-mode .gdpr-message {
-  background-color: var(--primary-light-15);
-  border-color: var(--primary-dark);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--secondary);
   color: var(--text-dark);
 }
 

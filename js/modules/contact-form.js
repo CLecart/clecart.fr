@@ -20,6 +20,11 @@ export function initContactForm() {
     const status = event?.detail?.status;
     if (status === "declined") {
       renderContactAlternative(contactForm);
+      return;
+    }
+
+    if (status === "accepted") {
+      clearStatusMessage(formStatus);
     }
   });
 
@@ -32,12 +37,35 @@ export function initContactForm() {
  * @param {HTMLElement} form - Form element
  */
 function renderContactAlternative(form) {
+  const formContainer = form.closest(".contact-form");
+  if (formContainer) {
+    formContainer.style.opacity = "1";
+    formContainer.style.pointerEvents = "auto";
+  }
+
   form.innerHTML = `
     <p class="gdpr-message">
       The contact form has been disabled because you declined our privacy policy.
       You can contact me directly by email at
       <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
     </p>`;
+}
+
+function showConsentRequiredNotice(statusElement) {
+  if (!statusElement) return;
+
+  statusElement.innerHTML =
+    "Please choose Accept or Decline in the privacy banner before sending a message.";
+  statusElement.className = "form-status info";
+  statusElement.style.display = "block";
+}
+
+function clearStatusMessage(statusElement) {
+  if (!statusElement) return;
+
+  statusElement.innerHTML = "";
+  statusElement.className = "form-status";
+  statusElement.style.display = "none";
 }
 
 /**
@@ -48,6 +76,26 @@ function renderContactAlternative(form) {
 function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
+
+    const gdprChoice =
+      localStorage.getItem("gdpr-consent") ||
+      localStorage.getItem("gdpr-choice");
+
+    if (gdprChoice !== "accepted") {
+      showConsentRequiredNotice(statusElement);
+      return;
+    }
+
+    const formData = new FormData(form);
+    const validationError = validateContactFormData(formData);
+    if (validationError) {
+      if (statusElement) {
+        statusElement.innerHTML = validationError;
+        statusElement.className = "form-status error";
+        statusElement.style.display = "block";
+      }
+      return;
+    }
 
     // Prevent multiple submissions
     if (form.classList.contains("sending")) return;
@@ -68,7 +116,6 @@ function setupFormSubmissionHandling(form, statusElement) {
       const templateId = emailCfg.template || "template_2ov9l9i";
 
       // Get data in EmailJS format
-      const formData = new FormData(form);
       const senderName =
         formData.get("from_name") || formData.get("name") || "Anonymous";
       const senderEmail =
@@ -145,6 +192,32 @@ function setupFormSubmissionHandling(form, statusElement) {
       }, 3000);
     }
   });
+}
+
+function validateContactFormData(formData) {
+  const name = String(
+    formData.get("name") || formData.get("from_name") || ""
+  ).trim();
+  const email = String(
+    formData.get("email") || formData.get("user_email") || ""
+  ).trim();
+  const message = String(formData.get("message") || "").trim();
+
+  if (!name || !email || !message) {
+    return "Please fill in your name, email address, and message before sending.";
+  }
+
+  // Practical email check to prevent obvious invalid values.
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRegex.test(email)) {
+    return "Please enter a valid email address.";
+  }
+
+  if (message.length < 10) {
+    return "Please write a slightly longer message (at least 10 characters).";
+  }
+
+  return "";
 }
 
 function getEmailConfig(form) {

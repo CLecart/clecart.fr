@@ -216,6 +216,10 @@ body.dark-mode .tech-item:hover {
   color: var(--text-color);
 }
 
+.features-list li strong {
+  margin-right: 0.25em;
+}
+
 .features-list li i {
   color: var(--primary);
   margin-right: 10px;

@@ -74,7 +74,7 @@ a::after {
   width: 0;
   height: var(--accent-line-thickness);
   background: var(--accent);
-  transition: width 0.3s ease;
+  transition: width var(--duration-normal) var(--ease-standard);
   opacity: 0.8;
 }
 

@@ -51,7 +51,7 @@
   border: none;
   border-radius: 50px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .gdpr-message {
@@ -81,9 +81,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 10000;
   padding: 16px;
+  animation: fadeIn var(--duration-normal) var(--ease-smooth);
 }
 
 .gdpr-refusal-notice-card {

@@ -49,7 +49,8 @@
 #projects .section-header h2 {
   opacity: 1;
   transform: translateY(0);
-  animation: title-glow 2s ease-in-out infinite alternate;
+  animation: title-glow var(--duration-slowest) var(--ease-standard) infinite
+    alternate;
 }
 
 @keyframes title-glow {
@@ -119,7 +120,7 @@ section.section-active::before {
 }
 
 section.section-active .section-header {
-  animation: fade-up-in 0.8s ease forwards;
+  animation: fade-up-in var(--duration-slower) var(--ease-standard) forwards;
 }
 
 @keyframes fade-up-in {
@@ -167,8 +168,8 @@ html.scrolling-in-progress header * {
 
 nav ul li a {
   transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+    color var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
 }
 
 nav ul li a.active {

@@ -26,7 +26,8 @@ header::after {
     var(--accent)
   );
   background-size: 200% 100%;
-  animation: gradientSlide 5s ease infinite;
+  animation: gradientSlide var(--duration-gradient) var(--ease-standard)
+    infinite;
   z-index: 99;
 }
 
@@ -106,9 +107,9 @@ header::after {
   background: var(--white-opacity-10);
   border-radius: 6px;
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    background-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -159,7 +160,7 @@ nav ul li a::after {
   width: 0;
   height: var(--accent-line-thickness);
   background: var(--primary-dark);
-  transition: width 0.3s ease;
+  transition: width var(--duration-normal) var(--ease-standard);
 }
 
 nav ul li a:hover::after {
@@ -252,8 +253,8 @@ nav ul li a.active::after {
     opacity: 1;
     visibility: visible;
     transition:
-      transform 0.3s ease,
-      opacity 0.3s ease,
+      transform var(--duration-normal) var(--ease-standard),
+      opacity var(--duration-normal) var(--ease-standard),
       visibility 0s linear 0s;
   }
 
@@ -273,8 +274,8 @@ nav ul li a.active::after {
     text-align: center;
     white-space: nowrap;
     transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
+      background-color var(--duration-normal) var(--ease-standard),
+      color var(--duration-normal) var(--ease-standard);
   }
 
   nav ul li a::after {

@@ -259,7 +259,7 @@ body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
   opacity: 0;
   transform: translateY(10px);
   display: none;
-  transition: all 0.4s ease;
+  transition: all var(--duration-normal) var(--ease-smooth);
 }
 
 .form-status.success {

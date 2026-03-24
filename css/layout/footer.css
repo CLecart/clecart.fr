@@ -22,7 +22,8 @@ footer::after {
     var(--accent)
   );
   background-size: 200% 100%;
-  animation: gradientSlide 5s ease infinite;
+  animation: gradientSlide var(--duration-gradient) var(--ease-standard)
+    infinite;
   z-index: 10;
 }
 
@@ -57,7 +58,7 @@ footer a::after {
   width: 0;
   height: var(--accent-line-thickness);
   background-color: var(--secondary);
-  transition: width 0.3s ease;
+  transition: width var(--duration-normal) var(--ease-standard);
 }
 
 footer a:hover::after {

@@ -86,13 +86,24 @@
   --card-color-dark: var(--text-dark);
   --card-border-dark: 1px solid var(--border-dark);
   --accent-line-thickness: 2px;
+
+  /* Animation Easing Functions */
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.3, 1.05, 0.5, 1);
+  --ease-standard: ease;
+
+  /* Animation Duration Scale - Unified Timing System */
+  --duration-instant: 0.15s;
   --duration-fast: 0.2s;
   --duration-normal: 0.3s;
   --duration-slow: 0.5s;
+  --duration-slower: 0.8s;
+  --duration-slowest: 2.5s;
+  --duration-gradient: 5s; /* For continuous gradient animations */
+
+  /* Standard Transitions */
   --transition: all var(--duration-normal) var(--ease-smooth);
   --transition-slow: all var(--duration-slow) var(--ease-smooth);
+  --transition-slower: all var(--duration-slower) var(--ease-smooth);
   --hover-scale: scale(1.05);
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);

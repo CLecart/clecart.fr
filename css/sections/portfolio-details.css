@@ -32,10 +32,10 @@
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity 0.8s var(--ease-smooth),
-    transform 0.8s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
+    opacity var(--duration-slower) var(--ease-smooth),
+    transform var(--duration-slower) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
 }
 
 .portfolio-section.card-base {
@@ -77,9 +77,9 @@ body.dark-mode .portfolio-section.card-base:hover {
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
   transition:
-    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform var(--duration-slow) var(--ease-smooth),
+    box-shadow var(--duration-slow) var(--ease-smooth),
+    border-color var(--duration-slow) var(--ease-smooth);
 }
 
 body.dark-mode .portfolio-section:hover {
@@ -105,7 +105,7 @@ body.dark-mode .portfolio-section:hover {
 .portfolio-section:hover h2 i {
   color: var(--card-icon-hover-color);
   transform: var(--card-icon-hover-transform);
-  animation: subtle-pulse-smooth 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: subtle-pulse-smooth var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 /* Grille pour les technologies */
@@ -125,10 +125,10 @@ body.dark-mode .portfolio-section:hover {
   position: relative;
   overflow: hidden;
   transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth),
-    background-color 0.4s var(--ease-smooth);
+    transform var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth),
+    background-color var(--duration-normal) var(--ease-smooth);
 }
 
 /* Simplifier l'apparition - uniquement visibilité */
@@ -169,9 +169,9 @@ body.dark-mode .tech-item {
   border-color: var(--primary);
   box-shadow: var(--card-box-shadow-hover);
   transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
+    transform var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
 }
 
 body.dark-mode .tech-item:hover {
@@ -187,12 +187,7 @@ body.dark-mode .tech-item:hover {
 
 .tech-item:hover h3 {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse-smooth 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* Animation de pulsation pour les cartes */
-.tech-item:hover h3 {
-  animation: subtle-pulse-smooth 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: subtle-pulse-smooth var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 /* Liste de fonctionnalités */
@@ -244,12 +239,12 @@ body.dark-mode .features-list li {
 }
 
 .portfolio-section.appear .features-list li {
-  animation: slideInFromLeftSmooth 0.7s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-}
+  animation:var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth
 
 .portfolio-section.appear .features-list li:nth-child(1) {
   animation-delay: 0.1s;
-}
+}var(--duration-slow) forwards var(--ease-smooth
 .portfolio-section.appear .features-list li:nth-child(2) {
   animation-delay: 0.15s;
 }
@@ -304,8 +299,8 @@ body.dark-mode .features-list li {
   top: 4px;
   color: var(--primary); /* Bleu par défaut */
   transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+    color var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
   font-size: 1.1rem;
 }
 
@@ -339,8 +334,8 @@ body.dark-mode .features-list li {
   top: 4px;
   color: var(--primary); /* Bleu par défaut */
   transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+    color var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
   font-size: 1.1rem;
 }
 
@@ -371,8 +366,8 @@ body.dark-mode .features-list li {
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+    opacity var(--duration-slow) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-standard);
 }
 
 .portfolio-section.appear .code-block {
@@ -565,7 +560,7 @@ body.dark-mode .outcomes-list li:hover {
     padding: 15px 20px;
     font-size: 1rem;
     border-radius: 12px;
-    transition: all 0.3s ease;
+    transition: all var(--duration-normal) var(--ease-standard);
   }
 
   .portfolio-section {

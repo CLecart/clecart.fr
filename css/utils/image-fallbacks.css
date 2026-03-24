@@ -1,6 +1,6 @@
 /* Image error handling and fallback styles */
 img[src^="http"] {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--duration-normal) var(--ease-standard);
 }
 
 img[src^="http"]:not([alt*="unavailable"]) {

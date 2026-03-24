@@ -68,7 +68,7 @@ header {
   width: 100%;
   z-index: 1000;
   height: 80px;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 .header-content {
   display: flex;
@@ -134,7 +134,7 @@ html.js-loading .js-loading-visible {
   text-decoration: none;
   border-radius: 30px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
   border: none;
   cursor: pointer;
 }

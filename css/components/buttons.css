@@ -55,7 +55,7 @@
     var(--white-opacity-20),
     transparent
   );
-  transition: left 0.7s ease;
+  transition: left var(--duration-slow) var(--ease-standard);
 }
 
 .btn:hover::before,

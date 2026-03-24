@@ -209,7 +209,9 @@ body.dark-mode .tech-item:hover {
 .features-list li {
   margin-bottom: 12px;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0;
   font-size: 1.08rem;
   color: var(--text-color);
 }

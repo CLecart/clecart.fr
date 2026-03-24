@@ -6,10 +6,14 @@
   background-color: var(--white);
   box-shadow: var(--shadow-up);
   z-index: 9999;
-  display: none;
+  display: block;
   text-align: center;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.gdpr-banner.hidden {
+  display: none;
 }
 
 .gdpr-content {
@@ -71,6 +75,46 @@
   color: var(--primary-dark);
 }
 
+.gdpr-refusal-notice {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10000;
+  padding: 16px;
+}
+
+.gdpr-refusal-notice-card {
+  max-width: 520px;
+  width: 100%;
+  background: var(--white);
+  color: var(--text-color);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  text-align: left;
+}
+
+.gdpr-refusal-notice-card h4 {
+  margin: 0 0 12px;
+}
+
+.gdpr-refusal-notice-card p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.gdpr-refusal-notice-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.gdpr-refusal-notice-actions .btn {
+  min-width: 130px;
+}
+
 body.dark-mode .gdpr-banner {
   background-color: var(--card-dark);
   box-shadow: var(--shadow-up-dark);
@@ -92,6 +136,12 @@ body.dark-mode .gdpr-message a {
 
 body.dark-mode .gdpr-message a:hover {
   color: var(--primary);
+}
+
+body.dark-mode .gdpr-refusal-notice-card {
+  background: var(--card-dark);
+  color: var(--text-dark);
+  box-shadow: var(--shadow-up-dark);
 }
 
 @media (max-width: 768px) {

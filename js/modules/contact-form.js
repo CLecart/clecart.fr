@@ -16,6 +16,13 @@ export function initContactForm() {
     return;
   }
 
+  globalThis.addEventListener("gdpr:consent-changed", (event) => {
+    const status = event?.detail?.status;
+    if (status === "declined") {
+      renderContactAlternative(contactForm);
+    }
+  });
+
   // Configure form behavior
   setupFormSubmissionHandling(contactForm, formStatus);
 }

@@ -18,6 +18,57 @@ function getConsentStatus() {
   return typeof legacyChoice === "string" ? legacyChoice : null;
 }
 
+function showRefusalNotice() {
+  const existingNotice = document.getElementById("gdpr-refusal-notice");
+  if (existingNotice) {
+    existingNotice.remove();
+  }
+
+  const notice = document.createElement("div");
+  notice.id = "gdpr-refusal-notice";
+  notice.className = "gdpr-refusal-notice";
+  notice.setAttribute("role", "dialog");
+  notice.setAttribute("aria-modal", "true");
+  notice.setAttribute("aria-labelledby", "gdpr-refusal-title");
+
+  notice.innerHTML = `
+    <div class="gdpr-refusal-notice-card">
+      <h4 id="gdpr-refusal-title">Sending disabled</h4>
+      <p>
+        You declined consent for third-party services. The contact form is now disabled.
+        You can still reach me directly at
+        <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
+      </p>
+      <div class="gdpr-refusal-notice-actions">
+        <button type="button" class="btn" id="gdpr-refusal-close">OK</button>
+      </div>
+    </div>
+  `;
+
+  function closeNotice() {
+    notice.remove();
+  }
+
+  notice.addEventListener("click", (event) => {
+    if (event.target === notice) {
+      closeNotice();
+    }
+  });
+
+  const closeButton = notice.querySelector("#gdpr-refusal-close");
+  closeButton?.addEventListener("click", closeNotice);
+
+  document.body.appendChild(notice);
+}
+
+function notifyConsentChange(status) {
+  globalThis.dispatchEvent(
+    new CustomEvent("gdpr:consent-changed", {
+      detail: { status },
+    })
+  );
+}
+
 export function initGDPRBanner() {
   const banner = document.getElementById("gdpr-banner");
   const acceptBtn =
@@ -49,6 +100,7 @@ export function initGDPRBanner() {
     localStorage.setItem("gdpr-consent", "accepted");
     localStorage.setItem("gdpr-choice", "accepted");
     banner.classList.add("hidden");
+    notifyConsentChange("accepted");
     globalThis.analytics?.enableTracking();
   }
 
@@ -61,7 +113,9 @@ export function initGDPRBanner() {
     localStorage.setItem("gdpr-consent", "declined");
     localStorage.setItem("gdpr-choice", "declined");
     banner.classList.add("hidden");
+    notifyConsentChange("declined");
     globalThis.analytics?.disableTracking();
+    showRefusalNotice();
 
     /**
      * Contact form deactivation after refusal

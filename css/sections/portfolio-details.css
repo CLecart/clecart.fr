@@ -105,7 +105,8 @@ body.dark-mode .portfolio-section:hover {
 .portfolio-section:hover h2 i {
   color: var(--card-icon-hover-color);
   transform: var(--card-icon-hover-transform);
-  animation: subtle-pulse-smooth var(--duration-slowest) infinite var(--ease-smooth);
+  animation: subtle-pulse-smooth var(--duration-slowest) infinite
+    var(--ease-smooth);
 }
 
 /* Grille pour les technologies */
@@ -187,7 +188,8 @@ body.dark-mode .tech-item:hover {
 
 .tech-item:hover h3 {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse-smooth var(--duration-slowest) infinite var(--ease-smooth);
+  animation: subtle-pulse-smooth var(--duration-slowest) infinite
+    var(--ease-smooth);
 }
 
 /* Liste de fonctionnalités */
@@ -234,17 +236,18 @@ body.dark-mode .features-list li {
   opacity: 0;
   transform: translateX(-20px);
   transition:
-    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth);
 }
 
 .portfolio-section.appear .features-list li {
-  animation:var(--duration-slow) var(--ease-smooth),
-    transform var(--duration-slow) var(--ease-smooth
+  animation: slideInFromLeftSmooth var(--duration-slow) forwards
+    var(--ease-smooth);
+}
 
 .portfolio-section.appear .features-list li:nth-child(1) {
   animation-delay: 0.1s;
-}var(--duration-slow) forwards var(--ease-smooth
+}
 .portfolio-section.appear .features-list li:nth-child(2) {
   animation-delay: 0.15s;
 }

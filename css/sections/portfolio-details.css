@@ -732,9 +732,7 @@ body.dark-mode .outcomes-list li:hover {
   }
 
   .features-list li strong {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: inline;
     margin: 0;
     font-size: 1.1rem;
     font-weight: 700;
@@ -766,9 +764,7 @@ body.dark-mode .outcomes-list li:hover {
   }
 
   .features-list li strong {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: inline;
     margin: 0;
     font-size: 1.05rem;
     color: var(--text-color);

@@ -425,10 +425,10 @@ body.dark-mode .approach-item.card-base:hover {
 .cta-section {
   margin: 40px 0 0 0;
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
   align-items: center;
+  justify-content: center;
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -442,6 +442,11 @@ body.dark-mode .approach-item.card-base:hover {
 }
 
 .cta-section .btn {
+  width: 220px;
+  max-width: 100%;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
   transition: var(--btn-transition);
   will-change: transform, box-shadow;
 }
@@ -453,6 +458,12 @@ body.dark-mode .approach-item.card-base:hover {
 
 .cta-section .btn-secondary:hover {
   box-shadow: var(--btn-secondary-shadow-hover);
+}
+
+@media (max-width: 768px) {
+  .cta-section .btn {
+    width: 200px;
+  }
 }
 
 /* Mode sombre */
@@ -515,7 +526,6 @@ body.dark-mode .outcomes-list li:hover {
   }
 
   .cta-section .btn {
-    width: 100%;
     max-width: 250px;
     padding: 15px 20px;
     font-size: 1rem;
@@ -571,7 +581,6 @@ body.dark-mode .outcomes-list li:hover {
   }
 
   .cta-section .btn {
-    width: 100%;
     max-width: 280px;
     min-width: unset;
     padding: 20px 30px;

@@ -209,11 +209,15 @@ body.dark-mode .tech-item:hover {
 .features-list li {
   margin-bottom: 12px;
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
-  gap: 0;
+  gap: 10px;
   font-size: 1.08rem;
   color: var(--text-color);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth);
 }
 
 .features-list li strong {
@@ -222,8 +226,12 @@ body.dark-mode .tech-item:hover {
 
 .features-list li i {
   color: var(--primary);
-  margin-right: 10px;
   font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition:
+    color var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
 }
 
 .features-list li:hover {
@@ -233,17 +241,13 @@ body.dark-mode .tech-item:hover {
   z-index: auto;
 }
 
-body.dark-mode .features-list li {
-  color: var(--text-dark);
+.features-list li:hover i {
+  color: var(--accent);
+  animation: checkmark-pulse 1.5s infinite ease-in-out;
 }
 
-/* Harmonisation des features-list pour correspondre aux animations des autres pages */
-.features-list li {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition:
-    opacity var(--duration-slow) var(--ease-smooth),
-    transform var(--duration-slow) var(--ease-smooth);
+body.dark-mode .features-list li {
+  color: var(--text-dark);
 }
 
 .portfolio-section.appear .features-list li {
@@ -298,59 +302,7 @@ body.dark-mode .features-list li {
 .features-list li,
 .outcomes-list li {
   margin-bottom: 15px;
-  padding-left: 30px;
   position: relative;
-}
-
-.features-list i {
-  position: absolute;
-  left: 0;
-  top: 4px;
-  color: var(--primary); /* Bleu par défaut */
-  transition:
-    color var(--duration-normal) var(--ease-standard),
-    transform var(--duration-normal) var(--ease-standard);
-  font-size: 1.1rem;
-}
-
-/* Animation au survol - passage au rouge avec effet de pulsation */
-.features-list li:hover i {
-  color: var(--accent); /* Rouge au survol */
-  animation: checkmark-pulse 1.5s infinite ease-in-out;
-}
-
-/* Correction: Séparer les effets de survol pour les listes de fonctionnalités */
-.features-list li {
-  margin-bottom: 15px;
-  padding-left: 30px;
-  position: relative;
-  /* Supprimer la transition qui affecte le conteneur entier */
-  transition: none;
-}
-
-/* Limiter l'animation au survol uniquement à l'icône, pas à tout l'élément li */
-.features-list li:hover {
-  /* Retirer les propriétés qui affectent le contour */
-  transform: none;
-  border-color: transparent;
-  box-shadow: none;
-}
-
-/* Animation au survol - passage au rouge avec effet de pulsation uniquement pour l'icône */
-.features-list li i {
-  position: absolute;
-  left: 0;
-  top: 4px;
-  color: var(--primary); /* Bleu par défaut */
-  transition:
-    color var(--duration-normal) var(--ease-standard),
-    transform var(--duration-normal) var(--ease-standard);
-  font-size: 1.1rem;
-}
-
-.features-list li:hover i {
-  color: var(--accent); /* Rouge au survol */
-  animation: checkmark-pulse 1.5s infinite ease-in-out;
 }
 
 /* Animation de pulsation pour les checkmarks */
@@ -579,6 +531,13 @@ body.dark-mode .outcomes-list li:hover {
   .portfolio-details .section-header h1 {
     font-size: 2.2rem;
   }
+
+  /* Ensure flexbox for features-list on tablets */
+  .features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 992px) {
@@ -733,8 +692,9 @@ body.dark-mode .outcomes-list li:hover {
     border: none;
     position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .features-list li strong {

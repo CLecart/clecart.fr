@@ -28,10 +28,33 @@ import { loadRuntimeConfig } from "./utils/config.js";
 function initVideoDurationLimiter() {
   const videoLimiters = document.querySelectorAll("video[data-duration]");
   videoLimiters.forEach((video) => {
-    const maxDuration = parseFloat(video.getAttribute("data-duration"));
+    const maxDuration = Number.parseFloat(video.dataset.duration);
     video.addEventListener("timeupdate", () => {
       if (video.currentTime >= maxDuration) {
         video.currentTime = 0;
+      }
+    });
+  });
+}
+
+/**
+ * Initialize view more projects button
+ * @description Toggles visibility of hidden project cards
+ */
+function initViewMoreProjects() {
+  const btn = document.getElementById("view-more-btn");
+  const hiddenCards = document.querySelectorAll(".project-card--hidden");
+
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    hiddenCards.forEach((card) => {
+      if (card.classList.contains("visible")) {
+        card.classList.remove("visible");
+        btn.textContent = "View More Projects";
+      } else {
+        card.classList.add("visible");
+        btn.textContent = "View Less Projects";
       }
     });
   });
@@ -74,6 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     initModals();
     initContactForm();
     initProjectNavigation();
+    initViewMoreProjects();
   });
 
   globalThis.addEventListener("load", () => {

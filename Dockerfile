@@ -28,7 +28,11 @@ COPY --chown=nginx-user:nginx-user nginx.conf /etc/nginx/conf.d/default.conf
 # Set ownership and permissions
 RUN chown -R nginx-user:nginx-user /var/cache/nginx && \
     chown -R nginx-user:nginx-user /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
+    chmod -R 755 /usr/share/nginx/html && \
+    mkdir -p /run/nginx && \
+    chown -R nginx-user:nginx-user /run/nginx && \
+    chmod -R 1777 /run && \
+    chmod 1777 /var/run
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

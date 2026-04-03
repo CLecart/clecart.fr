@@ -22,6 +22,22 @@ import PrivacyAnalytics from "./utils/analytics.js";
 import { loadRuntimeConfig } from "./utils/config.js";
 
 /**
+ * Initialize video duration limiter
+ * @description Limits videos with data-duration attribute to specified length
+ */
+function initVideoDurationLimiter() {
+  const videoLimiters = document.querySelectorAll("video[data-duration]");
+  videoLimiters.forEach((video) => {
+    const maxDuration = parseFloat(video.getAttribute("data-duration"));
+    video.addEventListener("timeupdate", () => {
+      if (video.currentTime >= maxDuration) {
+        video.currentTime = 0;
+      }
+    });
+  });
+}
+
+/**
  * Application initialization event handler
  * @description Initializes all modules in optimal order for performance
  * @listens DOMContentLoaded
@@ -62,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   globalThis.addEventListener("load", () => {
     initVideoHandler();
+    initVideoDurationLimiter();
     registerServiceWorker();
 
     setTimeout(() => {

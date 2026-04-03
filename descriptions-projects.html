@@ -80,6 +80,7 @@
             <a href="#project1" class="nav-btn active">Groupie-Tracker</a>
             <a href="#project2" class="nav-btn">BombermanDX</a>
             <a href="#project3" class="nav-btn">Social Network</a>
+            <a href="#project4" class="nav-btn">Pochet du Courval</a>
           </div>
         </div>
       </div>
@@ -275,6 +276,115 @@
             combines product features and operational concerns in one codebase.
             It demonstrates end-to-end full-stack delivery: secure auth, data
             modeling, real-time communication, and deployment readiness.
+          </p>
+        </div>
+
+        <!-- Project 4: Pochet du Courval Showcase -->
+        <div class="project description card-base fade-in" id="project4">
+          <h2>Pochet du Courval Showcase</h2>
+
+          <h3>Project Overview</h3>
+          <p>
+            Pochet du Courval Showcase is a brand showcase and marketing website
+            that presents the luxury glassmaking craftsmanship through a modern
+            web experience. The site pairs a high-fidelity interactive 3D
+            perfume bottle with curated marketing sections—Key Facts,
+            Capabilities, International presence and Contact CTA—to communicate
+            materiality, finishes and production capabilities.
+          </p>
+
+          <h3>Technologies Used</h3>
+          <ul>
+            <li>
+              <strong>Vite:</strong> Development server and optimized builds
+            </li>
+            <li>
+              <strong>React + TypeScript:</strong> Component-driven UI with type
+              safety
+            </li>
+            <li>
+              <strong>Tailwind CSS:</strong> Utility-first styling and
+              responsive layout
+            </li>
+            <li>
+              <strong>@react-three/fiber + three.js:</strong> Interactive 3D
+              rendering and procedural geometry
+            </li>
+            <li>
+              <strong>@react-three/drei:</strong> HDR environment, contact
+              shadows and controls
+            </li>
+            <li>
+              <strong>Framer Motion:</strong> Entrance and staggered UI
+              animations
+            </li>
+            <li>
+              <strong>Radix / shadcn patterns:</strong> Accessible UI primitives
+              and composition
+            </li>
+            <li>
+              <strong>Vitest / ESLint:</strong> Tests and linting for developer
+              experience
+            </li>
+          </ul>
+
+          <h3>Key Features</h3>
+          <ul>
+            <li>
+              <strong>Interactive 3D Hero:</strong> Procedurally generated
+              perfume bottle with lathe geometry, PBR materials, studio lighting
+              and HDR environment
+            </li>
+            <li>
+              <strong>Graceful Fallback:</strong> WebGL detection with
+              high-quality fallback image for non-WebGL or low-capability
+              devices
+            </li>
+            <li>
+              <strong>Responsive Camera & Controls:</strong> Adaptive camera
+              setups for mobile/tablet/desktop with trackball controls for
+              exploration
+            </li>
+            <li>
+              <strong>Animated Modular Pages:</strong> Hero, Key Facts,
+              Capabilities, International and Contact CTA built as reusable
+              components with smooth motion
+            </li>
+            <li>
+              <strong>Performance-Minded Rendering:</strong> frameloop="demand",
+              controlled DPR, Suspense/lazy patterns for minimal CPU/GPU use
+            </li>
+            <li>
+              <strong>Developer Ergonomics:</strong> Vite scripts, TypeScript,
+              linting and test hooks for maintainable delivery
+            </li>
+          </ul>
+
+          <h3>Development Process</h3>
+          <p>
+            I started by modeling the bottle and materials with procedural
+            geometry and tuned physical-based rendering (PBR) materials. The
+            Hero3D component uses @react-three/fiber and @react-three/drei for
+            Environment setup and contact shadows; a high-quality fallback image
+            is served when WebGL is unavailable.
+          </p>
+          <p>
+            Studio lighting and HDRI (/hdr/studio.hdr) integration enables
+            realistic material visualization and caustics. UI sections were
+            built with Tailwind and Radix/shadcn-like primitives, animated via
+            Framer Motion. The key engineering challenge focused on balancing
+            visual fidelity with runtime performance and deterministic build
+            behavior.
+          </p>
+
+          <h3>Outcome</h3>
+          <p>
+            The project is a production-style brand showcase that demonstrates
+            both visual craft and front-end engineering: interactive 3D
+            presentation, modular UI components, and a clear build/test
+            workflow. The site is ready for content localization, CI polishing,
+            and deployment, with further iterations focused on i18n, content
+            authoring, and CI/CD integration.
           </p>
         </div>
       </div>

@@ -41,8 +41,9 @@
     "url": "https://github.com/CLecart/clecart.fr/issues"
   },
   "homepage": "https://clecart.fr",
-  "devDependencies": {},
-  "dependencies": {},
+  "devDependencies": {
+    "puppeteer": "^24.40.0"
+  },
   "engines": {
     "node": ">=16.0.0"
   },

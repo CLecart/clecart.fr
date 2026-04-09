@@ -95,6 +95,7 @@ The portfolio demonstrates my ability to create intuitive and high-performance u
 - **Groupie-Tracker:** Go web application for visualizing music artist API data
 - **BombermanDX:** Browser game built in JavaScript with performance optimization
 - **Social Network:** Full-stack social platform with secure authentication, real-time chat, stories, groups, and event RSVP
+- **PartiQ:** Modern product and ticket management platform with secure authentication, document handling, real-time updates, and AI-assisted support features
 
 ## Project Structure
 

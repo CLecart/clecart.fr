@@ -109,9 +109,9 @@
   --hover-y-offset: translateY(-10px);
   --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
-  --card-hover-transform: translateY(-10px);
-  --card-hover-scale: scale(1.05);
-  --card-icon-hover-transform: scale(1.1);
+  --card-hover-transform: translateY(-4px) scale(1.03);
+  --card-hover-scale: scale(1.02);
+  --card-icon-hover-transform: scale(1.08);
   --card-icon-color: var(--primary);
   --card-icon-hover-color: var(--accent);
   --card-transition:

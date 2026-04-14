@@ -168,11 +168,27 @@
 
 @media (max-width: 404px) {
   .project-buttons {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
     width: 100%;
     align-items: center;
+    justify-content: flex-start;
+  }
+
+  .project-buttons a {
+    flex: 0 0 auto;
+    min-width: 0;
+    width: auto;
+  }
+
+  .project-btn,
+  .github-btn {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    min-width: auto;
+    width: auto;
+    white-space: nowrap;
   }
 
   .project-content {

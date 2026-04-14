@@ -93,11 +93,6 @@ body.dark-mode .card-base:hover {
   transition: var(--card-transition);
 }
 
-.project-card:hover .project-thumb img,
-.project-card:hover .project-thumb video {
-  transform: var(--card-hover-scale);
-}
-
 .project-content {
   flex: 1;
   padding: var(--card-padding);
@@ -150,7 +145,6 @@ body.dark-mode .project-content p {
 }
 
 .language-card:hover {
-  transform: var(--hover-y-small);
   box-shadow: var(--card-box-shadow-hover);
   border-color: var(--primary);
 }
@@ -198,22 +192,7 @@ body.dark-mode .language-icon img {
 
 .skill-card:hover .skill-icon,
 .language-card:hover .language-icon img {
-  animation: subtle-pulse 2.5s infinite ease-in-out;
-}
-
-@keyframes subtle-pulse {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.05);
-  }
-  60% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+  transform: var(--card-icon-hover-transform);
 }
 
 @media (max-width: 480px) {

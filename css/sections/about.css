@@ -252,4 +252,10 @@ incipal, boutons, responsive
     align-items: center;
     margin-top: 10px;
   }
+
+  .about-buttons .btn {
+    min-width: unset;
+    width: auto;
+    padding: 8px 14px;
+  }
 }

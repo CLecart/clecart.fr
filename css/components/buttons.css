@@ -82,7 +82,6 @@
 
 .btn-view-live {
   background: var(--btn-view-live-bg);
-  box-shadow: var(--btn-secondary-shadow);
 }
 
 .btn-view-live:hover {
@@ -90,8 +89,9 @@
 }
 
 .project-btn {
-  display: inline-block;
-  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .github-btn {

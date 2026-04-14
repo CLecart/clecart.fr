@@ -2,7 +2,7 @@
 
 #privacy {
   max-width: 900px;
-  margin: 60px auto 0;
+  margin: calc(var(--header-height) + 40px) auto 100px;
   padding: 40px 30px;
   background: var(--white);
   border-radius: var(--card-radius);
@@ -38,5 +38,24 @@ body.dark-mode #privacy {
 
 body.dark-mode #privacy h2,
 body.dark-mode #privacy h3 {
+  color: var(--primary);
+}
+
+#privacy .privacy-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color var(--duration-normal) var(--ease-standard);
+}
+
+#privacy .privacy-link:hover {
+  color: var(--primary-dark);
+}
+
+body.dark-mode #privacy .privacy-link {
+  color: var(--secondary);
+}
+
+body.dark-mode #privacy .privacy-link:hover {
   color: var(--primary);
 }

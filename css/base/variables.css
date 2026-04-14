@@ -24,6 +24,10 @@
   --light: #f8f9fa;
   --light-gray: #f0f0f0;
   --black: #000000;
+  --github-icon-color: #15191f;
+  --github-btn-size: 44px;
+  --gdpr-message-bg-dark: rgba(255, 255, 255, 0.08);
+  --github-icon-size: 1.9rem;
   --text-color: #2d334a;
   --text-light: #6c757d;
   --text-dark: #f4f4f4;

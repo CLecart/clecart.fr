@@ -1,23 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
 
     <script>
       const stored = localStorage.getItem("dark-mode");
-      const prefersDark = globalThis.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      if (stored === "enabled" || (stored !== "disabled" && prefersDark)) {
+      if (
+        stored === "enabled" ||
+        (stored !== "disabled" &&
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
         document.documentElement.classList.add("dark-mode");
+        document.documentElement.style.colorScheme = "dark";
+      } else {
+        document.documentElement.style.colorScheme = "light";
       }
     </script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
     <meta
       name="description"
       content="Portfolio details - Christophe Lecart - Information for recruiters and hiring managers"
     />
+    <meta
+      name="keywords"
+      content="portfolio, Christophe Lecart, recruiters, hiring managers, web development, technical details"
+    />
+    <meta name="author" content="Christophe Lecart" />
+    <meta name="robots" content="index, follow" />
 
     <title>Portfolio Details - Christophe Lecart</title>
 
@@ -44,7 +57,15 @@
     <meta name="msapplication-TileColor" content="#6c63ff" />
     <meta name="theme-color" content="#6c63ff" />
 
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="canonical" href="https://clecart.fr/about-portfolio.html" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//api.emailjs.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css?v=2025108" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link
       rel="stylesheet"
@@ -64,12 +85,36 @@
           <span>Lecart</span>
         </a>
         <div class="right-content">
+          <nav aria-label="Main navigation">
+            <ul id="main-navigation">
+              <li><a href="index.html#hero">Home</a></li>
+              <li><a href="index.html#about">About</a></li>
+              <li><a href="index.html#skills">Skills</a></li>
+              <li><a href="index.html#projects">Projects</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+              <li>
+                <a
+                  href="assets/documents/CV_Christophe_Lecart.pdf"
+                  class="cv-link"
+                  download
+                  ><i class="fas fa-file-download"></i> CV</a
+                >
+              </li>
+            </ul>
+          </nav>
           <div class="header-buttons">
-            <a href="index.html" class="back-btn">Back</a>
             <button class="dark-mode-toggle" aria-label="Toggle dark mode">
               <span class="moon-icon">🌙</span>
             </button>
           </div>
+          <button
+            class="nav-toggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+          >
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </header>

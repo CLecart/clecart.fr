@@ -1,23 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      const stored = localStorage.getItem("dark-mode");
+      if (
+        stored === "enabled" ||
+        (stored !== "disabled" &&
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.style.colorScheme = "dark";
+      } else {
+        document.documentElement.style.colorScheme = "light";
+      }
+    </script>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
     <meta
       name="description"
       content="Privacy Policy - Christophe Lecart Portfolio"
     />
+    <meta
+      name="keywords"
+      content="privacy policy, portfolio, Christophe Lecart, GDPR, web development"
+    />
+    <meta name="author" content="Christophe Lecart" />
     <meta name="robots" content="noindex" />
 
     <title>Privacy Policy - Christophe Lecart</title>
-
-    <script>
-      document.documentElement.style.colorScheme = "light dark";
-      const s = localStorage.getItem("dark-mode"),
-        p = matchMedia("(prefers-color-scheme:dark)").matches;
-      if (s === "enabled" || (s !== "disabled" && p))
-        document.documentElement.classList.add("dark-mode");
-    </script>
 
     <!-- Optimized favicons for different platforms -->
     <link rel="icon" href="assets/icons/favicon.ico" />
@@ -42,6 +57,14 @@
     <meta name="msapplication-TileColor" content="#6c63ff" />
     <meta name="theme-color" content="#6c63ff" />
 
+    <link rel="canonical" href="https://clecart.fr/privacy-policy.html" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//api.emailjs.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link rel="stylesheet" href="styles.css?v=2025108" />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link
@@ -62,21 +85,45 @@
           <span>Lecart</span>
         </a>
         <div class="right-content">
+          <nav aria-label="Main navigation">
+            <ul id="main-navigation">
+              <li><a href="index.html#hero">Home</a></li>
+              <li><a href="index.html#about">About</a></li>
+              <li><a href="index.html#skills">Skills</a></li>
+              <li><a href="index.html#projects">Projects</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+              <li>
+                <a
+                  href="assets/documents/CV_Christophe_Lecart.pdf"
+                  class="cv-link"
+                  download
+                  ><i class="fas fa-file-download"></i> CV</a
+                >
+              </li>
+            </ul>
+          </nav>
           <div class="header-buttons">
-            <a href="index.html" class="back-btn">Back</a>
             <button class="dark-mode-toggle" aria-label="Toggle dark mode">
               <span class="moon-icon">🌙</span>
             </button>
           </div>
+          <button
+            class="nav-toggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+          >
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </header>
 
     <main>
-      <div class="description card-base">
+      <div id="privacy" class="description card-base">
         <h2>Privacy Policy</h2>
 
-        <p>Last updated: May 25, 2023</p>
+        <p>Last updated: April 14, 2026</p>
 
         <h3>Introduction</h3>
         <p>
@@ -121,6 +168,7 @@
             <strong>EmailJS:</strong> For processing contact form submissions.
             Their privacy policy can be found
             <a
+              class="privacy-link"
               href="https://www.emailjs.com/legal/privacy-policy/"
               target="_blank"
               rel="noopener noreferrer"
@@ -131,6 +179,7 @@
             <strong>Font Awesome:</strong> For icons. Their privacy policy can
             be found
             <a
+              class="privacy-link"
               href="https://fontawesome.com/privacy"
               target="_blank"
               rel="noopener noreferrer"
@@ -141,6 +190,7 @@
             <strong>Google Fonts:</strong> For web fonts. Their privacy policy
             can be found
             <a
+              class="privacy-link"
               href="https://policies.google.com/privacy"
               target="_blank"
               rel="noopener noreferrer"
@@ -195,7 +245,8 @@
       <div class="container">
         <p>
           &copy; 2026 Christophe Lecart. All rights reserved. |
-          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="privacy-policy.html">Privacy Policy</a> |
+          <a href="index.html#contact">Contact</a>
         </p>
       </div>
     </footer>

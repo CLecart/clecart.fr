@@ -182,13 +182,18 @@
     width: auto;
   }
 
-  .project-btn,
-  .github-btn {
+  .project-btn {
     padding: 8px 14px;
     font-size: 0.95rem;
     min-width: auto;
     width: auto;
     white-space: nowrap;
+  }
+
+  .github-btn {
+    min-width: 44px;
+    font-size: 1.1rem;
+    padding: var(--btn-padding);
   }
 
   .project-content {

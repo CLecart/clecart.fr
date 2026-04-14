@@ -82,6 +82,7 @@
 
 .btn-view-live {
   background: var(--btn-view-live-bg);
+  box-shadow: var(--btn-secondary-shadow);
 }
 
 .btn-view-live:hover {

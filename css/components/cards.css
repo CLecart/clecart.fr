@@ -118,9 +118,27 @@ body.dark-mode .card-base:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   margin-top: auto;
   width: 100%;
+}
+
+.project-buttons .project-btn {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.project-buttons .github-btn,
+.project-buttons .btn-view-live {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body.dark-mode .project-content h3 {

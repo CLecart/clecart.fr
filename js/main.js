@@ -39,24 +39,59 @@ function initVideoDurationLimiter() {
 
 /**
  * Initialize view more projects button
- * @description Toggles visibility of hidden project cards
+ * @description Shows one full grid row by default, adapts on resize
  */
 function initViewMoreProjects() {
   const btn = document.getElementById("view-more-btn");
-  const hiddenCards = document.querySelectorAll(".project-card--hidden");
+  const grid = document.querySelector(".projects-grid");
+  const allCards = [
+    ...document.querySelectorAll(".projects-grid .project-card"),
+  ];
 
-  if (!btn) return;
+  if (!btn || !grid || allCards.length === 0) return;
 
-  btn.addEventListener("click", () => {
-    hiddenCards.forEach((card) => {
-      if (card.classList.contains("visible")) {
-        card.classList.remove("visible");
-        btn.textContent = "View More Projects";
-      } else {
-        card.classList.add("visible");
-        btn.textContent = "View Less Projects";
+  let expanded = false;
+
+  function getColumnCount() {
+    return getComputedStyle(grid).gridTemplateColumns.split(" ").length;
+  }
+
+  function showInitialCards() {
+    const colCount = getColumnCount();
+    const toShow = Math.min(
+      Math.ceil(3 / colCount) * colCount,
+      allCards.length
+    );
+    allCards.forEach((card, i) => {
+      card.classList.remove("visible", "project-card--hidden");
+      if (i >= toShow) {
+        card.classList.add("project-card--hidden");
       }
     });
+    btn.style.display = toShow >= allCards.length ? "none" : "";
+    btn.textContent = "View More Projects";
+  }
+
+  btn.addEventListener("click", () => {
+    expanded = !expanded;
+    if (expanded) {
+      allCards.forEach((card) => {
+        card.classList.remove("project-card--hidden");
+        card.classList.remove("visible");
+      });
+      btn.textContent = "View Less Projects";
+    } else {
+      showInitialCards();
+    }
+  });
+
+  showInitialCards();
+
+  let resizeTimer;
+  globalThis.addEventListener("resize", () => {
+    if (expanded) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(showInitialCards, 150);
   });
 }
 

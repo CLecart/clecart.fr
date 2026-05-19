@@ -215,6 +215,7 @@ nav ul li a.active::after {
 @media (max-width: 768px) {
   header {
     height: var(--header-height-mobile);
+    padding: 0;
   }
 
   .nav-toggle {
@@ -223,7 +224,8 @@ nav ul li a.active::after {
     justify-content: center;
     height: var(--toggle-height);
     width: var(--toggle-width);
-    margin-left: var(--spacing-sm);
+    margin-left: 12px;
+    padding: 8px;
     background: var(--white-opacity-10);
     border-radius: var(--toggle-radius);
   }
@@ -309,15 +311,6 @@ nav ul li a.active::after {
     gap: 0;
   }
 
-  .nav-toggle {
-    margin-left: 12px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 36px;
-    width: 36px;
-  }
 }
 
 @media (max-width: 480px) {

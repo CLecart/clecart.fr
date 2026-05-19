@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - Christophe Lecart</title>
+</head>
+<body>
+    <p>Téléchargement du CV en cours... <a href="/assets/documents/CV_Christophe_Lecart.pdf">Cliquez ici</a> si ça ne démarre pas.</p>
+    <script>
+        const a = document.createElement('a');
+        a.href = '/assets/documents/CV_Christophe_Lecart.pdf';
+        a.download = 'CV_Christophe_Lecart.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => { globalThis.location.href = '/'; }, 1500);
+    </script>
+</body>
+</html>

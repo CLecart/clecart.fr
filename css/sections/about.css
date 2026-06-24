@@ -199,7 +199,7 @@ incipal, boutons, responsive
   align-items: center;
   padding: 10px 0;
   margin: 20px auto;
-  max-width: 90%;
+  max-width: 100%;
 }
 
 @media (max-width: 768px) {

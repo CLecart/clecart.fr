@@ -4,17 +4,28 @@
 
 ### Headers HTTP de Sécurité
 
+> **Périmètre — à lire avant tout.** Ces en-têtes sont servis par le
+> déploiement conteneurisé (`nginx.conf` + `nginx-security-headers.conf`).
+> **`clecart.fr` est hébergé sur GitHub Pages, qui ne permet pas de définir
+> d'en-têtes HTTP personnalisés : aucun des en-têtes ci-dessous n'y est
+> actif.** La protection réelle du site public repose donc sur l'intégrité des
+> ressources (SRI, versions épinglées), l'absence de backend et l'absence de
+> traitement de données côté serveur. Vérification : `curl -I https://clecart.fr`.
+
 #### Content Security Policy (CSP)
 
 ```nginx
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com cdn.emailjs.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' cdnjs.cloudflare.com fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self';
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
 ```
 
 **Justification des permissions :**
 
-- `'unsafe-inline'` pour scripts/styles : Nécessaire pour les styles dynamiques et le thème dark/light
-- `cdnjs.cloudflare.com` : FontAwesome icons
-- `cdn.emailjs.com` + `api.emailjs.com` : Service de contact form
+- `'unsafe-inline'` pour scripts : requis par le bootstrap de thème inline en
+  `<head>`, qui doit s'exécuter avant le premier rendu pour éviter le FOUC
+- `'unsafe-inline'` pour styles : styles appliqués dynamiquement en JS
+- `cdn.jsdelivr.net` : SDK EmailJS (script) et icônes devicon (images)
+- `api.emailjs.com` : envoi du formulaire de contact
+- `cdnjs.cloudflare.com` : Font Awesome (CSS et polices)
 - `fonts.googleapis.com` + `fonts.gstatic.com` : Google Fonts
 - `data:` pour images : SVG inline dans le CSS
 
@@ -24,6 +35,21 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' c
 - `X-Frame-Options: DENY` - Prévient le clickjacking
 - `X-XSS-Protection: 1; mode=block` - Protection XSS navigateur
 - `Referrer-Policy: strict-origin-when-cross-origin` - Contrôle du referrer
+- `Permissions-Policy` - Neutralise géolocalisation, micro, caméra et paiement
+
+#### Piège nginx à connaître
+
+`add_header` n'est hérité d'un niveau supérieur **que si le niveau courant n'en
+déclare aucun**. Chaque `location` de ce projet définit son propre
+`Cache-Control` : sans un `include` explicite de
+`nginx-security-headers.conf`, elle ne servirait **aucun** en-tête de sécurité.
+Toute nouvelle `location` doit donc inclure ce fichier.
+
+Vérification (conteneur) :
+
+```bash
+curl -sI http://localhost:8080/ | grep -icE "content-security|x-frame|x-xss|x-content-type|referrer|permissions"   # doit renvoyer 6
+```
 
 ### Authentification et Autorisation
 
@@ -86,8 +112,11 @@ HEALTHCHECK --interval=30s --timeout=3s \
 # Scan des vulnérabilités des dépendances
 npm audit
 
-# Test des headers de sécurité
-curl -I https://clecart.fr | grep -E "(X-|Content-Security)"
+# Test des headers de sécurité — sur le conteneur, seul endroit où ils existent.
+# Le lancer contre https://clecart.fr ne renvoie rien : GitHub Pages ne sert pas
+# d'en-têtes personnalisés.
+npm run docker:build && npm run docker:run
+curl -sI http://localhost:8080/ | grep -E "(X-|Content-Security|Referrer|Permissions)"
 
 # Test SSL/TLS
 testssl.sh clecart.fr

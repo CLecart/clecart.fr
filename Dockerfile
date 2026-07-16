@@ -22,8 +22,10 @@ RUN addgroup -g 1001 -S nginx-user && \
 # Copy website files
 COPY --chown=nginx-user:nginx-user . /usr/share/nginx/html
 
-# Copy optimized nginx configuration
-COPY --chown=nginx-user:nginx-user nginx.conf /etc/nginx/conf.d/default.conf
+# Left owned by root: nginx only needs to read its own configuration, and a
+# worker that can rewrite it can also switch off the headers below.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx-security-headers.conf /etc/nginx/security-headers.conf
 
 # Set ownership and permissions
 RUN chown -R nginx-user:nginx-user /var/cache/nginx && \

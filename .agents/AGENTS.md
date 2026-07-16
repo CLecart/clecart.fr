@@ -62,12 +62,12 @@ Ce document définit les standards absolus et non négociables pour le portfolio
    Positionnement revendiqué publiquement par le portfolio : il engage le code.
    - **Le poids transféré est le premier critère.** Images en WebP, vidéos de démo en lazy-load via IntersectionObserver, `loading="lazy"` systématique.
    - Ne jamais précacher dans le Service Worker une ressource que le site ne charge pas : c'est de la bande passante gaspillée à chaque installation.
-   - **[CIBLE]** `styles.css` enchaîne 25 `@import` séquentiels, soit 25 allers-retours réseau bloquants avant le premier pixel. C'est l'écart le plus coûteux entre le discours Green IT et le code : à traiter par concaténation avant toute autre optimisation de rendu.
+   - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-07-16) : 23 requêtes CSS en **2 vagues** — `styles.css` seul, puis les 22 imports en parallèle. Le coût est donc **un** aller-retour de découverte supplémentaire, pas 22 : le CSS bloque le rendu, et le navigateur ne peut demander les imports qu'après avoir parsé le baril. Concaténer économiserait ce hop, mais sans build ni CI, un bundle commité dériverait de ses sources au premier oubli — le remède serait pire que le mal. **Le baril reste la bonne solution tant qu'aucune CI ne régénère le bundle.** Ne pas « optimiser » ce point sans mesure préalable.
 
 10. **Accessibilité Numérique (RGAA / WCAG) :**
     - Navigation clavier complète, contrastes conformes en thème clair **et** sombre.
     - Toute `<video>` porte un `<track kind="captions">` (SonarQube Web:S4084). Toute image porte un `alt` signifiant.
-    - **[CIBLE]** `prefers-reduced-motion` n'est honoré nulle part dans le CSS alors que le site est fortement animé. Sur un site à ce point animé, c'est un manquement direct au WCAG 2.3.3.
+    - `prefers-reduced-motion` est honoré globalement dans `css/utils/animations.css` (WCAG 2.3.3). Les durées y sont écrasées à ~0, **jamais à `none`** : les animations d'entrée démarrent à `opacity: 0` et comptent sur l'application de l'état final. Toute animation pilotée en JS (typewriter) doit tester la media query elle-même, le CSS ne l'atteint pas.
 
 ---
 

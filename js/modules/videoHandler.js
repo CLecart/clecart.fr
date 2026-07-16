@@ -9,6 +9,13 @@ function addLoadingBackground(video) {
   }
 }
 
+/**
+ * Pause a video once it scrolls out of view, resume it on the way back
+ * @function observeVideoVisibility
+ * @description Decoding an offscreen video burns CPU and battery for a picture nobody sees. Resuming is gated on the autoplay attribute, so a video the visitor paused by hand is never restarted behind their back — and because setupVideos strips autoplay on mobile, playback there stays entirely manual. Without IntersectionObserver support nothing is bound and videos simply keep playing.
+ * @param {HTMLVideoElement} video - Video to observe
+ * @returns {void}
+ */
 function observeVideoVisibility(video) {
   if ("IntersectionObserver" in globalThis) {
     const observer = new IntersectionObserver(
@@ -33,6 +40,13 @@ function observeVideoVisibility(video) {
   }
 }
 
+/**
+ * Hold back a video's network fetch until it approaches the viewport
+ * @function observeLazyLoad
+ * @description The 200px margin starts the download before the video is on screen, trading a little early bandwidth for playback that is ready on arrival. Promoted data-src attributes are deleted, so a second pass finds nothing to do, and visibility observation is attached only after loading — there is nothing worth pausing before a source exists.
+ * @param {HTMLVideoElement} video - Video carrying data-src on itself or on its source children
+ * @returns {void}
+ */
 function observeLazyLoad(video) {
   if ("IntersectionObserver" in globalThis) {
     const lazyObserver = new IntersectionObserver(
@@ -70,7 +84,9 @@ function observeLazyLoad(video) {
  * @param {boolean} isMobile - Whether the device is mobile
  */
 function setupTouchInteractions(video, isMobile) {
-  if (!isMobile) return;
+  if (!isMobile) {
+    return;
+  }
 
   video.addEventListener("loadedmetadata", () => {
     if (!video.hasAttribute("autoplay")) {
@@ -99,6 +115,18 @@ function setupTouchInteractions(video, isMobile) {
   });
 }
 
+/**
+ * Prepare every video on the page for mobile constraints and lazy playback
+ * @function initVideoHandler
+ * @description Runs synchronously: main.js already calls this from a load
+ * handler, and re-registering a load listener here would never fire — the DOM
+ * does not invoke listeners added while the event it listens for is dispatching,
+ * and load only happens once. The video list is captured at call time, so markup
+ * injected later is not covered. Mobile is detected from the user agent string,
+ * which is unreliable by nature: every decision it drives is a data-saving
+ * default, never a feature gate.
+ * @returns {void}
+ */
 export function initVideoHandler() {
   const videos = document.querySelectorAll("video");
   const isMobile =
@@ -106,10 +134,12 @@ export function initVideoHandler() {
       navigator.userAgent
     );
 
-  globalThis.addEventListener("load", () => {
-    setupVideos();
-  });
-
+  /**
+   * Normalise each video's attributes and attach its observers
+   * @function setupVideos
+   * @description playsinline stops iOS from hijacking playback into fullscreen. Legacy assets/images/*.mp4 source paths are rewritten to assets/videos/ at runtime, patching markup that was never migrated. On mobile, autoplay is stripped and preload capped at metadata, so a visitor on cellular data never pays for a video they did not ask to watch.
+   * @returns {void}
+   */
   function setupVideos() {
     videos.forEach((video) => {
       video.setAttribute("playsinline", "");
@@ -146,4 +176,6 @@ export function initVideoHandler() {
       setupTouchInteractions(video, isMobile);
     });
   }
+
+  setupVideos();
 }

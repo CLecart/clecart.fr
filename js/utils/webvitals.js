@@ -1,6 +1,6 @@
 /**
  * Core Web Vitals monitoring and optimization system
- * @fileoverview Real-time web performance metrics monitoring with automatic optimizations
+ * @file Real-time web performance metrics monitoring with automatic optimizations
  * @author Christophe Lecart
  */
 
@@ -76,8 +76,6 @@ export function initWebVitals() {
     );
   }
 
-  monitorResourceTiming();
-
   /**
    * Final Web Vitals report generation after complete loading
    * @description 1s delay to ensure all metrics are captured
@@ -138,6 +136,12 @@ function optimizeFID() {
   }
 }
 
+/**
+ * Reduces Cumulative Layout Shift (CLS)
+ * @description Lets images without explicit dimensions size themselves from
+ * their intrinsic ratio rather than reflowing the page on decode
+ * @returns {void}
+ */
 function optimizeCLS() {
   const images = document.querySelectorAll("img:not([width]):not([height])");
   images.forEach((img) => {
@@ -147,6 +151,12 @@ function optimizeCLS() {
   });
 }
 
+/**
+ * Hints the compositor about elements that are about to animate
+ * @description Sets will-change on entrance-animated elements and clears it on
+ * animationend, since a permanent will-change keeps layers alive for nothing
+ * @returns {void}
+ */
 function optimizeAnimations() {
   const animatedElements = document.querySelectorAll(
     '[class*="fade"], [class*="slide"]'
@@ -164,25 +174,12 @@ function optimizeAnimations() {
   });
 }
 
-function monitorResourceTiming() {
-  const resourceObserver = new PerformanceObserver((list) => {
-    for (const entry of list.getEntries()) {
-      if (entry.duration > 1000) {
-        // Slow resource detected
-      }
-
-      if (entry.transferSize > 500000) {
-        // Large resource detected
-      }
-    }
-  });
-
-  resourceObserver.observe({ entryTypes: ["resource"] });
-}
-
+/**
+ * Forwards the collected vitals to the analytics module, when present
+ * @param {object} vitals - Collected LCP, FID, CLS, FCP and TTFB values
+ * @returns {void}
+ */
 function reportVitals(vitals) {
-  const score = calculatePerformanceScore(vitals);
-
   if (globalThis.analytics) {
     globalThis.analytics.trackEvent(
       "Performance",
@@ -190,29 +187,4 @@ function reportVitals(vitals) {
       JSON.stringify(vitals)
     );
   }
-}
-
-function calculatePerformanceScore(vitals) {
-  let score = 100;
-
-  if (vitals.lcp > 4000) score -= 40;
-  else if (vitals.lcp > 2500) score -= 20;
-  else if (vitals.lcp > 1200) score -= 10;
-
-  if (vitals.fid > 300) score -= 30;
-  else if (vitals.fid > 100) score -= 15;
-  else if (vitals.fid > 50) score -= 5;
-
-  if (vitals.cls > 0.25) score -= 30;
-  else if (vitals.cls > 0.1) score -= 15;
-  else if (vitals.cls > 0.05) score -= 5;
-
-  return Math.max(0, score);
-}
-
-function getPerformanceRating(score) {
-  if (score >= 90) return "Excellent";
-  if (score >= 75) return "Good";
-  if (score >= 50) return "Needs Improvement";
-  return "Poor";
 }

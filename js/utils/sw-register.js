@@ -1,6 +1,6 @@
 /**
  * Service Worker registration and PWA management
- * @fileoverview Handles service worker registration with update notifications
+ * @file Handles service worker registration with update notifications
  * @author Christophe Lecart
  */
 
@@ -67,7 +67,9 @@ export function registerServiceWorker() {
   let refreshing = false;
   if ("serviceWorker" in navigator) {
     globalThis.addEventListener("controllerchange", () => {
-      if (refreshing) return;
+      if (refreshing) {
+        return;
+      }
       refreshing = true;
       globalThis.location.reload();
     });

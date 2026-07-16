@@ -1,5 +1,5 @@
 /**
- * @fileoverview Accessible modal management module
+ * @file Accessible modal management module
  * @description Handles modal opening, closing and animations with accessibility support
  * @version 1.0.0
  * @author Christophe Lecart <djlike@hotmail.fr>

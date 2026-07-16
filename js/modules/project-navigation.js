@@ -3,11 +3,19 @@
  * @author Christophe Lecart
  */
 
+/**
+ * Turn the project anchors into a hash-driven tab switcher
+ * @function initProjectNavigation
+ * @description A deep link opens the project named by the URL hash; an unmatched or absent hash falls back to the first project, so the page is never left showing nothing. Every project is reset to inactive up front, which makes the function safe to run over markup already in an arbitrary state.
+ * @returns {void}
+ */
 export function initProjectNavigation() {
   const navButtons = document.querySelectorAll(".nav-btn");
   const projects = document.querySelectorAll(".project");
 
-  if (!navButtons.length || !projects.length) return;
+  if (!navButtons.length || !projects.length) {
+    return;
+  }
 
   projects.forEach((project) => {
     project.classList.remove("active");
@@ -33,7 +41,9 @@ export function initProjectNavigation() {
     activeProject.classList.add("active");
     activeProject.style.display = "block";
   }
-  if (activeButton) activeButton.classList.add("active");
+  if (activeButton) {
+    activeButton.classList.add("active");
+  }
 
   navButtons.forEach((button) => {
     button.addEventListener("click", (e) => {

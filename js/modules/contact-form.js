@@ -6,7 +6,9 @@ export function initContactForm() {
   const contactForm = document.getElementById("contact-form");
   const formStatus = document.querySelector(".form-status");
 
-  if (!contactForm) return;
+  if (!contactForm) {
+    return;
+  }
 
   const gdprChoice =
     localStorage.getItem("gdpr-consent") || localStorage.getItem("gdpr-choice");
@@ -49,8 +51,17 @@ function renderContactAlternative(form) {
     </p>`;
 }
 
+/**
+ * Tell the visitor to answer the privacy banner before sending
+ * @function showConsentRequiredNotice
+ * @description Covers the case where no choice was ever recorded, which is distinct from a recorded refusal: refusal replaces the form outright, an unanswered banner only blocks this one submission and is styled as info rather than an error.
+ * @param {HTMLElement} statusElement - Status container; a missing element makes this a no-op
+ * @returns {void}
+ */
 function showConsentRequiredNotice(statusElement) {
-  if (!statusElement) return;
+  if (!statusElement) {
+    return;
+  }
 
   statusElement.innerHTML =
     "Please choose Accept or Decline in the privacy banner before sending a message.";
@@ -58,8 +69,17 @@ function showConsentRequiredNotice(statusElement) {
   statusElement.style.display = "block";
 }
 
+/**
+ * Retract the status message and collapse its container
+ * @function clearStatusMessage
+ * @description Called when consent flips to accepted, to drop a notice that has just become false. Display is reset to none rather than only emptying the text, so the collapsed container leaves no gap in the form layout.
+ * @param {HTMLElement} statusElement - Status container; a missing element makes this a no-op
+ * @returns {void}
+ */
 function clearStatusMessage(statusElement) {
-  if (!statusElement) return;
+  if (!statusElement) {
+    return;
+  }
 
   statusElement.innerHTML = "";
   statusElement.className = "form-status";
@@ -95,7 +115,9 @@ function setupFormSubmissionHandling(form, statusElement) {
       return;
     }
 
-    if (form.classList.contains("sending")) return;
+    if (form.classList.contains("sending")) {
+      return;
+    }
 
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
@@ -179,12 +201,21 @@ function setupFormSubmissionHandling(form, statusElement) {
     } finally {
       setTimeout(() => {
         form.classList.remove("sending");
-        if (submitButton) submitButton.disabled = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
       }, 3000);
     }
   });
 }
 
+/**
+ * Check the submitted fields before spending an EmailJS round-trip
+ * @function validateContactFormData
+ * @description Returns the message to display rather than a boolean, so the empty string is the success case. Each field is read under two possible names because the markup and the EmailJS template disagree on them. The email pattern is deliberately loose: it rejects obvious typos without pretending to validate deliverability.
+ * @param {FormData} formData - Submitted form values
+ * @returns {string} Message to display, or an empty string when the data is valid
+ */
 function validateContactFormData(formData) {
   const name = String(
     formData.get("name") || formData.get("from_name") || ""
@@ -211,6 +242,13 @@ function validateContactFormData(formData) {
   return "";
 }
 
+/**
+ * Resolve the EmailJS credentials to use for this form
+ * @function getEmailConfig
+ * @description Runtime config loaded from the gitignored config.json outranks the data-emailjs-* attributes in the markup, so a deployment can override committed values without touching the HTML. Every field falls back to an empty string rather than undefined, letting callers gate on truthiness alone.
+ * @param {HTMLElement} form - Form carrying the data-emailjs-* fallback attributes
+ * @returns {{user: string, service: string, template: string}} Resolved EmailJS identifiers
+ */
 function getEmailConfig(form) {
   const runtimeCfg = globalThis.runtimeConfig?.emailjs || {};
   const datasetCfg = {
@@ -236,7 +274,9 @@ function getEmailConfig(form) {
  */
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");
-  if (button) button.disabled = true;
+  if (button) {
+    button.disabled = true;
+  }
 
   if (statusElement) {
     statusElement.innerHTML = message;

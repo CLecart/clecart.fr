@@ -11,11 +11,11 @@
  * @returns {void}
  */
 export function initPerformanceOptimizations() {
-  if ('connection' in navigator) {
+  if ("connection" in navigator) {
     const connection = navigator.connection;
     optimizeForConnection(connection);
-    
-    connection.addEventListener('change', () => {
+
+    connection.addEventListener("change", () => {
       optimizeForConnection(connection);
     });
   }
@@ -24,15 +24,16 @@ export function initPerformanceOptimizations() {
    * Connection detection and optimization for slow connections
    */
   function optimizeForConnection(connection) {
-    const slowConnection = connection.saveData || 
-                          ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
-    
+    const slowConnection =
+      connection.saveData ||
+      ["slow-2g", "2g", "3g"].includes(connection.effectiveType);
+
     if (slowConnection) {
-      document.documentElement.classList.add('slow-connection');
+      document.documentElement.classList.add("slow-connection");
 
       const videos = document.querySelectorAll('video[preload="auto"]');
-      videos.forEach(video => {
-        video.setAttribute('preload', 'metadata');
+      videos.forEach((video) => {
+        video.setAttribute("preload", "metadata");
       });
     }
   }

@@ -1,6 +1,6 @@
 /**
  *Main JavaScript entry point for portfolio website
- * @fileoverview Handles module initialization and global functionality
+ * @file Handles module initialization and global functionality
  * @author Christophe Lecart
  */
 
@@ -47,14 +47,28 @@ function initViewMoreProjects() {
     ...document.querySelectorAll(".projects-grid .project-card"),
   ];
 
-  if (!btn || !grid || allCards.length === 0) return;
+  if (!btn || !grid || allCards.length === 0) {
+    return;
+  }
 
   let expanded = false;
 
+  /**
+   * Count the columns the grid currently resolves to
+   * @function getColumnCount
+   * @description Reads the computed grid-template-columns instead of re-testing breakpoints in JS, so the CSS media queries stay the single source of truth for the layout.
+   * @returns {number} Number of columns in the current layout
+   */
   function getColumnCount() {
     return getComputedStyle(grid).gridTemplateColumns.split(" ").length;
   }
 
+  /**
+   * Collapse the project grid back to its initial rows
+   * @function showInitialCards
+   * @description Rounds the visible count up to a whole number of columns so the grid never ends on a half-filled row, and drops the toggle entirely when every card already fits.
+   * @returns {void}
+   */
   function showInitialCards() {
     const colCount = getColumnCount();
     const toShow = Math.min(
@@ -88,7 +102,9 @@ function initViewMoreProjects() {
 
   let resizeTimer;
   globalThis.addEventListener("resize", () => {
-    if (expanded) return;
+    if (expanded) {
+      return;
+    }
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(showInitialCards, 150);
   });
@@ -97,7 +113,7 @@ function initViewMoreProjects() {
 /**
  * Application initialization event handler
  * @description Initializes all modules in optimal order for performance
- * @listens DOMContentLoaded
+ * @listens Document#event:DOMContentLoaded
  */
 document.addEventListener("DOMContentLoaded", async () => {
   // Load runtime config before modules that depend on it (contact form).

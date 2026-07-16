@@ -1,11 +1,10 @@
 /**
  * Service Worker for caching and offline functionality
- * @fileoverview Service Worker implementation
+ * @file Service Worker implementation
  * @description Handles cache, fetch strategies and offline features
  */
 
 const CACHE_NAME = "portfolio-cache-v2";
-const CACHE_FALLBACK = "portfolio-fallback-v1";
 
 const urlsToCache = [
   "/",
@@ -20,8 +19,27 @@ const urlsToCache = [
   "/assets/manifest/site.webmanifest",
 ];
 
-const offlinePage = "/offline.html";
-const offlineImage = "/assets/images/offline-fallback.svg";
+/**
+ * Builds the placeholder served when an image cannot be fetched offline
+ * @description Generated in-worker rather than fetched from disk: a precached
+ * asset that goes missing turns the fallback itself into a failed request
+ * @returns {Response} An inline SVG placeholder
+ */
+function offlineImageResponse() {
+  const svg = [
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="225" viewBox="0 0 400 225" role="img" aria-label="Image unavailable offline">',
+    '<rect width="400" height="225" fill="#f8f9fa"/>',
+    '<text x="200" y="118" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#6c757d">Image unavailable offline</text>',
+    "</svg>",
+  ].join("");
+
+  return new Response(svg, {
+    headers: {
+      "Content-Type": "image/svg+xml",
+      "Cache-Control": "no-store",
+    },
+  });
+}
 
 /**
  * Service Worker installation event
@@ -53,7 +71,7 @@ globalThis.addEventListener("activate", (event) => {
       try {
         const cacheNames = await caches.keys();
         const cacheDeletePromises = cacheNames
-          .filter((name) => name !== CACHE_NAME && name !== CACHE_FALLBACK)
+          .filter((name) => name !== CACHE_NAME)
           .map((name) => caches.delete(name));
 
         await Promise.all(cacheDeletePromises);
@@ -71,7 +89,9 @@ globalThis.addEventListener("activate", (event) => {
  * @description Implements Network-First for HTML/JSON and Cache-First for assets
  */
 globalThis.addEventListener("fetch", (event) => {
-  if (!event.request.url.startsWith(globalThis.location.origin)) return;
+  if (!event.request.url.startsWith(globalThis.location.origin)) {
+    return;
+  }
 
   const isNavigationRequest = event.request.mode === "navigate";
   const isImageRequest = event.request.destination === "image";
@@ -115,7 +135,9 @@ async function handleNavigationRequest(request) {
  */
 async function handleImageRequest(request) {
   const cachedResponse = await caches.match(request);
-  if (cachedResponse) return cachedResponse;
+  if (cachedResponse) {
+    return cachedResponse;
+  }
 
   try {
     const networkResponse = await fetch(request);
@@ -127,7 +149,7 @@ async function handleImageRequest(request) {
     throw new Error("Network response not ok");
   } catch (error) {
     console.warn("Image request failed, serving offline fallback:", error);
-    return caches.match(offlineImage);
+    return offlineImageResponse();
   }
 }
 
@@ -138,7 +160,9 @@ async function handleImageRequest(request) {
  */
 async function handleAssetRequest(request) {
   const cachedResponse = await caches.match(request);
-  if (cachedResponse) return cachedResponse;
+  if (cachedResponse) {
+    return cachedResponse;
+  }
 
   try {
     const networkResponse = await fetch(request);

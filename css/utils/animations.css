@@ -108,7 +108,8 @@ section.section-active::before {
 }
 
 section.section-active .section-header {
-  animation: section-header-reveal var(--duration-slower) var(--ease-standard) forwards;
+  animation: section-header-reveal var(--duration-slower) var(--ease-standard)
+    forwards;
 }
 
 @keyframes section-header-reveal {

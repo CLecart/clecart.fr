@@ -100,8 +100,7 @@ body.dark-mode .portfolio-section:hover {
 .portfolio-section:hover h2 i {
   color: var(--card-icon-hover-color);
   transform: var(--card-icon-hover-transform);
-  animation: subtle-pulse var(--duration-slowest) infinite
-    var(--ease-smooth);
+  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 .tech-grid {
@@ -157,8 +156,7 @@ body.dark-mode .tech-item:hover {
 
 .tech-item:hover h3 {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse var(--duration-slowest) infinite
-    var(--ease-smooth);
+  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 .features-list,
@@ -219,8 +217,7 @@ body.dark-mode .features-list li {
 }
 
 .portfolio-section.appear .features-list li {
-  animation: slide-in-left var(--duration-slow) forwards
-    var(--ease-smooth);
+  animation: slide-in-left var(--duration-slow) forwards var(--ease-smooth);
 }
 
 .portfolio-section.appear .features-list li:nth-child(1) {

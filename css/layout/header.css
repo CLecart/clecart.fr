@@ -297,7 +297,6 @@ nav ul li a.active::after {
     margin-left: auto;
     gap: 0;
   }
-
 }
 
 @media (max-width: 480px) {

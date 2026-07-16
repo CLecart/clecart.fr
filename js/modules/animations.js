@@ -10,7 +10,7 @@ let scrollDirection = "down";
 /**
  * Intersection observer factory for configurable observers
  * @function createObserver
- * @param {function} callback - Callback function for observed entries
+ * @param {Function} callback - Callback function for observed entries
  * @param {object} options - Custom options for observer
  * @returns {IntersectionObserver} Configured observer instance
  * @description Simplifies observer creation with optimal default options
@@ -146,7 +146,9 @@ function initProjectPageAnimations() {
  */
 function initLearningOutcomesAnimations() {
   const outcomesList = document.querySelector(".outcomes-list");
-  if (!outcomesList) return;
+  if (!outcomesList) {
+    return;
+  }
 
   const outcomesObserver = createObserver((entries) => {
     entries.forEach((entry) => {
@@ -174,7 +176,9 @@ function initLearningOutcomesAnimations() {
  */
 export function initTypewriterEffect() {
   const typewriterElement = document.querySelector(".typewriter-text");
-  if (!typewriterElement) return;
+  if (!typewriterElement) {
+    return;
+  }
 
   const texts = [
     "Software Engineer",
@@ -196,6 +200,12 @@ export function initTypewriterEffect() {
   const deletingSpeed = 50;
   const pauseDuration = 2000;
 
+  /**
+   * Type or delete a single character, then schedule the next step
+   * @function typeEffect
+   * @description Re-schedules itself through setTimeout rather than running on a fixed interval, so typing, deleting and the end-of-word pause can each use their own delay. The early return on that pause is what keeps a second timer from racing the one at the bottom.
+   * @returns {void}
+   */
   function typeEffect() {
     const currentText = texts[currentTextIndex];
 

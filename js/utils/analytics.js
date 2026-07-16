@@ -1,6 +1,6 @@
 /**
  * Privacy-first analytics system
- * @fileoverview GDPR-compliant analytics with user consent and anonymized data
+ * @file GDPR-compliant analytics with user consent and anonymized data
  * @author Christophe Lecart
  */
 
@@ -15,7 +15,7 @@
 class PrivacyAnalytics {
   /**
    * PrivacyAnalytics class constructor
-   * @constructor
+   * @class
    * @description Initializes session data and checks GDPR consent
    */
   constructor() {
@@ -36,7 +36,7 @@ class PrivacyAnalytics {
 
   /**
    * Initializes all analytics trackers
-   * @method init
+   * @function init
    * @description Sets up event listeners and starts data collection
    * @returns {void}
    */
@@ -47,21 +47,21 @@ class PrivacyAnalytics {
     this.trackPerformance();
 
     globalThis.addEventListener("beforeunload", () => {
-      this.sendAnalytics();
+      this.flushEvents();
     });
 
     /**
-     * Periodic data sending for long sessions
-     * @description 30-second interval to prevent data loss
+     * @description 30s interval bounds how long events sit in localStorage on
+     * long sessions, where beforeunload may never fire.
      */
     setInterval(() => {
-      this.sendAnalytics();
+      this.flushEvents();
     }, 30000);
   }
 
   /**
    * Records a page view
-   * @method trackPageView
+   * @function trackPageView
    * @description Increments page view counter for session
    * @returns {void}
    */
@@ -71,7 +71,7 @@ class PrivacyAnalytics {
 
   /**
    * Tracks user scroll depth
-   * @method trackScrollDepth
+   * @function trackScrollDepth
    * @description Calculates maximum scroll percentage reached
    * @returns {void}
    */
@@ -92,6 +92,12 @@ class PrivacyAnalytics {
     });
   }
 
+  /**
+   * Counts user interactions for the session
+   * @function trackInteractions
+   * @description Listeners are passive: counting must never delay scrolling
+   * @returns {void}
+   */
   trackInteractions() {
     const interactionEvents = ["click", "keydown", "touch"];
 
@@ -106,6 +112,12 @@ class PrivacyAnalytics {
     });
   }
 
+  /**
+   * Records Core Web Vitals into the session data
+   * @function trackPerformance
+   * @description Silently skipped where PerformanceObserver is unsupported
+   * @returns {void}
+   */
   trackPerformance() {
     if ("PerformanceObserver" in globalThis) {
       const observer = new PerformanceObserver((list) => {
@@ -134,7 +146,7 @@ class PrivacyAnalytics {
 
   /**
    * Records a custom user event
-   * @method trackEvent
+   * @function trackEvent
    * @description Collects categorized events for behavioral analysis
    * @param {string} category - Event category (e.g., 'Navigation', 'Interaction')
    * @param {string} action - Action performed (e.g., 'Click', 'Download')
@@ -146,7 +158,9 @@ class PrivacyAnalytics {
    * trackEvent('Download', 'PDF', 'CV_Download', 1);
    */
   trackEvent(category, action, label = null, value = null) {
-    if (!this.consentGiven) return;
+    if (!this.consentGiven) {
+      return;
+    }
 
     const eventData = {
       category,
@@ -162,39 +176,27 @@ class PrivacyAnalytics {
     localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50)));
   }
 
-  sendAnalytics() {
-    if (!this.consentGiven) return;
+  /**
+   * Flushes the buffered events
+   * @function flushEvents
+   * @description No analytics endpoint is configured, so nothing leaves the
+   * browser: events are buffered in localStorage and dropped here. Wiring an
+   * endpoint means sending the buffer from this method and updating
+   * privacy-policy.html to match.
+   * @returns {void}
+   */
+  flushEvents() {
+    if (!this.consentGiven) {
+      return;
+    }
 
     this.sessionData.timeOnPage = Date.now() - this.sessionData.startTime;
-
-    const analyticsData = {
-      session: this.sessionData,
-      events: JSON.parse(localStorage.getItem("analytics_events") || "[]"),
-      userAgent: navigator.userAgent,
-      screen: {
-        width: screen.width,
-        height: screen.height,
-      },
-      viewport: {
-        width: globalThis.innerWidth,
-        height: globalThis.innerHeight,
-      },
-      connection: navigator.connection
-        ? {
-            effectiveType: navigator.connection.effectiveType,
-            downlink: navigator.connection.downlink,
-          }
-        : null,
-      timestamp: Date.now(),
-    };
-
-    // In real implementation, send to your analytics endpoint
     localStorage.removeItem("analytics_events");
   }
 
   /**
    * Updates GDPR consent status
-   * @method updateConsent
+   * @function updateConsent
    * @description Manages tracking activation/deactivation based on consent
    * @param {boolean} hasConsent - User consent status
    * @returns {void}
@@ -222,7 +224,7 @@ class PrivacyAnalytics {
 
   /**
    * Disables tracking when user declines consent
-   * @method disableTracking
+   * @function disableTracking
    * @description Stops all analytics collection and clears stored data
    * @returns {void}
    * @example

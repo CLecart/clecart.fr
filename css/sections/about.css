@@ -17,13 +17,10 @@
 }
 /** Styles for the portfolio "About" section */
 
-#about {
-  padding: 80px 0 120px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+/* No base #about rule on purpose. A padded, 100vh-tall About pushes
+   #languages below the fold, and both must stay visible when the About nav
+   link is followed. Only the narrow breakpoints pad the section, where
+   #languages is stacked below anyway. */
 
 @media (max-width: 768px) {
   #about {

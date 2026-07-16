@@ -4,6 +4,37 @@
  */
 
 /**
+ * Bring a section to rest just under the fixed header
+ * @function scrollToSection
+ * @description Lands the section so its top rule meets the header's, which sits
+ * at bottom: -3px. Exported so anything that needs to return to a section — the
+ * nav links, the project grid collapsing — lands identically; a second copy of
+ * this arithmetic would drift from the header's CSS the first time it changes.
+ * @param {string} targetId - Hash selector of the target section, e.g. "#projects"
+ * @returns {void}
+ */
+export function scrollToSection(targetId) {
+  const targetElement = document.querySelector(targetId);
+  const header = document.querySelector("header");
+
+  if (!targetElement || !header) {
+    return;
+  }
+
+  const targetPosition =
+    targetElement.getBoundingClientRect().top + globalThis.pageYOffset;
+  const headerTraitOffset = 3;
+  const additionalOffset = targetId === "#skills" ? 50 : 0;
+  const scrollTarget =
+    targetPosition - header.offsetHeight + headerTraitOffset + additionalOffset;
+
+  globalThis.scrollTo({
+    top: Math.max(0, scrollTarget),
+    behavior: "smooth",
+  });
+}
+
+/**
  * Wire the burger menu, its dismissal paths, and smooth anchor scrolling
  * @function initNavigation
  * @description Visibility is driven imperatively alongside the active class because a closed-but-visible menu stays clickable and focusable off-screen. Hiding is therefore deferred by the menu transition duration, so the slide-out plays out before the element leaves the accessibility tree, and each deferred hide re-checks the class in case the menu was reopened meanwhile.
@@ -115,36 +146,7 @@ export function initNavigation() {
     .forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
-        const targetId = this.getAttribute("href");
-        const targetElement = document.querySelector(targetId);
-
-        if (targetElement) {
-          const header = document.querySelector("header");
-          const headerHeight = header.offsetHeight;
-          const targetPosition =
-            targetElement.getBoundingClientRect().top + globalThis.pageYOffset;
-
-          // Alignement parfait : le trait de section doit se confondre avec celui du header
-          // Header trait à bottom: -3px, donc on ajuste pour que les traits soient alignés
-          const headerTraitOffset = 3;
-
-          // Ajustement spécial pour la section skills pour centrer les cards
-          let additionalOffset = 0;
-          if (targetId === "#skills") {
-            additionalOffset = 50;
-          }
-
-          const scrollTarget =
-            targetPosition -
-            headerHeight +
-            headerTraitOffset +
-            additionalOffset;
-
-          globalThis.scrollTo({
-            top: Math.max(0, scrollTarget),
-            behavior: "smooth",
-          });
-        }
+        scrollToSection(this.getAttribute("href"));
       });
     });
 }

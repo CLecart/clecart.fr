@@ -7,7 +7,7 @@
 document.documentElement.classList.remove("no-js");
 
 import { initDarkMode } from "./modules/darkmode.js";
-import { initNavigation } from "./modules/navigation.js";
+import { initNavigation, scrollToSection } from "./modules/navigation.js";
 import { initAnimations, initTypewriterEffect } from "./modules/animations.js";
 import { initContactForm } from "./modules/contact-form.js";
 import { initProjectNavigation } from "./modules/project-navigation.js";
@@ -95,6 +95,9 @@ function initViewMoreProjects() {
       btn.textContent = "View Less Projects";
     } else {
       showInitialCards();
+      /* The rows that vanish are above the button, so without this the visitor
+         is left stranded past the end of the section they were reading. */
+      scrollToSection("#projects");
     }
   });
 

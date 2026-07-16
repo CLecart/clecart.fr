@@ -15,8 +15,6 @@ const urlsToCache = [
   "/index.html",
   "/styles.css",
   "/js/main.js",
-  "/js/critical.js",
-  "/css/critical.css",
   "/assets/images/profile.webp",
   "/assets/icons/favicon.ico",
   "/assets/icons/apple-touch-icon.png",

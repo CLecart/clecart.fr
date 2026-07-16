@@ -5,26 +5,6 @@
   max-width: 100%;
 }
 
-html.js-loading,
-html.js-loading body {
-  visibility: hidden;
-}
-
-html.js-loading .js-loading-visible,
-html.js-loading #splash-screen {
-  visibility: visible;
-}
-
-html.js-loading [class*="animate"],
-html.js-loading [class*="transition"],
-html.js-loading [class*="fade"],
-html.js-loading [class*="slide"] {
-  animation-name: none;
-  transition-property: none;
-  transform: none;
-  opacity: 0;
-}
-
 html,
 body {
   overflow-x: hidden;

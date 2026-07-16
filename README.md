@@ -143,8 +143,7 @@ clecart.fr/
 │   │   │   ├── animations.css      # Optimized CSS animations
 │   │   │   ├── image-fallbacks.css # Broken image fallbacks
 │   │   │   ├── modals.css          # Accessible modal system
-│   │   │   └── responsive.css      # Responsive media queries
-│   │   └── critical.css             # Inline critical CSS
+│   │       └── responsive.css      # Responsive media queries
 │   │
 │   ├── js/                          # Modular JavaScript architecture
 │   │   ├── modules/                 # Business features
@@ -163,10 +162,10 @@ clecart.fr/
 │   │   │   ├── performance.js       # Runtime optimizations
 │   │   │   ├── service-worker.js    # Base Service Worker
 │   │   │   ├── sw-register.js       # Service Worker registration
+│   │   │   ├── video-duration-limit.js # Preview duration cap
 │   │   │   └── webvitals.js         # Core Web Vitals monitoring
 │   │   │
-│   │   ├── main.js                  # Application entry point
-│   │   └── critical.js              # Inline critical JavaScript
+│   │   └── main.js                  # Application entry point
 │   │
 │   └── styles.css                   # Main styles (legacy)
 │

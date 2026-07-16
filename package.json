@@ -1,24 +1,20 @@
 {
   "name": "clecart-portfolio",
   "version": "1.0.0",
-  "description": "Portfolio professionnel de Christophe Lecart - Développeur Full Stack",
+  "description": "Portfolio professionnel de Christophe Lecart - Software Engineer & Green IT Lead",
   "main": "index.html",
+  "type": "module",
   "scripts": {
     "start": "python3 -m http.server 8000",
     "docker:build": "docker build -t clecart-portfolio .",
     "docker:run": "docker run -d -p 8080:80 --name clecart-portfolio-container clecart-portfolio",
     "docker:stop": "docker stop clecart-portfolio-container && docker rm clecart-portfolio-container",
     "docker:logs": "docker logs clecart-portfolio-container",
-    "validate:html": "echo 'HTML validation - use https://validator.w3.org/'",
-    "validate:css": "echo 'CSS validation - use https://jigsaw.w3.org/css-validator/'",
-    "lighthouse": "lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
-    "docs:generate": "jsdoc -c jsdoc.json",
-    "docs:serve": "python3 -m http.server 8001 --directory docs/jsdoc",
-    "docs:clean": "rm -rf docs/jsdoc",
-    "jsdoc:convert": "./scripts/convert-to-jsdoc.sh",
-    "lint": "eslint js/**/*.js",
-    "lint:fix": "eslint js/**/*.js --fix",
-    "format": "prettier --write js/**/*.js",
+    "lighthouse": "npx lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
+    "lint": "eslint js",
+    "lint:fix": "eslint js --fix",
+    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css eslint.config.js",
+    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css eslint.config.js",
     "deploy": "./deploy.sh"
   },
   "repository": {
@@ -42,6 +38,11 @@
   },
   "homepage": "https://clecart.fr",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-jsdoc": "^63.0.13",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.5",
     "puppeteer": "^24.40.0"
   },
   "engines": {

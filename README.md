@@ -162,7 +162,6 @@ clecart.fr/
 │   │   │   ├── performance.js       # Runtime optimizations
 │   │   │   ├── service-worker.js    # Base Service Worker
 │   │   │   ├── sw-register.js       # Service Worker registration
-│   │   │   ├── video-duration-limit.js # Preview duration cap
 │   │   │   └── webvitals.js         # Core Web Vitals monitoring
 │   │   │
 │   │   └── main.js                  # Application entry point
@@ -237,16 +236,20 @@ npm run docker:build         # Build Docker image
 npm run docker:run           # Run local container
 
 # Validation and quality
-npm run validate:html        # W3C HTML validation
-npm run validate:css         # W3C CSS validation
-npm run lighthouse           # Full Lighthouse audit
+npm run lint                 # ESLint (flat config, zero warnings tolerated)
+npm run lint:fix             # ESLint with autofix
+npm run format               # Prettier over js/ and css/
+npm run format:check         # Fail if anything is unformatted
+npm run lighthouse           # Full Lighthouse audit (requires npm start first)
 
 # Deployment
 npm run deploy               # Production deployment script
 npm run docker:stop          # Stop container and clean up
 ```
 
-Note: some scripts/documentation commands (for example, `docs:generate`, `docs:serve`, `jsdoc:convert`) rely on optional config files and scripts (jsdoc, `scripts/convert-to-jsdoc.sh`). These resources are not included by default in this repository, but you can add them if you want to generate documentation with jsdoc.
+HTML and CSS validation are done through the W3C services directly:
+[validator.w3.org](https://validator.w3.org/) and
+[jigsaw.w3.org/css-validator](https://jigsaw.w3.org/css-validator/).
 
 ### Secret Management (EmailJS) - recommended
 

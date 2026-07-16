@@ -35,7 +35,7 @@ Ce document définit les standards absolus et non négociables pour le portfolio
    - **Redondance CSS :** un `@keyframes` est défini **exactement une fois**, dans `css/utils/animations.css` s'il est partagé par plusieurs couches. Une définition dupliquée dans un fichier importé plus tard écrase silencieusement l'autre et rend le débogage impossible.
    - **Design tokens obligatoires :** durées et courbes viennent de `css/base/variables.css` (`--duration-*`, `--ease-*`, `--transition*`). Toute valeur codée en dur (`0.4s`, `cubic-bezier(...)`) est un défaut. Une durée hors de l'échelle définie doit d'abord devenir un token.
    - **Nommage CSS homogène :** kebab-case pour les classes **et** les `@keyframes`, sans exception.
-   - **Zéro Warning Toléré :** tous les avertissements ESLint doivent être résolus à la source. **[CIBLE]** — l'outillage est actuellement inopérant : ni ESLint ni Prettier ne sont installés, et `.eslintrc.json` est au format legacy refusé par ESLint 9+. Restaurer un lint qui s'exécute est un prérequis à toute revendication de qualité.
+   - **Zéro Warning Toléré :** `npm run lint` doit sortir **0 erreur et 0 warning**, et `npm run format:check` doit passer. Aucune exception, aucun `eslint-disable` de confort. La répartition est stricte : Prettier possède le formatage, ESLint la correctness, `eslint-plugin-jsdoc` la documentation. `console.log` est banni ; `console.warn`/`console.error` sont autorisés car un échec silencieux est pire qu'une trace.
 
 6. **Tests, CI/CD & Journal de Bord :**
    - **Mise à jour du Journal de Bord :** chaque intervention (ajout, fix, refacto) doit être rigoureusement consignée dans le fichier `docs/JOURNAL_DE_BORD.md`. Jamais de fichier CHANGELOG.md.

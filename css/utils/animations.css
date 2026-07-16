@@ -7,7 +7,6 @@
     transform var(--duration-slow) var(--ease-smooth);
 }
 
-/* Fallback for when JavaScript is disabled */
 .no-js .fade-in,
 .no-js .slide-left,
 .no-js .slide-right {
@@ -230,7 +229,6 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-/* Shared by the header and footer gradient bands. */
 @keyframes gradient-slide {
   0% {
     background-position: 0% 50%;
@@ -240,5 +238,20 @@ html.scrolling-in-progress .header-content * {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* Near-zero, never `none`: entrances start at opacity 0 and rely on the end
+   state being applied. Cancelling would leave them invisible. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }

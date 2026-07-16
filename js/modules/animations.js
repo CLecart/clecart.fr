@@ -61,9 +61,6 @@ export function initAnimations() {
     }
   });
 
-  /**
-   * Specialized observer for section headers
-   */
   const sectionHeaders = document.querySelectorAll("h2, .section-title");
   const headerObserver = createObserver(
     (entries) => {
@@ -80,17 +77,10 @@ export function initAnimations() {
     headerObserver.observe(header);
   });
 
-  /**
-   * Section activation observer with direction detection
-   * @description Manages active section state and scroll direction
-   */
   const sections = document.querySelectorAll("section[id]");
   const sectionObserver = createObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        /**
-         * Scroll direction detection
-         */
         const currentScrollY = globalThis.scrollY;
         scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
         lastScrollY = currentScrollY;
@@ -120,7 +110,6 @@ export function initAnimations() {
     initProjectPageAnimations();
   }
 
-  // Initialize Learning Outcomes animations for about-portfolio page
   if (currentPath.includes("about-portfolio")) {
     initLearningOutcomesAnimations();
   }
@@ -164,11 +153,10 @@ function initLearningOutcomesAnimations() {
       if (entry.isIntersecting) {
         const listItems = entry.target.querySelectorAll("li");
 
-        // Animate each list item with staggered timing
         listItems.forEach((item, index) => {
           setTimeout(() => {
             item.classList.add("appear-outcome");
-          }, index * 100); // 100ms delay between each item
+          }, index * 100);
         });
 
         outcomesObserver.unobserve(entry.target);
@@ -194,6 +182,12 @@ export function initTypewriterEffect() {
     "Go Developer",
     "Sustainable Architectures",
   ];
+
+  /* setTimeout-driven, so the CSS reduced-motion query cannot reach it. */
+  if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    typewriterElement.textContent = texts[0];
+    return;
+  }
 
   let currentTextIndex = 0;
   let currentCharIndex = 0;

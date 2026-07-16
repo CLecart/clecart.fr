@@ -165,9 +165,14 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://cdn.emailjs.com" />
 
+    <!-- Version is pinned exactly: SRI breaks on any floating range (@3) the
+         moment upstream publishes a patch, which would silently kill the form. -->
     <script
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.1/dist/email.min.js"
+      integrity="sha384-VDbnsk/qjpIVHPQMkJiROI+vW/7cw0k8TFYVLUabm7EWoLEDwcXh09XQ6gQ86Y0B"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
       defer
     ></script>
     <script type="module" src="js/main.js" defer></script>

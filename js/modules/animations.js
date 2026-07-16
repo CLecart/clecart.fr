@@ -189,10 +189,10 @@ export function initTypewriterEffect() {
   if (!typewriterElement) return;
 
   const texts = [
-    "Web & Mobile Developer",
-    "JavaScript Specialist",
+    "Software Engineer",
+    "Green IT Lead",
     "Go Developer",
-    "Modern App Creator",
+    "Sustainable Architectures",
   ];
 
   let currentTextIndex = 0;

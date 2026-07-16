@@ -3,7 +3,6 @@
    Organisation : conteneur principal, titre, sous-titre, boutons, responsive
 */
 
-/** Hero main container */
 #hero {
   height: 100vh;
   display: flex;
@@ -29,7 +28,6 @@
   z-index: -1;
 }
 
-/** Main title and subtitle */
 .hero-content {
   max-width: 800px;
   margin: 60px auto 0;
@@ -61,7 +59,6 @@
   color: var(--primary);
 }
 
-/** Hero action buttons */
 .hero-buttons {
   margin-top: 30px;
   background-color: transparent;
@@ -73,7 +70,6 @@
   margin: 10px 8px;
 }
 
-/* Animation d'apparition du hero */
 body.dark-mode #hero::before {
   background-image: radial-gradient(
     var(--primary-light-20) 1px,
@@ -91,7 +87,6 @@ body.dark-mode .hero-content {
   color: var(--white);
 }
 
-/* Responsive : ajustements pour tablettes et mobiles */
 @media (max-width: 768px) {
   .hero-content {
     margin-top: 40px;

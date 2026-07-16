@@ -1,13 +1,10 @@
-/* Base */
 @import "./css/base/variables.css";
 @import "./css/base/reset.css";
 
-/* Utils */
 @import "./css/utils/animations.css";
 @import "./css/utils/responsive.css";
 @import "./css/utils/modals.css";
 
-/* Components */
 @import "./css/components/buttons.css";
 @import "./css/components/cards.css";
 @import "./css/components/forms.css";
@@ -15,11 +12,9 @@
 @import "./css/components/dark-mode-toggle.css";
 @import "./css/components/notifications.css";
 
-/* Layout */
 @import "./css/layout/header.css";
 @import "./css/layout/footer.css";
 
-/* Sections */
 @import "./css/sections/hero.css";
 @import "./css/sections/about.css";
 @import "./css/sections/skills.css";
@@ -28,7 +23,6 @@
 @import "./css/sections/privacy.css";
 @import "./css/sections/portfolio-details.css";
 
-/* Utils additionnels */
 @import "./css/utils/image-fallbacks.css";
 
 /* Theme imports - always last to override styles if necessary */

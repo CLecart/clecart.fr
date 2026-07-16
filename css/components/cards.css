@@ -2,10 +2,6 @@
  * Card components with unified styling
  * @description Base card styles with variants, responsive design and animations
  */
-/**
- * Card components with unified styling
- * @description Base card styles with variants, responsive design and animations
- */
 
 .card-base {
   background-color: var(--card-bg);

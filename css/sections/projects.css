@@ -3,7 +3,6 @@
    Organisation : grille, cartes projet, navigation, responsive
 */
 
-/* Projects grid */
 #projects {
   padding: 50px 0 80px;
   background-color: var(--light);
@@ -23,7 +22,6 @@ body.dark-mode #projects {
   background-color: var(--darker);
 }
 
-/* Cartes projet */
 .description {
   max-width: 900px;
   margin: 40px auto 30px;
@@ -80,7 +78,6 @@ body:not(.homepage) .description {
   margin-bottom: 10px;
 }
 
-/* Project navigation */
 .project-navigation {
   padding: 120px 0 80px;
   text-align: center;
@@ -149,7 +146,6 @@ body.dark-mode .project-navigation {
   border-color: var(--primary);
 }
 
-/* Hidden projects */
 .project-card--hidden {
   display: none;
   opacity: 0;
@@ -161,7 +157,6 @@ body.dark-mode .project-navigation {
   opacity: 1;
 }
 
-/* Projects footer with button */
 .projects-footer {
   text-align: center;
   margin-top: 20px;
@@ -211,9 +206,6 @@ html body .project.active#project3.description.card-base:hover {
   z-index: 10;
 }
 
-/* Project appearance animation */
-
-/* Responsive : ajustements pour tablettes et mobiles */
 @media (max-width: 768px) {
   .description {
     margin-top: 40px;

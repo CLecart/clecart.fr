@@ -87,7 +87,6 @@ header::after {
   perspective: 1000px;
 }
 
-/** Back button style for secondary pages */
 .back-btn {
   color: var(--white);
   text-decoration: none;

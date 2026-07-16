@@ -28,16 +28,8 @@ export function initPerformanceOptimizations() {
                           ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
     
     if (slowConnection) {
-      /**
-       * Slow connection conditions detected
-       * @description Checks saveData or 2G/3G connection type
-       */
       document.documentElement.classList.add('slow-connection');
-      
-      /**
-       * Video preload optimization for slow connections
-       * @description Changes preload="auto" to preload="metadata" to save bandwidth
-       */
+
       const videos = document.querySelectorAll('video[preload="auto"]');
       videos.forEach(video => {
         video.setAttribute('preload', 'metadata');

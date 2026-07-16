@@ -205,7 +205,6 @@
   }
 }
 
-/* iPad Mini & Tablet Optimized Buttons */
 .btn-container {
   display: flex;
   flex-direction: column;
@@ -269,14 +268,12 @@
   transform: translateY(-2px);
 }
 
-/* Icon inside buttons */
 .btn-tablet-primary i,
 .btn-tablet-secondary i {
   font-size: 1.4rem;
   flex-shrink: 0;
 }
 
-/* Shine effect on buttons */
 .btn-tablet-primary::before,
 .btn-tablet-secondary::before {
   content: "";

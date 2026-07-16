@@ -108,12 +108,12 @@ export function initNavigation() {
 
           // Alignement parfait : le trait de section doit se confondre avec celui du header
           // Header trait à bottom: -3px, donc on ajuste pour que les traits soient alignés
-          const headerTraitOffset = 3; // Le trait du header descend de 3px sous le header
+          const headerTraitOffset = 3;
 
           // Ajustement spécial pour la section skills pour centrer les cards
           let additionalOffset = 0;
           if (targetId === "#skills") {
-            additionalOffset = 50; // Remonte la section de 50px pour centrer les cards
+            additionalOffset = 50;
           }
 
           const scrollTarget =

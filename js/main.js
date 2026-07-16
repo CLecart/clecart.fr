@@ -4,7 +4,6 @@
  * @author Christophe Lecart
  */
 
-// Remove no-js class immediately when JavaScript loads
 document.documentElement.classList.remove("no-js");
 
 import { initDarkMode } from "./modules/darkmode.js";
@@ -118,11 +117,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   initPerformanceOptimizations();
   initWebVitals();
 
-  /**
-   * Privacy-first analytics initialization
-   * @type {PrivacyAnalytics}
-   * @global
-   */
   globalThis.analytics = new PrivacyAnalytics();
 
   requestAnimationFrame(() => {

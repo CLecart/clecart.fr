@@ -19,15 +19,6 @@ class PrivacyAnalytics {
    * @description Initializes session data and checks GDPR consent
    */
   constructor() {
-    /**
-     * User session data
-     * @type {Object}
-     * @property {number} startTime - Session start timestamp
-     * @property {number} pageViews - Number of page views
-     * @property {number} interactions - Number of user interactions
-     * @property {number} scrollDepth - Maximum scroll depth (%)
-     * @property {number} timeOnPage - Time spent on page (ms)
-     */
     this.sessionData = {
       startTime: Date.now(),
       pageViews: 0,
@@ -36,11 +27,6 @@ class PrivacyAnalytics {
       timeOnPage: 0,
     };
 
-    /**
-     * GDPR consent status
-     * @type {boolean}
-     * @description Checks if user has accepted tracking
-     */
     this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
 
     if (this.consentGiven) {
@@ -60,10 +46,6 @@ class PrivacyAnalytics {
     this.trackInteractions();
     this.trackPerformance();
 
-    /**
-     * Send data before page unload
-     * @description Uses beforeunload to capture short sessions
-     */
     globalThis.addEventListener("beforeunload", () => {
       this.sendAnalytics();
     });
@@ -126,7 +108,6 @@ class PrivacyAnalytics {
 
   trackPerformance() {
     if ("PerformanceObserver" in globalThis) {
-      // Core Web Vitals
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.entryType === "largest-contentful-paint") {
@@ -167,16 +148,6 @@ class PrivacyAnalytics {
   trackEvent(category, action, label = null, value = null) {
     if (!this.consentGiven) return;
 
-    /**
-     * Event data structure
-     * @type {Object}
-     * @property {string} category - Event category
-     * @property {string} action - Action performed
-     * @property {string|null} label - Descriptive label
-     * @property {number|null} value - Numeric value
-     * @property {number} timestamp - Event timestamp
-     * @property {string} url - Page URL where event occurred
-     */
     const eventData = {
       category,
       action,
@@ -186,10 +157,6 @@ class PrivacyAnalytics {
       url: globalThis.location.pathname,
     };
 
-    /**
-     * Local storage of events for deferred sending
-     * @description Keeps last 50 events to avoid overload
-     */
     const events = JSON.parse(localStorage.getItem("analytics_events") || "[]");
     events.push(eventData);
     localStorage.setItem("analytics_events", JSON.stringify(events.slice(-50)));
@@ -222,7 +189,6 @@ class PrivacyAnalytics {
     };
 
     // In real implementation, send to your analytics endpoint
-    // Clear sent events
     localStorage.removeItem("analytics_events");
   }
 
@@ -243,10 +209,6 @@ class PrivacyAnalytics {
       this.init();
       this.initialized = true;
     } else if (!hasConsent) {
-      /**
-       * Analytics data cleanup on consent withdrawal
-       * @description Removes all collected data and resets session
-       */
       localStorage.removeItem("analytics_events");
       this.sessionData = {
         startTime: Date.now(),
@@ -271,8 +233,4 @@ class PrivacyAnalytics {
   }
 }
 
-/**
- * Export PrivacyAnalytics class for main application use
- * @exports PrivacyAnalytics
- */
 export default PrivacyAnalytics;

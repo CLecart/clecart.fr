@@ -14,7 +14,6 @@ img[alt*="unavailable"] {
   background: var(--light-gray);
 }
 
-/* Language icon fallback */
 .language-icon {
   display: flex;
   align-items: center;
@@ -30,7 +29,6 @@ img[alt*="unavailable"] {
   line-height: 1;
 }
 
-/* Robust theme transition */
 .theme-transitioning * {
   transition:
     background-color 0.15s ease,
@@ -42,13 +40,11 @@ img[alt*="unavailable"] {
   transition: none;
 }
 
-/* Prevent layout shifts during theme switch */
 body.dark-mode .language-icon > div {
   background: var(--primary);
   color: var(--white);
 }
 
-/* Error state styling */
 .image-error {
   background: var(--light-gray);
   border: 2px dashed var(--text-light);

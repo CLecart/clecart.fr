@@ -70,6 +70,9 @@ body .form-group textarea.field-valid:focus {
   border-color: var(--status-success-color);
 }
 
+/* Chrome autofill: the inset shadow masks the UA's forced yellow background,
+   and the 5000s transition defers its repaint beyond any real session.
+   Repeated below for the valid-state and dark-mode autofill rules. */
 .form-group input:-webkit-autofill,
 .form-group input:-webkit-autofill:hover,
 .form-group input:-webkit-autofill:focus,
@@ -298,7 +301,6 @@ body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
   transform: translateY(0);
 }
 
-/* Field help text */
 .field-help {
   color: var(--text-light);
   font-size: 0.8rem;

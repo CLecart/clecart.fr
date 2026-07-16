@@ -15,10 +15,6 @@
  * initModals();
  */
 export function initModals() {
-  /**
-   * Modal trigger configuration on project thumbnails
-   * @description Ajoute des event listeners de clic sur toutes les images de projets
-   */
   document.querySelectorAll(".project-thumb img").forEach((image) => {
     image.addEventListener("click", function () {
       createImageModal(this.src, this.alt);
@@ -37,19 +33,11 @@ export function initModals() {
    * createImageModal('/assets/images/project.jpg', 'Capture du projet');
    */
   function createImageModal(src, alt) {
-    /**
-     * Nettoyage des modales existantes pour éviter les conflits
-     * @description Supprime toute modale déjà ouverte avant d'en créer une nouvelle
-     */
     const existingModal = document.querySelector(".modal-overlay");
     if (existingModal) {
       existingModal.remove();
     }
 
-    /**
-     * Création de la structure DOM de la modale
-     * @description Construit les éléments overlay, contenu, image et bouton de fermeture
-     */
     const modalOverlay = document.createElement("div");
     modalOverlay.className = "modal-overlay";
 
@@ -65,10 +53,6 @@ export function initModals() {
     closeButton.innerHTML = "&times;";
     closeButton.setAttribute("aria-label", "Close modal");
 
-    /**
-     * Assemblage et injection de la modale dans le DOM
-     * @description Construit la hiérarchie complète et l'ajoute au body
-     */
     modalContent.appendChild(modalImage);
     modalContent.appendChild(closeButton);
     modalOverlay.appendChild(modalContent);
@@ -82,10 +66,6 @@ export function initModals() {
       modalOverlay.classList.add("active");
     }, 10);
 
-    /**
-     * Modal close handlers configuration
-     * @description Multiple méthodes de fermeture pour une meilleure UX
-     */
     closeButton.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", function (e) {
       if (e.target === modalOverlay) {

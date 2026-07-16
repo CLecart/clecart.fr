@@ -108,10 +108,6 @@ export function initGDPRBanner() {
 
   if (!banner) return;
 
-  /**
-   * Conditional GDPR banner display
-   * @description Shows only if no choice has been recorded
-   */
   const storedConsentStatus = getConsentStatus();
   const consentStatus =
     typeof storedConsentStatus === "string" ? storedConsentStatus : "";
@@ -145,9 +141,6 @@ export function initGDPRBanner() {
     globalThis.analytics?.disableTracking();
     showRefusalNotice();
 
-    /**
-     * Contact form deactivation after refusal
-     */
     const contactForm = document.querySelector("#contact-form");
     if (contactForm) {
       const inputs = contactForm.querySelectorAll("input, textarea, button");

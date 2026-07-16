@@ -7,9 +7,6 @@
 const CACHE_NAME = "portfolio-cache-v2";
 const CACHE_FALLBACK = "portfolio-fallback-v1";
 
-/**
- * Static resources URLs to cache
- */
 const urlsToCache = [
   "/",
   "/index.html",
@@ -36,9 +33,6 @@ globalThis.addEventListener("install", (event) => {
     (async () => {
       try {
         const cache = await caches.open(CACHE_NAME);
-        /**
-         * @description Downloads and stores all critical files
-         */
         await cache.addAll(urlsToCache);
         await globalThis.skipWaiting();
       } catch (error) {
@@ -57,9 +51,6 @@ globalThis.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       try {
-        /**
-         * Remove obsolete old caches
-         */
         const cacheNames = await caches.keys();
         const cacheDeletePromises = cacheNames
           .filter((name) => name !== CACHE_NAME && name !== CACHE_FALLBACK)
@@ -80,16 +71,8 @@ globalThis.addEventListener("activate", (event) => {
  * @description Implements Network-First for HTML/JSON and Cache-First for assets
  */
 globalThis.addEventListener("fetch", (event) => {
-  /**
-   * Cross-origin request filtering
-   * @description Ignores external requests to avoid CORS errors
-   */
   if (!event.request.url.startsWith(globalThis.location.origin)) return;
 
-  /**
-   * Request type analysis based on headers
-   * @description Determines appropriate cache strategy
-   */
   const isNavigationRequest = event.request.mode === "navigate";
   const isImageRequest = event.request.destination === "image";
   const isStyleRequest = event.request.destination === "style";

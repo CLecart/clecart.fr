@@ -8,7 +8,6 @@ export function initContactForm() {
 
   if (!contactForm) return;
 
-  // Check GDPR consent and adapt interface
   const gdprChoice =
     localStorage.getItem("gdpr-consent") || localStorage.getItem("gdpr-choice");
   if (gdprChoice === "declined") {
@@ -28,7 +27,6 @@ export function initContactForm() {
     }
   });
 
-  // Configure form behavior
   setupFormSubmissionHandling(contactForm, formStatus);
 }
 
@@ -97,10 +95,8 @@ function setupFormSubmissionHandling(form, statusElement) {
       return;
     }
 
-    // Prevent multiple submissions
     if (form.classList.contains("sending")) return;
 
-    // Immediate UI feedback
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
       form,
@@ -115,7 +111,6 @@ function setupFormSubmissionHandling(form, statusElement) {
       const serviceId = emailCfg.service || "service_lokewrs";
       const templateId = emailCfg.template || "template_2ov9l9i";
 
-      // Get data in EmailJS format
       const senderName =
         formData.get("from_name") || formData.get("name") || "Anonymous";
       const senderEmail =
@@ -129,7 +124,6 @@ function setupFormSubmissionHandling(form, statusElement) {
         to_name: "Christophe",
       };
 
-      // Check EmailJS service availability
       if (typeof emailjs === "undefined") {
         setFormState(
           form,
@@ -156,10 +150,8 @@ function setupFormSubmissionHandling(form, statusElement) {
         emailjs.init(emailCfg.user);
       }
 
-      // Send message
       await emailjs.send(serviceId, templateId, templateParams);
 
-      // Success
       setFormState(
         form,
         submitButton,
@@ -185,7 +177,6 @@ function setupFormSubmissionHandling(form, statusElement) {
           : `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
-      // Reset form after delay
       setTimeout(() => {
         form.classList.remove("sending");
         if (submitButton) submitButton.disabled = false;

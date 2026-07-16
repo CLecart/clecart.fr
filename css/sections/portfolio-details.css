@@ -136,29 +136,6 @@ body.dark-mode .portfolio-section:hover {
   opacity: 1;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUpSmooth {
-  0% {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  100% {
-    /* Enlèvement de l'effet de rebond */
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 body.dark-mode .tech-item {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
@@ -276,45 +253,10 @@ body.dark-mode .features-list li {
   animation-delay: 0.4s;
 }
 
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInFromLeftSmooth {
-  from {
-    opacity: 0;
-    transform: translateX(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 .features-list li,
 .outcomes-list li {
   margin-bottom: 15px;
   position: relative;
-}
-
-/* Animation de pulsation pour les checkmarks */
-@keyframes checkmark-pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 /* Bloc de code */
@@ -752,20 +694,6 @@ body.dark-mode .outcomes-list li:hover {
   }
 }
 
-@keyframes subtle-pulse-smooth {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.03);
-  }
-  60% {
-    transform: scale(1.03);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 
 /* CORRECTION: Harmonisation globale des transitions pour toutes les cartes */
 .tech-item,

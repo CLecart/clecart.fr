@@ -34,17 +34,6 @@
   transform: translate(0, 0);
 }
 
-@keyframes smoothAppear {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 #skills .section-header h2,
 #projects .section-header h2 {
   opacity: 1;
@@ -192,33 +181,6 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes skill-animation {
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes subtle-pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes fadeInUpSmooth {
   0% {
     opacity: 0;
@@ -265,5 +227,18 @@ html.scrolling-in-progress .header-content * {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+/* Shared by the header and footer gradient bands. */
+@keyframes gradientSlide {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

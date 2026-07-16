@@ -86,7 +86,7 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 10000;
   padding: 16px;
-  animation: fadeIn var(--duration-normal) var(--ease-smooth);
+  animation: fade-in var(--duration-normal) var(--ease-smooth);
 }
 
 .gdpr-refusal-notice-card {
@@ -96,7 +96,7 @@
   color: var(--text-color);
   border-radius: 14px;
   padding: 20px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow);
   text-align: left;
 }
 

@@ -104,7 +104,7 @@ body.dark-mode .portfolio-section:hover {
 .portfolio-section:hover h2 i {
   color: var(--card-icon-hover-color);
   transform: var(--card-icon-hover-transform);
-  animation: subtle-pulse-smooth var(--duration-slowest) infinite
+  animation: subtle-pulse var(--duration-slowest) infinite
     var(--ease-smooth);
 }
 
@@ -164,7 +164,7 @@ body.dark-mode .tech-item:hover {
 
 .tech-item:hover h3 {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse-smooth var(--duration-slowest) infinite
+  animation: subtle-pulse var(--duration-slowest) infinite
     var(--ease-smooth);
 }
 
@@ -227,7 +227,7 @@ body.dark-mode .features-list li {
 }
 
 .portfolio-section.appear .features-list li {
-  animation: slideInFromLeftSmooth var(--duration-slow) forwards
+  animation: slide-in-left var(--duration-slow) forwards
     var(--ease-smooth);
 }
 
@@ -360,7 +360,7 @@ body.dark-mode .approach-item.card-base:hover {
 
 .approach-item:hover h3 {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse-smooth 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 /* Section CTA */
@@ -374,8 +374,8 @@ body.dark-mode .approach-item.card-base:hover {
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity 0.8s var(--ease-smooth),
+    transform 0.8s var(--ease-smooth);
 }
 
 .cta-section.appear {
@@ -452,7 +452,7 @@ body.dark-mode .outcomes-list li:hover {
 .portfolio-section:hover h2 i,
 .outcomes-list li:hover::before {
   color: var(--card-icon-hover-color);
-  animation: subtle-pulse-smooth 2.5s infinite var(--ease-smooth);
+  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 /* Responsive */
@@ -587,7 +587,7 @@ body.dark-mode .outcomes-list li:hover {
   left: var(--spacing-md);
   top: var(--spacing-md);
   color: var(--primary);
-  font-size: var(--font-size-small);
+  font-size: var(--icon-size-small);
   transition: var(--card-icon-transition);
 }
 
@@ -603,7 +603,7 @@ body.dark-mode .outcomes-list li:hover {
 
 .outcomes-list li:hover::before {
   color: var(--accent);
-  animation: subtle-pulse-smooth 2.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 body.dark-mode .outcomes-list li {
@@ -683,7 +683,7 @@ body.dark-mode .outcomes-list li:hover {
   /* Texte descriptif */
   .features-list li strong ~ * {
     margin-left: 32px;
-    color: var(--text-color-light);
+    color: var(--text-light);
     line-height: 1.6;
     font-size: 0.9rem;
   }
@@ -710,7 +710,7 @@ body.dark-mode .outcomes-list li:hover {
 .portfolio-section.appear .tech-item,
 .portfolio-section.appear .approach-item {
   transform: translateY(0);
-  animation: fadeInUpSmooth 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: fade-in-up var(--duration-slower) forwards var(--ease-smooth);
 }
 
 /* Animation cascadée pour toutes les cartes - délais identiques */

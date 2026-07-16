@@ -99,7 +99,7 @@ section.section-active::before {
   );
   transform: scaleX(0);
   transform-origin: center;
-  animation: section-line 0.8s var(--ease-smooth) forwards;
+  animation: section-line var(--duration-slower) var(--ease-smooth) forwards;
 }
 
 @keyframes section-line {
@@ -109,10 +109,10 @@ section.section-active::before {
 }
 
 section.section-active .section-header {
-  animation: fade-up-in var(--duration-slower) var(--ease-standard) forwards;
+  animation: section-header-reveal var(--duration-slower) var(--ease-standard) forwards;
 }
 
-@keyframes fade-up-in {
+@keyframes section-header-reveal {
   from {
     opacity: 0.8;
     transform: translateY(10px);
@@ -170,7 +170,7 @@ html.scrolling-in-progress .header-content * {
   pointer-events: auto;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -181,7 +181,7 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-@keyframes fadeInUpSmooth {
+@keyframes fade-in-up {
   0% {
     opacity: 0;
     transform: translateY(25px);
@@ -192,7 +192,7 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-@keyframes slideInFromLeftSmooth {
+@keyframes slide-in-left {
   from {
     opacity: 0;
     transform: translateX(-25px);
@@ -203,7 +203,7 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-@keyframes subtle-pulse-smooth {
+@keyframes subtle-pulse {
   0% {
     transform: scale(1);
   }
@@ -231,7 +231,7 @@ html.scrolling-in-progress .header-content * {
 }
 
 /* Shared by the header and footer gradient bands. */
-@keyframes gradientSlide {
+@keyframes gradient-slide {
   0% {
     background-position: 0% 50%;
   }

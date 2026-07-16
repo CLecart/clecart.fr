@@ -26,7 +26,7 @@ header::after {
     var(--accent)
   );
   background-size: 200% 100%;
-  animation: gradientSlide var(--duration-gradient) var(--ease-standard)
+  animation: gradient-slide var(--duration-gradient) var(--ease-standard)
     infinite;
   z-index: 99;
 }
@@ -233,9 +233,9 @@ nav ul li a.active::after {
     opacity: 0;
     visibility: hidden;
     transition:
-      transform var(--animation-duration-short) ease,
-      opacity var(--animation-duration-short) ease,
-      visibility 0s linear var(--animation-duration-short);
+      transform var(--duration-normal) var(--ease-standard),
+      opacity var(--duration-normal) var(--ease-standard),
+      visibility 0s linear var(--duration-normal);
   }
 
   nav ul.active {

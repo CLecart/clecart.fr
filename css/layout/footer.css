@@ -22,7 +22,7 @@ footer::after {
     var(--accent)
   );
   background-size: 200% 100%;
-  animation: gradientSlide var(--duration-gradient) var(--ease-standard)
+  animation: gradient-slide var(--duration-gradient) var(--ease-standard)
     infinite;
   z-index: 10;
 }

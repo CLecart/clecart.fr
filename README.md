@@ -64,6 +64,7 @@ no server-side code at all.
 ### 🎨 **User Interface**
 
 - **Design tokens** in `css/base/variables.css`: colors, plus a `--duration-*` / `--ease-*` / `--transition*` scale that animations draw from
+- **One card hover, for every card.** Lift, neon glow, border and icon pulse live once in `css/components/cards.css` and read their values from four tokens; no section file redefines them. The pulse factor is _derived_ rather than chosen — `scale = 1 + var(--card-pulse-travel) ÷ size` — because `scale` grows an element in proportion to its size, so a single factor on a 14px bullet and a 40px logo produces two visibly different animations. Deriving it keeps every icon travelling the same 3.6px.
 - **Adaptive Theme:** the system preference is honored until the visitor toggles the theme; from then on their explicit choice is persisted in `localStorage` and wins. An inline bootstrap in `<head>` applies it before first paint to avoid a flash of wrong theme.
 - **Micro-interactions** and animations driven by the Intersection Observer API
 - **Responsive Design** with mobile-first breakpoints
@@ -74,9 +75,9 @@ no server-side code at all.
 - **Core Web Vitals** observed in the browser (`js/utils/webvitals.js`): LCP, FID, CLS, FCP and TTFB via `PerformanceObserver`, with optimization triggers past the usual thresholds
 - **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen. On mobile, `videoHandler.js` strips `autoplay` and caps `preload` at `metadata`, so a visitor on cellular data never pays for a video they did not ask to watch.
 - **Resource Hints:** `dns-prefetch`, `preconnect`, and a `preload` on `profile.webp` with `fetchpriority="high"`
-- **Service Worker:** precached shell, network-first for navigation, cache-first for images/CSS/JS, and an in-worker SVG placeholder when an image cannot be fetched offline
+- **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for images and video, plus an in-worker SVG placeholder when an image cannot be fetched offline. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
-- **[CIBLE] Desktop video lazy-loading:** `videoHandler.js` implements a `data-src` deferred-load path, but the current markup carries plain `<source src>`, so that path never runs and the demo videos are fetched eagerly on desktop. Wiring the markup to `data-src` is the outstanding work.
+- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~41 MB of demo footage on disk. Browsers already defer an autoplay video they cannot show; the only thing that broke that was one stray `preload="auto"`, on a card hidden behind "View More Projects", which pulled 2.5 MB nobody had asked for. `videoHandler.js` also carries a `data-src` deferred-load path that never runs, since the markup uses plain `<source src>` — dead, but harmless now that the browser's own deferral is not being overridden.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
 
 ### 🛡️ **Security and Compliance**

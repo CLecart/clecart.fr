@@ -120,10 +120,21 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      non maîtrisée.
    - **Savoir ce qui est un secret.** Les identifiants EmailJS sont **publics
      par conception** : le navigateur en a besoin, `clecart.fr/js/utils/config.js`
-     les sert en clair. Ils sont commités, et c'est correct. La protection réelle
-     est la **liste de domaines autorisés du tableau de bord EmailJS**, hors
-     dépôt. Ne jamais réintroduire un `config.json` « pour les cacher » : ça ne
-     cache rien et ça casse le déploiement.
+     les sert en clair. Ils sont commités, et c'est correct. Ne jamais
+     réintroduire un `config.json` « pour les cacher » : ça ne cache rien et ça
+     casse le déploiement.
+   - **Ce qui borne l'exposition, c'est le template**, pas la clé : il écrit à
+     une adresse fixe, donc les identifiants ne peuvent déclencher qu'un message
+     vers le propriétaire du site. Un abus coûte le quota mensuel, rien d'autre.
+     Le champ « To Email » du template ne doit **jamais** devenir une variable :
+     le compte deviendrait un relais de spam ouvert.
+   - **Décision assumée, ne pas la « corriger » sans mesure :** le filtre par
+     domaine d'EmailJS est payant et le compte est en plan gratuit — les
+     domaines qui y figurent sont **inertes**. reCAPTCHA v2, vérifié côté
+     EmailJS, rendrait la clé inutilisable et serait gratuit, mais livrerait à
+     Google une donnée sur chaque visiteur d'un site qui affirme ne rien
+     partager avec des tiers. À activer si le quota grimpe sans raison, pas
+     avant.
    - **Un vrai secret n'a pas sa place ici** et impliquerait d'abord un serveur.
    - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité : une
      signature SRI qui casse le formulaire de contact est un échec, pas une

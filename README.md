@@ -283,8 +283,17 @@ protect nothing while making the site undeployable — this project is served by
 GitHub Pages, straight from the repository, with no build step able to inject an
 untracked file.
 
-What actually protects the endpoint is EmailJS's own domain allowlist, which is
-configured in the EmailJS dashboard rather than in this repository.
+What bounds the exposure is the EmailJS template, not the key: it sends to a
+fixed address, so the identifiers can only ever trigger a message to the site
+owner. Abuse costs the monthly request quota and nothing else — no data is
+readable, no third party is reachable.
+
+EmailJS's domain allowlist would filter by origin, but it is a paid feature and
+this account is on the free plan: the domains listed there are inert. reCAPTCHA
+v2, which EmailJS verifies server-side, would neutralise the key outright and is
+free — deliberately not enabled, since it would hand Google a data point on
+every visitor of a site that claims to share nothing with third parties. That
+trade is not worth making at the current volume.
 
 A real secret would not belong here at all: with no backend, anything the page
 can read, a visitor can read.

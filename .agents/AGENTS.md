@@ -160,20 +160,25 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
 9. **Sobriété numérique (Green IT).** Positionnement revendiqué publiquement :
    il engage le code.
    - **Le poids transféré est le premier critère, et il se mesure.** Images en
-     WebP, `loading="lazy"` sur les `<img>` — **jamais sur une `<video>` :** la
-     spec ne définit `loading` que pour `img` et `iframe`, le navigateur
-     l'ignore ailleurs. Une vidéo se diffère par IntersectionObserver.
+     WebP, `loading="lazy"` sur les `<img>`.
+   - **Une `<video>` se diffère par `loading="lazy"` + `poster`, les deux
+     ensemble.** Mesuré (Chrome, 2026-07-17) : le poster seul ne suffit pas — le
+     navigateur charge la vidéo pour en tirer une première image ; `loading`
+     seul non plus. La paire donne 0 octet au chargement. `loading` sur `<video>`
+     n'est **pas** dans la spec HTML : Chrome l'honore, les autres moteurs
+     probablement pas (non vérifié ici). Le `poster` reste donc le garde-fou
+     portable.
+   - **Ne pas généraliser ce réglage sans mesurer.** Appliqué aux six vidéos, il
+     les a rendues muettes : elles se téléchargeaient (18 Mo) puis restaient
+     figées sur la première image, `currentTime` bloqué à 0. Autoplay et « ne
+     rien charger » sont contradictoires — une vidéo visible doit charger pour
+     jouer. Le réglage n'est légitime que sur une vidéo **masquée au départ**.
    - Ne jamais précacher dans le Service Worker une ressource que le site ne
      charge pas.
    - **CSS/JS en network-first**, cache en filet hors-ligne uniquement. Sans
      build ni hash d'URL, le cache-first figerait chaque visiteur sur la version
      découverte en premier : tout déploiement futur invisible, définitivement.
      `CACHE_NAME` se bumpe à chaque changement de liste ou de stratégie.
-   - **[CIBLE] Lazy-loading vidéo :** `videoHandler.js` implémente une voie
-     `data-src`, mais le markup porte des `<source src>` : la condition
-     `video.dataset.src && !video.src` est toujours fausse. Mesuré : 2,5 Mo
-     transférés au chargement (sur ~41 Mo de fichiers, le navigateur ne
-     demandant que des plages).
    - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-07-16) :
      23 requêtes en **2 vagues** — le baril, puis ses 22 imports en parallèle.
      Le coût est **un** aller-retour de découverte, pas 22. Concaténer

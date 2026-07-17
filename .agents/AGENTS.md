@@ -1,92 +1,210 @@
-# Manifeste de Développement : Règles de l'Art, Bonnes Pratiques et Conformité (Projet clecart.fr)
+# Manifeste de Développement — clecart.fr
 
-Ce document définit les standards absolus et non négociables pour le portfolio **clecart.fr**. Tout ajout, modification ou intervention de l'agent IA doit s'inscrire dans une démarche stricte de **qualité logicielle premium**, s'inspirant des meilleurs standards de l'industrie (Clean Code, SOLID, OWASP, Green IT) et adaptés à une **application web statique sans framework** (HTML/CSS/JavaScript ES modules, servie par GitHub Pages).
+Standards non négociables pour le portfolio **clecart.fr**. Toute intervention,
+humaine ou IA, s'y conforme.
 
-**Contexte technique déterminant :** aucun build, aucun bundler, aucun backend, aucune base de données. Le navigateur consomme les sources telles qu'elles sont commitées. Toute règle ci-dessous découle de cette contrainte : il n'y a pas d'outil pour rattraper une négligence à la compilation.
+**Contexte déterminant, dont tout le reste découle :** site statique, aucun
+framework, aucun bundler, **aucun build**, aucun backend, aucune base de
+données. GitHub Pages sert le dépôt tel qu'il est commité. Le navigateur
+consomme les sources telles quelles.
 
----
+Trois conséquences directes :
 
-## I. Les Règles de l'Art (Ingénierie Logicielle Premium)
+1. **Aucune compilation ne rattrapera une négligence.** La discipline vit dans
+   le code, ou nulle part.
+2. **Rien ne peut être caché au visiteur.** Tout ce que la page lit, il le lit.
+3. **Aucune étape de déploiement n'existe** pour générer, injecter ou
+   transformer quoi que ce soit. Une solution qui en suppose une est une
+   solution qui casse le site.
 
-1. **Architecture Limpide (Clean Architecture & SRP) :**
-   Le code doit être modulaire, découplé et respecter le principe de responsabilité unique. La séparation est portée par l'arborescence et doit le rester : `js/modules/` pour les fonctionnalités métier, `js/utils/` pour les utilitaires techniques, `css/` en architecture SMACSS (`base` / `components` / `layout` / `sections` / `theme` / `utils`). Un fichier placé dans la mauvaise couche est un défaut, même s'il fonctionne. Les solutions de contournement (hacks) sont proscrites : lorsqu'un hack est structurellement nécessaire (ex. `transition: background-color 5000s` pour neutraliser l'autofill Chrome), il doit porter un commentaire expliquant la contrainte.
-
-2. **Zéro Dette Technique & Clean Code :**
-   Le code doit être concis et s'expliquer de lui-même grâce au nommage explicite (Ubiquitous Language : `project-card`, `gdpr-banner`, `section-active`).
-   - *Bannissement des commentaires "perroquets"* qui décrivent l'évidence.
-   - Les seules documentations autorisées sont les standards : **JSDoc** pour JavaScript.
-   - **Zéro code mort.** Un fichier non importé, un keyframe non référencé, une classe CSS sans markup correspondant ou une constante non utilisée doivent être supprimés, pas conservés « au cas où ». L'historique Git est la sauvegarde.
-
-3. **Complexité Maîtrisée (Règle S3776) :**
-   Aucune fonction ne doit dépasser une **complexité cognitive de 15**. L'IA doit systématiquement extraire la logique complexe dans des fonctions utilitaires (Helper functions).
-
----
-
-## II. Les Bonnes Pratiques (Modernité et Fiabilité)
-
-4. **Syntaxe Moderne et Sécurisée (JavaScript ES2021+) :**
-   - Utilisation systématique de l'Optional Chaining (`?.`) et du Nullish Coalescing (`??`).
-   - `const` par défaut, `let` si réassignation, **`var` interdit**. `globalThis` plutôt que `window`.
-   - ES modules exclusivement (`import` / `export`). Aucun script inline hors du bootstrap de thème anti-FOUC en `<head>`, qui doit rester minimal.
-   - Isolation des effets de bord : un module exporte des fonctions `init*()` appelées par `js/main.js`, jamais d'exécution implicite à l'import.
-
-5. **Anticipation SonarQube & Zéro Récidive :**
-   - **Un seul mécanisme par problème.** Deux générations concurrentes du même dispositif (ex. anti-FOUC `js-loading` *et* `no-js`) sont une faute : la morte est supprimée immédiatement.
-   - **Redondance CSS :** un `@keyframes` est défini **exactement une fois**, dans `css/utils/animations.css` s'il est partagé par plusieurs couches. Une définition dupliquée dans un fichier importé plus tard écrase silencieusement l'autre et rend le débogage impossible.
-   - **Design tokens obligatoires :** durées et courbes viennent de `css/base/variables.css` (`--duration-*`, `--ease-*`, `--transition*`). Toute valeur codée en dur (`0.4s`, `cubic-bezier(...)`) est un défaut. Une durée hors de l'échelle définie doit d'abord devenir un token.
-   - **Nommage CSS homogène :** kebab-case pour les classes **et** les `@keyframes`, sans exception.
-   - **Zéro Warning Toléré :** `npm run lint` doit sortir **0 erreur et 0 warning**, et `npm run format:check` doit passer. Aucune exception, aucun `eslint-disable` de confort. La répartition est stricte : Prettier possède le formatage, ESLint la correctness, `eslint-plugin-jsdoc` la documentation. `console.log` est banni ; `console.warn`/`console.error` sont autorisés car un échec silencieux est pire qu'une trace.
-
-6. **Tests, CI/CD & Journal de Bord :**
-   - **Mise à jour du Journal de Bord :** chaque intervention (ajout, fix, refacto) doit être rigoureusement consignée dans le fichier `docs/JOURNAL_DE_BORD.md`. Jamais de fichier CHANGELOG.md.
-   - Validation stricte du linter (ESLint) et formatage (Prettier).
-   - **[CIBLE]** Aucune CI n'existe : le lint, l'audit Lighthouse et l'analyse SonarQube ne tournent à aucun moment automatiquement. Tant que c'est le cas, toute vérification est manuelle et doit être explicitement rapportée, jamais supposée.
+**Ne rien affirmer sans mesure.** Ce projet n'a pas de tests : la vérification
+est empirique ou n'existe pas. Puppeteer est installé, Chrome système est en
+`/usr/bin/google-chrome-stable` (passer `executablePath`, le cache Puppeteer est
+vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
 
 ---
 
-## III. La Conformité (Sécurité, UX & Éthique)
+## I. Règles de l'art
 
-7. **Sécurité DevSecOps & OWASP Top 10 :**
-   Sans backend ni base de données, la surface d'attaque est la **chaîne d'approvisionnement front** et l'injection DOM.
-   - **Intégrité des ressources distantes (SRI) :** tout `<script>` ou `<link rel="stylesheet">` tiers doit être **épinglé à une version exacte** puis signé par `integrity` + `crossorigin="anonymous"`. Épingler une plage flottante (`@3`) puis y ajouter un hash casse le site au premier patch amont : le pin précède toujours la signature.
-   - Toute injection de contenu se fait par `textContent`, jamais par `innerHTML` sur une donnée non maîtrisée (formulaire de contact, paramètres d'URL).
-   - Les secrets (clés EmailJS) transitent par `config.json`, ignoré par Git.
+1. **Séparation claire.** L'arborescence porte la structure et doit le rester :
+   `js/modules/` pour le métier, `js/utils/` pour la technique, `css/` en
+   SMACSS (`base` / `components` / `layout` / `sections` / `theme` / `utils`).
+   Un fichier dans la mauvaise couche est un défaut, même s'il fonctionne.
+   Les hacks sont proscrits ; quand l'un est structurellement nécessaire (ex.
+   `transition: background-color 5000s` contre l'autofill Chrome), il porte un
+   commentaire expliquant la contrainte.
+   **Exception documentée :** `service-worker.js` **reste à la racine**. Le
+   scope d'un worker est son dossier ; depuis `js/utils/` il ne contrôlerait que
+   `/js/utils/`. L'échappatoire habituelle, l'en-tête `Service-Worker-Allowed`,
+   est hors de portée sur GitHub Pages. Le « ranger » tuerait le PWA.
 
-8. **Souveraineté & Données Personnelles (RGPD) :**
-   Le site collecte des données via le formulaire de contact et l'analytics.
-   - **Consentement préalable réel :** aucun traçage avant acceptation explicite via la bannière (`js/utils/gdpr.js`). Le refus doit être aussi simple que l'acceptation et rester respecté.
-   - Analytics privacy-first : aucune donnée personnelle identifiable, aucun partage tiers.
-   - `privacy-policy.html` doit décrire l'état réel du traitement, jamais une intention.
+2. **Zéro dette, zéro code mort.** Le code est concis et s'explique par son
+   nommage.
+   - **Bannissement des commentaires perroquets** qui décrivent l'évidence. Un
+     commentaire ne survit que s'il énonce une contrainte que le code ne peut
+     pas montrer. Jamais de « ce que fait la ligne suivante », jamais de
+     changelog dans le code.
+   - Seule documentation autorisée : **JSDoc** pour JavaScript. Une JSDoc qui
+     paraphrase le nom de la fonction est un perroquet. Ne jamais laisser
+     `eslint --fix` insérer des blocs JSDoc vides : ils satisfont la règle en ne
+     documentant rien.
+   - **Zéro code mort.** Fichier non importé, keyframe non référencé, classe CSS
+     sans markup, constante inutilisée : supprimés, pas conservés « au cas où ».
+     L'historique Git est la sauvegarde.
+   - **Ne pas ressusciter une règle morte par réflexe.** Du code jamais exécuté
+     n'est pas forcément du code à réparer : vérifier d'abord que son intention
+     est encore la bonne.
 
-9. **Sobriété Numérique (Green IT) :**
-   Positionnement revendiqué publiquement par le portfolio : il engage le code.
-   - **Le poids transféré est le premier critère.** Images en WebP, vidéos de démo en lazy-load via IntersectionObserver, `loading="lazy"` systématique.
-   - Ne jamais précacher dans le Service Worker une ressource que le site ne charge pas : c'est de la bande passante gaspillée à chaque installation.
-   - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-07-16) : 23 requêtes CSS en **2 vagues** — `styles.css` seul, puis les 22 imports en parallèle. Le coût est donc **un** aller-retour de découverte supplémentaire, pas 22 : le CSS bloque le rendu, et le navigateur ne peut demander les imports qu'après avoir parsé le baril. Concaténer économiserait ce hop, mais sans build ni CI, un bundle commité dériverait de ses sources au premier oubli — le remède serait pire que le mal. **Le baril reste la bonne solution tant qu'aucune CI ne régénère le bundle.** Ne pas « optimiser » ce point sans mesure préalable.
-
-10. **Accessibilité Numérique (RGAA / WCAG) :**
-    - Navigation clavier complète, contrastes conformes en thème clair **et** sombre.
-    - Toute `<video>` porte un `<track kind="captions">` (SonarQube Web:S4084). Toute image porte un `alt` signifiant.
-    - `prefers-reduced-motion` est honoré globalement dans `css/utils/animations.css` (WCAG 2.3.3). Les durées y sont écrasées à ~0, **jamais à `none`** : les animations d'entrée démarrent à `opacity: 0` et comptent sur l'application de l'état final. Toute animation pilotée en JS (typewriter) doit tester la media query elle-même, le CSS ne l'atteint pas.
+3. **Complexité maîtrisée (SonarQube S3776).** Aucune fonction ne dépasse une
+   complexité cognitive de 15. Extraire dans des fonctions utilitaires.
 
 ---
 
-## IV. Cadre Opérationnel de l'IA
+## II. Bonnes pratiques
 
-11. **Intégrité de l'Espace de Travail :**
-    Interdiction de polluer la racine du projet avec des scripts jetables. Les modifications doivent être chirurgicales.
+4. **JavaScript ES2021+.**
+   - Optional chaining (`?.`) et nullish coalescing (`??`) systématiques.
+     Attention : `a?.b()` protège `a`, **pas** l'absence de `b`.
+   - `const` par défaut, `let` si réassignation, **`var` interdit**.
+     `globalThis` plutôt que `window`.
+   - ES modules exclusivement. Aucun script inline hors du bootstrap de thème
+     anti-FOUC en `<head>`, qui reste minimal.
+   - Un module exporte des `init*()` appelées par `js/main.js` ; jamais
+     d'exécution implicite à l'import.
+   - **Piège récurrent dans ce projet :** ne jamais enregistrer un listener
+     `load` dans une fonction que `main.js` appelle déjà depuis un handler
+     `load`. Le DOM n'invoque pas un listener ajouté pendant le dispatch de
+     l'événement qu'il écoute, et `load` n'arrive qu'une fois. Ce bug a tué le
+     pipeline vidéo et le service worker, silencieusement, pendant des mois.
 
-12. **Autonomie et Sous-Agents Multiples :**
-    L'agent principal a l'autorisation et l'obligation d'utiliser des **sous-agents** pour les tâches complexes (audit de sécurité, refactoring, analyse de performance) afin d'accélérer l'exécution.
+5. **Anticipation SonarQube & zéro récidive.**
+   - **Un seul mécanisme par problème.** Deux générations concurrentes du même
+     dispositif sont une faute : la morte est supprimée immédiatement.
+   - **Un `@keyframes` est défini exactement une fois**, dans
+     `css/utils/animations.css` s'il est partagé. Une définition dupliquée dans
+     un fichier importé plus tard écrase silencieusement l'autre.
+   - **Design tokens obligatoires :** durées et courbes viennent de
+     `css/base/variables.css` (`--duration-*`, `--ease-*`, `--transition*`).
+     Toute valeur en dur est un défaut ; une durée hors échelle devient d'abord
+     un token.
+   - **Nommage CSS homogène :** kebab-case pour les classes **et** les
+     `@keyframes`, sans exception.
+   - **Toute `var(--x)` doit être définie.** Une variable CSS absente rend la
+     déclaration invalide et le navigateur l'ignore **en silence**.
+   - **Zéro warning toléré :** `npm run lint` sort 0 erreur et 0 warning,
+     `npm run format:check` passe. Aucun `eslint-disable` de confort. Prettier
+     possède le formatage, ESLint la correctness, `eslint-plugin-jsdoc` la
+     documentation. `console.log` banni ; `console.warn`/`console.error`
+     autorisés — un échec silencieux est pire qu'une trace.
 
-13. **Attribution & Discrétion (Historique Git) :**
-    Les commits sont rédigés **au seul nom du développeur** (`CLecart`). Interdiction formelle de mentionner l'IA (Claude/Gemini/Anthropic), y compris via un trailer `Co-Authored-By`.
+6. **Traçabilité.**
+   - **Le `git log` est le journal de bord.** Ni `JOURNAL_DE_BORD.md`, ni
+     `CHANGELOG.md` : ils dupliqueraient l'historique puis dériveraient de lui.
+     En contrepartie, le message de commit porte le raisonnement : ce qui a été
+     mesuré, ce qui a été écarté, pourquoi.
+   - **[CIBLE] Aucune CI.** Lint, Lighthouse et SonarQube ne tournent
+     automatiquement à aucun moment. Toute vérification est manuelle et doit
+     être explicitement rapportée, jamais supposée.
 
-14. **Socle de Sécurité Non-Régressif :**
-    - Aucun secret n'est commité (`.env` et `config.json` systématiquement dans le `.gitignore`).
-    - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité au passage : une signature SRI qui casse le formulaire de contact est un échec, pas une conformité.
+---
 
-15. **Honnêteté Documentaire :**
-    La documentation distingue le fait de la cible (`[CIBLE]`).
-    - L'arborescence documentée dans `README.md` et `about-portfolio.html` doit correspondre au disque, fichier pour fichier. Documenter un fichier inexistant est un mensonge technique.
-    - Ne jamais annoncer une vérification qui n'a pas été exécutée. Un test non lancé se dit « non lancé ».
+## III. Conformité
+
+7. **Sécurité — chaîne d'approvisionnement et DOM.** Sans backend, la surface
+   d'attaque se résume à ces deux points.
+   - **SRI :** tout `<script>` ou `<link rel="stylesheet">` tiers est **épinglé
+     à une version exacte** puis signé (`integrity` + `crossorigin="anonymous"`).
+     Le pin précède toujours la signature : signer une plage flottante (`@3`)
+     casse le site au premier patch amont.
+   - Injection de contenu par `textContent`, jamais `innerHTML` sur une donnée
+     non maîtrisée.
+   - **Savoir ce qui est un secret.** Les identifiants EmailJS sont **publics
+     par conception** : le navigateur en a besoin, `clecart.fr/js/utils/config.js`
+     les sert en clair. Ils sont commités, et c'est correct. La protection réelle
+     est la **liste de domaines autorisés du tableau de bord EmailJS**, hors
+     dépôt. Ne jamais réintroduire un `config.json` « pour les cacher » : ça ne
+     cache rien et ça casse le déploiement.
+   - **Un vrai secret n'a pas sa place ici** et impliquerait d'abord un serveur.
+   - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité : une
+     signature SRI qui casse le formulaire de contact est un échec, pas une
+     conformité.
+   - **Périmètre des en-têtes :** la CSP et les en-têtes de sécurité
+     (`nginx-security-headers.conf`) ne valent que pour le déploiement Docker.
+     **GitHub Pages ne sert aucun en-tête personnalisé** — ils ne protègent pas
+     `clecart.fr`. Toute mention doit le préciser. Piège nginx : `add_header`
+     n'est hérité que si le niveau courant n'en déclare aucun ; chaque `location`
+     doit inclure le fichier explicitement.
+
+8. **RGPD.** Le site traite des données via le formulaire de contact et
+   l'analytics.
+   - **Consentement préalable réel :** aucun traçage avant acceptation explicite
+     (`js/utils/gdpr.js`).
+   - **Le retrait est aussi simple que le don** : tout contrôle
+     `[data-gdpr-reopen]` réaffiche la bannière et efface la décision. C'est une
+     obligation, pas un confort.
+   - `privacy-policy.html` décrit **l'état réel** du traitement, jamais une
+     intention. Y compris les tiers qui reçoivent l'IP du visiteur du seul fait
+     de servir une ressource.
+
+9. **Sobriété numérique (Green IT).** Positionnement revendiqué publiquement :
+   il engage le code.
+   - **Le poids transféré est le premier critère, et il se mesure.** Images en
+     WebP, `loading="lazy"` sur les `<img>` — **jamais sur une `<video>` :** la
+     spec ne définit `loading` que pour `img` et `iframe`, le navigateur
+     l'ignore ailleurs. Une vidéo se diffère par IntersectionObserver.
+   - Ne jamais précacher dans le Service Worker une ressource que le site ne
+     charge pas.
+   - **CSS/JS en network-first**, cache en filet hors-ligne uniquement. Sans
+     build ni hash d'URL, le cache-first figerait chaque visiteur sur la version
+     découverte en premier : tout déploiement futur invisible, définitivement.
+     `CACHE_NAME` se bumpe à chaque changement de liste ou de stratégie.
+   - **[CIBLE] Lazy-loading vidéo :** `videoHandler.js` implémente une voie
+     `data-src`, mais le markup porte des `<source src>` : la condition
+     `video.dataset.src && !video.src` est toujours fausse. Mesuré : 2,5 Mo
+     transférés au chargement (sur ~41 Mo de fichiers, le navigateur ne
+     demandant que des plages).
+   - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-07-16) :
+     23 requêtes en **2 vagues** — le baril, puis ses 22 imports en parallèle.
+     Le coût est **un** aller-retour de découverte, pas 22. Concaténer
+     l'économiserait, mais sans CI un bundle commité dériverait de ses sources au
+     premier oubli. **Le baril reste la bonne solution tant qu'aucune CI ne le
+     régénère.** Ne pas « optimiser » sans mesure préalable.
+
+10. **Accessibilité (RGAA / WCAG).**
+    - Navigation clavier complète, contrastes conformes en thème clair **et**
+      sombre.
+    - Toute `<video>` porte un `<track kind="captions">` (SonarQube Web:S4084).
+      Toute image porte un `alt` signifiant.
+    - `prefers-reduced-motion` est honoré globalement dans
+      `css/utils/animations.css` (WCAG 2.3.3). Les durées y sont écrasées à ~0,
+      **jamais à `none`** : les animations d'entrée démarrent à `opacity: 0` et
+      comptent sur l'application de l'état final. Toute animation pilotée en JS
+      (typewriter) doit tester la media query elle-même.
+    - Un élément `position: fixed` transparent **n'est pas traversable** : sans
+      `pointer-events: none`, sa boîte avale les clics de tout ce qu'elle
+      recouvre.
+
+---
+
+## IV. Cadre de travail
+
+11. **Intégrité de l'espace de travail.** Interdiction de polluer la racine avec
+    des scripts jetables. Modifications chirurgicales. Vérifier `git status`
+    avant chaque commit ; jamais de `git add -A` à l'aveugle.
+
+12. **Sous-agents.** Autorisation et obligation d'utiliser des sous-agents pour
+    les tâches lourdes (audit, refactoring, analyse). Leurs conclusions se
+    vérifient : ils affirment parfois sans mesurer.
+
+13. **Attribution.** Les commits sont rédigés **au seul nom du développeur**
+    (`CLecart`). Interdiction formelle de mentionner l'IA (Claude / Gemini /
+    Anthropic), y compris via un trailer `Co-Authored-By`.
+
+14. **Honnêteté documentaire.** La documentation distingue le fait de la cible
+    (`[CIBLE]`), et le `[CIBLE]` se retire dès que le fait est acquis.
+    - L'arborescence documentée dans `README.md` et `about-portfolio.html`
+      correspond au disque, fichier pour fichier.
+    - **Ne jamais annoncer une vérification non exécutée.** Un test non lancé se
+      dit « non lancé ».
+    - Ce dépôt est public et lu par des recruteurs qui iront voir le code :
+      chaque promesse non tenue discrédite tout le reste.

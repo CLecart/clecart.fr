@@ -102,23 +102,12 @@ body:not(.homepage) .description {
   transform: translateY(-5px);
 }
 
-body.dark-mode #projects .project-card {
-  background-color: var(--card-dark);
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-dark);
-}
-
 body.dark-mode #projects .project-content p {
   color: var(--text-gray-dark);
 }
 
 body.dark-mode #projects .project-content h3 {
   color: var(--text-dark);
-}
-
-body.dark-mode #projects .project-card:hover {
-  box-shadow: var(--btn-shadow-hover);
-  border-color: var(--primary);
 }
 
 body.dark-mode .description {
@@ -134,16 +123,6 @@ body.dark-mode .description h3 {
 
 body.dark-mode .project-navigation {
   border-bottom: 1px solid var(--form-border-dark);
-}
-
-.card-base.description {
-  transition: var(--card-transition);
-}
-
-.card-base.description:hover {
-  transform: var(--card-hover-transform);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
 }
 
 .project-card--hidden {
@@ -162,48 +141,18 @@ body.dark-mode .project-navigation {
   margin-top: 20px;
 }
 
-body.dark-mode .card-base.description:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
+/* Composes the shared card transition instead of replacing it: `transition` is
+   a shorthand, and .project's opacity-only transition sits later in the cascade
+   than cards.css, so without this the card would snap on hover. */
 .project.description.card-base {
   scroll-margin-top: 120px;
   margin-top: 30px;
   position: relative;
   z-index: 1;
   transition:
-    transform 0.3s var(--ease-smooth),
-    box-shadow 0.3s var(--ease-smooth),
-    border-color 0.3s var(--ease-smooth);
+    var(--card-transition),
+    opacity var(--duration-normal) var(--ease-smooth);
   will-change: transform;
-}
-
-.project.description.card-base:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
-  z-index: 1;
-}
-
-body.dark-mode .project.description.card-base:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
-body #project1.project.description.card-base:hover,
-body #project2.project.description.card-base:hover,
-body #project3.project.description.card-base:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
-  z-index: 10;
-}
-
-body .project.active.description.card-base:hover,
-html body .project.active#project1.description.card-base:hover,
-html body .project.active#project2.description.card-base:hover,
-html body .project.active#project3.description.card-base:hover {
-  transform: translateY(-10px);
-  z-index: 10;
 }
 
 @media (max-width: 768px) {

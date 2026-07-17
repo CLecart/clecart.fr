@@ -21,6 +21,10 @@
   max-width: 800px;
 }
 
+/* The entrance itself belongs to the shared .fade-in mechanism (animations.css),
+   which the markup already carries. Only the opacity leg is restated here:
+   `transition` is a shorthand, so cards.css's --card-transition would otherwise
+   replace .fade-in's and the section would pop in instead of fading. */
 .portfolio-section {
   margin-bottom: 40px;
   padding: 30px;
@@ -28,13 +32,9 @@
   background-color: var(--card-bg);
   box-shadow: var(--card-box-shadow);
   border: var(--card-border);
-  opacity: 0;
-  transform: translateY(30px);
   transition:
-    opacity var(--duration-slower) var(--ease-smooth),
-    transform var(--duration-slower) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth);
+    var(--card-transition),
+    opacity var(--duration-slow) var(--ease-smooth);
 }
 
 .portfolio-section.card-base {
@@ -42,44 +42,20 @@
   padding: 30px 35px;
   background: var(--white);
   border-radius: var(--card-radius);
-  box-shadow: var(--card-box-shadow);
   border: 1px solid var(--border-light);
-  transition: var(--card-transition);
 }
 
 .portfolio-section.card-base:hover {
-  box-shadow: var(--neon-shadow);
   border: 1px solid var(--primary);
 }
 
 body.dark-mode .portfolio-section.card-base {
   background: var(--card-dark);
-  box-shadow: var(--card-box-shadow-dark);
   border: 1px solid var(--border-dark);
 }
 
 body.dark-mode .portfolio-section.card-base:hover {
-  box-shadow: var(--neon-shadow-dark);
   border: 1px solid var(--primary);
-}
-
-.portfolio-section.appear {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.portfolio-section:hover {
-  transform: var(--card-hover-transform);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
-  transition:
-    transform var(--duration-slow) var(--ease-smooth),
-    box-shadow var(--duration-slow) var(--ease-smooth),
-    border-color var(--duration-slow) var(--ease-smooth);
-}
-
-body.dark-mode .portfolio-section:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 .portfolio-section h2 {
@@ -97,12 +73,6 @@ body.dark-mode .portfolio-section:hover {
   transition: var(--card-icon-transition);
 }
 
-.portfolio-section:hover h2 i {
-  color: var(--card-icon-hover-color);
-  transform: var(--card-icon-hover-transform);
-  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
-}
-
 .tech-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -117,11 +87,6 @@ body.dark-mode .portfolio-section:hover {
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  transition:
-    transform var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth),
-    background-color var(--duration-normal) var(--ease-smooth);
 }
 
 .portfolio-section.appear .tech-item {
@@ -133,30 +98,11 @@ body.dark-mode .tech-item {
   box-shadow: var(--shadow-dark);
 }
 
-.tech-item:hover {
-  transform: var(--card-hover-transform);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-  transition:
-    transform var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth);
-}
-
-body.dark-mode .tech-item:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
 .tech-item h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: var(--primary);
   transition: var(--card-icon-transition);
-}
-
-.tech-item:hover h3 {
-  color: var(--card-icon-hover-color);
-  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 .features-list,
@@ -292,35 +238,25 @@ body.dark-mode .features-list li {
   border-radius: 10px;
   border: 1px solid transparent;
   box-shadow: var(--shadow);
-  transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth),
-    background-color 0.4s var(--ease-smooth);
 }
 
 .approach-item.card-base {
   padding: 20px 18px;
   background: var(--white);
   border-radius: var(--card-radius);
-  box-shadow: var(--card-box-shadow);
   border: 1px solid var(--border-light);
-  transition: var(--card-transition);
 }
 
 .approach-item.card-base:hover {
-  box-shadow: var(--card-box-shadow-hover);
   border: 1px solid var(--primary);
 }
 
 body.dark-mode .approach-item.card-base {
   background: var(--card-dark);
-  box-shadow: var(--card-box-shadow-dark);
   border: 1px solid var(--border-dark);
 }
 
 body.dark-mode .approach-item.card-base:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
   border: 1px solid var(--primary);
 }
 
@@ -328,26 +264,11 @@ body.dark-mode .approach-item.card-base:hover {
   opacity: 1;
 }
 
-.approach-item:hover {
-  transform: var(--card-hover-transform);
-  box-shadow: var(--card-box-shadow-hover);
-  border-color: var(--primary);
-  transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
-}
-
 .approach-item h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: var(--primary);
   transition: var(--card-icon-transition);
-}
-
-.approach-item:hover h3 {
-  color: var(--card-icon-hover-color);
-  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 .cta-section {
@@ -380,7 +301,6 @@ body.dark-mode .approach-item.card-base:hover {
 }
 
 .cta-section .btn:hover {
-  transform: var(--hover-y-offset);
   box-shadow: var(--btn-shadow-hover);
 }
 
@@ -398,44 +318,8 @@ body.dark-mode .portfolio-section {
   background-color: var(--card-dark);
 }
 
-body.dark-mode .approach-item:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
 body.dark-mode .code-block {
   background-color: var(--darker);
-}
-
-body.dark-mode .tech-item:hover,
-body.dark-mode .approach-item:hover,
-body.dark-mode .outcomes-list li:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
-.portfolio-section:hover,
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover {
-  transform: var(--card-hover-transform);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-  transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
-}
-
-.tech-item h3,
-.approach-item h3 {
-  transition: color 0.4s var(--ease-smooth);
-}
-
-.tech-item:hover h3,
-.approach-item:hover h3,
-.portfolio-section:hover h2 i,
-.outcomes-list li:hover::before {
-  color: var(--card-icon-hover-color);
-  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
 }
 
 @media (max-width: 768px) {
@@ -537,26 +421,25 @@ body.dark-mode .outcomes-list li:hover {
   margin-top: 25px;
 }
 
+/* Composes the shared card transition rather than replacing it: `transition`
+   is a shorthand, so declaring opacity alone here would drop the transform,
+   box-shadow and border-color transitions this card gets from cards.css. */
 .outcomes-list li {
   background-color: var(--primary-light);
   border-radius: 10px;
   padding: 18px 20px 18px 50px;
   position: relative;
   transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth),
-    opacity 0.7s var(--ease-smooth);
+    var(--card-transition),
+    opacity var(--duration-slow) var(--ease-smooth);
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
   margin-bottom: 0;
   opacity: 0;
-  transform: translateX(-20px);
 }
 
 .outcomes-list li.appear-outcome {
   opacity: 1;
-  transform: translateX(0);
 }
 
 .outcomes-list li::before {
@@ -571,28 +454,9 @@ body.dark-mode .outcomes-list li:hover {
   transition: var(--card-icon-transition);
 }
 
-.outcomes-list li:hover {
-  transform: var(--card-hover-transform);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-  transition:
-    transform 0.4s var(--ease-smooth),
-    box-shadow 0.4s var(--ease-smooth),
-    border-color 0.4s var(--ease-smooth);
-}
-
-.outcomes-list li:hover::before {
-  color: var(--accent);
-  animation: subtle-pulse var(--duration-slowest) infinite var(--ease-smooth);
-}
-
 body.dark-mode .outcomes-list li {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
-}
-
-body.dark-mode .outcomes-list li:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
 }
 
 @media (max-width: 768px) {
@@ -673,20 +537,14 @@ body.dark-mode .outcomes-list li:hover {
   }
 }
 
-.tech-item,
-.approach-item,
-.outcomes-list li {
-  transform: translateY(0);
-  transition:
-    transform 0.5s var(--ease-smooth),
-    box-shadow 0.5s var(--ease-smooth),
-    border-color 0.5s var(--ease-smooth);
-}
-
+/* `backwards`, never `forwards`: a filled-forwards animation keeps applying its
+   100% keyframe (transform: translateY(0)) from the animation origin, which
+   outranks every normal declaration — :hover could not lift these cards at any
+   specificity. Filling backwards covers the stagger delay instead, then hands
+   transform back to the cascade when the entrance ends. */
 .portfolio-section.appear .tech-item,
 .portfolio-section.appear .approach-item {
-  transform: translateY(0);
-  animation: fade-in-up var(--duration-slower) forwards var(--ease-smooth);
+  animation: fade-in-up var(--duration-slower) backwards var(--ease-smooth);
 }
 
 .portfolio-section.appear .tech-item:nth-child(1),
@@ -726,24 +584,4 @@ body.dark-mode .approach-item,
 body.dark-mode .outcomes-list li {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
-}
-
-body.dark-mode .portfolio-section:hover,
-body.dark-mode .tech-item:hover,
-body.dark-mode .approach-item:hover,
-body.dark-mode .outcomes-list li:hover {
-  box-shadow: var(--card-box-shadow-hover-dark);
-}
-
-.card-base:hover,
-.project-card:hover,
-.skill-card:hover,
-.language-card:hover,
-.tech-item:hover,
-.approach-item:hover,
-.outcomes-list li:hover {
-  transform: translateY(-10px);
-  border-color: var(--primary);
-  box-shadow: var(--card-box-shadow-hover);
-  z-index: 1;
 }

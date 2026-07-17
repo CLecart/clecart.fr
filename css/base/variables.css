@@ -4,15 +4,10 @@
   --primary-light: rgba(108, 99, 255, 0.1);
   --primary-light-15: rgba(108, 99, 255, 0.15);
   --primary-light-20: rgba(108, 99, 255, 0.2);
-  --primary-light-30: rgba(108, 99, 255, 0.3);
   --primary-opacity: rgba(108, 99, 255, 0.8);
   --btn-view-live-bg: #d6113c;
   --secondary: #4ecdc4;
-  --secondary-dark: #3db8b0;
-  --secondary-light: rgba(78, 205, 196, 0.1);
-  --secondary-opacity: rgba(78, 205, 196, 0.8);
   --accent: #ff6b6b;
-  --accent-dark: #e95f5f;
   --accent-light: rgba(255, 107, 107, 0.2);
   --accent-opacity: rgba(255, 107, 107, 0.3);
   --dark: #1a1a2e;
@@ -25,7 +20,6 @@
   --light-gray: #f0f0f0;
   --black: #000000;
   --github-icon-color: #15191f;
-  --github-btn-size: 44px;
   --gdpr-message-bg-dark: rgba(255, 255, 255, 0.08);
   --github-icon-size: 1.9rem;
   --text-color: #2d334a;
@@ -34,11 +28,8 @@
   --text-gray-dark: #d1d1d1;
   --white-opacity-10: rgba(255, 255, 255, 0.1);
   --white-opacity-20: rgba(255, 255, 255, 0.2);
-  --white-opacity-80: rgba(255, 255, 255, 0.8);
-  --black-opacity-10: rgba(0, 0, 0, 0.1);
   --black-opacity-30: rgba(0, 0, 0, 0.3);
   --black-opacity-80: rgba(0, 0, 0, 0.8);
-  --black-opacity-90: rgba(0, 0, 0, 0.9);
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
@@ -53,21 +44,17 @@
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
   --shadow-dark: 0 8px 25px var(--black-opacity-30);
-  --shadow-up: 0 -5px 20px rgba(0, 0, 0, 0.1);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   --card-box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
   --card-box-shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.3);
-  --card-box-shadow-hover:
-    0 15px 35px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(108, 99, 255, 0.2);
-  --card-box-shadow-hover-dark:
-    0 15px 35px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(108, 99, 255, 0.25);
   --btn-padding: 12px 28px;
   --btn-radius: 50px;
   --btn-font-weight: 500;
   --btn-transition:
     transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  --btn-hover-lift: translateY(-2px) scale(1.05);
   --btn-shadow: 0 4px 15px var(--primary-light);
   --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
   --btn-secondary-shadow: 0 4px 15px var(--accent-light);
@@ -86,7 +73,6 @@
   --card-bg: var(--white);
   --card-color: var(--text-color);
   --card-margin: 0;
-  --card-border-radius: 15px;
   --card-bg-dark: var(--card-dark);
   --card-color-dark: var(--text-dark);
   --card-border-dark: 1px solid var(--border-dark);
@@ -97,7 +83,6 @@
   --ease-standard: ease;
 
   /* Animation Duration Scale - Unified Timing System */
-  --duration-instant: 0.15s;
   --duration-fast: 0.2s;
   --duration-normal: 0.3s;
   --duration-slow: 0.5s;
@@ -107,25 +92,32 @@
 
   /* Standard Transitions */
   --transition: all var(--duration-normal) var(--ease-smooth);
-  --transition-slow: all var(--duration-slow) var(--ease-smooth);
-  --transition-slower: all var(--duration-slower) var(--ease-smooth);
-  --hover-scale: scale(1.05);
-  --hover-y-offset: translateY(-10px);
-  --hover-y-small: translateY(-5px);
   --hover-y-tiny: translateY(-2px);
-  --card-hover-transform: translateY(-4px) scale(1.03);
-  --card-hover-scale: scale(1.02);
-  --card-icon-hover-transform: scale(1.08);
+
+  /* Card hover — the single source of truth.
+     Every card on the site reads these four values and nothing else. Tune the
+     hover here, once, rather than per card: that divergence is exactly what
+     this block replaced. No scale on the lift — cards nest (a tech-item sits
+     inside a portfolio-section), and scaling a parent drags its children. */
+  --card-hover-lift: translateY(-6px);
+  --card-hover-shadow: var(--neon-shadow);
+  --card-hover-shadow-dark: var(--neon-shadow-dark);
   --card-icon-color: var(--primary);
   --card-icon-hover-color: var(--accent);
+
+  /* The icon's yoyo. An animation and a static transform fight over the same
+     property and the animation always wins, so the icon pulses OR it scales —
+     never both. Pulsing is the site's choice. */
+  --card-icon-hover-pulse: subtle-pulse var(--duration-slowest)
+    var(--ease-smooth) infinite;
   --card-transition:
     transform var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth);
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
   --card-icon-transition:
     transform var(--duration-normal) var(--ease-smooth),
     color var(--duration-normal) var(--ease-smooth);
   --header-height: 80px;
-  --header-height-scrolled: 60px;
   --header-height-mobile: 60px;
   --toggle-height: 36px;
   --toggle-width: 36px;
@@ -134,7 +126,6 @@
   --spacing-sm: 10px;
   --spacing-md: 15px;
   --spacing-lg: 25px;
-  --spacing-xl: 40px;
   --spacing-mobile: 10px;
   --icon-size-small: 0.9rem;
   --icon-size-medium: 1.5rem;
@@ -148,15 +139,9 @@
   --status-info-bg: rgba(3, 169, 244, 0.15);
   --status-info-color: #0288d1;
   --status-info-border: rgba(3, 169, 244, 0.3);
-  --breakpoint-xs: 380px;
-  --breakpoint-sm: 480px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
   --neon-shadow: 0 0 24px 4px var(--primary);
   --neon-shadow-dark: 0 0 32px 6px var(--primary);
   --input-focus-shadow-dark: 0 5px 15px rgba(108, 99, 255, 0.2);
-  --input-focus-bg-dark: rgba(60, 60, 80, 0.3);
 }
 
 /* Dark mode variables override */

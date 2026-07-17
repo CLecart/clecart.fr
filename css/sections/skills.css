@@ -20,8 +20,11 @@
   display: none;
 }
 
+/* The only language logo drawn as a font icon rather than an <img>. Sized to
+   match the 40px its nine siblings render at, so the row reads as one set and
+   the shared pulse lands on the same travel. */
 .rust-icon {
-  font-size: 48px;
+  font-size: 40px;
   color: #ce422b;
 }
 

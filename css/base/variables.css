@@ -105,16 +105,30 @@
   --card-icon-color: var(--primary);
   --card-icon-hover-color: var(--accent);
 
-  /* The yoyo. One animation, one tempo; only its reach varies, because `scale`
-     moves an element in proportion to its size. Keeping one number would not
-     keep one effect: at 1.2 a 15px checkmark travels 3px and a 300px heading
-     travels 61px. These two values are tuned so the *motion* matches — which is
-     what the eye reads. An animation and a static transform fight over the same
-     property and the animation always wins, so an element pulses or it scales,
-     never both. */
+  /* The yoyo. One animation, one tempo, and one distance.
+     `scale` grows an element in proportion to its size, so a single factor
+     cannot produce a single effect: at 1.2 an 18px checkmark travels 3.6px and
+     a 40px icon travels 8px — twice as far, which reads as a different
+     animation. So the factor is derived rather than chosen:
+
+         scale = 1 + travel ÷ size
+
+     Set the travel once and every icon lands on the same displacement,
+     whatever its size. Divisors are the --icon-size-* tokens in px, spelled as
+     numbers because calc() divides by numbers, not by lengths — keep them in
+     step if those tokens ever change.
+
+     An animation and a static transform fight over the same property and the
+     animation always wins, so an element pulses or it scales, never both. */
   --duration-pulse: 1.5s;
   --card-hover-pulse: card-pulse var(--duration-pulse) ease-in-out infinite;
-  --card-icon-pulse-scale: 1.2;
+  --card-pulse-travel: 3.6;
+  --card-pulse-scale-xs: calc(1 + var(--card-pulse-travel) / 14.4); /* 0.9rem */
+  --card-pulse-scale-sm: calc(1 + var(--card-pulse-travel) / 17.6); /* 1.1rem */
+  --card-pulse-scale-md: calc(1 + var(--card-pulse-travel) / 24); /* 1.5rem */
+  --card-pulse-scale-lg: calc(1 + var(--card-pulse-travel) / 40); /* 2.5rem */
+  /* Headings are wide and short: matching their travel to an icon's would make
+     the factor invisible. Chosen by eye, not derived. */
   --card-title-pulse-scale: 1.05;
   --card-transition:
     transform var(--duration-normal) var(--ease-smooth),

@@ -232,15 +232,32 @@ body.dark-mode .portfolio-section:hover {
    heading are read, not pointed at, and making body text twitch is not
    harmonisation.
 
-   The split below is by size, not by kind: icons are small enough to carry the
-   full reach, headings are wide enough that the same number would throw the
-   word across the card. */
+   Each icon takes the scale matching its own size, so they all travel the same
+   distance. Grouped by size, not by role. */
 .card-base:hover .card-icon,
-.skill-card:hover .skill-icon,
+.skill-card:hover .skill-icon {
+  --card-pulse-scale: var(--card-pulse-scale-lg);
+  animation: var(--card-hover-pulse);
+  color: var(--card-icon-hover-color);
+}
+
+/* Language logos pulse but keep their brand colour. Nine are <img> and cannot
+   be recoloured at all; Rust is a font icon and could be, so it is excluded
+   here rather than allowed to drift from the row it belongs to. */
 .language-card:hover .language-icon img,
-.portfolio-section:hover h2 i,
+.language-card:hover .language-icon i {
+  --card-pulse-scale: var(--card-pulse-scale-lg);
+  animation: var(--card-hover-pulse);
+}
+
+.portfolio-section:hover h2 i {
+  --card-pulse-scale: var(--card-pulse-scale-md);
+  animation: var(--card-hover-pulse);
+  color: var(--card-icon-hover-color);
+}
+
 .outcomes-list li:hover::before {
-  --card-pulse-scale: var(--card-icon-pulse-scale);
+  --card-pulse-scale: var(--card-pulse-scale-xs);
   animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);
 }

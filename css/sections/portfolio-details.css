@@ -154,8 +154,8 @@ body.dark-mode .tech-item {
 }
 
 .features-list li:hover i {
-  color: var(--accent);
-  animation: checkmark-pulse 1.5s infinite ease-in-out;
+  color: var(--card-icon-hover-color);
+  animation: var(--card-icon-hover-pulse);
 }
 
 body.dark-mode .features-list li {

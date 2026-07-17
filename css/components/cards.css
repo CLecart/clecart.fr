@@ -226,16 +226,14 @@ body.dark-mode .portfolio-section:hover {
   border-color: var(--primary);
 }
 
-/* Each card pulses whatever leads it: its icon where it has one, its heading
-   where it does not. Before this, some icons pulsed, some scaled once and some
-   did nothing — and two card types had no reaction at all. Adding a card means
-   adding its lead element here, and nowhere else. */
+/* One pulse, for the elements that already had a hover reaction. Some scaled
+   once and some pulsed; they all pulse now. Deliberately not extended to cards
+   that reacted with nothing — a project's name and a policy's heading are
+   read, not pointed at, and making body text twitch is not harmonisation. */
 .card-base:hover .card-icon,
 .skill-card:hover .skill-icon,
 .language-card:hover .language-icon img,
 .portfolio-section:hover h2 i,
-.project-card:hover .project-content h3,
-.description:hover > h2,
 .tech-item:hover h3,
 .approach-item:hover h3,
 .outcomes-list li:hover::before {

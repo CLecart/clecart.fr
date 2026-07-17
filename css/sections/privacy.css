@@ -1,13 +1,13 @@
 /* Styles for privacy policy page */
 
+/* Layout only. Background, radius, shadow and colour come from .card-base,
+   which the markup already carries: repeating them here did not change a pixel,
+   it just outranked the hover with an ID and left this the only card on the
+   site that never lit up. */
 #privacy {
   max-width: 900px;
   margin: calc(var(--header-height) + 40px) auto 100px;
   padding: 40px 30px;
-  background: var(--white);
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-box-shadow);
-  color: var(--text-color);
 }
 
 #privacy h2 {
@@ -28,12 +28,6 @@
 
 #privacy ul li {
   margin-bottom: 10px;
-}
-
-body.dark-mode #privacy {
-  background: var(--card-dark);
-  color: var(--text-dark);
-  box-shadow: var(--card-box-shadow-dark);
 }
 
 body.dark-mode #privacy h2,

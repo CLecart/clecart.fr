@@ -131,9 +131,29 @@ function notifyConsentChange(status) {
 }
 
 /**
+ * Enable or disable every control of the contact form
+ * @function setContactFormEnabled
+ * @description A refusal has to reach the inputs themselves, not just a flag the
+ * submit handler consults: the visitor must see that sending is off before they
+ * type a message they cannot send.
+ * @param {boolean} enabled - Whether the form may be used
+ * @returns {void}
+ */
+function setContactFormEnabled(enabled) {
+  const contactForm = document.querySelector("#contact-form");
+  if (!contactForm) {
+    return;
+  }
+
+  contactForm.querySelectorAll("input, textarea, button").forEach((input) => {
+    input.disabled = !enabled;
+  });
+}
+
+/**
  * Show the consent banner and bind the two decisions it offers
  * @function initGDPRBanner
- * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. A stored refusal is re-applied on each load, disabling the contact inputs before any interaction rather than trusting the form to check. Each decision is written to both gdpr-consent and the legacy gdpr-choice key, keeping the two readers of that state in agreement during the migration.
+ * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. A stored refusal is re-applied on each load, disabling the contact inputs before any interaction rather than trusting the form to check. Each decision is written to both gdpr-consent and the legacy gdpr-choice key, keeping the two readers of that state in agreement during the migration. Any [data-gdpr-reopen] control on the page re-opens the banner, because withdrawing consent has to be as easy as giving it.
  * @returns {void}
  */
 export function initGDPRBanner() {
@@ -161,6 +181,7 @@ export function initGDPRBanner() {
     banner.classList.add("hidden");
     notifyConsentChange("accepted");
     globalThis.analytics?.enableTracking();
+    setContactFormEnabled(true);
   }
 
   /**
@@ -175,26 +196,39 @@ export function initGDPRBanner() {
     notifyConsentChange("declined");
     globalThis.analytics?.disableTracking();
     showRefusalNotice();
+    setContactFormEnabled(false);
+  }
 
-    const contactForm = document.querySelector("#contact-form");
-    if (contactForm) {
-      const inputs = contactForm.querySelectorAll("input, textarea, button");
-      inputs.forEach((input) => {
-        input.disabled = true;
-      });
-    }
+  /**
+   * Put the decision back in the visitor's hands
+   * @function handleReopen
+   * @description Erases the record instead of flipping it: re-showing the banner
+   * with a decision still stored would leave the page acting on the old answer
+   * until a new button is pressed. Analytics is stopped on the way out, so the
+   * gap between withdrawing and re-answering is not silently treated as consent.
+   * @returns {void}
+   */
+  function handleReopen() {
+    localStorage.removeItem("gdpr-consent");
+    localStorage.removeItem("gdpr-choice");
+    globalThis.analytics?.disableTracking();
+    setContactFormEnabled(true);
+    document.querySelector(".gdpr-refusal-notice")?.remove();
+    banner.classList.remove("hidden");
+    banner.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
   acceptBtn?.addEventListener("click", handleAccept);
   declineBtn?.addEventListener("click", handleDecline);
 
+  document.querySelectorAll("[data-gdpr-reopen]").forEach((control) => {
+    control.addEventListener("click", (event) => {
+      event.preventDefault();
+      handleReopen();
+    });
+  });
+
   if (consentStatus === "declined") {
-    const contactForm = document.querySelector("#contact-form");
-    if (contactForm) {
-      const inputs = contactForm.querySelectorAll("input, textarea, button");
-      inputs.forEach((input) => {
-        input.disabled = true;
-      });
-    }
+    setContactFormEnabled(false);
   }
 }

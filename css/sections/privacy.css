@@ -59,3 +59,7 @@ body.dark-mode #privacy .privacy-link {
 body.dark-mode #privacy .privacy-link:hover {
   color: var(--primary);
 }
+
+.gdpr-reopen-actions {
+  margin: 12px 0 0;
+}

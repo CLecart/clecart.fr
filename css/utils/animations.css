@@ -203,15 +203,18 @@ html.scrolling-in-progress .header-content * {
   }
 }
 
-@keyframes checkmark-pulse {
-  0% {
+/* One pulse for the whole site, with its reach read off the element.
+   `scale` moves an element in proportion to its size, so a single value cannot
+   look the same on a 15px checkmark and a 300px heading: at scale(1.2) the
+   checkmark travels 3px and the heading 61px. --card-pulse-scale is what each
+   caller sets to keep the *motion* constant instead of the number. */
+@keyframes card-pulse {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
+    transform: scale(var(--card-pulse-scale, 1.2));
   }
 }
 

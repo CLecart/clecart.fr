@@ -154,8 +154,9 @@ body.dark-mode .tech-item {
 }
 
 .features-list li:hover i {
+  --card-pulse-scale: var(--card-icon-pulse-scale);
   color: var(--card-icon-hover-color);
-  animation: var(--card-icon-hover-pulse);
+  animation: var(--card-hover-pulse);
 }
 
 body.dark-mode .features-list li {

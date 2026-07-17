@@ -227,17 +227,28 @@ body.dark-mode .portfolio-section:hover {
 }
 
 /* One pulse, for the elements that already had a hover reaction. Some scaled
-   once and some pulsed; they all pulse now. Deliberately not extended to cards
-   that reacted with nothing — a project's name and a policy's heading are
-   read, not pointed at, and making body text twitch is not harmonisation. */
+   once and some pulsed; they all run the same animation now. Deliberately not
+   extended to cards that reacted with nothing — a project's name and a policy's
+   heading are read, not pointed at, and making body text twitch is not
+   harmonisation.
+
+   The split below is by size, not by kind: icons are small enough to carry the
+   full reach, headings are wide enough that the same number would throw the
+   word across the card. */
 .card-base:hover .card-icon,
 .skill-card:hover .skill-icon,
 .language-card:hover .language-icon img,
 .portfolio-section:hover h2 i,
-.tech-item:hover h3,
-.approach-item:hover h3,
 .outcomes-list li:hover::before {
-  animation: var(--card-icon-hover-pulse);
+  --card-pulse-scale: var(--card-icon-pulse-scale);
+  animation: var(--card-hover-pulse);
+  color: var(--card-icon-hover-color);
+}
+
+.tech-item:hover h3,
+.approach-item:hover h3 {
+  --card-pulse-scale: var(--card-title-pulse-scale);
+  animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);
 }
 

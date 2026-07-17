@@ -105,13 +105,17 @@
   --card-icon-color: var(--primary);
   --card-icon-hover-color: var(--accent);
 
-  /* The icon's yoyo. An animation and a static transform fight over the same
-     property and the animation always wins, so the icon pulses OR it scales —
-     never both. The tempo and the reach are the animation's identity and live
-     here, once: the previous pulse reached 3% over 2.5s, which is invisible. */
+  /* The yoyo. One animation, one tempo; only its reach varies, because `scale`
+     moves an element in proportion to its size. Keeping one number would not
+     keep one effect: at 1.2 a 15px checkmark travels 3px and a 300px heading
+     travels 61px. These two values are tuned so the *motion* matches — which is
+     what the eye reads. An animation and a static transform fight over the same
+     property and the animation always wins, so an element pulses or it scales,
+     never both. */
   --duration-pulse: 1.5s;
-  --card-icon-hover-pulse: checkmark-pulse var(--duration-pulse) ease-in-out
-    infinite;
+  --card-hover-pulse: card-pulse var(--duration-pulse) ease-in-out infinite;
+  --card-icon-pulse-scale: 1.2;
+  --card-title-pulse-scale: 1.05;
   --card-transition:
     transform var(--duration-normal) var(--ease-smooth),
     box-shadow var(--duration-normal) var(--ease-smooth),

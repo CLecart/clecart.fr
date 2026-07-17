@@ -11,10 +11,10 @@
     "docker:stop": "docker stop clecart-portfolio-container && docker rm clecart-portfolio-container",
     "docker:logs": "docker logs clecart-portfolio-container",
     "lighthouse": "npx lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
-    "lint": "eslint js",
-    "lint:fix": "eslint js --fix",
-    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css eslint.config.js",
-    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css eslint.config.js",
+    "lint": "eslint js service-worker.js",
+    "lint:fix": "eslint js service-worker.js --fix",
+    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js eslint.config.js",
+    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js eslint.config.js",
     "deploy": "./deploy.sh"
   },
   "repository": {

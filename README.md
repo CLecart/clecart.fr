@@ -169,12 +169,12 @@ clecart.fr/
 │   │   │   ├── gdpr.js               # Consent banner and enforcement
 │   │   │   ├── modal.js              # Accessible modal system
 │   │   │   ├── performance.js        # Runtime optimizations
-│   │   │   ├── service-worker.js     # Service Worker (cache strategies)
 │   │   │   ├── sw-register.js        # Service Worker registration
 │   │   │   └── webvitals.js          # Core Web Vitals monitoring
 │   │   │
 │   │   └── main.js                   # Application entry point
 │   │
+│   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
 │   └── styles.css                    # Barrel importing the 22 CSS modules
 │
 ├── 📦 Assets

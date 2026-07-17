@@ -57,9 +57,32 @@ export default [
   },
 
   {
-    files: ["js/utils/service-worker.js"],
+    files: ["service-worker.js"],
     languageOptions: {
+      ecmaVersion: 2021,
+      sourceType: "module",
       globals: { ...globals.serviceworker },
+    },
+    plugins: { jsdoc },
+    rules: {
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      "no-unused-vars": "error",
+      "prefer-const": "error",
+      "no-var": "error",
+      curly: ["error", "all"],
+      eqeqeq: ["error", "always"],
+      "jsdoc/require-jsdoc": [
+        "error",
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      "jsdoc/check-tag-names": "error",
+      "jsdoc/valid-types": "error",
     },
   },
 ];

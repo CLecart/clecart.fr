@@ -7,31 +7,32 @@
 /**
  * Registers the service worker for PWA functionality
  * @function registerServiceWorker
- * @description Configures service worker registration with automatic update handling
+ * @description Registers synchronously: main.js already calls this from a load
+ * handler, and re-registering a load listener here would never fire — the DOM
+ * does not invoke listeners added while the event they listen for is
+ * dispatching, and load only happens once.
  * @returns {void}
  */
 export function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    globalThis.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/js/utils/service-worker.js")
-        .then((registration) => {
-          registration.addEventListener("updatefound", () => {
-            const newWorker = registration.installing;
-            newWorker.addEventListener("statechange", () => {
-              if (
-                newWorker.state === "installed" &&
-                navigator.serviceWorker.controller
-              ) {
-                showUpdateNotification();
-              }
-            });
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              showUpdateNotification();
+            }
           });
-        })
-        .catch(() => {
-          // Service Worker registration failed
         });
-    });
+      })
+      .catch((error) => {
+        console.warn("Service Worker registration failed:", error);
+      });
   }
 
   /**

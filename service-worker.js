@@ -1,10 +1,18 @@
 /**
  * Service Worker for caching and offline functionality
  * @file Service Worker implementation
- * @description Handles cache, fetch strategies and offline features
+ * @description Handles cache, fetch strategies and offline features.
+ *
+ * MUST stay at the repository root. A worker's scope is its own directory, so
+ * from js/utils/ it could only ever control /js/utils/ — never the pages. The
+ * usual escape, a Service-Worker-Allowed header, is not available: GitHub Pages
+ * serves this repository and cannot set custom headers.
  */
 
-const CACHE_NAME = "portfolio-cache-v2";
+/* Bump on any change to urlsToCache or to a caching strategy: activate() drops
+   every cache whose name differs, which is the only way a stale entry ever
+   leaves a visitor's browser. */
+const CACHE_NAME = "portfolio-cache-v3";
 
 const urlsToCache = [
   "/",
@@ -154,26 +162,31 @@ async function handleImageRequest(request) {
 }
 
 /**
- * Asset request handler (Cache-First strategy)
+ * Asset request handler (Network-First strategy)
+ * @description CSS and JS are the files that change on every deployment, and
+ * nothing here fingerprints their URLs — no build step, no content hash. Served
+ * cache-first they would pin a visitor to the version they first loaded, with
+ * no event able to invalidate it, so a deployment would simply never reach
+ * anyone who had already visited. The cache is therefore an offline fallback
+ * only, never a shortcut.
  * @param {Request} request - Asset request (CSS/JS)
- * @returns {Promise<Response>} Response from cache or network
+ * @returns {Promise<Response>} Response from network, or cache when offline
  */
 async function handleAssetRequest(request) {
-  const cachedResponse = await caches.match(request);
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(request, networkResponse.clone());
-      return networkResponse;
     }
     return networkResponse;
   } catch (error) {
-    console.error("Asset fetch failed:", error);
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      console.warn("Asset fetch failed, serving cached copy:", error);
+      return cachedResponse;
+    }
+    console.error("Asset fetch failed and nothing cached:", error);
     throw error;
   }
 }

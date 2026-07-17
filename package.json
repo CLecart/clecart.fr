@@ -32,7 +32,8 @@
     "pwa"
   ],
   "author": "Christophe Lecart <contact@clecart.fr>",
-  "license": "MIT",
+  "license": "UNLICENSED",
+  "private": true,
   "bugs": {
     "url": "https://github.com/CLecart/clecart.fr/issues"
   },

@@ -458,7 +458,14 @@ docker logs clecart-portfolio-container -f
 
 ## License and Credits
 
-**© 2025 Christophe Lecart** - All rights reserved
+**© 2026 Christophe Lecart — All rights reserved.**
+
+This repository is published for reading, not for reuse: no permission is
+granted to copy, modify or redistribute its code or its content. `package.json`
+declares `UNLICENSED` and `private` to say the same thing to tooling, and there
+is deliberately no LICENSE file — adding one would grant rights.
+
+The third-party dependencies listed below keep their own licenses.
 
 ### Technologies Used
 

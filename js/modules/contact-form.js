@@ -210,27 +210,47 @@ function setupFormSubmissionHandling(form, statusElement) {
 }
 
 /**
+ * Read the first of several field names that carries a text value
+ * @function readTextField
+ * @description FormData.get returns File | string | null, and a File stringifies
+ * to "[object Object]" — a truthy value that would sail through validation. Only
+ * strings are accepted, so a file input under one of these names yields an empty
+ * field rather than a fake one. Several names per field because the markup and
+ * the EmailJS template disagree on them.
+ * @param {FormData} formData - Submitted form values
+ * @param {...string} names - Field names to try, in order of preference
+ * @returns {string} Trimmed value of the first text field found, or an empty string
+ */
+function readTextField(formData, ...names) {
+  for (const name of names) {
+    const value = formData.get(name);
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+  return "";
+}
+
+/**
  * Check the submitted fields before spending an EmailJS round-trip
  * @function validateContactFormData
- * @description Returns the message to display rather than a boolean, so the empty string is the success case. Each field is read under two possible names because the markup and the EmailJS template disagree on them. The email pattern is deliberately loose: it rejects obvious typos without pretending to validate deliverability.
+ * @description Returns the message to display rather than a boolean, so the empty string is the success case. The email pattern is deliberately loose: it rejects obvious typos without pretending to validate deliverability.
  * @param {FormData} formData - Submitted form values
  * @returns {string} Message to display, or an empty string when the data is valid
  */
 function validateContactFormData(formData) {
-  const name = String(
-    formData.get("name") || formData.get("from_name") || ""
-  ).trim();
-  const email = String(
-    formData.get("email") || formData.get("user_email") || ""
-  ).trim();
-  const message = String(formData.get("message") || "").trim();
+  const name = readTextField(formData, "name", "from_name");
+  const email = readTextField(formData, "email", "user_email");
+  const message = readTextField(formData, "message");
 
   if (!name || !email || !message) {
     return "Please fill in your name, email address, and message before sending.";
   }
 
-  // Practical email check to prevent obvious invalid values.
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  /* The final class excludes the dot so only the last one can be the separator.
+     Letting both sides match dots makes the engine retry every dot in the
+     address, and accepted a trailing dot ("a@b.co.") as valid. */
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@.]{2,}$/;
   if (!emailRegex.test(email)) {
     return "Please enter a valid email address.";
   }

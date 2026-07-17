@@ -1,9 +1,14 @@
+/* Transparent is not the same as click-through: this wrapper spans the full
+   width at z-index 9999, so without pointer-events: none it swallows every
+   click landing beside or above the card — the whole bottom strip of the page
+   becomes unusable until the visitor answers. The card opts back in below. */
 .gdpr-banner {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: transparent;
+  pointer-events: none;
   z-index: 9999;
   display: block;
   text-align: center;
@@ -16,6 +21,7 @@
 }
 
 .gdpr-content {
+  pointer-events: auto;
   padding: 20px 24px;
   max-width: min(900px, calc(100% - 32px));
   margin: 0 auto;

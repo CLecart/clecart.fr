@@ -28,9 +28,11 @@ class PrivacyAnalytics {
     };
 
     this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
+    this.initialized = false;
 
     if (this.consentGiven) {
       this.init();
+      this.initialized = true;
     }
   }
 
@@ -220,6 +222,21 @@ class PrivacyAnalytics {
         timeOnPage: 0,
       };
     }
+  }
+
+  /**
+   * Enables tracking once the visitor accepts
+   * @function enableTracking
+   * @description Counterpart to disableTracking, called by the consent banner.
+   * Guarded by the initialized flag: the constructor already starts collection
+   * when consent was stored on a previous visit, and a second init() would
+   * bind every listener and interval twice.
+   * @returns {void}
+   * @example
+   * analytics.enableTracking();
+   */
+  enableTracking() {
+    this.updateConsent(true);
   }
 
   /**

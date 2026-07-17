@@ -245,7 +245,7 @@ function validateContactFormData(formData) {
 /**
  * Resolve the EmailJS credentials to use for this form
  * @function getEmailConfig
- * @description Runtime config loaded from the gitignored config.json outranks the data-emailjs-* attributes in the markup, so a deployment can override committed values without touching the HTML. Every field falls back to an empty string rather than undefined, letting callers gate on truthiness alone.
+ * @description globalThis.runtimeConfig outranks the data-emailjs-* attributes, so a deployment can override the markup without touching it. Today loadRuntimeConfig() returns hardcoded values and no page carries those attributes, so the dataset branch is a fallback for a case that does not exist yet — kept because EmailJS identifiers are public by design and may well move into the markup. Every field falls back to an empty string rather than undefined, letting callers gate on truthiness alone.
  * @param {HTMLElement} form - Form carrying the data-emailjs-* fallback attributes
  * @returns {{user: string, service: string, template: string}} Resolved EmailJS identifiers
  */

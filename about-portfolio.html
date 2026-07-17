@@ -150,7 +150,10 @@
               </div>
               <div class="tech-item">
                 <h3>Accessibility</h3>
-                <p>Compliance with WCAG standards, keyboard navigation</p>
+                <p>
+                  WCAG 2.1 AA as the working target: keyboard navigation,
+                  captions on every video, reduced-motion support
+                </p>
               </div>
               <div class="tech-item">
                 <h3>UX/UI</h3>
@@ -160,7 +163,7 @@
               </div>
               <div class="tech-item">
                 <h3>Tools</h3>
-                <p>EmailJS API, Git, CI/CD integration</p>
+                <p>EmailJS API, Git, ESLint, Prettier, Docker</p>
               </div>
               <div class="tech-item">
                 <h3>JavaScript Architecture</h3>
@@ -169,8 +172,9 @@
               <div class="tech-item">
                 <h3>Testing & Quality</h3>
                 <p>
-                  W3C validation, cross-browser compatibility testing, web
-                  performance optimization
+                  ESLint and Prettier as enforced gates, W3C validators for
+                  HTML/CSS. All checks are run manually: the project has no CI
+                  and no automated test suite.
                 </p>
               </div>
             </div>
@@ -227,18 +231,21 @@ clecart.fr/
 │   ├── icons/                   # PWA + favicons
 │   │   ├── android-chrome-*.png
 │   │   ├── apple-touch-icon.png
-│   │   ├── favicon*.png|ico
-│   │   └── rust-icon.svg
+│   │   └── favicon*.png|ico
 │   ├── images/                  # Site images
 │   │   ├── profile.webp
 │   │   └── Konekt.png
 │   ├── manifest/                # PWA Configuration
 │   │   ├── site.webmanifest
 │   │   └── browserconfig.xml
-│   └── videos/                  # Project demos
-│       ├── BombermanDX.mp4
-│       └── Groupie-Tracker.mp4
-├── css/                         # SMACSS architecture
+│   └── videos/                  # Project demos (.mp4 + .en.vtt captions)
+│       ├── AbrisCraft.*
+│       ├── BombermanDX.*
+│       ├── Groupie-Tracker.*
+│       ├── Konekt.*
+│       ├── PartiQ.*
+│       └── pochet-du-courval-preview.*
+├── css/                         # SMACSS-inspired architecture
 │   ├── base/                    # Foundations
 │   ├── components/              # Reusable components
 │   ├── layout/                  # Global structure
@@ -263,22 +270,24 @@ clecart.fr/
 │   │   ├── sw-register.js
 │   │   └── webvitals.js
 │   └── main.js                  # Entry point
-├── .vscode/                     # IDE configuration
-│   ├── extensions.json
-│   └── settings.json
+├── cv/
+│   └── index.html               # /cv download redirect
+├── .agents/
+│   └── AGENTS.md                # Engineering manifesto
 ├── eslint.config.js             # Code quality
 ├── .prettierrc.json             # Formatting
 ├── .gitignore                   # Git exclusions
 ├── docker-compose.yml           # Orchestration
 ├── Dockerfile                   # Containerization
 ├── package.json                 # npm scripts
-├── deploy.sh                    # Deployment
-├── nginx.conf                   # Server configuration
+├── deploy.sh                    # Deployment (Docker)
+├── nginx.conf                   # Container server configuration
+├── nginx-security-headers.conf  # Security headers (container only)
 ├── SECURITY.md                  # Security documentation
 ├── robots.txt                   # SEO directives
 ├── sitemap.xml                  # Sitemap
-├── CNAME                        # Custom domain
-├── styles.css                   # Main styles
+├── CNAME                        # Custom domain (GitHub Pages)
+├── styles.css                   # Barrel importing the 22 CSS modules
 ├── index.html                   # Main page
 ├── about-portfolio.html         # Technical documentation
 ├── descriptions-projects.html   # Project details
@@ -348,7 +357,10 @@ clecart.fr/
               <li>
                 Cross-browser compatibility management with specific fixes
               </li>
-              <li>DevOps and deployment with Docker and Nginx configuration</li>
+              <li>
+                DevOps with a Docker and Nginx configuration for self-hosting,
+                while the public site is served by GitHub Pages
+              </li>
             </ul>
           </div>
 

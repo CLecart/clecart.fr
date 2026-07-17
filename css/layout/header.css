@@ -283,14 +283,6 @@ nav ul li a.active::after {
     gap: 8px;
   }
 
-  body:not(.homepage) .logo {
-    font-size: 1.6rem;
-    max-width: 60%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   .right-content {
     display: flex;
     align-items: center;

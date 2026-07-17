@@ -220,6 +220,10 @@ body.dark-mode .approach-item:hover,
 body.dark-mode .outcomes-list li:hover,
 body.dark-mode .portfolio-section:hover {
   box-shadow: var(--card-hover-shadow-dark);
+  /* Repeated from the light rule, not inherited from it: the resting
+     `body.dark-mode .card-base` sets the `border` shorthand at a higher
+     specificity, so it resets the colour the hover asked for. */
+  border-color: var(--primary);
 }
 
 /* Each card pulses whatever leads it: its icon where it has one, its heading

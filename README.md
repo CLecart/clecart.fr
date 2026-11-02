@@ -33,7 +33,7 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 ### 🚀 **Core Technical Stack**
 
 - **Frontend:** Semantic HTML5, CSS3 (Flexbox, Grid, Custom Properties), JavaScript ES2021 modules
-- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 23 `@import`
+- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 22 `@import`
 - **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker with precaching and per-destination cache strategies
 - **Performance:** Client-side Core Web Vitals instrumentation, preloads for the profile image and the fonts, WebP profile image, offscreen video pausing
 - **Security:** No third-party resource — font, icons, logos and the EmailJS SDK are served by the site itself, at pinned versions — no backend, security headers on the container deployment
@@ -142,7 +142,6 @@ clecart.fr/
 │   │   │   ├── forms.css             # Form fields, status messages, trap field
 │   │   │   ├── gdpr.css              # GDPR consent banner
 │   │   │   ├── icons.css             # Sprite icon metrics (size, baseline)
-│   │   │   ├── modals.css            # Modal overlay styles
 │   │   │   └── notifications.css     # Service worker update notice
 │   │   ├── layout/
 │   │   │   ├── footer.css            # Responsive footer
@@ -185,7 +184,7 @@ clecart.fr/
 │   │   └── main.js                   # Application entry point
 │   │
 │   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
-│   └── styles.css                    # Barrel importing the 23 CSS modules
+│   └── styles.css                    # Barrel importing the 22 CSS modules
 │
 ├── 📦 Assets
 │   └── assets/
@@ -460,12 +459,12 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 
 Measured on the repository sources (2026-11-02):
 
-- **HTML + CSS + JS:** the four pages, `styles.css` and its 23 imports, `main.js` with the 11 modules it imports, the vendored EmailJS SDK and the service worker — 232 KB uncompressed, 65 KB gzipped file by file
+- **HTML + CSS + JS:** the four pages, `styles.css` and its 22 imports, `main.js` with the 11 modules it imports, the vendored EmailJS SDK and the service worker — 230 KB uncompressed, 64 KB gzipped file by file
 - **Fonts:** three Poppins woff2 files, 23.7 KB in all (woff2 is already compressed), preloaded
 - **Third parties on load:** none. First visit at 375 px scrolled to the bottom, measured in Chrome on 2026-11-02 against a local HTTP/2 server with gzip: 56 requests on the home page and 42 on each other page, every one same-origin — the same counts as before the font and the logos moved in, which had sent 13 of the home page's requests (36.7 KB) and 4 of every other page's (24.8 KB) to Google and jsDelivr.
 - **Profile image:** `profile.webp`, 31 KB (500×500 lossy WebP for a slot of 250 CSS px at most), preloaded with `fetchpriority="high"`
 - **Demo videos:** ~5 MB across six 480p files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
-- **CSS delivery:** 24 requests in 2 waves (the barrel, then its 23 imports, all sent within 3 ms of each other) — one extra discovery round-trip. Measured in Chrome on 2026-11-02 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
+- **CSS delivery:** 23 requests in 2 waves (the barrel, then its 22 imports, all sent within 3 ms of each other) — one extra discovery round-trip. Measured in Chrome on 2026-11-02 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
 
 **[CIBLE] Lighthouse scores and field Core Web Vitals:** not measured. No report is committed and
 no audit runs automatically. `js/utils/webvitals.js` observes LCP, FID, CLS, FCP and TTFB **in the

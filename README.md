@@ -77,7 +77,7 @@ no server-side code at all.
 - **Resource Hints:** `dns-prefetch`, `preconnect`, and a `preload` on `profile.webp` with `fetchpriority="high"`
 - **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for images and video, plus an in-worker SVG placeholder when an image cannot be fetched offline. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
-- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~41 MB of demo footage on disk (Chrome, 2026-11-02). Browsers already defer an autoplay video they cannot show; the only thing that broke that was one stray `preload="auto"`, on a card hidden behind "View More Projects", which pulled 2.5 MB nobody had asked for. `videoHandler.js` also carries a `data-src` deferred-load path that never runs, since the markup uses plain `<source src>` — dead, but harmless now that the browser's own deferral is not being overridden.
+- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
 
 ### 🛡️ **Security and Compliance**
@@ -411,8 +411,8 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 Measured on the repository sources (2026-07-17):
 
 - **HTML + CSS + JS:** 184 KB uncompressed, ~37 KB gzipped
-- **Profile image:** `profile.webp`, 352 KB, preloaded with `fetchpriority="high"`
-- **Demo videos:** ~41 MB across six files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
+- **Profile image:** `profile.webp`, 31 KB (500×500 lossy WebP for a slot of 250 CSS px at most), preloaded with `fetchpriority="high"`
+- **Demo videos:** ~5 MB across six 480p files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
 - **CSS delivery:** 23 requests in 2 waves (the barrel, then its 22 imports in parallel) — one extra discovery round-trip. Measured in Chrome on 2026-07-16 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight.
 
 **[CIBLE] Lighthouse scores and field Core Web Vitals:** not measured. No report is committed and

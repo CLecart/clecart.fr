@@ -158,6 +158,14 @@ curl -sI http://localhost:8080/ | grep -icE "content-security|x-frame|x-xss|x-co
 Il n'existe **ni suite de tests automatisés, ni CI**. Tout se lance à la main,
 et seulement quand quelqu'un le lance :
 
+Dernier `npm audit` (2026-11-02, outils à leur dernière version) : 0 haute,
+8 modérées, toutes issues d'un seul avis — `minimatch` < 11.0.1 (déni de
+service sur des motifs de fichiers piégés), embarqué par ESLint 10.14 lui-même.
+Aucune version corrigée d'ESLint n'existe encore ; le seul « correctif » que
+propose npm est de redescendre à ESLint 4. Exposition nulle ici : les motifs
+viennent de notre propre configuration, et rien de ces outils n'est servi au
+visiteur. À relancer à chaque mise à jour d'ESLint.
+
 ```bash
 npm audit                   # vulnérabilités des dépendances de développement
 npm run lint                # ESLint, 0 erreur et 0 warning attendus

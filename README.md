@@ -248,7 +248,7 @@ needed for the linting and audit tooling below.
 #### Prerequisites
 
 - **Python 3** — `npm start` is a thin wrapper around `python3 -m http.server`
-- **Node.js `^22.13.0 || >=24` and npm** — only for the tooling: ESLint, Prettier, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 63; ESLint 10 alone would accept `^20.19.0`
+- **Node.js `^22.22.2 || >=24.15.0` and npm** — only for the tooling: ESLint, Prettier, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 65; ESLint 10 alone would accept `^20.19.0`
 - **Docker and Docker Compose** — optional, for the containerized flow
 
 #### Available Scripts

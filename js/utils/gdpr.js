@@ -16,38 +16,35 @@ export function getConsentStatus() {
 }
 
 /**
- * Get the consent banner, building it when the page ships without one
- * @function ensureBannerElements
- * @description Injecting the banner rather than requiring it in every page's markup means consent cannot be lost by a page that simply forgot the element.
+ * Build the consent banner and append it to the page
+ * @function buildBanner
+ * @description Built here rather than written into each page, so every page shows the same wording and none can ship without it.
  * @returns {{banner: HTMLElement, acceptBtn: HTMLElement, declineBtn: HTMLElement}} The banner and its two action buttons
  */
-function ensureBannerElements() {
-  let banner = document.getElementById("gdpr-banner");
-
-  if (!banner) {
-    banner = document.createElement("div");
-    banner.id = "gdpr-banner";
-    banner.className = "gdpr-banner hidden";
-    banner.innerHTML = `
-      <div class="gdpr-content">
-        <p>
-          This site uses third-party services to process the contact form. By
-          continuing, you accept our
-          <a href="privacy-policy.html">privacy policy</a>.
-        </p>
-        <div class="gdpr-buttons">
-          <button id="gdpr-accept" class="btn">Accept</button>
-          <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
-        </div>
+function buildBanner() {
+  const banner = document.createElement("div");
+  banner.id = "gdpr-banner";
+  banner.className = "gdpr-banner hidden";
+  banner.innerHTML = `
+    <div class="gdpr-content">
+      <p>
+        Accepting lets the contact form send your message through EmailJS, and
+        turns on usage counts that never leave your browser. Until then, both
+        stay off. Details in the
+        <a href="privacy-policy.html">privacy policy</a>.
+      </p>
+      <div class="gdpr-buttons">
+        <button id="gdpr-accept" class="btn">Accept</button>
+        <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
       </div>
-    `;
-    document.body.appendChild(banner);
-  }
+    </div>
+  `;
+  document.body.appendChild(banner);
 
   return {
     banner,
-    acceptBtn: document.getElementById("gdpr-accept"),
-    declineBtn: document.getElementById("gdpr-decline"),
+    acceptBtn: banner.querySelector("#gdpr-accept"),
+    declineBtn: banner.querySelector("#gdpr-decline"),
   };
 }
 
@@ -148,7 +145,7 @@ function setContactFormEnabled(enabled) {
  * @returns {void}
  */
 export function initGDPRBanner() {
-  const { banner, acceptBtn, declineBtn } = ensureBannerElements();
+  const { banner, acceptBtn, declineBtn } = buildBanner();
 
   const consentStatus = getConsentStatus();
   if (!consentStatus) {

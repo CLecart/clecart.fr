@@ -1,13 +1,7 @@
 /**
- * Video handler module with intersection observer and lazy loading
+ * Demo video playback
  * @module VideoHandler
  */
-function addLoadingBackground(video) {
-  const parent = video.parentElement;
-  if (parent?.classList.contains("project-thumb") && !video.poster) {
-    parent.style.backgroundColor = "#14141e";
-  }
-}
 
 /**
  * Pause a video once it scrolls out of view, resume it on the way back
@@ -41,45 +35,7 @@ function observeVideoVisibility(video) {
 }
 
 /**
- * Hold back a video's network fetch until it approaches the viewport
- * @function observeLazyLoad
- * @description The 200px margin starts the download before the video is on screen, trading a little early bandwidth for playback that is ready on arrival. Promoted data-src attributes are deleted, so a second pass finds nothing to do, and visibility observation is attached only after loading — there is nothing worth pausing before a source exists.
- * @param {HTMLVideoElement} video - Video carrying data-src on itself or on its source children
- * @returns {void}
- */
-function observeLazyLoad(video) {
-  if ("IntersectionObserver" in globalThis) {
-    const lazyObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (video.dataset.src) {
-              video.src = video.dataset.src;
-              delete video.dataset.src;
-            }
-
-            if (video.querySelector("source[data-src]")) {
-              const sources = video.querySelectorAll("source[data-src]");
-              sources.forEach((source) => {
-                source.src = source.dataset.src;
-                delete source.dataset.src;
-              });
-              video.load();
-            }
-
-            lazyObserver.unobserve(video);
-            observeVideoVisibility(video);
-          }
-        });
-      },
-      { rootMargin: "200px" }
-    );
-    lazyObserver.observe(video);
-  }
-}
-
-/**
- * Setup touch interactions for mobile devices
+ * On mobile, keep videos paused until tapped, and let a tap toggle playback
  * @param {HTMLVideoElement} video - Video element to setup
  * @param {boolean} isMobile - Whether the device is mobile
  */
@@ -111,12 +67,11 @@ function setupTouchInteractions(video, isMobile) {
 
   video.addEventListener("dblclick", (e) => {
     e.preventDefault();
-    return false;
   });
 }
 
 /**
- * Prepare every video on the page for mobile constraints and lazy playback
+ * Prepare every video on the page for mobile constraints and offscreen pausing
  * @function initVideoHandler
  * @description Runs synchronously: main.js already calls this from a load
  * handler, and re-registering a load listener here would never fire — the DOM
@@ -137,7 +92,7 @@ export function initVideoHandler() {
   /**
    * Normalise each video's attributes and attach its observers
    * @function setupVideos
-   * @description playsinline stops iOS from hijacking playback into fullscreen. Legacy assets/images/*.mp4 source paths are rewritten to assets/videos/ at runtime, patching markup that was never migrated. On mobile, autoplay is stripped and preload capped at metadata, so a visitor on cellular data never pays for a video they did not ask to watch.
+   * @description playsinline stops iOS from hijacking playback into fullscreen. On mobile, autoplay is stripped and preload capped at metadata, so a visitor on cellular data never pays for a video they did not ask to watch.
    * @returns {void}
    */
   function setupVideos() {
@@ -145,33 +100,12 @@ export function initVideoHandler() {
       video.setAttribute("playsinline", "");
       video.setAttribute("disablePictureInPicture", "");
 
-      const sources = video.querySelectorAll("source");
-      sources.forEach((source) => {
-        const src = source.getAttribute("src");
-        if (src && src.includes("assets/images/") && src.endsWith(".mp4")) {
-          const correctedSrc = src.replace("assets/images/", "assets/videos/");
-          source.setAttribute("src", correctedSrc);
-        }
-      });
-
-      if (isMobile) {
-        if (video.hasAttribute("autoplay")) {
-          video.removeAttribute("autoplay");
-          video.setAttribute("preload", "metadata");
-        }
-
-        if (video.getAttribute("preload") === "auto") {
-          video.setAttribute("preload", "metadata");
-        }
-
-        addLoadingBackground(video);
+      if (isMobile && video.hasAttribute("autoplay")) {
+        video.removeAttribute("autoplay");
+        video.setAttribute("preload", "metadata");
       }
 
-      if (video.dataset.src && !video.src) {
-        observeLazyLoad(video);
-      } else {
-        observeVideoVisibility(video);
-      }
+      observeVideoVisibility(video);
 
       setupTouchInteractions(video, isMobile);
     });

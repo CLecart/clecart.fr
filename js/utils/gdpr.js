@@ -1,29 +1,24 @@
 /**
- * GDPR compliance module for privacy management
+ * Consent banner, and the one reader of the visitor's decision
  * @module GDPR
- * @description Handles user consent for analytics and form functionality
  */
 
 /**
  * Read back the consent decision recorded for this visitor
  * @function getConsentStatus
- * @description Falls back to the legacy gdpr-choice key so a decision taken before the rename is still honoured instead of re-prompting someone who already answered. Returns null rather than an empty string when nothing was recorded, letting the caller tell "never asked" apart from an explicit decision.
+ * @description The only place consent is read: every module that gates on it calls this, so the fallback to the legacy gdpr-choice key lives here alone. That fallback honours a decision taken before the rename instead of re-prompting someone who already answered. Returns null when nothing was recorded, letting the caller tell "never asked" apart from an explicit decision.
  * @returns {string|null} The recorded decision, or null when the visitor has not answered
  */
-function getConsentStatus() {
-  const consent = localStorage.getItem("gdpr-consent");
-  if (typeof consent === "string") {
-    return consent;
-  }
-
-  const legacyChoice = localStorage.getItem("gdpr-choice");
-  return typeof legacyChoice === "string" ? legacyChoice : null;
+export function getConsentStatus() {
+  return (
+    localStorage.getItem("gdpr-consent") ?? localStorage.getItem("gdpr-choice")
+  );
 }
 
 /**
  * Get the consent banner, building it when the page ships without one
  * @function ensureBannerElements
- * @description Injecting the banner rather than requiring it in every page's markup means consent cannot be lost by a page that simply forgot the element. Button lookups accept the legacy accept-btn and decline-btn ids alongside the current ones, keeping older pages wired.
+ * @description Injecting the banner rather than requiring it in every page's markup means consent cannot be lost by a page that simply forgot the element.
  * @returns {{banner: HTMLElement, acceptBtn: HTMLElement, declineBtn: HTMLElement}} The banner and its two action buttons
  */
 function ensureBannerElements() {
@@ -51,12 +46,8 @@ function ensureBannerElements() {
 
   return {
     banner,
-    acceptBtn:
-      document.getElementById("gdpr-accept") ||
-      document.getElementById("accept-btn"),
-    declineBtn:
-      document.getElementById("gdpr-decline") ||
-      document.getElementById("decline-btn"),
+    acceptBtn: document.getElementById("gdpr-accept"),
+    declineBtn: document.getElementById("gdpr-decline"),
   };
 }
 
@@ -153,27 +144,21 @@ function setContactFormEnabled(enabled) {
 /**
  * Show the consent banner and bind the two decisions it offers
  * @function initGDPRBanner
- * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. A stored refusal is re-applied on each load, disabling the contact inputs before any interaction rather than trusting the form to check. Each decision is written to both gdpr-consent and the legacy gdpr-choice key, keeping the two readers of that state in agreement during the migration. Any [data-gdpr-reopen] control on the page re-opens the banner, because withdrawing consent has to be as easy as giving it.
+ * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. A stored refusal is re-applied on each load, disabling the contact inputs before any interaction rather than trusting the form to check. Each decision is written under both gdpr-consent and the legacy gdpr-choice key, as privacy-policy.html states. Any [data-gdpr-reopen] control on the page re-opens the banner, because withdrawing consent has to be as easy as giving it.
  * @returns {void}
  */
 export function initGDPRBanner() {
   const { banner, acceptBtn, declineBtn } = ensureBannerElements();
 
-  if (!banner) {
-    return;
-  }
-
-  const storedConsentStatus = getConsentStatus();
-  const consentStatus =
-    typeof storedConsentStatus === "string" ? storedConsentStatus : "";
-  if (consentStatus === "") {
+  const consentStatus = getConsentStatus();
+  if (!consentStatus) {
     banner.classList.remove("hidden");
   }
 
   /**
-   * Handle consent acceptance
+   * Record acceptance, then let analytics and the contact form run
    * @function handleAccept
-   * @description Records acceptance and hides banner
+   * @returns {void}
    */
   function handleAccept() {
     localStorage.setItem("gdpr-consent", "accepted");
@@ -185,9 +170,9 @@ export function initGDPRBanner() {
   }
 
   /**
-   * Handle consent decline
+   * Record refusal, stop analytics, disable the form and say what that costs
    * @function handleDecline
-   * @description Records refusal, hides banner and disables form
+   * @returns {void}
    */
   function handleDecline() {
     localStorage.setItem("gdpr-consent", "declined");

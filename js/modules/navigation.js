@@ -22,7 +22,7 @@ export function scrollToSection(targetId) {
   }
 
   const targetPosition =
-    targetElement.getBoundingClientRect().top + globalThis.pageYOffset;
+    targetElement.getBoundingClientRect().top + globalThis.scrollY;
   const headerTraitOffset = 3;
   const additionalOffset = targetId === "#skills" ? 50 : 0;
   const scrollTarget =
@@ -86,7 +86,7 @@ export function initNavigation() {
     if (navMenu.classList.contains("active")) {
       navMenu.style.visibility = "visible";
       setMenuWidth();
-      const headerHeight = document.querySelector("header").offsetHeight;
+      const headerHeight = document.querySelector("header")?.offsetHeight ?? 0;
       navMenu.style.top = `${headerHeight + 5}px`;
     } else {
       setTimeout(() => {

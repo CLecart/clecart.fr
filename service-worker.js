@@ -1,7 +1,5 @@
 /**
- * Service Worker for caching and offline functionality
- * @file Service Worker implementation
- * @description Handles cache, fetch strategies and offline features.
+ * Service worker
  *
  * MUST stay at the repository root. A worker's scope is its own directory, so
  * from js/utils/ it could only ever control /js/utils/ — never the pages. The
@@ -58,11 +56,6 @@ globalThis.addEventListener("install", (event) => {
   );
 });
 
-/**
- * Service Worker activation event
- * @event activate
- * @description Cleans old caches and takes control of clients
- */
 globalThis.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
@@ -101,7 +94,7 @@ globalThis.addEventListener("fetch", (event) => {
 });
 
 /**
- * Navigation request handler (Network-First strategy)
+ * Serve a page from the network, else its cached copy, else the cached home page
  * @param {Request} request - Navigation request
  * @returns {Promise<Response>} Response from network or cache
  */
@@ -117,12 +110,12 @@ async function handleNavigationRequest(request) {
   } catch (error) {
     console.warn("Navigation request failed, serving cached fallback:", error);
     const cachedResponse = await caches.match(request);
-    return cachedResponse || caches.match("/index.html");
+    return cachedResponse ?? caches.match("/index.html");
   }
 }
 
 /**
- * Image request handler (Cache-First with fallback)
+ * Serve an image from the cache first, else the network, else a placeholder
  * @param {Request} request - Image request
  * @returns {Promise<Response>} Response from cache, network or fallback
  */
@@ -147,7 +140,7 @@ async function handleImageRequest(request) {
 }
 
 /**
- * Asset request handler (Network-First strategy)
+ * Serve CSS and JS from the network, falling back to the cache only offline
  * @description CSS and JS are the files that change on every deployment, and
  * nothing here fingerprints their URLs — no build step, no content hash. Served
  * cache-first they would pin a visitor to the version they first loaded, with

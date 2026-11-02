@@ -1,6 +1,16 @@
 /**
- * Contact form module with EmailJS integration
+ * Contact form, sent through EmailJS
  * @module ContactForm
+ */
+
+import { EMAILJS } from "../utils/config.js";
+import { getConsentStatus } from "../utils/gdpr.js";
+
+/**
+ * Wire the contact form, or replace it with a mailto notice after a refusal
+ * @function initContactForm
+ * @description EmailJS is initialised here, once. Its SDK is a deferred classic script placed before main.js, so by now it has either run or failed to load for good.
+ * @returns {void}
  */
 export function initContactForm() {
   const contactForm = document.getElementById("contact-form");
@@ -10,9 +20,7 @@ export function initContactForm() {
     return;
   }
 
-  const gdprChoice =
-    localStorage.getItem("gdpr-consent") || localStorage.getItem("gdpr-choice");
-  if (gdprChoice === "declined") {
+  if (getConsentStatus() === "declined") {
     renderContactAlternative(contactForm);
     return;
   }
@@ -29,11 +37,15 @@ export function initContactForm() {
     }
   });
 
+  if (typeof emailjs !== "undefined") {
+    emailjs.init(EMAILJS.user);
+  }
+
   setupFormSubmissionHandling(contactForm, formStatus);
 }
 
 /**
- * Display alternative when GDPR is declined
+ * Swap the form's fields for a mailto link, so a refusal is never a dead end
  * @param {HTMLElement} form - Form element
  */
 function renderContactAlternative(form) {
@@ -87,7 +99,7 @@ function clearStatusMessage(statusElement) {
 }
 
 /**
- * Configure form submission handling
+ * Gate each submission on consent and validation, then hand it to EmailJS
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
  */
@@ -95,11 +107,7 @@ function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const gdprChoice =
-      localStorage.getItem("gdpr-consent") ||
-      localStorage.getItem("gdpr-choice");
-
-    if (gdprChoice !== "accepted") {
+    if (getConsentStatus() !== "accepted") {
       showConsentRequiredNotice(statusElement);
       return;
     }
@@ -129,23 +137,6 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      const emailCfg = getEmailConfig(form);
-      const serviceId = emailCfg.service || "service_lokewrs";
-      const templateId = emailCfg.template || "template_2ov9l9i";
-
-      const senderName =
-        formData.get("from_name") || formData.get("name") || "Anonymous";
-      const senderEmail =
-        formData.get("email") || formData.get("user_email") || "";
-      const templateParams = {
-        from_name: senderName,
-        user_name: senderName,
-        email: senderEmail,
-        user_email: senderEmail,
-        message: formData.get("message"),
-        to_name: "Christophe",
-      };
-
       if (typeof emailjs === "undefined") {
         setFormState(
           form,
@@ -157,23 +148,8 @@ function setupFormSubmissionHandling(form, statusElement) {
         return;
       }
 
-      if (!emailCfg.user || !serviceId || !templateId) {
-        setFormState(
-          form,
-          submitButton,
-          statusElement,
-          "error",
-          'Contact form is temporarily unavailable. Please contact me at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
-        );
-        return;
-      }
-
-      if (emailCfg.user) {
-        emailjs.init(emailCfg.user);
-      }
-
       if (!isAutomatedSubmission(formData)) {
-        await emailjs.send(serviceId, templateId, templateParams);
+        await sendMessage(formData);
       }
 
       setFormState(
@@ -186,19 +162,12 @@ function setupFormSubmissionHandling(form, statusElement) {
       form.reset();
     } catch (error) {
       console.error("Sending error:", error);
-      const errorMessage =
-        error?.message ||
-        "Sending failed. Please contact me directly by email.";
-      const isConfigError = errorMessage.includes("not configured");
-
       setFormState(
         form,
         submitButton,
         statusElement,
         "error",
-        isConfigError
-          ? `Contact form is temporarily unavailable (EmailJS configuration missing). Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.`
-          : `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+        `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
       setTimeout(() => {
@@ -212,25 +181,19 @@ function setupFormSubmissionHandling(form, statusElement) {
 }
 
 /**
- * Read the first of several field names that carries a text value
+ * Read a form field as trimmed text
  * @function readTextField
  * @description FormData.get returns File | string | null, and a File stringifies
  * to "[object Object]" — a truthy value that would sail through validation. Only
- * strings are accepted, so a file input under one of these names yields an empty
- * field rather than a fake one. Several names per field because the markup and
- * the EmailJS template disagree on them.
+ * strings are accepted, so a file input under this name yields an empty field
+ * rather than a fake one.
  * @param {FormData} formData - Submitted form values
- * @param {...string} names - Field names to try, in order of preference
- * @returns {string} Trimmed value of the first text field found, or an empty string
+ * @param {string} name - Field name
+ * @returns {string} Trimmed value, or an empty string when the field holds no text
  */
-function readTextField(formData, ...names) {
-  for (const name of names) {
-    const value = formData.get(name);
-    if (typeof value === "string" && value.trim()) {
-      return value.trim();
-    }
-  }
-  return "";
+function readTextField(formData, name) {
+  const value = formData.get(name);
+  return typeof value === "string" ? value.trim() : "";
 }
 
 /**
@@ -241,8 +204,8 @@ function readTextField(formData, ...names) {
  * @returns {string} Message to display, or an empty string when the data is valid
  */
 function validateContactFormData(formData) {
-  const name = readTextField(formData, "name", "from_name");
-  const email = readTextField(formData, "email", "user_email");
+  const name = readTextField(formData, "name");
+  const email = readTextField(formData, "email");
   const message = readTextField(formData, "message");
 
   if (!name || !email || !message) {
@@ -278,29 +241,28 @@ function isAutomatedSubmission(formData) {
 }
 
 /**
- * Resolve the EmailJS credentials to use for this form
- * @function getEmailConfig
- * @description globalThis.runtimeConfig outranks the data-emailjs-* attributes, so a deployment can override the markup without touching it. Today loadRuntimeConfig() returns hardcoded values and no page carries those attributes, so the dataset branch is a fallback for a case that does not exist yet — kept because EmailJS identifiers are public by design and may well move into the markup. Every field falls back to an empty string rather than undefined, letting callers gate on truthiness alone.
- * @param {HTMLElement} form - Form carrying the data-emailjs-* fallback attributes
- * @returns {{user: string, service: string, template: string}} Resolved EmailJS identifiers
+ * Send the validated message through EmailJS
+ * @function sendMessage
+ * @description The keys are the live EmailJS template's contract, not this form's, which is why the name and the address each go out twice. Rename or drop one only together with the template.
+ * @param {FormData} formData - Submitted form values, already validated
+ * @returns {Promise<object>} EmailJS response; rejects with its status object, or throws a string
  */
-function getEmailConfig(form) {
-  const runtimeCfg = globalThis.runtimeConfig?.emailjs || {};
-  const datasetCfg = {
-    user: form?.dataset?.emailjsUser || "",
-    service: form?.dataset?.emailjsService || "",
-    template: form?.dataset?.emailjsTemplate || "",
-  };
+function sendMessage(formData) {
+  const senderName = formData.get("name");
+  const senderEmail = formData.get("email");
 
-  return {
-    user: runtimeCfg.user || datasetCfg.user || "",
-    service: runtimeCfg.service || datasetCfg.service || "",
-    template: runtimeCfg.template || datasetCfg.template || "",
-  };
+  return emailjs.send(EMAILJS.service, EMAILJS.template, {
+    from_name: senderName,
+    user_name: senderName,
+    email: senderEmail,
+    user_email: senderEmail,
+    message: formData.get("message"),
+    to_name: "Christophe",
+  });
 }
 
 /**
- * Update form visual state
+ * Lock the form and show a status; only the submit handler's finally unlocks it
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} button - Submit button
  * @param {HTMLElement} statusElement - Status element

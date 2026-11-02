@@ -4,7 +4,7 @@
  */
 
 /**
- * Registers the service worker for PWA functionality
+ * Register the root-scoped worker, and offer a reload when a newer one installs
  * @function registerServiceWorker
  * @description Registers synchronously: main.js already calls this from a load
  * handler, and re-registering a load listener here would never fire — the DOM

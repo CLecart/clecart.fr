@@ -1,22 +1,18 @@
 /**
- * Privacy-first analytics system
- * @file GDPR-compliant analytics with user consent and anonymized data
+ * Consent-gated analytics that never leaves the browser
  * @author Christophe Lecart
  */
 
+import { getConsentStatus } from "./gdpr.js";
+
 /**
- * Privacy-first analytics management class
+ * Session counters and a localStorage event buffer, both inert without consent
  * @class PrivacyAnalytics
- * @description Collects performance and usage metrics while respecting privacy
- * @example
- * const analytics = new PrivacyAnalytics();
- * analytics.trackEvent('Navigation', 'Click', 'Header Menu');
  */
 class PrivacyAnalytics {
   /**
-   * PrivacyAnalytics class constructor
+   * Start collecting at once when consent was stored on an earlier visit
    * @class
-   * @description Initializes session data and checks GDPR consent
    */
   constructor() {
     this.sessionData = {
@@ -27,7 +23,7 @@ class PrivacyAnalytics {
       timeOnPage: 0,
     };
 
-    this.consentGiven = localStorage.getItem("gdpr-choice") === "accepted";
+    this.consentGiven = getConsentStatus() === "accepted";
     this.initialized = false;
 
     if (this.consentGiven) {
@@ -37,34 +33,29 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Initializes all analytics trackers
+   * Bind the counters and schedule the buffer flushes
    * @function init
-   * @description Sets up event listeners and starts data collection
    * @returns {void}
    */
   init() {
     this.trackPageView();
     this.trackScrollDepth();
     this.trackInteractions();
-    this.trackPerformance();
 
     globalThis.addEventListener("beforeunload", () => {
       this.flushEvents();
     });
 
-    /**
-     * @description 30s interval bounds how long events sit in localStorage on
-     * long sessions, where beforeunload may never fire.
-     */
+    /* 30s interval bounds how long events sit in localStorage on long
+       sessions, where beforeunload may never fire. */
     setInterval(() => {
       this.flushEvents();
     }, 30000);
   }
 
   /**
-   * Records a page view
+   * Count one page view for this document
    * @function trackPageView
-   * @description Increments page view counter for session
    * @returns {void}
    */
   trackPageView() {
@@ -72,9 +63,8 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Tracks user scroll depth
+   * Keep the deepest scroll reached, as a percentage of the scrollable height
    * @function trackScrollDepth
-   * @description Calculates maximum scroll percentage reached
    * @returns {void}
    */
   trackScrollDepth() {
@@ -95,69 +85,26 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Counts user interactions for the session
+   * Count clicks and key presses; a tap on a touch screen fires click too
    * @function trackInteractions
-   * @description Listeners are passive: counting must never delay scrolling
    * @returns {void}
    */
   trackInteractions() {
-    const interactionEvents = ["click", "keydown", "touch"];
-
-    interactionEvents.forEach((event) => {
-      document.addEventListener(
-        event,
-        () => {
-          this.sessionData.interactions++;
-        },
-        { passive: true }
-      );
+    ["click", "keydown"].forEach((event) => {
+      document.addEventListener(event, () => {
+        this.sessionData.interactions++;
+      });
     });
   }
 
   /**
-   * Records Core Web Vitals into the session data
-   * @function trackPerformance
-   * @description Silently skipped where PerformanceObserver is unsupported
-   * @returns {void}
-   */
-  trackPerformance() {
-    if ("PerformanceObserver" in globalThis) {
-      const observer = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          if (entry.entryType === "largest-contentful-paint") {
-            this.sessionData.lcp = Math.round(entry.startTime);
-          }
-
-          if (entry.entryType === "first-input") {
-            this.sessionData.fid = Math.round(
-              entry.processingStart - entry.startTime
-            );
-          }
-
-          if (entry.entryType === "layout-shift" && !entry.hadRecentInput) {
-            this.sessionData.cls = (this.sessionData.cls || 0) + entry.value;
-          }
-        }
-      });
-
-      observer.observe({
-        entryTypes: ["largest-contentful-paint", "first-input", "layout-shift"],
-      });
-    }
-  }
-
-  /**
-   * Records a custom user event
+   * Append an event to the buffer, keeping the latest 50; a no-op without consent
    * @function trackEvent
-   * @description Collects categorized events for behavioral analysis
    * @param {string} category - Event category (e.g., 'Navigation', 'Interaction')
    * @param {string} action - Action performed (e.g., 'Click', 'Download')
    * @param {string|null} [label=null] - Optional label for additional context
    * @param {number|null} [value=null] - Numeric value associated with event
    * @returns {void}
-   * @example
-   * trackEvent('UI', 'Button Click', 'Contact Form Submit');
-   * trackEvent('Download', 'PDF', 'CV_Download', 1);
    */
   trackEvent(category, action, label = null, value = null) {
     if (!this.consentGiven) {
@@ -179,7 +126,7 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Flushes the buffered events
+   * Discard the buffered events and record the time spent on the page
    * @function flushEvents
    * @description No analytics endpoint is configured, so nothing leaves the
    * browser: events are buffered in localStorage and dropped here. Wiring an
@@ -197,14 +144,10 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Updates GDPR consent status
+   * Start collecting on the first grant; on withdrawal, drop the buffer and reset the counters
    * @function updateConsent
-   * @description Manages tracking activation/deactivation based on consent
    * @param {boolean} hasConsent - User consent status
    * @returns {void}
-   * @example
-   * analytics.updateConsent(true);
-   * analytics.updateConsent(false);
    */
   updateConsent(hasConsent) {
     this.consentGiven = hasConsent;
@@ -225,27 +168,22 @@ class PrivacyAnalytics {
   }
 
   /**
-   * Enables tracking once the visitor accepts
+   * Grant consent; safe to call when collection has already started
    * @function enableTracking
    * @description Counterpart to disableTracking, called by the consent banner.
    * Guarded by the initialized flag: the constructor already starts collection
    * when consent was stored on a previous visit, and a second init() would
    * bind every listener and interval twice.
    * @returns {void}
-   * @example
-   * analytics.enableTracking();
    */
   enableTracking() {
     this.updateConsent(true);
   }
 
   /**
-   * Disables tracking when user declines consent
+   * Withdraw consent: the buffer is erased and the counters start over
    * @function disableTracking
-   * @description Stops all analytics collection and clears stored data
    * @returns {void}
-   * @example
-   * analytics.disableTracking();
    */
   disableTracking() {
     this.updateConsent(false);

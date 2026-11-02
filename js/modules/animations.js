@@ -1,41 +1,28 @@
 /**
- * Animation module with intersection observer and scroll effects
+ * Entrance animations and the typewriter
  * @module Animations
- * @description Handles element animations, scroll detection and typewriter effects
  */
-
-let lastScrollY = 0;
-let scrollDirection = "down";
 
 /**
- * Intersection observer factory for configurable observers
+ * Create an IntersectionObserver that ignores the bottom tenth of the viewport
  * @function createObserver
  * @param {Function} callback - Callback function for observed entries
- * @param {object} options - Custom options for observer
  * @returns {IntersectionObserver} Configured observer instance
- * @description Simplifies observer creation with optimal default options
  */
-function createObserver(callback, options = {}) {
-  const defaultOptions = {
+function createObserver(callback) {
+  return new IntersectionObserver(callback, {
     root: null,
     rootMargin: "0px 0px -10% 0px",
     threshold: [0, 0.1, 0.5, 1],
-  };
-
-  const mergedOptions = { ...defaultOptions, ...options };
-  return new IntersectionObserver(callback, mergedOptions);
+  });
 }
 
 /**
- * Initialize scroll-triggered animations for elements
+ * Reveal entrance-animated elements as they scroll in, and flag the sections on screen
  * @function initAnimations
- * @description Triggers 'appear' class when intersecting with viewport
+ * @returns {void}
  */
 export function initAnimations() {
-  const elementsToAnimate = document.querySelectorAll(
-    ".project-card, .skill-card, .language-card, .section-intro, .about-intro"
-  );
-
   const animationObserver = createObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -48,101 +35,29 @@ export function initAnimations() {
     });
   });
 
-  elementsToAnimate.forEach((element) => {
-    animationObserver.observe(element);
-  });
-
-  const allAnimatedElements = document.querySelectorAll(
-    ".fade-in, .slide-left, .slide-right"
-  );
-  allAnimatedElements.forEach((element) => {
-    if (!element.classList.contains("appear")) {
+  document
+    .querySelectorAll(".fade-in, .slide-left, .slide-right")
+    .forEach((element) => {
       animationObserver.observe(element);
-    }
-  });
+    });
 
-  const sectionHeaders = document.querySelectorAll("h2, .section-title");
-  const headerObserver = createObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("appear");
-        }
-      });
-    },
-    { rootMargin: "0px 0px -20% 0px" }
-  );
-
-  sectionHeaders.forEach((header) => {
-    headerObserver.observe(header);
-  });
-
-  const sections = document.querySelectorAll("section[id]");
   const sectionObserver = createObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const currentScrollY = globalThis.scrollY;
-        scrollDirection = currentScrollY > lastScrollY ? "down" : "up";
-        lastScrollY = currentScrollY;
-
-        entry.target.classList.add("section-active");
-
-        if (scrollDirection === "down") {
-          entry.target.setAttribute("data-scroll-direction", "down");
-        } else {
-          entry.target.setAttribute("data-scroll-direction", "up");
-        }
-      } else {
-        entry.target.classList.remove("section-active");
-      }
+      entry.target.classList.toggle("section-active", entry.isIntersecting);
     });
   });
 
-  sections.forEach((section) => {
+  document.querySelectorAll("section[id]").forEach((section) => {
     sectionObserver.observe(section);
   });
 
-  const currentPath = globalThis.location.pathname;
-  if (
-    currentPath.includes("descriptions-projects") ||
-    currentPath.includes("project")
-  ) {
-    initProjectPageAnimations();
-  }
-
-  if (currentPath.includes("about-portfolio")) {
-    initLearningOutcomesAnimations();
-  }
+  initLearningOutcomesAnimations();
 }
 
 /**
- * Initialize specialized animations for project pages
- * @function initProjectPageAnimations
- * @description Configures specialized animations for portfolio sections
- */
-function initProjectPageAnimations() {
-  const projectElements = document.querySelectorAll(
-    ".project-showcase, .project-details, .tech-stack"
-  );
-
-  const projectObserver = createObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("appear");
-        projectObserver.unobserve(entry.target);
-      }
-    });
-  });
-
-  projectElements.forEach((element) => {
-    projectObserver.observe(element);
-  });
-}
-
-/**
- * Initialize animations for Learning Outcomes cards
+ * Reveal the learning-outcome items 100 ms apart, the first time the list scrolls in
  * @function initLearningOutcomesAnimations
- * @description Animates outcomes list items with staggered appear-outcome class
+ * @returns {void}
  */
 function initLearningOutcomesAnimations() {
   const outcomesList = document.querySelector(".outcomes-list");
@@ -170,7 +85,7 @@ function initLearningOutcomesAnimations() {
 }
 
 /**
- * Initialize typewriter effect for dynamic text
+ * Cycle the hero subtitle through the role titles, typing and deleting each
  * @function initTypewriterEffect
  * @returns {void}
  */

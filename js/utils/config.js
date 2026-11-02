@@ -1,13 +1,10 @@
 /**
- * Lightweight runtime config loader.
- * EmailJS values are intentionally hardcoded for static hosting.
+ * EmailJS identifiers, public by design: the browser needs them to send, and
+ * the template's fixed recipient, not their secrecy, is what bounds their use.
+ * @author Christophe Lecart
  */
-export async function loadRuntimeConfig() {
-  return {
-    emailjs: {
-      user: "wCnIBsLz_IoHaoFDx",
-      service: "service_lokewrs",
-      template: "template_2ov9l9i",
-    },
-  };
-}
+export const EMAILJS = {
+  user: "wCnIBsLz_IoHaoFDx",
+  service: "service_lokewrs",
+  template: "template_2ov9l9i",
+};

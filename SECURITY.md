@@ -149,21 +149,22 @@ curl -sI http://localhost:8080/ | grep -icE "content-security|x-frame|x-xss|x-co
 
 ## Conteneur
 
-- Image `nginx:alpine`, exécutée sous un utilisateur non-root (UID 1001), avec un
-  `HEALTHCHECK` sur `/`.
-- La configuration nginx reste la propriété de root : un worker capable de la
-  réécrire pourrait aussi désactiver les en-têtes.
-- **Le contenu de l'image est une liste blanche** (`.dockerignore`) : seuls les
-  fichiers que le site sert entrent dans le contexte de build. `.git`, `.env`,
-  `config.json`, `node_modules` et tout fichier local restent dehors — sans
-  quoi `COPY .` les copierait dans la racine web, et nginx les servirait.
-  Vérifié le 2026-11-02 en listant la racine web de l'image construite : les
-  pages, `cv/`, `css/`, `js/`, `assets/`, le service worker, `robots.txt`,
-  `sitemap.xml`, plus les deux fichiers de configuration nginx, que le
-  `Dockerfile` doit trouver dans le contexte et qui sont de toute façon publics
-  dans ce dépôt.
-- **[CIBLE]** Les fichiers servis appartiennent à `nginx-user`, l'utilisateur
-  qui exécute nginx : un worker compromis pourrait les réécrire.
+- Image `nginxinc/nginx-unprivileged:1.30.6-alpine`, épinglée : maître et
+  workers nginx tournent sous l'UID 101, sur le port 8080. Le `HEALTHCHECK`
+  interroge `/` ; c'est le seul contrôle de santé du dépôt.
+- La configuration nginx appartient à root : l'image de base confie
+  `/etc/nginx` à l'UID 101, le `Dockerfile` la rend à root. Un worker capable de
+  la réécrire pourrait aussi désactiver les en-têtes.
+- **Le `Dockerfile` copie les fichiers servis par leur nom**, jamais tout le
+  contexte : les cinq pages HTML (dont `404.html`), `styles.css`, le service
+  worker, `robots.txt`, `sitemap.xml` et les dossiers `cv/`, `css/`, `js/`,
+  `assets/`. Les deux fichiers de configuration nginx vont dans `/etc/nginx`,
+  pas dans la racine web.
+- `.dockerignore` ne fait que borner le contexte de build : `.git`, `.env`,
+  `config.json`, `node_modules` et tout fichier local ne sont même pas envoyés
+  au builder.
+- Les fichiers servis appartiennent à root (fichiers 644, dossiers 755) :
+  l'UID 101 qui exécute nginx peut les lire, pas les réécrire.
 
 ## Vérifications
 
@@ -200,9 +201,9 @@ GitHub Pages, ni sur le conteneur.
 
 - **GitHub Pages** : aucun accès aux journaux.
 - **Conteneur** : nginx écrit ses journaux d'accès sur la sortie standard
-  (`docker logs`), sauf pour les assets statiques (`access_log off`). Personne ne
-  les relit automatiquement. Le `HEALTHCHECK` marque le conteneur `unhealthy`,
-  sans prévenir personne. Seul `deploy.sh` réagit, au moment du déploiement :
+  (`docker logs`), sauf pour les images, les polices et les vidéos
+  (`access_log off`). Personne ne les relit automatiquement. Le `HEALTHCHECK`
+  marque le conteneur `unhealthy`, sans prévenir personne. Seul `deploy.sh` réagit, au moment du déploiement :
   il interroge le site et restaure l'image précédente s'il ne répond pas dans
   les 60 secondes.
 

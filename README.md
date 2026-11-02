@@ -42,9 +42,9 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 
 This tooling exists and works, but it is **not what serves clecart.fr** — see [Deployment](#deployment).
 
-- **Containerization:** `nginx:alpine` image running as a non-root user, with a `HEALTHCHECK`
-- **Orchestration:** Docker Compose with a health check and Traefik labels
-- **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts, polls health, and rolls back automatically on error
+- **Containerization:** `nginxinc/nginx-unprivileged:1.30.6-alpine`, pinned; nginx runs as uid 101 on port 8080 over a site owned by root, with a `HEALTHCHECK`
+- **Orchestration:** Docker Compose v2 (`docker compose`) with Traefik labels; the image's `HEALTHCHECK` is the only health check
+- **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts, polls the site for up to 60 seconds, and rolls back automatically on error
 - **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`), Prettier
 - **[CIBLE] Continuous Integration:** none. No workflow exists in this repository — lint, Lighthouse and any security scan are run **manually** or not at all.
 
@@ -77,9 +77,9 @@ no server-side code at all.
 - **Preloads:** `profile.webp` with `fetchpriority="high"`, and the Poppins faces each page's first viewport draws (400 and 700 everywhere, 600 on the home page). There is no `dns-prefetch` or `preconnect` left: no page loads anything from another host.
 - **Self-hosted font:** Poppins latin 400/600/700 in `assets/fonts/` (23.7 KB of woff2), byte-identical to the files Google Fonts served, declared in `css/base/fonts.css` with Google's own `unicode-range`. Measured in Chrome on 2026-11-02 on a local HTTP/2 server throttled to 150 ms / 1.6 Mbps: with the preloads the fonts arrive before first paint in 7 runs out of 7 (0/7 without), and CLS falls from 0.032 to 0.003 on the home page.
 - **Skill logos:** the nine devicon 2.18.0 SVGs live in `assets/icons/devicon/` (23.0 KB, 9.2 KB gzipped), instead of an unpinned jsDelivr URL.
-- **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page transfers 14.9 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a return visit takes the sprite from the browser cache, 0 bytes.
+- **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page transfers 14.9 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a reload takes the sprite from Chrome's memory cache, 0 bytes.
 - **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for same-origin images, plus an in-worker SVG placeholder when an image cannot be fetched offline. Everything else — fonts, videos, captions, the icon sprite (fetched as type _other_) and the EmailJS call — is not intercepted and goes to the network and the browser's HTTP cache. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
-- **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
+- **WebP** for the profile image and the Konekt video poster
 - **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
 
@@ -90,7 +90,7 @@ no server-side code at all.
 - **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables both analytics and the contact form.
 - **Privacy-First Analytics:** consent-gated and, as it stands, entirely local — no analytics endpoint is configured, so events are buffered in `localStorage` (last 50) and dropped. No personal data is collected and nothing is shared with a third party.
-- **Container Security:** non-root user, health check, nginx configuration left owned by root
+- **Container Security:** nginx runs as uid 101; the site and the nginx configuration belong to root and are read-only to it; health check
 
 ### 🚀 **DevOps and Production**
 
@@ -120,12 +120,12 @@ against `git ls-files` on 2026-11-02.
 ```text
 clecart.fr/
 ├── 🏗️ Infrastructure
-│   ├── Dockerfile                    # nginx:alpine image, non-root, healthcheck
-│   ├── docker-compose.yml            # Container orchestration (port 8081)
+│   ├── Dockerfile                    # nginx-unprivileged 1.30.6, uid 101, healthcheck
+│   ├── docker-compose.yml            # Container orchestration (port 8080)
 │   ├── deploy.sh                     # Deployment script with rollback
 │   ├── nginx.conf                    # Container server configuration
 │   ├── nginx-security-headers.conf   # Security headers (container only)
-│   ├── .dockerignore                 # Allowlist of what the image may serve
+│   ├── .dockerignore                 # Allowlist of the build context
 │   ├── package.json                  # npm scripts and metadata
 │   └── package-lock.json             # Pinned dev dependency tree
 │
@@ -209,6 +209,8 @@ clecart.fr/
 │       │   │   └── sqlite-original.svg
 │       │   ├── android-chrome-192x192.png
 │       │   ├── android-chrome-512x512.png
+│       │   ├── android-chrome-maskable-192x192.png
+│       │   ├── android-chrome-maskable-512x512.png
 │       │   ├── apple-touch-icon.png
 │       │   ├── favicon-16x16.png
 │       │   ├── favicon-32x32.png
@@ -239,6 +241,7 @@ clecart.fr/
 │   ├── about-portfolio.html          # Technical documentation
 │   ├── descriptions-projects.html    # Project details
 │   ├── privacy-policy.html           # GDPR privacy policy
+│   ├── 404.html                      # Page for any missing path
 │   ├── cv/index.html                 # /cv download redirect
 │   ├── robots.txt                    # SEO crawling directives
 │   └── sitemap.xml                   # Structured sitemap
@@ -294,7 +297,7 @@ needed for the linting and audit tooling below.
 
 - **Python 3** — `npm start` is a thin wrapper around `python3 -m http.server`
 - **Node.js `^22.22.2 || >=24.15.0` and npm** — only for the tooling: ESLint, Prettier, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 65; ESLint 10 alone would accept `^20.19.0`
-- **Docker and Docker Compose** — optional, for the containerized flow
+- **Docker with Compose v2** (`docker compose`) — optional, for the containerized flow
 
 #### Available Scripts
 
@@ -414,16 +417,30 @@ curl -I http://localhost:8080
 ```
 
 ```bash
-# Or via Docker Compose (published on port 8081)
-docker-compose up -d --build
+# Or via Docker Compose v2 (published on port 8080)
+docker compose up -d --build
 
 # Follow the logs
-docker-compose logs -f portfolio
+docker compose logs -f portfolio
 ```
 
 `docker-compose.yml` pins `container_name` and a fixed host port, so the service is **not**
-scalable with `--scale` as written. The Prometheus monitoring block in that file is commented
-out — Compose brings up the portfolio container only.
+scalable with `--scale` as written. It publishes the same host port as `deploy.sh` and
+`npm run docker:run`, 8080: run one of them at a time. Compose brings up the portfolio container
+only.
+
+What the container sends, from `nginx.conf`:
+
+- **Caching:** `no-cache` for HTML, CSS, JS, the web manifest, the captions and the icon sprite —
+  none of their URLs carries a version, so each use revalidates and an unchanged file costs a 304;
+  one week (`max-age=604800`) for images, fonts and videos; a year with `immutable` only for
+  `js/vendor/<name>-X.Y.Z.min.js`, whose release is in the file name.
+- **Types:** `.vtt` as `text/vtt` and `.webmanifest` as `application/manifest+json`, which nginx's
+  stock `mime.types` does not know.
+- **Missing paths:** a 404 status with `404.html`. GitHub Pages serves the same file for any missing
+  path on its own, which is why every URL in it is root-absolute.
+- **Access log:** every request on standard output (`docker logs`), except images, fonts and
+  videos.
 
 ### 📊 **Post-Deployment Checks**
 
@@ -438,8 +455,9 @@ npx lighthouse https://clecart.fr --output json
 curl -sI http://localhost:8080/ | grep -E "(X-|Content-Security|Referrer|Permissions)"
 ```
 
-There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compose.yml` and
-`deploy.sh` all probe `/`.
+There is no `/health` endpoint. The `Dockerfile`'s `HEALTHCHECK`, the only one in the repository,
+probes `/` with busybox `wget`; `deploy.sh` polls `/` with `curl` before it calls a deployment
+done.
 
 ## Security and Performance
 
@@ -449,7 +467,7 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 - **Supply chain:** nothing is fetched from a third party. The EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`); the 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
-- **Container Security** with non-root user and health checks
+- **Container Security:** unprivileged nginx (uid 101) serving a site it cannot rewrite
 - **Privacy-First Analytics** without invasive tracking
 - **[CIBLE] TLS grading and OWASP Top 10 conformance:** no SSL Labs test, no OWASP audit and no penetration test has been run against this site. TLS on clecart.fr is GitHub Pages' own configuration, not this repository's.
 - **Full documentation** -> [SECURITY.md](./SECURITY.md)
@@ -472,7 +490,7 @@ nowhere, so there is no historical data to quote.
 
 ### 📱 **Progressive Web App**
 
-- **Installable** on mobile and desktop (standalone display, 192/512 icons in `any` and `maskable`, Contact and Projects shortcuts)
+- **Installable** on mobile and desktop (standalone display, 192/512 icons: full-bleed for `any`, separate safe-zone PNGs for `maskable`, Contact and Projects shortcuts)
 - **Offline Support:** precached shell, network-first navigation falling back to the cache, network-first CSS/JS with the cache as an offline fallback, cache-first images, in-worker SVG placeholder for unavailable images
 - **[CIBLE] Background Sync and Push Notifications:** not implemented — the Service Worker handles `install`, `activate` and `fetch` only
 

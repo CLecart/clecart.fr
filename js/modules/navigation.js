@@ -76,44 +76,58 @@ export function initNavigation() {
   }
 
   /**
-   * Draw the toggle as a cross while the menu is open, a burger otherwise
-   * @function showMenuIcon
-   * @description Only the fragment of the <use> reference changes: the sprite path stays the one the page's markup wrote, so no URL here can drift from the HTML. The <svg> keeps the burger's viewBox; the default preserveAspectRatio centres the narrower cross inside it, so both glyphs share the button's centre.
+   * Show on the toggle whether the menu is open: a cross and aria-expanded="true", or a burger and "false"
+   * @function showMenuState
+   * @description Only the fragment of the <use> reference changes: the sprite path stays the one the page's markup wrote, so no URL here can drift from the HTML. The <svg> keeps the burger's viewBox; the default preserveAspectRatio centres the narrower cross inside it, so both glyphs share the button's centre. The icon is aria-hidden, so aria-expanded is the only state a screen reader gets.
    * @param {boolean} open - Whether the menu is now open
    * @returns {void}
    */
-  function showMenuIcon(open) {
+  function showMenuState(open) {
     menuIcon?.setAttribute("href", `${sprite}#${open ? "xmark" : "bars"}`);
+    navToggle.setAttribute("aria-expanded", String(open));
+  }
+
+  /**
+   * Open the menu just below the header, sized to its longest link
+   * @function openMenu
+   * @returns {void}
+   */
+  function openMenu() {
+    navMenu.classList.add("active");
+    showMenuState(true);
+    navMenu.style.visibility = "visible";
+    setMenuWidth();
+    const headerHeight = document.querySelector("header")?.offsetHeight ?? 0;
+    navMenu.style.top = `${headerHeight + 5}px`;
+  }
+
+  /**
+   * Close the menu; every dismissal path goes through here
+   * @function closeMenu
+   * @returns {void}
+   */
+  function closeMenu() {
+    navMenu.classList.remove("active");
+    showMenuState(false);
+    setTimeout(() => {
+      if (!navMenu.classList.contains("active")) {
+        navMenu.style.visibility = "hidden";
+      }
+    }, MENU_TRANSITION_DURATION);
   }
 
   navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-    showMenuIcon(navMenu.classList.contains("active"));
-
     if (navMenu.classList.contains("active")) {
-      navMenu.style.visibility = "visible";
-      setMenuWidth();
-      const headerHeight = document.querySelector("header")?.offsetHeight ?? 0;
-      navMenu.style.top = `${headerHeight + 5}px`;
+      closeMenu();
     } else {
-      setTimeout(() => {
-        if (!navMenu.classList.contains("active")) {
-          navMenu.style.visibility = "hidden";
-        }
-      }, MENU_TRANSITION_DURATION);
+      openMenu();
     }
   });
 
   document.querySelectorAll("nav ul li a").forEach((link) => {
     link.addEventListener("click", () => {
       if (globalThis.innerWidth <= 768) {
-        navMenu.classList.remove("active");
-        showMenuIcon(false);
-        setTimeout(() => {
-          if (!navMenu.classList.contains("active")) {
-            navMenu.style.visibility = "hidden";
-          }
-        }, MENU_TRANSITION_DURATION);
+        closeMenu();
       }
     });
   });
@@ -125,13 +139,7 @@ export function initNavigation() {
       !e.target.closest("nav") &&
       !e.target.closest(".nav-toggle")
     ) {
-      navMenu.classList.remove("active");
-      showMenuIcon(false);
-      setTimeout(() => {
-        if (!navMenu.classList.contains("active")) {
-          navMenu.style.visibility = "hidden";
-        }
-      }, MENU_TRANSITION_DURATION);
+      closeMenu();
     }
   });
 

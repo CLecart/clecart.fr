@@ -33,10 +33,10 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 ### 🚀 **Core Technical Stack**
 
 - **Frontend:** Semantic HTML5, CSS3 (Flexbox, Grid, Custom Properties), JavaScript ES2021 modules
-- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 22 `@import`
+- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 23 `@import`
 - **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker with precaching and per-destination cache strategies
-- **Performance:** Client-side Core Web Vitals instrumentation, resource hints, WebP profile image, offscreen video pausing
-- **Security:** Pinned and SRI-signed third-party scripts, no backend, security headers on the container deployment
+- **Performance:** Client-side Core Web Vitals instrumentation, preloads for the profile image and the fonts, WebP profile image, offscreen video pausing
+- **Security:** No third-party resource — font, icons, logos and the EmailJS SDK are served by the site itself, at pinned versions — no backend, security headers on the container deployment
 
 ### 🏗️ **DevOps and Infrastructure**
 
@@ -72,11 +72,13 @@ no server-side code at all.
 
 ### ⚡ **Performance and Optimization**
 
-- **Core Web Vitals** observed in the browser (`js/utils/webvitals.js`): LCP, FID, CLS, FCP and TTFB via `PerformanceObserver`, with optimization triggers past the usual thresholds
+- **Core Web Vitals** observed in the browser (`js/utils/webvitals.js`): LCP, FID, CLS and FCP via `PerformanceObserver`, TTFB from Navigation Timing. A second after `load` they are stored as one analytics event — only with consent, and like every analytics event they never leave the browser. Nothing on the page reacts to them.
 - **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen. On mobile, `videoHandler.js` strips `autoplay` and caps `preload` at `metadata`, so a visitor on cellular data never pays for a video they did not ask to watch.
-- **Resource Hints:** `dns-prefetch`, `preconnect`, and a `preload` on `profile.webp` with `fetchpriority="high"`
+- **Preloads:** `profile.webp` with `fetchpriority="high"`, and the Poppins faces each page's first viewport draws (400 and 700 everywhere, 600 on the home page). There is no `dns-prefetch` or `preconnect` left: no page loads anything from another host.
+- **Self-hosted font:** Poppins latin 400/600/700 in `assets/fonts/` (23.7 KB of woff2), byte-identical to the files Google Fonts served, declared in `css/base/fonts.css` with Google's own `unicode-range`. Measured in Chrome on 2026-11-02 on a local HTTP/2 server throttled to 150 ms / 1.6 Mbps: with the preloads the fonts arrive before first paint in 7 runs out of 7 (0/7 without), and CLS falls from 0.032 to 0.003 on the home page.
+- **Skill logos:** the nine devicon 2.18.0 SVGs live in `assets/icons/devicon/` (23.0 KB, 9.2 KB gzipped), instead of an unpinned jsDelivr URL.
 - **UI icons from one local sprite:** the 21 Font Awesome Free 6.4.0 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (13.6 KB, 5.4 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome webfont they replace: a first visit to the home page transfers 13.8 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a return visit took the sprite from the browser cache, 0 bytes.
-- **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for images and video, plus an in-worker SVG placeholder when an image cannot be fetched offline. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
+- **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for same-origin images, plus an in-worker SVG placeholder when an image cannot be fetched offline. Everything else — fonts, videos, captions, the icon sprite (fetched as type _other_) and the EmailJS call — is not intercepted and goes to the network and the browser's HTTP cache. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
 - **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
@@ -84,7 +86,7 @@ no server-side code at all.
 ### 🛡️ **Security and Compliance**
 
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
-- **No third-party script:** the EmailJS SDK 5.0.3 is served by the site itself from `js/vendor/`, byte-identical to the file in the npm tarball (whose `integrity` npm checks against the registry), with its BSD-3-Clause licence beside it. A pinned, same-origin file needs no Subresource Integrity, and a CDN outage or compromise can no longer reach the form.
+- **No third-party resource:** the EmailJS SDK 5.0.3 is served by the site itself from `js/vendor/`, byte-identical to the file in the npm tarball (whose `integrity` npm checks against the registry), with its BSD-3-Clause licence beside it; the font, the UI icons and the skill logos are local too. A pinned, same-origin file needs no Subresource Integrity, and a CDN outage or compromise can no longer reach the page. Measured in Chrome on 2026-11-02: none of the four pages contacts any host but its own on load; `api.emailjs.com` is contacted only when the form is sent.
 - **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables both analytics and the contact form.
 - **Privacy-First Analytics:** consent-gated and, as it stands, entirely local — no analytics endpoint is configured, so events are buffered in `localStorage` (last 50) and dropped. No personal data is collected and nothing is shared with a third party.
@@ -112,7 +114,8 @@ Each project lives in its own repository; the portfolio showcases each one with 
 
 ### 📁 **Organizational Structure**
 
-Every file below is tracked in this repository.
+Every tracked file is listed below, and nothing else: checked file for file
+against `git ls-files` on 2026-11-02.
 
 ```text
 clecart.fr/
@@ -129,19 +132,22 @@ clecart.fr/
 ├── 🎨 Frontend Architecture
 │   ├── css/                          # SMACSS-inspired architecture
 │   │   ├── base/
+│   │   │   ├── fonts.css             # Self-hosted Poppins (@font-face)
 │   │   │   ├── reset.css             # Browser normalization
 │   │   │   └── variables.css         # Design tokens (colors, durations, easings)
 │   │   ├── components/
 │   │   │   ├── buttons.css           # Interactive button styles
-│   │   │   ├── cards.css             # Card system
+│   │   │   ├── cards.css             # Card system and shared hover
 │   │   │   ├── dark-mode-toggle.css  # Light/dark theme toggle
-│   │   │   ├── forms.css             # Forms with validation states
+│   │   │   ├── forms.css             # Form fields, status messages, trap field
 │   │   │   ├── gdpr.css              # GDPR consent banner
 │   │   │   ├── icons.css             # Sprite icon metrics (size, baseline)
-│   │   │   └── notifications.css     # Notification system
+│   │   │   ├── modals.css            # Modal overlay styles
+│   │   │   └── notifications.css     # Service worker update notice
 │   │   ├── layout/
 │   │   │   ├── footer.css            # Responsive footer
-│   │   │   └── header.css            # Main navigation
+│   │   │   ├── header.css            # Main navigation
+│   │   │   └── section.css           # Section separator line
 │   │   ├── sections/
 │   │   │   ├── about.css             # About section
 │   │   │   ├── contact.css           # Contact form
@@ -153,10 +159,7 @@ clecart.fr/
 │   │   ├── theme/
 │   │   │   └── darkmode.css          # Full dark theme
 │   │   └── utils/
-│   │       ├── animations.css        # Animations + prefers-reduced-motion
-│   │       ├── image-fallbacks.css   # Broken image fallbacks
-│   │       ├── modals.css            # Accessible modal system
-│   │       └── responsive.css        # Responsive media queries
+│   │       └── animations.css        # Animations + prefers-reduced-motion
 │   │
 │   ├── js/                           # Modular JavaScript architecture
 │   │   ├── modules/                  # Business features
@@ -164,31 +167,74 @@ clecart.fr/
 │   │   │   ├── contact-form.js       # Validation, EmailJS integration
 │   │   │   ├── darkmode.js           # System-aware adaptive theme
 │   │   │   ├── navigation.js         # Responsive menu, smooth scroll
-│   │   │   ├── project-navigation.js # Project navigation
+│   │   │   ├── project-navigation.js # Project tabs, deep links
 │   │   │   └── videoHandler.js       # Video playback, offscreen pausing
 │   │   │
 │   │   ├── utils/                    # Technical utilities
 │   │   │   ├── analytics.js          # Privacy-first, consent-gated tracking
 │   │   │   ├── config.js             # EmailJS public identifiers
 │   │   │   ├── gdpr.js               # Consent banner and enforcement
-│   │   │   ├── modal.js              # Accessible modal system
-│   │   │   ├── performance.js        # Runtime optimizations
 │   │   │   ├── sw-register.js        # Service Worker registration
-│   │   │   └── webvitals.js          # Core Web Vitals monitoring
+│   │   │   └── webvitals.js          # Core Web Vitals observation
+│   │   │
+│   │   ├── vendor/                   # Third-party code, served by the site
+│   │   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
+│   │   │   └── LICENSE-emailjs-browser.txt # Its BSD-3-Clause licence
 │   │   │
 │   │   ├── cv.js                     # Entry point of cv/index.html
 │   │   └── main.js                   # Application entry point
 │   │
 │   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
-│   └── styles.css                    # Barrel importing the 22 CSS modules
+│   └── styles.css                    # Barrel importing the 23 CSS modules
 │
 ├── 📦 Assets
-│   ├── documents/
-│   │   └── CV_Christophe_Lecart.pdf  # Professional resume
-│   ├── icons/                        # Favicons, PWA icons, sprite.svg (UI icons)
-│   ├── images/                       # profile.webp, posters/Konekt.webp
-│   ├── manifest/                     # site.webmanifest, browserconfig.xml
-│   └── videos/                       # Project demos (.mp4 + .en.vtt captions)
+│   └── assets/
+│       ├── documents/
+│       │   └── CV_Christophe_Lecart.pdf # Professional resume
+│       ├── fonts/                    # Poppins, self-hosted (latin subset)
+│       │   ├── OFL.txt               # SIL Open Font License 1.1
+│       │   ├── poppins-latin-400.woff2
+│       │   ├── poppins-latin-600.woff2
+│       │   └── poppins-latin-700.woff2
+│       ├── icons/                    # Favicons, PWA icons, UI sprite, skill logos
+│       │   ├── devicon/              # Skill logos, devicon 2.18.0
+│       │   │   ├── css3-original.svg
+│       │   │   ├── docker-original.svg
+│       │   │   ├── git-original.svg
+│       │   │   ├── go-original.svg
+│       │   │   ├── html5-original.svg
+│       │   │   ├── java-original.svg
+│       │   │   ├── javascript-original.svg
+│       │   │   ├── LICENSE.txt       # devicon's MIT licence
+│       │   │   ├── python-original.svg
+│       │   │   └── sqlite-original.svg
+│       │   ├── android-chrome-192x192.png
+│       │   ├── android-chrome-512x512.png
+│       │   ├── apple-touch-icon.png
+│       │   ├── favicon-16x16.png
+│       │   ├── favicon-32x32.png
+│       │   ├── favicon.ico
+│       │   └── sprite.svg            # Font Awesome Free 6.4.0, 21 UI icons
+│       ├── images/
+│       │   ├── posters/
+│       │   │   └── Konekt.webp       # Poster for the Konekt demo
+│       │   └── profile.webp
+│       ├── manifest/
+│       │   ├── browserconfig.xml
+│       │   └── site.webmanifest
+│       └── videos/                   # Project demos (.mp4 + .en.vtt captions)
+│           ├── AbrisCraft.en.vtt
+│           ├── AbrisCraft.mp4
+│           ├── BombermanDX.en.vtt
+│           ├── BombermanDX.mp4
+│           ├── Groupie-Tracker.en.vtt
+│           ├── Groupie-Tracker.mp4
+│           ├── Konekt.en.vtt
+│           ├── Konekt.mp4
+│           ├── PartiQ.en.vtt
+│           ├── PartiQ.mp4
+│           ├── pochet-du-courval-preview.en.vtt
+│           └── pochet-du-courval-preview.mp4
 │
 ├── 📄 Pages and Content
 │   ├── index.html                    # Main page
@@ -202,6 +248,7 @@ clecart.fr/
 ├── ⚙️ Development Configuration
 │   ├── eslint.config.js              # ESLint flat config
 │   ├── .prettierrc.json              # Prettier configuration
+│   ├── .prettierignore               # Keeps Prettier out of js/vendor/
 │   ├── .gitignore                    # Git exclusions
 │   └── .agents/AGENTS.md             # Project engineering manifesto
 │
@@ -263,7 +310,7 @@ npm run docker:logs          # Tail container logs
 # Validation and quality
 npm run lint                 # ESLint (flat config; every rule is an error)
 npm run lint:fix             # ESLint with autofix
-npm run format               # Prettier over js/, css/, styles.css, eslint.config.js
+npm run format               # Prettier over js/ (not js/vendor/), css/, styles.css, service-worker.js, eslint.config.js
 npm run format:check         # Fail if anything is unformatted
 npm run lighthouse           # Lighthouse audit of localhost:8000 (run npm start first)
 
@@ -350,8 +397,9 @@ no certificate or TLS configuration.
 
 The practical consequence: **custom HTTP headers cannot be set on GitHub Pages**, so the CSP and
 security headers in `nginx-security-headers.conf` are inactive on the public site. What protects
-it there is the absence of a backend, the pinned and SRI-signed third-party scripts, and the
-absence of any server-side data processing.
+it there is the absence of a backend, the absence of any third-party resource (everything the
+pages load is served, pinned, from this repository), and the absence of any server-side data
+processing.
 
 ### 🐳 **Docker Deployment (optional, self-hosting)**
 
@@ -400,7 +448,7 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** the EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`). The UI icons are not a third-party resource: the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg` and served with the site. The Google Fonts stylesheet cannot be signed (its CSS varies by user agent), and the skill icons are unpinned `<img>` SVGs from jsDelivr — images cannot carry SRI, and the CSP restricts `img-src` accordingly.
+- **Supply chain:** nothing is fetched from a third party. The EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`); the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
 - **Container Security** with non-root user and health checks
@@ -410,22 +458,24 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 
 ### ⚡ **Performance**
 
-Measured on the repository sources (2026-07-17):
+Measured on the repository sources (2026-11-02):
 
-- **HTML + CSS + JS:** 184 KB uncompressed, ~37 KB gzipped
+- **HTML + CSS + JS:** the four pages, `styles.css` and its 23 imports, `main.js` with the 11 modules it imports, the vendored EmailJS SDK and the service worker — 232 KB uncompressed, 65 KB gzipped file by file
+- **Fonts:** three Poppins woff2 files, 23.7 KB in all (woff2 is already compressed), preloaded
+- **Third parties on load:** none. First visit at 375 px scrolled to the bottom, measured in Chrome on 2026-11-02 against a local HTTP/2 server with gzip: 56 requests on the home page and 42 on each other page, every one same-origin — the same counts as before the font and the logos moved in, which had sent 13 of the home page's requests (36.7 KB) and 4 of every other page's (24.8 KB) to Google and jsDelivr.
 - **Profile image:** `profile.webp`, 31 KB (500×500 lossy WebP for a slot of 250 CSS px at most), preloaded with `fetchpriority="high"`
 - **Demo videos:** ~5 MB across six 480p files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
-- **CSS delivery:** 23 requests in 2 waves (the barrel, then its 22 imports in parallel) — one extra discovery round-trip. Measured in Chrome on 2026-07-16 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight.
+- **CSS delivery:** 24 requests in 2 waves (the barrel, then its 23 imports, all sent within 3 ms of each other) — one extra discovery round-trip. Measured in Chrome on 2026-11-02 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
 
 **[CIBLE] Lighthouse scores and field Core Web Vitals:** not measured. No report is committed and
-no audit runs automatically. `js/utils/webvitals.js` observes LCP, FID and CLS **in the visitor's
-browser** and reacts past the standard thresholds (2500 ms / 100 ms / 0.1); it does not report
-anywhere, so there is no historical data to quote.
+no audit runs automatically. `js/utils/webvitals.js` observes LCP, FID, CLS, FCP and TTFB **in the
+visitor's browser** and keeps them there, in the consent-gated analytics buffer; it reports
+nowhere, so there is no historical data to quote.
 
 ### 📱 **Progressive Web App**
 
 - **Installable** on mobile and desktop (standalone display, 192/512 icons in `any` and `maskable`, Contact and Projects shortcuts)
-- **Offline Support:** precached shell, network-first navigation falling back to the cache, cache-first assets, in-worker SVG placeholder for unavailable images
+- **Offline Support:** precached shell, network-first navigation falling back to the cache, network-first CSS/JS with the cache as an offline fallback, cache-first images, in-worker SVG placeholder for unavailable images
 - **[CIBLE] Background Sync and Push Notifications:** not implemented — the Service Worker handles `install`, `activate` and `fetch` only
 
 ## Maintenance
@@ -484,14 +534,15 @@ docker logs clecart-portfolio-container -f
 This repository is published for reading, not for reuse: no permission is
 granted to copy, modify or redistribute its code or its content. `package.json`
 declares `UNLICENSED` and `private` to say the same thing to tooling, and there
-is deliberately no LICENSE file — adding one would grant rights.
+is deliberately no LICENSE file at its root — adding one would grant rights.
 
-The third-party dependencies listed below keep their own licenses.
+The third-party files listed below keep their own licenses; the licence files
+in `assets/fonts/`, `assets/icons/devicon/` and `js/vendor/` are theirs.
 
 ### Technologies Used
 
-- **Icons:** [Font Awesome Free](https://fontawesome.com/) 6.4.0 (UI icons, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — copied into `assets/icons/sprite.svg` with their attribution) and [Devicon](https://devicon.dev/) (skill logos)
-- **Fonts:** [Google Fonts](https://fonts.google.com/) (Poppins)
+- **Icons:** [Font Awesome Free](https://fontawesome.com/) 6.4.0 (UI icons, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — copied into `assets/icons/sprite.svg` with their attribution) and [Devicon](https://devicon.dev/) 2.18.0 (skill logos, MIT — copied into `assets/icons/devicon/` with `LICENSE.txt`)
+- **Font:** [Poppins](https://github.com/itfoundry/Poppins) by the Poppins Project Authors ([SIL OFL 1.1](https://openfontlicense.org/) — the files [Google Fonts](https://fonts.google.com/specimen/Poppins) serves, copied into `assets/fonts/` with `OFL.txt`)
 - **Email Service:** [EmailJS](https://emailjs.com/)
 - **Hosting:** [GitHub Pages](https://pages.github.com/)
 

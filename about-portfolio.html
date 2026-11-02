@@ -320,52 +320,102 @@
             <div class="code-block">
               <pre><code>
 clecart.fr/
-├── assets/                      # Optimized assets
+├── assets/
 │   ├── documents/
-│   │   └── CV_Christophe_Lecart.pdf
-│   ├── icons/                   # PWA, favicons, UI icon sprite
-│   │   ├── android-chrome-*.png
+│   │   └── CV_Christophe_Lecart.pdf # Professional resume
+│   ├── fonts/                   # Poppins, self-hosted (latin subset)
+│   │   ├── OFL.txt              # SIL Open Font License 1.1
+│   │   ├── poppins-latin-400.woff2
+│   │   ├── poppins-latin-600.woff2
+│   │   └── poppins-latin-700.woff2
+│   ├── icons/                   # Favicons, PWA icons, UI sprite, skill logos
+│   │   ├── devicon/             # Skill logos, devicon 2.18.0
+│   │   │   ├── css3-original.svg
+│   │   │   ├── docker-original.svg
+│   │   │   ├── git-original.svg
+│   │   │   ├── go-original.svg
+│   │   │   ├── html5-original.svg
+│   │   │   ├── java-original.svg
+│   │   │   ├── javascript-original.svg
+│   │   │   ├── LICENSE.txt      # devicon's MIT licence
+│   │   │   ├── python-original.svg
+│   │   │   └── sqlite-original.svg
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
 │   │   ├── apple-touch-icon.png
-│   │   ├── favicon*.png|ico
-│   │   └── sprite.svg           # Font Awesome Free 6.4.0 subset
-│   ├── images/                  # Site images
-│   │   ├── profile.webp
-│   │   └── posters/Konekt.webp
-│   ├── manifest/                # PWA Configuration
-│   │   ├── site.webmanifest
-│   │   └── browserconfig.xml
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon.ico
+│   │   └── sprite.svg           # Font Awesome Free 6.4.0, 21 UI icons
+│   ├── images/
+│   │   ├── posters/
+│   │   │   └── Konekt.webp      # Poster for the Konekt demo
+│   │   └── profile.webp
+│   ├── manifest/
+│   │   ├── browserconfig.xml
+│   │   └── site.webmanifest
 │   └── videos/                  # Project demos (.mp4 + .en.vtt captions)
-│       ├── AbrisCraft.*
-│       ├── BombermanDX.*
-│       ├── Groupie-Tracker.*
-│       ├── Konekt.*
-│       ├── PartiQ.*
-│       └── pochet-du-courval-preview.*
+│       ├── AbrisCraft.en.vtt
+│       ├── AbrisCraft.mp4
+│       ├── BombermanDX.en.vtt
+│       ├── BombermanDX.mp4
+│       ├── Groupie-Tracker.en.vtt
+│       ├── Groupie-Tracker.mp4
+│       ├── Konekt.en.vtt
+│       ├── Konekt.mp4
+│       ├── PartiQ.en.vtt
+│       ├── PartiQ.mp4
+│       ├── pochet-du-courval-preview.en.vtt
+│       └── pochet-du-courval-preview.mp4
 ├── css/                         # SMACSS-inspired architecture
-│   ├── base/                    # Foundations
-│   ├── components/              # Reusable components
-│   ├── layout/                  # Global structure
-│   ├── sections/                # Specific sections
-│   ├── theme/                   # Theme management
-│   └── utils/                   # Utilities
+│   ├── base/
+│   │   ├── fonts.css            # Self-hosted Poppins (@font-face)
+│   │   ├── reset.css            # Browser normalization
+│   │   └── variables.css        # Design tokens (colors, durations, easings)
+│   ├── components/
+│   │   ├── buttons.css          # Interactive button styles
+│   │   ├── cards.css            # Card system and shared hover
+│   │   ├── dark-mode-toggle.css # Light/dark theme toggle
+│   │   ├── forms.css            # Form fields, status messages, trap field
+│   │   ├── gdpr.css             # GDPR consent banner
+│   │   ├── icons.css            # Sprite icon metrics (size, baseline)
+│   │   ├── modals.css           # Modal overlay styles
+│   │   └── notifications.css    # Service worker update notice
+│   ├── layout/
+│   │   ├── footer.css           # Responsive footer
+│   │   ├── header.css           # Main navigation
+│   │   └── section.css          # Section separator line
+│   ├── sections/
+│   │   ├── about.css            # About section
+│   │   ├── contact.css          # Contact form
+│   │   ├── hero.css             # Hero/banner section
+│   │   ├── portfolio-details.css # about-portfolio.html page
+│   │   ├── privacy.css          # Privacy policy page
+│   │   ├── projects.css         # Projects gallery
+│   │   └── skills.css           # Technical skills
+│   ├── theme/
+│   │   └── darkmode.css         # Full dark theme
+│   └── utils/
+│       └── animations.css       # Animations + prefers-reduced-motion
 ├── js/                          # Modular JavaScript
 │   ├── modules/                 # Business features
-│   │   ├── animations.js
-│   │   ├── contact-form.js
-│   │   ├── darkmode.js
-│   │   ├── navigation.js
-│   │   ├── project-navigation.js
-│   │   └── videoHandler.js
+│   │   ├── animations.js        # Intersection Observer, transitions
+│   │   ├── contact-form.js      # Validation, EmailJS integration
+│   │   ├── darkmode.js          # System-aware adaptive theme
+│   │   ├── navigation.js        # Responsive menu, smooth scroll
+│   │   ├── project-navigation.js # Project tabs, deep links
+│   │   └── videoHandler.js      # Video playback, offscreen pausing
 │   ├── utils/                   # Technical utilities
-│   │   ├── analytics.js
-│   │   ├── config.js
-│   │   ├── gdpr.js
-│   │   ├── modal.js
-│   │   ├── performance.js
-│   │   ├── sw-register.js
-│   │   └── webvitals.js
+│   │   ├── analytics.js         # Privacy-first, consent-gated tracking
+│   │   ├── config.js            # EmailJS public identifiers
+│   │   ├── gdpr.js              # Consent banner and enforcement
+│   │   ├── sw-register.js       # Service Worker registration
+│   │   └── webvitals.js         # Core Web Vitals observation
+│   ├── vendor/                  # Third-party code, served by the site
+│   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
+│   │   └── LICENSE-emailjs-browser.txt # Its BSD-3-Clause licence
 │   ├── cv.js                    # Entry point of cv/index.html
-│   └── main.js                  # Entry point
+│   └── main.js                  # Application entry point
 ├── service-worker.js            # Must stay at root: scope = its own directory
 ├── cv/
 │   └── index.html               # /cv download redirect
@@ -373,6 +423,7 @@ clecart.fr/
 │   └── AGENTS.md                # Engineering manifesto
 ├── eslint.config.js             # Code quality
 ├── .prettierrc.json             # Formatting
+├── .prettierignore              # Prettier skips js/vendor/
 ├── .gitignore                   # Git exclusions
 ├── docker-compose.yml           # Orchestration
 ├── Dockerfile                   # Containerization
@@ -386,7 +437,7 @@ clecart.fr/
 ├── robots.txt                   # SEO directives
 ├── sitemap.xml                  # Sitemap
 ├── CNAME                        # Custom domain (GitHub Pages)
-├── styles.css                   # Barrel importing the 22 CSS modules
+├── styles.css                   # Barrel importing the 23 CSS modules
 ├── index.html                   # Main page
 ├── about-portfolio.html         # Technical documentation
 ├── descriptions-projects.html   # Project details

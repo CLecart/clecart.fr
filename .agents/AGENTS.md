@@ -116,6 +116,11 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      à une version exacte** puis signé (`integrity` + `crossorigin="anonymous"`).
      Le pin précède toujours la signature : signer une plage flottante (`@3`)
      casse le site au premier patch amont.
+   - **Aujourd'hui, aucune ressource tierce** (mesuré, Chrome, 2026-11-02) :
+     police, icônes, logos et SDK EmailJS sont servis par le site, épinglés ;
+     seul `api.emailjs.com` est contacté, et seulement à l'envoi du formulaire.
+     En réintroduire une, c'est aussi l'ajouter à `privacy-policy.html` et à
+     la CSP.
    - Injection de contenu par `textContent`, jamais `innerHTML` sur une donnée
      non maîtrisée.
    - **Savoir ce qui est un secret.** Les identifiants EmailJS sont **publics
@@ -186,12 +191,18 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      build ni hash d'URL, le cache-first figerait chaque visiteur sur la version
      découverte en premier : tout déploiement futur invisible, définitivement.
      `CACHE_NAME` se bumpe à chaque changement de liste ou de stratégie.
-   - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-07-16) :
-     23 requêtes en **2 vagues** — le baril, puis ses 22 imports en parallèle.
-     Le coût est **un** aller-retour de découverte, pas 22. Concaténer
+   - `styles.css` est un baril de 23 `@import`. **Mesuré** (Chrome, 2026-11-02) :
+     24 requêtes en **2 vagues** — le baril, puis ses 23 imports en parallèle.
+     Le coût est **un** aller-retour de découverte, pas 23. Concaténer
      l'économiserait, mais sans CI un bundle commité dériverait de ses sources au
      premier oubli. **Le baril reste la bonne solution tant qu'aucune CI ne le
      régénère.** Ne pas « optimiser » sans mesure préalable.
+   - **Poppins est préchargée, graisse par graisse.** Sans `preload`, la police
+     n'est découverte qu'après les imports du baril et arrive après le premier
+     rendu : bascule de police et décalage (CLS 0,032 sur l'accueil, mesuré
+     Chrome, 2026-11-02, HTTP/2 local bridé à 150 ms / 1,6 Mb/s). Ne précharger
+     que les graisses que le premier écran de la page dessine : une graisse
+     préchargée qui ne sert pas est une requête perdue.
 
 10. **Accessibilité (RGAA / WCAG).**
     - Navigation clavier complète, contrastes conformes en thème clair **et**

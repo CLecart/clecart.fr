@@ -13,8 +13,8 @@ actif sur `clecart.fr`.** Vérification : `curl -sI https://clecart.fr`.
 
 Ce qui protège réellement le site public :
 
-- l'intégrité des ressources tierces qui peuvent la porter (versions épinglées
-  et signées SRI) ;
+- l'absence de toute ressource tierce : police, icônes, logos et SDK EmailJS
+  sont servis par le site lui-même, à des versions épinglées ;
 - l'absence de toute valeur saisie par un visiteur réinjectée dans le DOM ;
 - l'absence de serveur, donc de données côté serveur à voler.
 
@@ -30,11 +30,16 @@ Ce qui protège réellement le site public :
   `assets/icons/sprite.svg`, servi par le site lui-même. Leurs tracés viennent
   de l'archive npm `@fortawesome/fontawesome-free@6.4.0`, vérifiée contre
   l'empreinte `integrity` publiée par le registre.
-- La feuille **Google Fonts** ne peut pas être signée : son contenu varie selon
-  le navigateur qui la demande.
-- Les **icônes devicon** sont des `<img>` SVG servies par jsDelivr, sans
-  version épinglée. Une image ne porte pas de SRI ; dans le conteneur, la CSP
-  limite `img-src` à `'self'`, `data:` et `cdn.jsdelivr.net`.
+- La police **Poppins** est servie par le site (`assets/fonts/`) : les trois
+  fichiers woff2 (latin, graisses 400, 600 et 700) sont, à l'octet près
+  (sha256), ceux que Google Fonts envoyait au navigateur (Poppins v24). Licence
+  SIL OFL 1.1 à côté (`OFL.txt`).
+- Les **logos devicon** de la section des langages (`assets/icons/devicon/`)
+  viennent du tag 2.18.0 de devicon, identiques à l'octet aux fichiers que
+  servait l'URL jsDelivr non épinglée. Licence MIT à côté (`LICENSE.txt`).
+- Mesuré dans Chrome le 2026-11-02 : au chargement, aucune des quatre pages ne
+  contacte d'autre hôte que le sien. `api.emailjs.com` n'est contacté qu'à
+  l'envoi du formulaire.
 
 ## DOM
 
@@ -94,25 +99,29 @@ gratuit, donc les domaines qui y figurent sont **inertes**.
 ### Content Security Policy
 
 ```nginx
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
 ```
 
+- `default-src 'self'` : les directives absentes y retombent. Styles, polices,
+  images, vidéos et manifeste viennent tous du site ; le service worker relève
+  de `script-src`, qui l'autorise aussi.
 - `script-src 'unsafe-inline'` : requis par le bootstrap de thème inline en
   `<head>`, seul script inline du site, qui doit s'exécuter avant le premier
   rendu pour éviter le flash de mauvais thème.
-- `style-src 'unsafe-inline'` : **[CIBLE] à retirer.** Le code commité ne
-  contient ni attribut `style` ni élément `<style>` ; les styles posés par
-  JavaScript passent par `element.style`, que la CSP ne bloque pas. Mesuré dans
-  le conteneur le 2026-11-02 : sans lui, les quatre pages se chargent sans
-  violation, et l'envoi du formulaire, l'acceptation du bandeau, le thème, le
-  menu mobile, la page projets et `/cv/` fonctionnent. Le refus du bandeau n'a
-  pas été testé.
-- `cdn.jsdelivr.net` : icônes devicon (images).
+- Aucun `'unsafe-inline'` pour les styles : le code commité ne contient ni
+  attribut `style` ni élément `<style>`, et les styles posés par JavaScript
+  passent par `element.style`, que la CSP ne bloque pas.
 - `api.emailjs.com` : envoi du formulaire, seul hôte EmailJS contacté, et
   seulement à l'envoi.
-- `fonts.googleapis.com` + `fonts.gstatic.com` : Google Fonts.
-- `data:` pour les images : icônes SVG en `url("data:…")` dans
-  `css/components/forms.css`.
+
+Mesuré le 2026-11-02 avec cette politique servie en en-tête par un serveur
+local (pas le conteneur) : aucune violation sur les quatre pages (375 et
+1280 px, défilement, menu mobile, thème), à l'envoi du formulaire, à
+l'acceptation et au refus du bandeau, à la réouverture du choix, sur la page
+projets, sur `/cv/` et pour le service worker. Contrôle négatif : un attribut
+`style`, une image `data:` et une feuille Google Fonts injectés dans la page
+sont bien refusés. Les icônes `data:` des contrôles vidéo appartiennent à
+Chrome et ne passent pas par la politique de la page.
 
 ### Autres en-têtes
 

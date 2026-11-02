@@ -33,7 +33,7 @@ export function initContactForm() {
     }
 
     if (status === "accepted") {
-      clearStatusMessage(formStatus);
+      showStatus(formStatus, "", "");
     }
   });
 
@@ -49,12 +49,6 @@ export function initContactForm() {
  * @param {HTMLElement} form - Form element
  */
 function renderContactAlternative(form) {
-  const formContainer = form.closest(".contact-form");
-  if (formContainer) {
-    formContainer.style.opacity = "1";
-    formContainer.style.pointerEvents = "auto";
-  }
-
   form.innerHTML = `
     <p class="gdpr-message">
       The contact form has been disabled because you declined our privacy policy.
@@ -64,38 +58,21 @@ function renderContactAlternative(form) {
 }
 
 /**
- * Tell the visitor to answer the privacy banner before sending
- * @function showConsentRequiredNotice
- * @description Covers the case where no choice was ever recorded, which is distinct from a recorded refusal: refusal replaces the form outright, an unanswered banner only blocks this one submission and is styled as info rather than an error.
+ * Write the form's status line, the one place that does
+ * @function showStatus
+ * @description The state class alone shows or hides the line: forms.css displays .form-status only with a state, so an empty state collapses it and leaves no gap in the form layout. Messages are this module's own constants, some carrying a mailto link, never visitor input.
  * @param {HTMLElement} statusElement - Status container; a missing element makes this a no-op
+ * @param {string} state - "success", "error", "sending" or "info"; empty to hide the line
+ * @param {string} message - Markup to display
  * @returns {void}
  */
-function showConsentRequiredNotice(statusElement) {
+function showStatus(statusElement, state, message) {
   if (!statusElement) {
     return;
   }
 
-  statusElement.innerHTML =
-    "Please choose Accept or Decline in the privacy banner before sending a message.";
-  statusElement.className = "form-status info";
-  statusElement.style.display = "block";
-}
-
-/**
- * Retract the status message and collapse its container
- * @function clearStatusMessage
- * @description Called when consent flips to accepted, to drop a notice that has just become false. Display is reset to none rather than only emptying the text, so the collapsed container leaves no gap in the form layout.
- * @param {HTMLElement} statusElement - Status container; a missing element makes this a no-op
- * @returns {void}
- */
-function clearStatusMessage(statusElement) {
-  if (!statusElement) {
-    return;
-  }
-
-  statusElement.innerHTML = "";
-  statusElement.className = "form-status";
-  statusElement.style.display = "none";
+  statusElement.innerHTML = message;
+  statusElement.className = state ? `form-status ${state}` : "form-status";
 }
 
 /**
@@ -107,19 +84,21 @@ function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
+    /* No recorded choice is not a refusal: a refusal replaces the form
+       outright, an unanswered banner only blocks this one submission. */
     if (getConsentStatus() !== "accepted") {
-      showConsentRequiredNotice(statusElement);
+      showStatus(
+        statusElement,
+        "info",
+        "Please choose Accept or Decline in the privacy banner before sending a message."
+      );
       return;
     }
 
     const formData = new FormData(form);
     const validationError = validateContactFormData(formData);
     if (validationError) {
-      if (statusElement) {
-        statusElement.innerHTML = validationError;
-        statusElement.className = "form-status error";
-        statusElement.style.display = "block";
-      }
+      showStatus(statusElement, "error", validationError);
       return;
     }
 
@@ -275,9 +254,5 @@ function setFormState(form, button, statusElement, state, message) {
     button.disabled = true;
   }
 
-  if (statusElement) {
-    statusElement.innerHTML = message;
-    statusElement.className = `form-status ${state}`;
-    statusElement.style.display = "block";
-  }
+  showStatus(statusElement, state, message);
 }

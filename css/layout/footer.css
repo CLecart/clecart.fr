@@ -23,7 +23,7 @@ footer::after {
   );
   background-size: 200% 100%;
   animation: gradient-slide var(--duration-gradient) var(--ease-standard)
-    infinite;
+    var(--iterations-loop);
   z-index: 10;
 }
 

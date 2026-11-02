@@ -4,7 +4,7 @@
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--primary);
-  color: white;
+  color: var(--white);
   padding: 12px 20px;
   border-radius: var(--btn-radius);
   display: flex;
@@ -23,7 +23,7 @@
 }
 
 .app-update-notification button {
-  background: white;
+  background: var(--white);
   color: var(--primary);
   border: none;
   padding: 8px 16px;
@@ -57,7 +57,7 @@
 
 .dark-mode body .app-update-notification button {
   background: var(--primary);
-  color: white;
+  color: var(--white);
 }
 
 .dark-mode body .app-update-notification button:hover {

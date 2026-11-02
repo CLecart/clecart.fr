@@ -4,10 +4,6 @@
   border-radius: var(--card-radius);
   border: var(--card-border);
   box-shadow: var(--card-box-shadow);
-  transition:
-    transform var(--duration-normal) var(--ease-smooth),
-    box-shadow var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth);
   padding: var(--card-padding);
   margin: var(--card-margin);
   overflow: hidden;
@@ -21,7 +17,6 @@
 }
 
 .skill-card {
-  height: 310px;
   position: relative;
   display: flex;
   flex-direction: column;

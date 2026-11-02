@@ -3,6 +3,8 @@
  * @module GDPR
  */
 
+import { readStored, removeStored, writeStored } from "./storage.js";
+
 /**
  * Read back the consent decision recorded for this visitor
  * @function getConsentStatus
@@ -10,28 +12,26 @@
  * @returns {string|null} The recorded decision, or null when the visitor has not answered
  */
 export function getConsentStatus() {
-  return (
-    localStorage.getItem("gdpr-consent") ?? localStorage.getItem("gdpr-choice")
-  );
+  return readStored("gdpr-consent") ?? readStored("gdpr-choice");
 }
 
 /**
  * Build the consent banner and append it to the page
  * @function buildBanner
- * @description Built here rather than written into each page, so every page shows the same wording and none can ship without it.
+ * @description Built here rather than written into each page, so every page shows the same wording and none can ship without it. An aside with a name, so the banner is a landmark of its own instead of loose content outside every region. The link is root-absolute because 404.html is served at any depth, where a relative one would point under the missing path.
  * @returns {{banner: HTMLElement, acceptBtn: HTMLElement, declineBtn: HTMLElement}} The banner and its two action buttons
  */
 function buildBanner() {
-  const banner = document.createElement("div");
+  const banner = document.createElement("aside");
   banner.id = "gdpr-banner";
   banner.className = "gdpr-banner hidden";
+  banner.setAttribute("aria-label", "Privacy choices");
   banner.innerHTML = `
     <div class="gdpr-content">
       <p>
-        Accepting lets the contact form send your message through EmailJS, and
-        turns on usage counts that never leave your browser. Until then, both
-        stay off. Details in the
-        <a href="privacy-policy.html">privacy policy</a>.
+        Accepting lets the contact form send your message through EmailJS.
+        Until then, the form sends nothing. Details in the
+        <a href="/privacy-policy.html">privacy policy</a>.
       </p>
       <div class="gdpr-buttons">
         <button id="gdpr-accept" class="btn">Accept</button>
@@ -51,20 +51,15 @@ function buildBanner() {
 /**
  * Confirm a refusal was recorded and say what it costs
  * @function showRefusalNotice
- * @description Any previous notice is removed first, so repeated refusals cannot stack dialogs. The mailto route stays on screen because a refusal must not become a dead end for reaching the author. Only clicks landing on the backdrop itself dismiss it: the target comparison keeps a click inside the card from closing the dialog under the visitor.
+ * @description A native modal dialog: showModal() moves focus to the OK button, keeps it inside, makes the page behind inert and closes on Escape, none of which an aria-modal div does by itself. Every way out ends in the close event, which removes the notice, so repeated refusals cannot stack dialogs. The mailto route stays on screen because a refusal must not become a dead end for reaching the author. The dialog has no padding of its own, so a click whose target is the dialog itself landed on the backdrop: only those dismiss it.
  * @returns {void}
  */
 function showRefusalNotice() {
-  const existingNotice = document.getElementById("gdpr-refusal-notice");
-  if (existingNotice) {
-    existingNotice.remove();
-  }
+  document.getElementById("gdpr-refusal-notice")?.remove();
 
-  const notice = document.createElement("div");
+  const notice = document.createElement("dialog");
   notice.id = "gdpr-refusal-notice";
   notice.className = "gdpr-refusal-notice";
-  notice.setAttribute("role", "dialog");
-  notice.setAttribute("aria-modal", "true");
   notice.setAttribute("aria-labelledby", "gdpr-refusal-title");
 
   notice.innerHTML = `
@@ -76,31 +71,23 @@ function showRefusalNotice() {
         <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
       </p>
       <div class="gdpr-refusal-notice-actions">
-        <button type="button" class="btn" id="gdpr-refusal-close">OK</button>
+        <button type="button" class="btn" id="gdpr-refusal-close" autofocus>OK</button>
       </div>
     </div>
   `;
 
-  /**
-   * Dismiss the refusal notice
-   * @function closeNotice
-   * @description Detaches the notice from the DOM rather than hiding it; the next refusal rebuilds one from scratch.
-   * @returns {void}
-   */
-  function closeNotice() {
-    notice.remove();
-  }
-
+  notice.addEventListener("close", () => notice.remove());
   notice.addEventListener("click", (event) => {
     if (event.target === notice) {
-      closeNotice();
+      notice.close();
     }
   });
-
-  const closeButton = notice.querySelector("#gdpr-refusal-close");
-  closeButton?.addEventListener("click", closeNotice);
+  notice
+    .querySelector("#gdpr-refusal-close")
+    ?.addEventListener("click", () => notice.close());
 
   document.body.appendChild(notice);
+  notice.showModal();
 }
 
 /**
@@ -119,66 +106,29 @@ function notifyConsentChange(status) {
 }
 
 /**
- * Enable or disable every control of the contact form
- * @function setContactFormEnabled
- * @description A refusal has to reach the inputs themselves, not just a flag the
- * submit handler consults: the visitor must see that sending is off before they
- * type a message they cannot send.
- * @param {boolean} enabled - Whether the form may be used
- * @returns {void}
- */
-function setContactFormEnabled(enabled) {
-  const contactForm = document.querySelector("#contact-form");
-  if (!contactForm) {
-    return;
-  }
-
-  contactForm.querySelectorAll("input, textarea, button").forEach((input) => {
-    input.disabled = !enabled;
-  });
-}
-
-/**
  * Show the consent banner and bind the two decisions it offers
  * @function initGDPRBanner
- * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. A stored refusal is re-applied on each load, disabling the contact inputs before any interaction rather than trusting the form to check. Each decision is written under both gdpr-consent and the legacy gdpr-choice key, as privacy-policy.html states. Any [data-gdpr-reopen] control on the page re-opens the banner, because withdrawing consent has to be as easy as giving it.
+ * @description The banner appears only when no choice was ever recorded, so a decision is asked once and not on every visit. What a decision changes is the contact form's business: it reads the stored choice at init and listens for gdpr:consent-changed afterwards. Each decision is written under both gdpr-consent and the legacy gdpr-choice key, as privacy-policy.html states. Any [data-gdpr-reopen] control on the page re-opens the banner, because withdrawing consent has to be as easy as giving it.
  * @returns {void}
  */
 export function initGDPRBanner() {
   const { banner, acceptBtn, declineBtn } = buildBanner();
 
-  const consentStatus = getConsentStatus();
-  if (!consentStatus) {
+  if (!getConsentStatus()) {
     banner.classList.remove("hidden");
   }
 
   /**
-   * Record acceptance, then let analytics and the contact form run
-   * @function handleAccept
+   * Record a decision, put the banner away and announce it
+   * @function decide
+   * @param {string} status - "accepted" or "declined"
    * @returns {void}
    */
-  function handleAccept() {
-    localStorage.setItem("gdpr-consent", "accepted");
-    localStorage.setItem("gdpr-choice", "accepted");
+  function decide(status) {
+    writeStored("gdpr-consent", status);
+    writeStored("gdpr-choice", status);
     banner.classList.add("hidden");
-    notifyConsentChange("accepted");
-    globalThis.analytics?.enableTracking();
-    setContactFormEnabled(true);
-  }
-
-  /**
-   * Record refusal, stop analytics, disable the form and say what that costs
-   * @function handleDecline
-   * @returns {void}
-   */
-  function handleDecline() {
-    localStorage.setItem("gdpr-consent", "declined");
-    localStorage.setItem("gdpr-choice", "declined");
-    banner.classList.add("hidden");
-    notifyConsentChange("declined");
-    globalThis.analytics?.disableTracking();
-    showRefusalNotice();
-    setContactFormEnabled(false);
+    notifyConsentChange(status);
   }
 
   /**
@@ -186,22 +136,20 @@ export function initGDPRBanner() {
    * @function handleReopen
    * @description Erases the record instead of flipping it: re-showing the banner
    * with a decision still stored would leave the page acting on the old answer
-   * until a new button is pressed. Analytics is stopped on the way out, so the
-   * gap between withdrawing and re-answering is not silently treated as consent.
+   * until a new button is pressed.
    * @returns {void}
    */
   function handleReopen() {
-    localStorage.removeItem("gdpr-consent");
-    localStorage.removeItem("gdpr-choice");
-    globalThis.analytics?.disableTracking();
-    setContactFormEnabled(true);
-    document.querySelector(".gdpr-refusal-notice")?.remove();
+    removeStored("gdpr-consent");
+    removeStored("gdpr-choice");
     banner.classList.remove("hidden");
-    banner.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
-  acceptBtn?.addEventListener("click", handleAccept);
-  declineBtn?.addEventListener("click", handleDecline);
+  acceptBtn?.addEventListener("click", () => decide("accepted"));
+  declineBtn?.addEventListener("click", () => {
+    decide("declined");
+    showRefusalNotice();
+  });
 
   document.querySelectorAll("[data-gdpr-reopen]").forEach((control) => {
     control.addEventListener("click", (event) => {
@@ -209,8 +157,4 @@ export function initGDPRBanner() {
       handleReopen();
     });
   });
-
-  if (consentStatus === "declined") {
-    setContactFormEnabled(false);
-  }
 }

@@ -20,19 +20,16 @@ export function initProjectNavigation() {
   /**
    * Show one project and mark its tab, hiding every other project
    * @function activate
+   * @description The active class is the whole switch: projects.css shows .project.active and hides every other .project.
    * @param {HTMLElement} project - Project to show
    * @param {HTMLElement} button - Tab to mark as active
    * @returns {void}
    */
   function activate(project, button) {
-    projects.forEach((other) => {
-      other.classList.remove("active");
-      other.style.display = "none";
-    });
+    projects.forEach((other) => other.classList.remove("active"));
     navButtons.forEach((btn) => btn.classList.remove("active"));
 
     project.classList.add("active");
-    project.style.display = "block";
     button.classList.add("active");
   }
 

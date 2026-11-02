@@ -26,7 +26,7 @@ header::after {
   );
   background-size: 200% 100%;
   animation: gradient-slide var(--duration-gradient) var(--ease-standard)
-    infinite;
+    var(--iterations-loop);
   z-index: 99;
 }
 
@@ -180,7 +180,8 @@ nav ul li a.cv-link .icon {
     transition:
       transform var(--duration-normal) var(--ease-standard),
       opacity var(--duration-normal) var(--ease-standard),
-      visibility 0s linear var(--duration-normal);
+      visibility var(--duration-instant) var(--ease-linear)
+        var(--duration-normal);
   }
 
   nav ul.active {
@@ -190,7 +191,8 @@ nav ul li a.cv-link .icon {
     transition:
       transform var(--duration-normal) var(--ease-standard),
       opacity var(--duration-normal) var(--ease-standard),
-      visibility 0s linear 0s;
+      visibility var(--duration-instant) var(--ease-linear)
+        var(--duration-instant);
   }
 
   nav ul li {

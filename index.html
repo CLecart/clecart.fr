@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
 
     <script>
-      const stored = localStorage.getItem("dark-mode");
+      let stored = null;
+      try {
+        stored = localStorage.getItem("dark-mode");
+      } catch {
+        // Site data blocked: follow the system preference.
+      }
       if (
         stored === "enabled" ||
         (stored !== "disabled" &&
@@ -156,7 +161,7 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="styles.css?v=2025108" />
+    <link rel="stylesheet" href="styles.css" />
 
     <script src="js/vendor/emailjs-browser-5.0.3.min.js" defer></script>
     <script type="module" src="js/main.js"></script>
@@ -195,7 +200,7 @@
             </ul>
           </nav>
           <div class="header-buttons">
-            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+            <button class="dark-mode-toggle" aria-label="Dark mode">
               <span class="moon-icon">🌙</span>
             </button>
           </div>
@@ -1002,7 +1007,6 @@
                     autocomplete="off"
                   />
                 </div>
-                <input type="hidden" name="to_name" value="Christophe" />
                 <button type="submit" class="btn">Send Message</button>
                 <output class="form-status"></output>
               </form>

@@ -14,6 +14,23 @@ body {
   position: relative;
 }
 
+/* The one source of smooth scrolling, for anchors and script alike, and only
+   for visitors who have not asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* The one focus indicator, for every focusable element. Drawn outside the
+   element, so its contrast is against the background around it: dark on the
+   light theme's backgrounds and on the header's and footer's colour, teal on
+   the dark theme's. */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
 body {
   font-family: "Poppins", sans-serif;
   line-height: 1.6;

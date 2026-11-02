@@ -33,20 +33,12 @@
   transform: translate(0, 0);
 }
 
-#skills .section-header h2,
-#projects .section-header h2 {
-  opacity: 1;
-  transform: translateY(0);
-  animation: title-glow var(--duration-slowest) var(--ease-standard) infinite
-    alternate;
-}
-
 @keyframes title-glow {
   0% {
-    text-shadow: 0 0 2px rgba(108, 99, 255, 0);
+    text-shadow: 0 0 2px transparent;
   }
   100% {
-    text-shadow: 0 0 8px rgba(108, 99, 255, 0.4);
+    text-shadow: 0 0 8px var(--primary-light-40);
   }
 }
 
@@ -98,15 +90,6 @@ section.section-active .section-header {
   }
 }
 
-.header-content *,
-.dark-mode-toggle,
-.right-content *,
-.nav-toggle {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -126,17 +109,6 @@ section.section-active .section-header {
   100% {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 
@@ -167,17 +139,26 @@ section.section-active .section-header {
   }
 }
 
-/* Near-zero, never `none`: entrances start at opacity 0 and rely on the end
-   state being applied. Cancelling would leave them invisible. */
+/* Reduced motion crushes the timing tokens that every transition and
+   animation reads, instead of overriding the properties themselves: durations
+   and delays to zero, loops to a single pass. A value written in a rule
+   rather than taken from variables.css escapes this block, hence rule 5.
+   Zero, never `none`: entrances start at opacity 0 and rely on their end state
+   being applied, which a zero-length animation still does and `none` would
+   not. Zero rather than 0.01ms: a transition with no duration is never
+   started, while at 0.01ms it paints a first frame from the old value —
+   crossing the menu's breakpoint drew the closed menu's panel. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
-    scroll-behavior: auto !important;
+  :root {
+    --duration-fast: 0s;
+    --duration-normal: 0s;
+    --duration-slow: 0s;
+    --duration-slower: 0s;
+    --duration-slowest: 0s;
+    --duration-ripple: 0s;
+    --duration-gradient: 0s;
+    --duration-pulse: 0s;
+    --stagger-step: 0s;
+    --iterations-loop: 1;
   }
 }

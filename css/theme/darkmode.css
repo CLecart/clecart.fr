@@ -41,23 +41,15 @@
   color: var(--primary);
 }
 
-.dark-mode body input,
-.dark-mode body textarea,
-.dark-mode body select {
-  background-color: var(--form-bg-dark);
-  border-color: var(--form-border-dark);
-  color: var(--text-dark);
-}
-
 .dark-mode body footer {
   color: var(--white);
   opacity: 0.9;
 }
 
 .dark-mode body p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-dark-body);
 }
 
 .dark-mode body .card-base p {
-  color: rgba(244, 244, 244, 0.95);
+  color: var(--text-dark-card);
 }

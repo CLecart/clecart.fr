@@ -32,7 +32,7 @@
   background: var(--white);
   border-radius: 24px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--black-opacity-08);
   box-sizing: border-box;
 }
 
@@ -83,21 +83,27 @@
   color: var(--primary-dark);
 }
 
+/* A native modal dialog: the top layer stands in for a z-index, ::backdrop
+   for the dimmed overlay. It has no padding, border or background of its own,
+   so the card is all there is to see and a click on the dialog itself can only
+   have landed on the backdrop. The margin is restated because reset.css zeroes
+   the user agent's auto margin, which is what centres a modal dialog. */
 .gdpr-refusal-notice {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
-  padding: 16px;
+  margin: auto;
+  width: min(520px, 100% - 32px);
+  max-width: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+  overflow: visible;
   animation: fade-in var(--duration-normal) var(--ease-smooth);
 }
 
+.gdpr-refusal-notice::backdrop {
+  background: var(--black-opacity-50);
+}
+
 .gdpr-refusal-notice-card {
-  max-width: 520px;
-  width: 100%;
   background: var(--white);
   color: var(--text-color);
   border-radius: 14px;
@@ -130,7 +136,7 @@
 
 .dark-mode body .gdpr-content {
   background: var(--card-dark);
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--white-opacity-08);
   box-shadow: var(--shadow-up-dark);
 }
 

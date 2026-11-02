@@ -33,20 +33,19 @@
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
-  outline: none;
   box-shadow: var(--input-focus-shadow);
-  background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
+  background-color: var(--input-focus-bg);
   transform: var(--hover-y-tiny);
 }
 
 .form-group input:not(:placeholder-shown),
 .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
-  background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
+  background-color: var(--input-focus-bg);
 }
 
 /* Chrome autofill: the inset shadow masks the UA's forced yellow background,
-   and the 5000s transition defers its repaint beyond any real session.
+   and a transition longer than any real session defers its repaint.
    Repeated below for dark mode. */
 .form-group input:-webkit-autofill,
 .form-group input:-webkit-autofill:hover,
@@ -54,18 +53,12 @@
 .form-group input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset;
   -webkit-text-fill-color: var(--input-color);
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-.contact-form:hover .form-group input:focus,
-.contact-form:hover .form-group textarea:focus {
-  border-color: var(--primary);
-  box-shadow: var(--input-focus-shadow);
+  transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
 /* Light mode lets #contact's tinted gradient through the card and its empty
    fields, where .card-base, --input-bg and .gdpr-message would paint them
-   opaque. Dark mode keeps its colours: those rules outrank this one there. */
+   opaque. Dark mode keeps its colours: the rules below outrank this one. */
 .contact-form,
 .contact-form input,
 .contact-form textarea,
@@ -85,13 +78,19 @@
   box-shadow: var(--shadow-dark);
 }
 
-.dark-mode body .form-group input:focus,
-.dark-mode body .form-group textarea:focus,
+/* Filled and focused share the border and the tint; only focus adds the glow,
+   as in light mode, so a filled field never looks like the one being typed in. */
 .dark-mode body .form-group input:not(:placeholder-shown),
-.dark-mode body .form-group textarea:not(:placeholder-shown) {
-  box-shadow: var(--input-focus-shadow-dark);
+.dark-mode body .form-group textarea:not(:placeholder-shown),
+.dark-mode body .form-group input:focus,
+.dark-mode body .form-group textarea:focus {
   background-color: var(--input-focus-bg-dark);
   border-color: var(--primary);
+}
+
+.dark-mode body .form-group input:focus,
+.dark-mode body .form-group textarea:focus {
+  box-shadow: var(--input-focus-shadow-dark);
 }
 
 .dark-mode body .form-group input:-webkit-autofill,
@@ -100,7 +99,7 @@
 .dark-mode body .form-group input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
   -webkit-text-fill-color: var(--text-dark);
-  transition: background-color 5000s ease-in-out 0s;
+  transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
 .form-status {

@@ -21,3 +21,62 @@ section::after {
 section:last-of-type::after {
   display: none;
 }
+
+/* The heading block that opens a section, on the home page and the about
+   page alike. */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    margin-bottom: 25px;
+  }
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+  }
+}
+
+.section-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: var(--accent-line-thickness);
+  background: var(--secondary);
+}
+
+#skills .section-header h2,
+#projects .section-header h2 {
+  opacity: 1;
+  transform: translateY(0);
+  animation: title-glow var(--duration-slowest) var(--ease-standard)
+    var(--iterations-loop) alternate;
+}

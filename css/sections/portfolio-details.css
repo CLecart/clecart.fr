@@ -87,15 +87,6 @@
   overflow: hidden;
 }
 
-.portfolio-section.appear .tech-item {
-  opacity: 1;
-}
-
-.dark-mode body .tech-item {
-  background-color: var(--primary-light-15);
-  box-shadow: var(--shadow-dark);
-}
-
 .tech-item h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
@@ -117,17 +108,13 @@
 }
 
 .features-list li {
-  margin-bottom: 12px;
+  margin-bottom: 15px;
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 10px;
   font-size: 1.08rem;
   color: var(--text-color);
-  opacity: 0;
-  transform: translateX(-20px);
-  transition:
-    opacity var(--duration-slow) var(--ease-smooth),
-    transform var(--duration-slow) var(--ease-smooth);
 }
 
 .features-list li strong {
@@ -161,54 +148,11 @@
   color: var(--text-dark);
 }
 
-.portfolio-section.appear .features-list li {
-  animation: slide-in-left var(--duration-slow) forwards var(--ease-smooth);
-}
-
-.portfolio-section.appear .features-list li:nth-child(1) {
-  animation-delay: calc(var(--stagger-step) * 2);
-}
-.portfolio-section.appear .features-list li:nth-child(2) {
-  animation-delay: calc(var(--stagger-step) * 3);
-}
-.portfolio-section.appear .features-list li:nth-child(3) {
-  animation-delay: calc(var(--stagger-step) * 4);
-}
-.portfolio-section.appear .features-list li:nth-child(4) {
-  animation-delay: calc(var(--stagger-step) * 5);
-}
-.portfolio-section.appear .features-list li:nth-child(5) {
-  animation-delay: calc(var(--stagger-step) * 6);
-}
-.portfolio-section.appear .features-list li:nth-child(6) {
-  animation-delay: calc(var(--stagger-step) * 7);
-}
-.portfolio-section.appear .features-list li:nth-child(7) {
-  animation-delay: calc(var(--stagger-step) * 8);
-}
-
-.features-list li,
-.outcomes-list li {
-  margin-bottom: 15px;
-  position: relative;
-}
-
 .code-block {
   background-color: var(--dark);
   border-radius: 10px;
   overflow: hidden;
   margin: 20px 0;
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity var(--duration-slow) var(--ease-standard),
-    transform var(--duration-slow) var(--ease-standard);
-}
-
-.portfolio-section.appear .code-block {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: calc(var(--stagger-step) * 4);
 }
 
 .code-block pre {
@@ -259,10 +203,6 @@
   border: 1px solid var(--primary);
 }
 
-.portfolio-section.appear .approach-item {
-  opacity: 1;
-}
-
 .approach-item h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
@@ -277,16 +217,6 @@
   gap: 15px;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity var(--duration-slower) var(--ease-smooth),
-    transform var(--duration-slower) var(--ease-smooth);
-}
-
-.cta-section.appear {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .cta-section .btn {
@@ -382,7 +312,7 @@
     font-size: 1.3rem;
     font-weight: 700;
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-cta-mobile);
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -390,7 +320,7 @@
 
   .cta-section .btn:active {
     transform: translateY(2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-cta-mobile-active);
   }
 
   .cta-section .btn .icon {
@@ -409,25 +339,14 @@
   margin-top: 25px;
 }
 
-/* Composes the shared card transition rather than replacing it: `transition`
-   is a shorthand, so declaring opacity alone here would drop the transform,
-   box-shadow and border-color transitions this card gets from cards.css. */
 .outcomes-list li {
   background-color: var(--primary-light);
   border-radius: 10px;
   padding: 18px 20px 18px 50px;
   position: relative;
-  transition:
-    var(--card-transition),
-    opacity var(--duration-slow) var(--ease-smooth);
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
   margin-bottom: 0;
-  opacity: 0;
-}
-
-.outcomes-list li.appear-outcome {
-  opacity: 1;
 }
 
 /* 0.3em is the half-leading of a 1.6 line: the star sits where a glyph of its
@@ -439,11 +358,6 @@
   color: var(--primary);
   font-size: var(--icon-size-small);
   transition: var(--card-icon-transition);
-}
-
-.dark-mode body .outcomes-list li {
-  background-color: var(--primary-light-15);
-  box-shadow: var(--shadow-dark);
 }
 
 @media (max-width: 768px) {
@@ -524,46 +438,58 @@
   }
 }
 
-/* `backwards`, never `forwards`: a filled-forwards animation keeps applying its
+/* The page's one entrance. The shared .fade-in observer adds .appear to the
+   section; everything it holds then rises in, --stagger-step apart in source
+   order. Nothing here is hidden before .appear, the section's own opacity
+   covers the wait: without JS, .no-js shows the section and all it holds.
+   `backwards`, never `forwards`: a filled-forwards animation keeps applying its
    100% keyframe (transform: translateY(0)) from the animation origin, which
    outranks every normal declaration — :hover could not lift these cards at any
    specificity. Filling backwards covers the stagger delay instead, then hands
    transform back to the cascade when the entrance ends. */
-.portfolio-section.appear .tech-item,
-.portfolio-section.appear .approach-item {
+.portfolio-section.appear
+  :is(
+    .tech-item,
+    .approach-item,
+    .features-list li,
+    .outcomes-list li,
+    .code-block
+  ) {
   animation: fade-in-up var(--duration-slower) backwards var(--ease-smooth);
+  animation-delay: calc(var(--stagger-step) * (var(--stagger-order, 1) + 1));
 }
 
-.portfolio-section.appear .tech-item:nth-child(1),
-.portfolio-section.appear .approach-item:nth-child(1) {
-  animation-delay: calc(var(--stagger-step) * 2);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(2) {
+  --stagger-order: 2;
 }
-.portfolio-section.appear .tech-item:nth-child(2),
-.portfolio-section.appear .approach-item:nth-child(2) {
-  animation-delay: calc(var(--stagger-step) * 3);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(3) {
+  --stagger-order: 3;
 }
-.portfolio-section.appear .tech-item:nth-child(3),
-.portfolio-section.appear .approach-item:nth-child(3) {
-  animation-delay: calc(var(--stagger-step) * 4);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(4) {
+  --stagger-order: 4;
 }
-.portfolio-section.appear .tech-item:nth-child(4),
-.portfolio-section.appear .approach-item:nth-child(4) {
-  animation-delay: calc(var(--stagger-step) * 5);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(5) {
+  --stagger-order: 5;
 }
-.portfolio-section.appear .tech-item:nth-child(5) {
-  animation-delay: calc(var(--stagger-step) * 6);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(6) {
+  --stagger-order: 6;
 }
-.portfolio-section.appear .tech-item:nth-child(6) {
-  animation-delay: calc(var(--stagger-step) * 7);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(7) {
+  --stagger-order: 7;
 }
-.portfolio-section.appear .tech-item:nth-child(7) {
-  animation-delay: calc(var(--stagger-step) * 8);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(8) {
+  --stagger-order: 8;
 }
-.portfolio-section.appear .tech-item:nth-child(8) {
-  animation-delay: calc(var(--stagger-step) * 9);
-}
-.portfolio-section.appear .tech-item:nth-child(9) {
-  animation-delay: calc(var(--stagger-step) * 10);
+:is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
+  > :nth-child(9) {
+  --stagger-order: 9;
 }
 
 .dark-mode body .tech-item,

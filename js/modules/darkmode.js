@@ -3,6 +3,8 @@
  * @author Christophe Lecart
  */
 
+import { writeStored } from "../utils/storage.js";
+
 /**
  * Wire the theme toggle to the theme the head bootstrap already applied
  * @function initDarkMode
@@ -19,22 +21,23 @@ export function initDarkMode() {
   const root = document.documentElement;
 
   /**
-   * Show the theme the toggle would switch to
-   * @function updateToggleIcon
-   * @description The icon advertises the destination, not the current state: dark mode shows a sun.
+   * Show the current theme on the toggle: aria-pressed for assistive technology, an icon for the eye
+   * @function showTheme
+   * @description The icon advertises the destination, not the current state: dark mode shows a sun. The button's aria-label replaces its text as its name, so the emoji is never announced and aria-pressed is the only state a screen reader gets.
    * @param {boolean} isDark - Current theme
    * @returns {void}
    */
-  function updateToggleIcon(isDark) {
+  function showTheme(isDark) {
     icon.textContent = isDark ? "☀️" : "🌙";
+    darkModeToggle.setAttribute("aria-pressed", String(isDark));
   }
 
-  updateToggleIcon(root.classList.contains("dark-mode"));
+  showTheme(root.classList.contains("dark-mode"));
 
   darkModeToggle.addEventListener("click", () => {
     const isDark = root.classList.toggle("dark-mode");
     root.style.colorScheme = isDark ? "dark" : "light";
-    localStorage.setItem("dark-mode", isDark ? "enabled" : "disabled");
-    updateToggleIcon(isDark);
+    showTheme(isDark);
+    writeStored("dark-mode", isDark ? "enabled" : "disabled");
   });
 }

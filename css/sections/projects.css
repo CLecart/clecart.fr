@@ -43,11 +43,6 @@ body:not(.homepage) .description {
   opacity: 1;
 }
 
-#project1.project {
-  display: block;
-  opacity: 1;
-}
-
 .description h2 {
   color: var(--primary);
   margin-bottom: 20px;

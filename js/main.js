@@ -1,5 +1,6 @@
 /**
- * Entry point: the only module that runs on import, and the one that calls every init*()
+ * Entry point of the site's pages, and the one module that calls every init*()
+ * @description It runs on import, as js/cv.js does for /cv/; every other module only exports.
  * @author Christophe Lecart
  */
 
@@ -13,8 +14,6 @@ import { initProjectNavigation } from "./modules/project-navigation.js";
 import { initVideoHandler } from "./modules/videoHandler.js";
 import { initGDPRBanner } from "./utils/gdpr.js";
 import { registerServiceWorker } from "./utils/sw-register.js";
-import { initWebVitals } from "./utils/webvitals.js";
-import PrivacyAnalytics from "./utils/analytics.js";
 
 /**
  * Collapse the project grid to whole rows behind a View More toggle
@@ -32,6 +31,7 @@ function initViewMoreProjects() {
   }
 
   let expanded = false;
+  let resizeTimer;
 
   /**
    * Count the columns the grid currently resolves to
@@ -65,7 +65,10 @@ function initViewMoreProjects() {
     btn.textContent = "View More Projects";
   }
 
+  /* A collapse still pending from a resize would land after this click and
+     undo it, leaving the button out of step with the grid. */
   btn.addEventListener("click", () => {
+    clearTimeout(resizeTimer);
     expanded = !expanded;
     if (expanded) {
       allCards.forEach((card) => {
@@ -82,7 +85,6 @@ function initViewMoreProjects() {
 
   showInitialCards();
 
-  let resizeTimer;
   globalThis.addEventListener("resize", () => {
     if (expanded) {
       return;
@@ -95,9 +97,6 @@ function initViewMoreProjects() {
 document.addEventListener("DOMContentLoaded", () => {
   initDarkMode();
   initNavigation();
-  initWebVitals();
-
-  globalThis.analytics = new PrivacyAnalytics();
 
   requestAnimationFrame(() => {
     initAnimations();

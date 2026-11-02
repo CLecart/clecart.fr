@@ -4,6 +4,7 @@
   --primary-light: rgba(108, 99, 255, 0.1);
   --primary-light-15: rgba(108, 99, 255, 0.15);
   --primary-light-20: rgba(108, 99, 255, 0.2);
+  --primary-light-40: rgba(108, 99, 255, 0.4);
   --primary-opacity: rgba(108, 99, 255, 0.8);
   --btn-view-live-bg: #d6113c;
   --secondary: #4ecdc4;
@@ -20,16 +21,21 @@
   --light-gray: #f0f0f0;
   --black: #000000;
   --github-icon-color: #15191f;
-  --gdpr-message-bg-dark: rgba(255, 255, 255, 0.08);
+  --gdpr-message-bg-dark: var(--white-opacity-08);
+  --rust-logo-color: #ce422b;
   --github-icon-size: 1.9rem;
   --text-color: #2d334a;
   --text-light: #6c757d;
   --text-dark: #f4f4f4;
   --text-gray-dark: #d1d1d1;
+  --text-dark-body: rgba(255, 255, 255, 0.9);
+  --text-dark-card: rgba(244, 244, 244, 0.95);
+  --white-opacity-08: rgba(255, 255, 255, 0.08);
   --white-opacity-10: rgba(255, 255, 255, 0.1);
   --white-opacity-20: rgba(255, 255, 255, 0.2);
+  --black-opacity-08: rgba(0, 0, 0, 0.08);
   --black-opacity-30: rgba(0, 0, 0, 0.3);
-  --black-opacity-80: rgba(0, 0, 0, 0.8);
+  --black-opacity-50: rgba(0, 0, 0, 0.5);
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
@@ -43,6 +49,8 @@
   --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.08);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
+  --shadow-cta-mobile: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-cta-mobile-active: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-dark: 0 8px 25px var(--black-opacity-30);
   --shadow-up-dark: 0 -5px 20px rgba(0, 0, 0, 0.3);
   --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -82,6 +90,7 @@
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-standard: ease;
   --ease-in-out: ease-in-out;
+  --ease-linear: linear;
 
   --duration-fast: 0.2s;
   --duration-normal: 0.3s;
@@ -90,7 +99,12 @@
   --duration-slowest: 2.5s;
   --duration-ripple: 2s;
   --duration-gradient: 5s;
+  --duration-instant: 0s;
   --stagger-step: 0.05s;
+  --iterations-loop: infinite;
+  /* Not motion, so reduced motion leaves it alone: it holds Chrome's autofill
+     colour off for longer than any visit (forms.css). */
+  --duration-autofill-hold: 5000s;
 
   --transition: all var(--duration-normal) var(--ease-smooth);
   --hover-y-tiny: translateY(-2px);
@@ -123,7 +137,7 @@
      animation always wins, so an element pulses or it scales, never both. */
   --duration-pulse: 1.5s;
   --card-hover-pulse: card-pulse var(--duration-pulse) var(--ease-in-out)
-    infinite;
+    var(--iterations-loop);
   --card-pulse-travel: 3.6;
   --card-pulse-scale-xs: calc(1 + var(--card-pulse-travel) / 14.4); /* 0.9rem */
   --card-pulse-scale-sm: calc(1 + var(--card-pulse-travel) / 17.6); /* 1.1rem */
@@ -164,11 +178,12 @@
   --neon-shadow: 0 0 24px 4px var(--primary);
   --neon-shadow-dark: 0 0 32px 6px var(--primary);
   --input-focus-shadow-dark: 0 5px 15px rgba(108, 99, 255, 0.2);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--dark);
 }
 
 .dark-mode body {
-  --input-bg: var(--form-bg-dark);
-  --input-focus-bg: var(--input-focus-bg-dark);
-  --input-color: var(--text-dark);
   --text-color: var(--text-dark);
+  --focus-ring-color: var(--secondary);
 }

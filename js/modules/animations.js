@@ -20,6 +20,7 @@ function createObserver(callback) {
 /**
  * Reveal entrance-animated elements as they scroll in, and flag the sections on screen
  * @function initAnimations
+ * @description The only entrance trigger on the site. What appears inside a revealed element, and with what stagger, is CSS keyed on its .appear class, so the reduced-motion query reaches every step of it.
  * @returns {void}
  */
 export function initAnimations() {
@@ -50,38 +51,6 @@ export function initAnimations() {
   document.querySelectorAll("section[id]").forEach((section) => {
     sectionObserver.observe(section);
   });
-
-  initLearningOutcomesAnimations();
-}
-
-/**
- * Reveal the learning-outcome items 100 ms apart, the first time the list scrolls in
- * @function initLearningOutcomesAnimations
- * @returns {void}
- */
-function initLearningOutcomesAnimations() {
-  const outcomesList = document.querySelector(".outcomes-list");
-  if (!outcomesList) {
-    return;
-  }
-
-  const outcomesObserver = createObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const listItems = entry.target.querySelectorAll("li");
-
-        listItems.forEach((item, index) => {
-          setTimeout(() => {
-            item.classList.add("appear-outcome");
-          }, index * 100);
-        });
-
-        outcomesObserver.unobserve(entry.target);
-      }
-    });
-  });
-
-  outcomesObserver.observe(outcomesList);
 }
 
 /**

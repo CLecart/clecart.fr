@@ -8,7 +8,6 @@
   font-weight: var(--btn-font-weight);
   box-shadow: var(--btn-shadow);
   border: none;
-  outline: none;
   cursor: pointer;
   text-decoration: none;
   position: relative;
@@ -107,7 +106,8 @@
 }
 
 .github-btn:hover {
-  animation: pulse-red var(--duration-ripple) var(--ease-standard) infinite;
+  animation: pulse-red var(--duration-ripple) var(--ease-standard)
+    var(--iterations-loop);
 }
 
 @keyframes pulse-red {

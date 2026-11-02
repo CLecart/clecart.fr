@@ -2,7 +2,6 @@
   "name": "clecart-portfolio",
   "version": "1.0.0",
   "description": "Portfolio professionnel de Christophe Lecart - Software Engineer & Green IT Lead",
-  "main": "index.html",
   "type": "module",
   "scripts": {
     "start": "python3 -m http.server 8000",
@@ -48,10 +47,5 @@
   },
   "engines": {
     "node": "^22.22.2 || >=24.15.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  }
 }

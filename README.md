@@ -219,7 +219,6 @@ clecart.fr/
 │       │   │   └── Konekt.webp       # Poster for the Konekt demo
 │       │   └── profile.webp
 │       ├── manifest/
-│       │   ├── browserconfig.xml
 │       │   └── site.webmanifest
 │       └── videos/                   # Project demos (.mp4 + .en.vtt captions)
 │           ├── AbrisCraft.en.vtt

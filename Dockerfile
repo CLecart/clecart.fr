@@ -1,8 +1,12 @@
-FROM nginx:alpine
+# Pinned to an exact release of the stable branch: the bare nginx:alpine tag
+# follows mainline, so two builds of the same commit could ship different
+# servers. Bump deliberately.
+FROM nginx:1.30.6-alpine
 
-LABEL maintainer="Christophe Lecart <contact@clecart.fr>"
-LABEL description="Professional Portfolio - Full Stack Developer"
-LABEL version="1.0.0"
+LABEL org.opencontainers.image.title="clecart.fr" \
+      org.opencontainers.image.description="Portfolio of Christophe Lecart, Software Engineer & Green IT Lead" \
+      org.opencontainers.image.authors="Christophe Lecart <contact@clecart.fr>" \
+      org.opencontainers.image.source="https://github.com/CLecart/clecart.fr"
 
 RUN addgroup -g 1001 -S nginx-user && \
     adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx-user -g nginx-user nginx-user && \

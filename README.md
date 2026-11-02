@@ -77,7 +77,7 @@ no server-side code at all.
 - **Preloads:** `profile.webp` with `fetchpriority="high"`, and the Poppins faces each page's first viewport draws (400 and 700 everywhere, 600 on the home page). There is no `dns-prefetch` or `preconnect` left: no page loads anything from another host.
 - **Self-hosted font:** Poppins latin 400/600/700 in `assets/fonts/` (23.7 KB of woff2), byte-identical to the files Google Fonts served, declared in `css/base/fonts.css` with Google's own `unicode-range`. Measured in Chrome on 2026-11-02 on a local HTTP/2 server throttled to 150 ms / 1.6 Mbps: with the preloads the fonts arrive before first paint in 7 runs out of 7 (0/7 without), and CLS falls from 0.032 to 0.003 on the home page.
 - **Skill logos:** the nine devicon 2.18.0 SVGs live in `assets/icons/devicon/` (23.0 KB, 9.2 KB gzipped), instead of an unpinned jsDelivr URL.
-- **UI icons from one local sprite:** the 21 Font Awesome Free 6.4.0 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (13.6 KB, 5.4 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome webfont they replace: a first visit to the home page transfers 13.8 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a return visit took the sprite from the browser cache, 0 bytes.
+- **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page transfers 14.9 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a return visit takes the sprite from the browser cache, 0 bytes.
 - **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for same-origin images, plus an in-worker SVG placeholder when an image cannot be fetched offline. Everything else — fonts, videos, captions, the icon sprite (fetched as type _other_) and the EmailJS call — is not intercepted and goes to the network and the browser's HTTP cache. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
 - **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
@@ -213,7 +213,7 @@ clecart.fr/
 │       │   ├── favicon-16x16.png
 │       │   ├── favicon-32x32.png
 │       │   ├── favicon.ico
-│       │   └── sprite.svg            # Font Awesome Free 6.4.0, 21 UI icons
+│       │   └── sprite.svg            # Font Awesome Free 7.3.1, 21 UI icons
 │       ├── images/
 │       │   ├── posters/
 │       │   │   └── Konekt.webp       # Poster for the Konekt demo
@@ -446,7 +446,7 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** nothing is fetched from a third party. The EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`); the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
+- **Supply chain:** nothing is fetched from a third party. The EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`); the 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
 - **Container Security** with non-root user and health checks
@@ -539,7 +539,7 @@ in `assets/fonts/`, `assets/icons/devicon/` and `js/vendor/` are theirs.
 
 ### Technologies Used
 
-- **Icons:** [Font Awesome Free](https://fontawesome.com/) 6.4.0 (UI icons, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — copied into `assets/icons/sprite.svg` with their attribution) and [Devicon](https://devicon.dev/) 2.18.0 (skill logos, MIT — copied into `assets/icons/devicon/` with `LICENSE.txt`)
+- **Icons:** [Font Awesome Free](https://fontawesome.com/) 7.3.1 (UI icons, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — copied into `assets/icons/sprite.svg` with their attribution) and [Devicon](https://devicon.dev/) 2.18.0 (skill logos, MIT — copied into `assets/icons/devicon/` with `LICENSE.txt`)
 - **Font:** [Poppins](https://github.com/itfoundry/Poppins) by the Poppins Project Authors ([SIL OFL 1.1](https://openfontlicense.org/) — the files [Google Fonts](https://fonts.google.com/specimen/Poppins) serves, copied into `assets/fonts/` with `OFL.txt`)
 - **Email Service:** [EmailJS](https://emailjs.com/)
 - **Hosting:** [GitHub Pages](https://pages.github.com/)

@@ -26,10 +26,12 @@ Ce qui protège réellement le site public :
   registre. Sa licence BSD-3-Clause est à côté. Un fichier épinglé et servi
   depuis la même origine n'a pas besoin de SRI.
 - Les **icônes d'interface** ne sont pas une ressource tierce : les 21 icônes
-  Font Awesome Free 6.4.0 que les pages dessinent sont copiées dans
-  `assets/icons/sprite.svg`, servi par le site lui-même. Leurs tracés viennent
-  de l'archive npm `@fortawesome/fontawesome-free@6.4.0`, vérifiée contre
-  l'empreinte `integrity` publiée par le registre.
+  Font Awesome Free 7.3.1 que les pages dessinent sont copiées dans
+  `assets/icons/sprite.svg`, servi par le site lui-même. Leurs tracés et leurs
+  `viewBox` viennent de l'archive npm `@fortawesome/fontawesome-free@7.3.1`,
+  vérifiée contre l'empreinte `integrity` publiée par le registre : chaque
+  attribut `d` et `viewBox` est, caractère pour caractère, celui de la même
+  icône dans ses `sprites/solid.svg` et `sprites/brands.svg`.
 - La police **Poppins** est servie par le site (`assets/fonts/`) : les trois
   fichiers woff2 (latin, graisses 400, 600 et 700) sont, à l'octet près
   (sha256), ceux que Google Fonts envoyait au navigateur (Poppins v24). Licence

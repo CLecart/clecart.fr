@@ -1,6 +1,7 @@
-/* Font Awesome's own inline-SVG metrics, so each sprite icon lands where its
-   font glyph stood: one em tall, as wide as the viewBox on its <svg> makes it,
-   and lowered by the glyph's descent (64 of 512 units) below the baseline. */
+/* Font Awesome 7's inline-SVG metrics: one em tall, lowered by the glyph's
+   descent (64 of 512 units) below the baseline. Its default width, a fixed
+   1.25em with the drawing centred in it, is left out: each icon is as wide as
+   the viewBox on its <svg> makes it, which is FA's own width-auto. */
 .icon {
   height: 1em;
   overflow: visible;

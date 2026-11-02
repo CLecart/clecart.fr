@@ -20,10 +20,11 @@ Ce qui protège réellement le site public :
 
 ## Chaîne d'approvisionnement
 
-- Le **SDK EmailJS 3.12.1** (jsDelivr) est épinglé à une version exacte puis
-  signé (`integrity` + `crossorigin="anonymous"`). Le pin précède toujours la
-  signature : signer une plage flottante (`@3`) casse le site au premier
-  correctif amont.
+- Le **SDK EmailJS 5.0.3** est servi par le site lui-même
+  (`js/vendor/emailjs-browser-5.0.3.min.js`), copie à l'octet près du fichier
+  de l'archive npm, dont npm vérifie l'empreinte `integrity` publiée par le
+  registre. Sa licence BSD-3-Clause est à côté. Un fichier épinglé et servi
+  depuis la même origine n'a pas besoin de SRI.
 - Les **icônes d'interface** ne sont pas une ressource tierce : les 21 icônes
   Font Awesome Free 6.4.0 que les pages dessinent sont copiées dans
   `assets/icons/sprite.svg`, servi par le site lui-même. Leurs tracés viennent
@@ -93,7 +94,7 @@ gratuit, donc les domaines qui y figurent sont **inertes**.
 ### Content Security Policy
 
 ```nginx
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
 ```
 
 - `script-src 'unsafe-inline'` : requis par le bootstrap de thème inline en
@@ -106,7 +107,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   violation, et l'envoi du formulaire, l'acceptation du bandeau, le thème, le
   menu mobile, la page projets et `/cv/` fonctionnent. Le refus du bandeau n'a
   pas été testé.
-- `cdn.jsdelivr.net` : SDK EmailJS (script) et icônes devicon (images).
+- `cdn.jsdelivr.net` : icônes devicon (images).
 - `api.emailjs.com` : envoi du formulaire, seul hôte EmailJS contacté, et
   seulement à l'envoi.
 - `fonts.googleapis.com` + `fonts.gstatic.com` : Google Fonts.

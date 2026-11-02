@@ -84,7 +84,7 @@ no server-side code at all.
 ### 🛡️ **Security and Compliance**
 
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
-- **Subresource Integrity:** the one third-party resource that can carry it — the EmailJS SDK 3.12.1 — is pinned to an exact version and signed with `integrity` + `crossorigin="anonymous"`. Pinning always precedes signing: a floating range plus a hash breaks the site on the first upstream patch.
+- **No third-party script:** the EmailJS SDK 5.0.3 is served by the site itself from `js/vendor/`, byte-identical to the file in the npm tarball (whose `integrity` npm checks against the registry), with its BSD-3-Clause licence beside it. A pinned, same-origin file needs no Subresource Integrity, and a CDN outage or compromise can no longer reach the form.
 - **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables both analytics and the contact form.
 - **Privacy-First Analytics:** consent-gated and, as it stands, entirely local — no analytics endpoint is configured, so events are buffered in `localStorage` (last 50) and dropped. No personal data is collected and nothing is shared with a third party.
@@ -400,7 +400,7 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** the EmailJS SDK is version-pinned and SRI-signed. The UI icons are not a third-party resource: the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg` and served with the site. The Google Fonts stylesheet cannot be signed (its CSS varies by user agent), and the skill icons are unpinned `<img>` SVGs from jsDelivr — images cannot carry SRI, and the CSP restricts `img-src` accordingly.
+- **Supply chain:** the EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`). The UI icons are not a third-party resource: the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg` and served with the site. The Google Fonts stylesheet cannot be signed (its CSS varies by user agent), and the skill icons are unpinned `<img>` SVGs from jsDelivr — images cannot carry SRI, and the CSP restricts `img-src` accordingly.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
 - **Container Security** with non-root user and health checks

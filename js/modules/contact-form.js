@@ -38,7 +38,7 @@ export function initContactForm() {
   });
 
   if (typeof emailjs !== "undefined") {
-    emailjs.init(EMAILJS.user);
+    emailjs.init({ publicKey: EMAILJS.user });
   }
 
   setupFormSubmissionHandling(contactForm, formStatus);

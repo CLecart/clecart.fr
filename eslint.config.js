@@ -4,7 +4,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 
 export default [
   {
-    ignores: ["node_modules/**", "docs/**", "coverage/**"],
+    ignores: ["node_modules/**", "docs/**", "coverage/**", "js/vendor/**"],
   },
 
   js.configs.recommended,

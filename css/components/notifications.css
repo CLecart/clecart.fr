@@ -14,7 +14,7 @@
   box-shadow: var(--shadow);
   z-index: 9999;
   max-width: 90%;
-  animation: slide-up 0.3s var(--ease-smooth) forwards;
+  animation: slide-up var(--duration-normal) var(--ease-smooth) forwards;
 }
 
 .app-update-notification p {

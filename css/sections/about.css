@@ -1,22 +1,3 @@
-@media (max-width: 480px) {
-  .about-buttons .btn,
-  .about-buttons .btn-secondary {
-    font-size: 1rem;
-    padding: 12px 24px;
-    width: 100%;
-    max-width: 220px;
-    min-width: 110px;
-    border-radius: var(--btn-radius);
-    box-sizing: border-box;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 4px auto;
-  }
-}
-/** Styles for the portfolio "About" section */
-
 /* No base #about rule on purpose. A padded, 100vh-tall About pushes
    #languages below the fold, and both must stay visible when the About nav
    link is followed. Only the narrow breakpoints pad the section, where
@@ -240,6 +221,9 @@
   .about-buttons .btn {
     min-width: unset;
     width: auto;
+    max-width: 220px;
     padding: 8px 14px;
+    margin: 4px auto;
+    text-align: center;
   }
 }

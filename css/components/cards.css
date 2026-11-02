@@ -1,8 +1,3 @@
-/**
- * Card components with unified styling
- * @description Base card styles with variants, responsive design and animations
- */
-
 .card-base {
   background-color: var(--card-bg);
   color: var(--card-color);
@@ -153,15 +148,14 @@ body.dark-mode .project-content p {
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
-  width: 40px;
-  height: 40px;
+  min-width: 48px;
+  min-height: 48px;
 }
 
 .language-icon img {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  transition: var(--transition);
 }
 
 .language-card span {
@@ -233,8 +227,7 @@ body.dark-mode .portfolio-section:hover {
    harmonisation.
 
    Each icon takes the scale matching its own size, so they all travel the same
-   distance. Grouped by size, not by role. */
-.card-base:hover .card-icon,
+   distance. */
 .skill-card:hover .skill-icon {
   --card-pulse-scale: var(--card-pulse-scale-lg);
   animation: var(--card-hover-pulse);

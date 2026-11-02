@@ -1,5 +1,3 @@
-/** Portfolio details page styles - harmonized */
-
 .portfolio-details {
   padding: 130px 0 60px;
 }
@@ -168,25 +166,25 @@ body.dark-mode .features-list li {
 }
 
 .portfolio-section.appear .features-list li:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: calc(var(--stagger-step) * 2);
 }
 .portfolio-section.appear .features-list li:nth-child(2) {
-  animation-delay: 0.15s;
+  animation-delay: calc(var(--stagger-step) * 3);
 }
 .portfolio-section.appear .features-list li:nth-child(3) {
-  animation-delay: 0.2s;
+  animation-delay: calc(var(--stagger-step) * 4);
 }
 .portfolio-section.appear .features-list li:nth-child(4) {
-  animation-delay: 0.25s;
+  animation-delay: calc(var(--stagger-step) * 5);
 }
 .portfolio-section.appear .features-list li:nth-child(5) {
-  animation-delay: 0.3s;
+  animation-delay: calc(var(--stagger-step) * 6);
 }
 .portfolio-section.appear .features-list li:nth-child(6) {
-  animation-delay: 0.35s;
+  animation-delay: calc(var(--stagger-step) * 7);
 }
 .portfolio-section.appear .features-list li:nth-child(7) {
-  animation-delay: 0.4s;
+  animation-delay: calc(var(--stagger-step) * 8);
 }
 
 .features-list li,
@@ -210,7 +208,7 @@ body.dark-mode .features-list li {
 .portfolio-section.appear .code-block {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.2s;
+  transition-delay: calc(var(--stagger-step) * 4);
 }
 
 .code-block pre {
@@ -282,8 +280,8 @@ body.dark-mode .approach-item.card-base:hover {
   opacity: 0;
   transform: translateY(20px);
   transition:
-    opacity 0.8s var(--ease-smooth),
-    transform 0.8s var(--ease-smooth);
+    opacity var(--duration-slower) var(--ease-smooth),
+    transform var(--duration-slower) var(--ease-smooth);
 }
 
 .cta-section.appear {
@@ -327,11 +325,6 @@ body.dark-mode .code-block {
   .tech-grid,
   .approach-grid {
     grid-template-columns: 1fr;
-  }
-
-  .cta-section {
-    flex-direction: column;
-    align-items: center;
   }
 
   .cta-section .btn {
@@ -380,12 +373,6 @@ body.dark-mode .code-block {
 
   .features-list i {
     font-size: 1.1rem;
-  }
-
-  .cta-section {
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
   }
 
   .cta-section .btn {
@@ -550,34 +537,34 @@ body.dark-mode .outcomes-list li {
 
 .portfolio-section.appear .tech-item:nth-child(1),
 .portfolio-section.appear .approach-item:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: calc(var(--stagger-step) * 2);
 }
 .portfolio-section.appear .tech-item:nth-child(2),
 .portfolio-section.appear .approach-item:nth-child(2) {
-  animation-delay: 0.15s;
+  animation-delay: calc(var(--stagger-step) * 3);
 }
 .portfolio-section.appear .tech-item:nth-child(3),
 .portfolio-section.appear .approach-item:nth-child(3) {
-  animation-delay: 0.2s;
+  animation-delay: calc(var(--stagger-step) * 4);
 }
 .portfolio-section.appear .tech-item:nth-child(4),
 .portfolio-section.appear .approach-item:nth-child(4) {
-  animation-delay: 0.25s;
+  animation-delay: calc(var(--stagger-step) * 5);
 }
 .portfolio-section.appear .tech-item:nth-child(5) {
-  animation-delay: 0.3s;
+  animation-delay: calc(var(--stagger-step) * 6);
 }
 .portfolio-section.appear .tech-item:nth-child(6) {
-  animation-delay: 0.35s;
+  animation-delay: calc(var(--stagger-step) * 7);
 }
 .portfolio-section.appear .tech-item:nth-child(7) {
-  animation-delay: 0.4s;
+  animation-delay: calc(var(--stagger-step) * 8);
 }
 .portfolio-section.appear .tech-item:nth-child(8) {
-  animation-delay: 0.45s;
+  animation-delay: calc(var(--stagger-step) * 9);
 }
 .portfolio-section.appear .tech-item:nth-child(9) {
-  animation-delay: 0.5s;
+  animation-delay: calc(var(--stagger-step) * 10);
 }
 
 body.dark-mode .tech-item,

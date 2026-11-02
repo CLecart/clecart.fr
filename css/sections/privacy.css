@@ -1,5 +1,3 @@
-/* Styles for privacy policy page */
-
 /* Layout only. Background, radius, shadow and colour come from .card-base,
    which the markup already carries: repeating them here did not change a pixel,
    it just outranked the hover with an ID and left this the only card on the

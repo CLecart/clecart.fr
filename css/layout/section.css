@@ -1,0 +1,23 @@
+section {
+  position: relative;
+}
+
+section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--accent-line-thickness);
+  background: linear-gradient(
+    90deg,
+    var(--primary-light),
+    var(--primary),
+    var(--primary-light)
+  );
+  opacity: 0.7;
+}
+
+section:last-of-type::after {
+  display: none;
+}

@@ -1,8 +1,3 @@
-/* contact.css
-   Contact section styles for portfolio
-   Organisation : conteneur principal, formulaire, informations, responsive
-*/
-
 #contact {
   padding: 80px 0 120px;
   background: var(--gradient-1-light);
@@ -76,10 +71,6 @@
 .contact-info h3 {
   margin-bottom: 25px;
   color: var(--text-color);
-}
-
-body.dark-mode #contact {
-  background: var(--gradient-dark);
 }
 
 body.dark-mode .contact-info h3,

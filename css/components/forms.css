@@ -1,5 +1,3 @@
-/* Form components styles */
-
 .form-group {
   margin-bottom: 25px;
   width: 100%;
@@ -47,32 +45,9 @@
   background-color: var(--input-focus-bg, rgba(240, 240, 240, 0.2));
 }
 
-body .form-group input[type="text"].has-content,
-body .form-group input[type="text"].field-valid,
-body .form-group input[type="email"].email-valid,
-body .form-group input[type="email"].field-valid,
-body .form-group textarea.has-content,
-body .form-group textarea.field-valid {
-  border-color: var(--status-success-color);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M9 16.17l-4.24-4.24a1 1 0 0 0-1.42 1.42l5 5a1 1 0 0 0 1.42 0l11-11a1 1 0 0 0-1.42-1.42L9 16.17z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right var(--spacing-sm) center;
-  background-size: 20px 20px;
-  padding-right: 45px;
-}
-
-body .form-group input[type="text"].has-content:focus,
-body .form-group input[type="text"].field-valid:focus,
-body .form-group input[type="email"].email-valid:focus,
-body .form-group input[type="email"].field-valid:focus,
-body .form-group textarea.has-content:focus,
-body .form-group textarea.field-valid:focus {
-  border-color: var(--status-success-color);
-}
-
 /* Chrome autofill: the inset shadow masks the UA's forced yellow background,
    and the 5000s transition defers its repaint beyond any real session.
-   Repeated below for the valid-state and dark-mode autofill rules. */
+   Repeated below for dark mode. */
 .form-group input:-webkit-autofill,
 .form-group input:-webkit-autofill:hover,
 .form-group input:-webkit-autofill:focus,
@@ -80,55 +55,6 @@ body .form-group textarea.field-valid:focus {
   -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset;
   -webkit-text-fill-color: var(--input-color);
   transition: background-color 5000s ease-in-out 0s;
-  animation: autofill-detect 0.1s;
-}
-
-@keyframes autofill-detect {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-body .form-group input[type="text"]:-webkit-autofill.has-content,
-body .form-group input[type="text"]:-webkit-autofill.field-valid,
-body .form-group input[type="text"]:-webkit-autofill:hover.has-content,
-body .form-group input[type="text"]:-webkit-autofill:hover.field-valid,
-body .form-group input[type="text"]:-webkit-autofill:focus.has-content,
-body .form-group input[type="text"]:-webkit-autofill:focus.field-valid,
-body .form-group input[type="text"]:-webkit-autofill:active.has-content,
-body .form-group input[type="text"]:-webkit-autofill:active.field-valid,
-body .form-group input[type="email"]:-webkit-autofill.email-valid,
-body .form-group input[type="email"]:-webkit-autofill.field-valid,
-body .form-group input[type="email"]:-webkit-autofill:hover.email-valid,
-body .form-group input[type="email"]:-webkit-autofill:hover.field-valid,
-body .form-group input[type="email"]:-webkit-autofill:focus.email-valid,
-body .form-group input[type="email"]:-webkit-autofill:focus.field-valid,
-body .form-group input[type="email"]:-webkit-autofill:active.email-valid,
-body .form-group input[type="email"]:-webkit-autofill:active.field-valid {
-  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset;
-  -webkit-text-fill-color: var(--input-color);
-  border-color: var(--status-success-color);
-  padding-right: 45px;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-body .form-group input[type="text"]:-webkit-autofill.has-content,
-body .form-group input[type="text"]:-webkit-autofill.field-valid,
-body .form-group input[type="email"]:-webkit-autofill.email-valid,
-body .form-group input[type="email"]:-webkit-autofill.field-valid {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M9 16.17l-4.24-4.24a1 1 0 0 0-1.42 1.42l5 5a1 1 0 0 0 1.42 0l11-11a1 1 0 0 0-1.42-1.42L9 16.17z'/%3E%3C/svg%3E"),
-    linear-gradient(var(--input-bg), var(--input-bg));
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    right var(--spacing-sm) center,
-    0 0;
-  background-size:
-    20px 20px,
-    100% 100%;
 }
 
 .contact-form:hover .form-group input:focus,
@@ -137,8 +63,13 @@ body .form-group input[type="email"]:-webkit-autofill.field-valid {
   box-shadow: var(--input-focus-shadow);
 }
 
-body .contact-form,
-body .contact-form * {
+/* Light mode lets #contact's tinted gradient through the card and its empty
+   fields, where .card-base, --input-bg and .gdpr-message would paint them
+   opaque. Dark mode keeps its colours: those rules outrank this one there. */
+.contact-form,
+.contact-form input,
+.contact-form textarea,
+.contact-form .gdpr-message {
   background-color: transparent;
 }
 
@@ -163,24 +94,6 @@ body.dark-mode .form-group textarea:not(:placeholder-shown) {
   border-color: var(--primary);
 }
 
-body.dark-mode .form-group input[type="text"].has-content,
-body.dark-mode .form-group input[type="text"].field-valid,
-body.dark-mode .form-group input[type="email"].email-valid,
-body.dark-mode .form-group input[type="email"].field-valid,
-body.dark-mode .form-group textarea.has-content,
-body.dark-mode .form-group textarea.field-valid {
-  border-color: var(--status-success-color);
-}
-
-body.dark-mode .form-group input[type="text"].has-content:focus,
-body.dark-mode .form-group input[type="text"].field-valid:focus,
-body.dark-mode .form-group input[type="email"].email-valid:focus,
-body.dark-mode .form-group input[type="email"].field-valid:focus,
-body.dark-mode .form-group textarea.has-content:focus,
-body.dark-mode .form-group textarea.field-valid:focus {
-  border-color: var(--status-success-color);
-}
-
 body.dark-mode .form-group input:-webkit-autofill,
 body.dark-mode .form-group input:-webkit-autofill:hover,
 body.dark-mode .form-group input:-webkit-autofill:focus,
@@ -188,69 +101,6 @@ body.dark-mode .form-group input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
   -webkit-text-fill-color: var(--text-dark);
   transition: background-color 5000s ease-in-out 0s;
-}
-
-body.dark-mode .form-group input[type="text"]:-webkit-autofill.has-content,
-body.dark-mode .form-group input[type="text"]:-webkit-autofill.field-valid,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:hover.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:hover.field-valid,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:focus.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:focus.field-valid,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:active.has-content,
-body.dark-mode
-  .form-group
-  input[type="text"]:-webkit-autofill:active.field-valid,
-body.dark-mode .form-group input[type="email"]:-webkit-autofill.email-valid,
-body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:hover.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:hover.field-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:focus.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:focus.field-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:active.email-valid,
-body.dark-mode
-  .form-group
-  input[type="email"]:-webkit-autofill:active.field-valid {
-  -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
-  -webkit-text-fill-color: var(--text-dark);
-  border-color: var(--status-success-color);
-  padding-right: 45px;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-body.dark-mode .form-group input[type="text"]:-webkit-autofill.has-content,
-body.dark-mode .form-group input[type="text"]:-webkit-autofill.field-valid,
-body.dark-mode .form-group input[type="email"]:-webkit-autofill.email-valid,
-body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232e7d32'%3E%3Cpath d='M9 16.17l-4.24-4.24a1 1 0 0 0-1.42 1.42l5 5a1 1 0 0 0 1.42 0l11-11a1 1 0 0 0-1.42-1.42L9 16.17z'/%3E%3C/svg%3E"),
-    linear-gradient(var(--form-bg-dark), var(--form-bg-dark));
-  background-repeat: no-repeat, no-repeat;
-  background-position:
-    right var(--spacing-sm) center,
-    0 0;
-  background-size:
-    20px 20px,
-    100% 100%;
 }
 
 .form-status {
@@ -301,19 +151,6 @@ body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
   transform: translateY(0);
 }
 
-.field-help {
-  color: var(--text-light);
-  font-size: 0.8rem;
-  margin-top: var(--spacing-xs);
-  display: block;
-  opacity: 0.7;
-  transition: var(--transition);
-}
-
-.form-group:focus-within .field-help {
-  opacity: 1;
-}
-
 /* Off-screen rather than display: none, so a script that skips
    non-rendered fields still finds this one to fill. */
 .form-trap {
@@ -328,36 +165,14 @@ body.dark-mode .form-group input[type="email"]:-webkit-autofill.field-valid {
 .contact-form--stable .form-group input,
 .contact-form--stable .form-group textarea {
   transition:
-    border-color var(--duration-fast) ease,
-    box-shadow var(--duration-fast) ease,
-    background-color var(--duration-fast) ease;
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
 }
 
 .contact-form--stable .form-group input:focus,
 .contact-form--stable .form-group textarea:focus {
   transform: none;
-}
-
-.contact-form--stable .form-group input[type="text"].has-content,
-.contact-form--stable .form-group input[type="text"].field-valid,
-.contact-form--stable .form-group input[type="email"].email-valid,
-.contact-form--stable .form-group input[type="email"].field-valid,
-.contact-form--stable .form-group textarea.has-content,
-.contact-form--stable .form-group textarea.field-valid,
-body.dark-mode .contact-form--stable .form-group input[type="text"].has-content,
-body.dark-mode .contact-form--stable .form-group input[type="text"].field-valid,
-body.dark-mode
-  .contact-form--stable
-  .form-group
-  input[type="email"].email-valid,
-body.dark-mode
-  .contact-form--stable
-  .form-group
-  input[type="email"].field-valid,
-body.dark-mode .contact-form--stable .form-group textarea.has-content,
-body.dark-mode .contact-form--stable .form-group textarea.field-valid {
-  background-image: none;
-  padding-right: var(--input-padding);
 }
 
 .contact-form--stable .form-status {

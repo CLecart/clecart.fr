@@ -2,9 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  max-width: 100%;
 }
 
+/* Entrances start offset sideways (.slide-right sits 50px to the right until
+   it appears), which widens the page while they wait: without this the home
+   page scrolls up to 42px sideways on a phone. */
 html,
 body {
   overflow-x: hidden;
@@ -14,10 +16,8 @@ body {
 
 body {
   font-family: "Poppins", sans-serif;
-  font-display: swap;
   line-height: 1.6;
   color: var(--text-color);
-  overflow-x: hidden;
   background-color: var(--light);
 }
 
@@ -65,15 +65,9 @@ a:hover::after {
 .btn::after,
 .project-btn::after,
 .github-btn::after,
-.back-btn::after,
-.dark-mode-toggle::after,
 .nav-btn::after,
-.nav-toggle::after,
 .cv-link::after,
-.logo::after,
-.modal-close::after,
-.header-buttons a::after,
-.gdpr-buttons button::after {
+.logo::after {
   display: none;
 }
 

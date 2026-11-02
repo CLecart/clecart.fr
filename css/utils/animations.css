@@ -51,36 +51,11 @@
 }
 
 section {
-  position: relative;
   transition: var(--transition);
 }
 
 section.section-active {
   z-index: 2;
-}
-
-section::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: var(--accent-line-thickness);
-  background: linear-gradient(
-    90deg,
-    var(--primary-light),
-    var(--primary),
-    var(--primary-light)
-  );
-  opacity: 0.7;
-}
-
-#hero::after {
-  display: block;
-}
-
-section:last-of-type::after {
-  display: none;
 }
 
 section.section-active::before {
@@ -130,44 +105,6 @@ section.section-active .section-header {
   opacity: 1;
   transform: none;
   transition: none;
-}
-
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *:before,
-.theme-transitioning *:after {
-  transition: none;
-  animation-duration: 0s;
-  animation-delay: 0s;
-}
-
-html.scrolling-in-progress {
-  scroll-behavior: auto;
-}
-
-html.scrolling-in-progress * {
-  pointer-events: none;
-  user-select: none;
-}
-
-html.scrolling-in-progress header,
-html.scrolling-in-progress header * {
-  pointer-events: auto;
-}
-
-nav ul li a {
-  transition:
-    color var(--duration-normal) var(--ease-standard),
-    transform var(--duration-normal) var(--ease-standard);
-}
-
-nav ul li a.active {
-  color: var(--primary-dark);
-  transform: translateY(-2px);
-}
-
-html.scrolling-in-progress .header-content * {
-  pointer-events: auto;
 }
 
 @keyframes fade-in {

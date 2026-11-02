@@ -13,15 +13,17 @@
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  will-change: background-color, color, transform;
-  transform: translateZ(0);
+  /* Chrome composites a transform transition only while it runs, and draws the
+     emoji differently on and off a layer: without a permanent layer the icon
+     visibly changes the instant the hover lift ends. */
+  will-change: transform;
 }
 
 @media (hover: hover) {
   .dark-mode-toggle:hover {
     background: var(--white-opacity-20);
     color: var(--primary-dark);
-    transform: translateZ(0) translateY(-1px);
+    transform: translateY(-1px);
   }
 }
 

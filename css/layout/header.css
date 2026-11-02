@@ -7,7 +7,6 @@ header {
   z-index: 1000;
   box-shadow: var(--header-shadow);
   height: var(--header-height);
-  transform: translateZ(0);
 }
 
 header::after {
@@ -61,10 +60,6 @@ header::after {
   margin-top: 2px;
 }
 
-.logo::after {
-  display: none;
-}
-
 .logo:hover {
   color: var(--primary-dark);
 }
@@ -80,35 +75,9 @@ header::after {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.header-buttons > * {
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-.back-btn {
-  color: var(--white);
-  text-decoration: none;
-  padding: 8px 16px;
-  background: var(--white-opacity-10);
-  border-radius: 6px;
-  transition:
-    background-color var(--duration-fast) var(--ease-standard),
-    color var(--duration-fast) var(--ease-standard),
-    transform var(--duration-fast) var(--ease-standard);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  will-change: background-color, color, transform;
-  transform: translateZ(0);
-}
-
-.back-btn:hover {
-  background: var(--white-opacity-20);
-  color: var(--primary-dark);
-  transform: translateZ(0) translateY(-1px);
+  z-index: 100;
+  position: relative;
+  margin: 0;
 }
 
 nav ul {
@@ -139,21 +108,6 @@ nav ul li a.active {
   transform: translateY(-2px);
 }
 
-nav ul li a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: var(--accent-line-thickness);
-  background: var(--primary-dark);
-  transition: width var(--duration-normal) var(--ease-standard);
-}
-
-nav ul li a:hover::after {
-  width: 100%;
-}
-
 nav ul li a.cv-link {
   display: inline-flex;
   align-items: center;
@@ -178,6 +132,11 @@ nav ul li a.cv-link i {
   transition: var(--transition);
 }
 
+.nav-toggle:active {
+  background-color: var(--white-opacity-20);
+  transform: scale(0.95);
+}
+
 .nav-toggle:hover {
   background: var(--white-opacity-10);
 }
@@ -189,14 +148,6 @@ nav ul li a.cv-link i {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-nav ul li a.active {
-  color: var(--primary-dark);
-}
-
-nav ul li a.active::after {
-  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -265,10 +216,6 @@ nav ul li a.active::after {
     transition:
       background-color var(--duration-normal) var(--ease-standard),
       color var(--duration-normal) var(--ease-standard);
-  }
-
-  nav ul li a::after {
-    display: none;
   }
 
   nav ul li a:hover {

@@ -53,7 +53,8 @@
   --btn-radius: 50px;
   --btn-font-weight: 500;
   --btn-transition:
-    transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+    transform var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth);
   --btn-hover-lift: translateY(-2px) scale(1.05);
   --btn-shadow: 0 4px 15px var(--primary-light);
   --btn-shadow-hover: 0 8px 20px var(--primary-opacity);
@@ -78,19 +79,19 @@
   --card-border-dark: 1px solid var(--border-dark);
   --accent-line-thickness: 2px;
 
-  /* Animation Easing Functions */
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-standard: ease;
+  --ease-in-out: ease-in-out;
 
-  /* Animation Duration Scale - Unified Timing System */
   --duration-fast: 0.2s;
   --duration-normal: 0.3s;
   --duration-slow: 0.5s;
   --duration-slower: 0.8s;
   --duration-slowest: 2.5s;
-  --duration-gradient: 5s; /* For continuous gradient animations */
+  --duration-ripple: 2s;
+  --duration-gradient: 5s;
+  --stagger-step: 0.05s;
 
-  /* Standard Transitions */
   --transition: all var(--duration-normal) var(--ease-smooth);
   --hover-y-tiny: translateY(-2px);
 
@@ -121,7 +122,8 @@
      An animation and a static transform fight over the same property and the
      animation always wins, so an element pulses or it scales, never both. */
   --duration-pulse: 1.5s;
-  --card-hover-pulse: card-pulse var(--duration-pulse) ease-in-out infinite;
+  --card-hover-pulse: card-pulse var(--duration-pulse) var(--ease-in-out)
+    infinite;
   --card-pulse-travel: 3.6;
   --card-pulse-scale-xs: calc(1 + var(--card-pulse-travel) / 14.4); /* 0.9rem */
   --card-pulse-scale-sm: calc(1 + var(--card-pulse-travel) / 17.6); /* 1.1rem */
@@ -164,7 +166,6 @@
   --input-focus-shadow-dark: 0 5px 15px rgba(108, 99, 255, 0.2);
 }
 
-/* Dark mode variables override */
 body.dark-mode {
   --input-bg: var(--form-bg-dark);
   --input-focus-bg: var(--input-focus-bg-dark);

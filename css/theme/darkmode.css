@@ -30,7 +30,6 @@ body.dark-mode #contact {
 }
 
 body.dark-mode a,
-body.dark-mode p,
 body.dark-mode h1,
 body.dark-mode h4,
 body.dark-mode label {
@@ -55,10 +54,6 @@ body.dark-mode footer {
   opacity: 0.9;
 }
 
-body.dark-mode .text-light {
-  color: rgba(255, 255, 255, 0.9);
-}
-
 body.dark-mode p {
   color: rgba(255, 255, 255, 0.9);
 }
@@ -72,7 +67,6 @@ body.dark-mode .card-base p {
     font-size: 16px;
   }
   body.dark-mode p,
-  body.dark-mode .text-light,
   body.dark-mode label,
   body.dark-mode .form-group input,
   body.dark-mode .form-group textarea {

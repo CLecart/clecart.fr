@@ -28,32 +28,6 @@
     margin-left: auto;
   }
 
-  body.dark-mode nav ul {
-    background-color: var(--card-dark);
-    border: 1px solid var(--border-dark);
-  }
-
-  .tech-grid,
-  .approach-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cta-section {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .gdpr-content {
-    flex-direction: column;
-    text-align: center;
-    padding: 15px 10px;
-  }
-
-  .gdpr-buttons {
-    width: 100%;
-    justify-content: center;
-  }
-
   .projects-grid,
   .languages-grid,
   .skills-container,
@@ -88,30 +62,9 @@
   .project-card {
     min-height: auto;
   }
-
-  .gdpr-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .gdpr-buttons button {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 380px) {
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  * {
-    box-sizing: border-box;
-    max-width: 100vw;
-  }
-
   body {
     font-size: 14px;
   }

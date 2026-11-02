@@ -1,7 +1,6 @@
-# The Dockerfile copies the whole context into the web root, and nginx serves
-# any path that exists there. Everything is excluded by default, so a stray
-# file (.git, .env, config.json, node_modules, a local script) can never end up
-# downloadable: only what the site serves is listed back in.
+# Everything is excluded by default, so a stray file (.git, .env, config.json,
+# node_modules, a local script) is never even sent to the builder: only what
+# the Dockerfile copies is listed back in.
 *
 
 !index.html
@@ -18,7 +17,5 @@
 !robots.txt
 !sitemap.xml
 
-# Copied to /etc/nginx by the Dockerfile, so they must be in the context; the
-# whole-context copy also lands them in the web root, where they are readable.
 !nginx.conf
 !nginx-security-headers.conf

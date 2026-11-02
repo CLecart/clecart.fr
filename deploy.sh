@@ -37,7 +37,7 @@ log_error() {
 # un conteneur restauré sans --restart ne survivrait pas au redémarrage de l'hôte.
 start_container() {
     docker run -d \
-        -p "$PORT:80" \
+        -p "$PORT:8080" \
         --name "$CONTAINER_NAME" \
         --restart unless-stopped \
         "$1"

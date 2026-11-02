@@ -1,46 +1,37 @@
-# Pinned to an exact release of the stable branch: the bare nginx:alpine tag
-# follows mainline, so two builds of the same commit could ship different
-# servers. Bump deliberately.
-FROM nginx:1.30.6-alpine
+# Pinned to an exact release of the stable branch: a floating tag would let two
+# builds of the same commit ship different servers. Bump deliberately.
+# The unprivileged variant of that release runs master and workers as uid 101,
+# hence port 8080: ports below 1024 belong to root.
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine
 
 LABEL org.opencontainers.image.title="clecart.fr" \
       org.opencontainers.image.description="Portfolio of Christophe Lecart, Software Engineer & Green IT Lead" \
-      org.opencontainers.image.authors="Christophe Lecart <contact@clecart.fr>" \
+      org.opencontainers.image.authors="Christophe Lecart <djlike@hotmail.fr>" \
       org.opencontainers.image.source="https://github.com/CLecart/clecart.fr"
 
-RUN addgroup -g 1001 -S nginx-user && \
-    adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx-user -g nginx-user nginx-user && \
-    mkdir -p /var/cache/nginx/client_temp \
-             /var/cache/nginx/proxy_temp \
-             /var/cache/nginx/fastcgi_temp \
-             /var/cache/nginx/uwsgi_temp \
-             /var/cache/nginx/scgi_temp && \
-    apk add --no-cache \
-        curl \
-        ca-certificates && \
-    rm -rf /var/cache/apk/*
+# The base hands /etc/nginx to uid 101 so its entrypoint can rewrite the
+# configuration at start-up. Nothing here needs that, and a server able to
+# rewrite its own configuration can drop the security headers and reload.
+USER root
+RUN chown -R root:root /etc/nginx && \
+    chmod -R go-w /etc/nginx && \
+    rm /usr/share/nginx/html/50x.html
 
-# What this copies is decided by .dockerignore, which lists the served files.
-COPY --chown=nginx-user:nginx-user . /usr/share/nginx/html
+# Owned by root and read-only to uid 101: a worker can read the site and its
+# configuration, never rewrite them. Only served files reach the web root.
+COPY --chmod=644 nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chmod=644 nginx-security-headers.conf /etc/nginx/security-headers.conf
+COPY --chmod=644 index.html about-portfolio.html descriptions-projects.html \
+     privacy-policy.html 404.html styles.css service-worker.js robots.txt \
+     sitemap.xml /usr/share/nginx/html/
+COPY --chmod=u=rwX,go=rX css /usr/share/nginx/html/css
+COPY --chmod=u=rwX,go=rX js /usr/share/nginx/html/js
+COPY --chmod=u=rwX,go=rX assets /usr/share/nginx/html/assets
+COPY --chmod=u=rwX,go=rX cv /usr/share/nginx/html/cv
 
-# Left owned by root: nginx only needs to read its own configuration, and a
-# worker that can rewrite it can also switch off the headers below.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx-security-headers.conf /etc/nginx/security-headers.conf
+USER 101
 
-RUN chown -R nginx-user:nginx-user /var/cache/nginx && \
-    chown -R nginx-user:nginx-user /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html && \
-    mkdir -p /run/nginx && \
-    chown -R nginx-user:nginx-user /run/nginx && \
-    chmod -R 1777 /run && \
-    chmod 1777 /var/run
+EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:80/ || exit 1
-
-USER nginx-user
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+    CMD ["wget", "-q", "--spider", "http://127.0.0.1:8080/"]

@@ -20,10 +20,15 @@ Ce qui protège réellement le site public :
 
 ## Chaîne d'approvisionnement
 
-- **Font Awesome 6.4.0** (cdnjs) et le **SDK EmailJS 3.12.1** (jsDelivr) sont
-  épinglés à une version exacte puis signés (`integrity` +
-  `crossorigin="anonymous"`). Le pin précède toujours la signature : signer une
-  plage flottante (`@3`) casse le site au premier correctif amont.
+- Le **SDK EmailJS 3.12.1** (jsDelivr) est épinglé à une version exacte puis
+  signé (`integrity` + `crossorigin="anonymous"`). Le pin précède toujours la
+  signature : signer une plage flottante (`@3`) casse le site au premier
+  correctif amont.
+- Les **icônes d'interface** ne sont pas une ressource tierce : les 21 icônes
+  Font Awesome Free 6.4.0 que les pages dessinent sont copiées dans
+  `assets/icons/sprite.svg`, servi par le site lui-même. Leurs tracés viennent
+  de l'archive npm `@fortawesome/fontawesome-free@6.4.0`, vérifiée contre
+  l'empreinte `integrity` publiée par le registre.
 - La feuille **Google Fonts** ne peut pas être signée : son contenu varie selon
   le navigateur qui la demande.
 - Les **icônes devicon** sont des `<img>` SVG servies par jsDelivr, sans
@@ -88,7 +93,7 @@ gratuit, donc les domaines qui y figurent sont **inertes**.
 ### Content Security Policy
 
 ```nginx
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; media-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';
 ```
 
 - `script-src 'unsafe-inline'` : requis par le bootstrap de thème inline en
@@ -104,7 +109,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 - `cdn.jsdelivr.net` : SDK EmailJS (script) et icônes devicon (images).
 - `api.emailjs.com` : envoi du formulaire, seul hôte EmailJS contacté, et
   seulement à l'envoi.
-- `cdnjs.cloudflare.com` : Font Awesome (feuille de style et polices).
 - `fonts.googleapis.com` + `fonts.gstatic.com` : Google Fonts.
 - `data:` pour les images : icônes SVG en `url("data:…")` dans
   `css/components/forms.css`.

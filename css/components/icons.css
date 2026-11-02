@@ -1,0 +1,9 @@
+/* Font Awesome's own inline-SVG metrics, so each sprite icon lands where its
+   font glyph stood: one em tall, as wide as the viewBox on its <svg> makes it,
+   and lowered by the glyph's descent (64 of 512 units) below the baseline. */
+.icon {
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}

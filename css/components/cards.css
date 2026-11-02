@@ -27,7 +27,11 @@
   flex-direction: column;
 }
 
+/* The card's column would stretch the svg across its width and the drawing
+   would centre in that box. At its own width the icon keeps to the start of
+   the card, and its pulse grows around the icon, not the card's middle. */
 .skill-icon {
+  align-self: flex-start;
   font-size: var(--icon-size-large);
   margin-bottom: 15px;
   color: var(--card-icon-color);
@@ -235,21 +239,22 @@
 }
 
 /* Language logos pulse but keep their brand colour. Nine are <img> and cannot
-   be recoloured at all; Rust is a font icon and could be, so it is excluded
-   here rather than allowed to drift from the row it belongs to. */
+   be recoloured at all; Rust is a sprite icon drawn in currentColor and could
+   be, so it is excluded here rather than allowed to drift from the row it
+   belongs to. */
 .language-card:hover .language-icon img,
-.language-card:hover .language-icon i {
+.language-card:hover .language-icon .icon {
   --card-pulse-scale: var(--card-pulse-scale-lg);
   animation: var(--card-hover-pulse);
 }
 
-.portfolio-section:hover h2 i {
+.portfolio-section:hover h2 .icon {
   --card-pulse-scale: var(--card-pulse-scale-md);
   animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);
 }
 
-.outcomes-list li:hover::before {
+.outcomes-list li:hover .icon {
   --card-pulse-scale: var(--card-pulse-scale-xs);
   animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);

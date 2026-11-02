@@ -101,10 +101,9 @@
   min-width: 44px;
 }
 
-.github-btn i {
+.github-btn .icon {
   color: var(--github-icon-color);
   font-size: var(--github-icon-size);
-  line-height: 1;
 }
 
 .github-btn:hover {

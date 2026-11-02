@@ -44,7 +44,8 @@ export function initNavigation() {
   const MENU_TRANSITION_DURATION = 300;
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector("nav ul");
-  const menuIcon = navToggle?.querySelector("i");
+  const menuIcon = navToggle?.querySelector("use");
+  const sprite = menuIcon?.getAttribute("href")?.split("#")[0];
 
   if (!navToggle || !navMenu) {
     return;
@@ -74,14 +75,20 @@ export function initNavigation() {
     }
   }
 
+  /**
+   * Draw the toggle as a cross while the menu is open, a burger otherwise
+   * @function showMenuIcon
+   * @description Only the fragment of the <use> reference changes: the sprite path stays the one the page's markup wrote, so no URL here can drift from the HTML. The <svg> keeps the burger's viewBox; the default preserveAspectRatio centres the narrower cross inside it, so both glyphs share the button's centre.
+   * @param {boolean} open - Whether the menu is now open
+   * @returns {void}
+   */
+  function showMenuIcon(open) {
+    menuIcon?.setAttribute("href", `${sprite}#${open ? "xmark" : "bars"}`);
+  }
+
   navToggle.addEventListener("click", () => {
     navMenu.classList.toggle("active");
-
-    if (menuIcon) {
-      menuIcon.className = navMenu.classList.contains("active")
-        ? "fas fa-times"
-        : "fas fa-bars";
-    }
+    showMenuIcon(navMenu.classList.contains("active"));
 
     if (navMenu.classList.contains("active")) {
       navMenu.style.visibility = "visible";
@@ -101,9 +108,7 @@ export function initNavigation() {
     link.addEventListener("click", () => {
       if (globalThis.innerWidth <= 768) {
         navMenu.classList.remove("active");
-        if (menuIcon) {
-          menuIcon.className = "fas fa-bars";
-        }
+        showMenuIcon(false);
         setTimeout(() => {
           if (!navMenu.classList.contains("active")) {
             navMenu.style.visibility = "hidden";
@@ -121,9 +126,7 @@ export function initNavigation() {
       !e.target.closest(".nav-toggle")
     ) {
       navMenu.classList.remove("active");
-      if (menuIcon) {
-        menuIcon.className = "fas fa-bars";
-      }
+      showMenuIcon(false);
       setTimeout(() => {
         if (!navMenu.classList.contains("active")) {
           navMenu.style.visibility = "hidden";

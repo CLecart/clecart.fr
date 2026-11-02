@@ -113,7 +113,7 @@ nav ul li a.cv-link {
   gap: 5px;
 }
 
-nav ul li a.cv-link i {
+nav ul li a.cv-link .icon {
   font-size: 0.9rem;
 }
 
@@ -140,13 +140,9 @@ nav ul li a.cv-link i {
   background: var(--white-opacity-10);
 }
 
-.nav-toggle i {
+.nav-toggle .icon {
   font-size: 1.5rem;
-  line-height: 1;
   color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 @media (max-width: 768px) {

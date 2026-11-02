@@ -137,7 +137,7 @@
   gap: 8px;
 }
 
-.about-buttons .btn i {
+.about-buttons .btn .icon {
   font-size: 0.9rem;
 }
 
@@ -205,7 +205,7 @@
     transition: all var(--duration-normal) var(--ease-standard);
   }
 
-  .about-buttons .btn i {
+  .about-buttons .btn .icon {
     font-size: 1rem;
   }
 }

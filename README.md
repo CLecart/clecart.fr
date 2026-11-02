@@ -75,6 +75,7 @@ no server-side code at all.
 - **Core Web Vitals** observed in the browser (`js/utils/webvitals.js`): LCP, FID, CLS, FCP and TTFB via `PerformanceObserver`, with optimization triggers past the usual thresholds
 - **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen. On mobile, `videoHandler.js` strips `autoplay` and caps `preload` at `metadata`, so a visitor on cellular data never pays for a video they did not ask to watch.
 - **Resource Hints:** `dns-prefetch`, `preconnect`, and a `preload` on `profile.webp` with `fetchpriority="high"`
+- **UI icons from one local sprite:** the 21 Font Awesome Free 6.4.0 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (13.6 KB, 5.4 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome webfont they replace: a first visit to the home page transfers 13.8 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a return visit took the sprite from the browser cache, 0 bytes.
 - **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for images and video, plus an in-worker SVG placeholder when an image cannot be fetched offline. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
 - **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
@@ -83,7 +84,7 @@ no server-side code at all.
 ### 🛡️ **Security and Compliance**
 
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
-- **Subresource Integrity:** the two third-party resources that can carry it — Font Awesome 6.4.0 and the EmailJS SDK 3.12.1 — are pinned to an exact version and signed with `integrity` + `crossorigin="anonymous"`. Pinning always precedes signing: a floating range plus a hash breaks the site on the first upstream patch.
+- **Subresource Integrity:** the one third-party resource that can carry it — the EmailJS SDK 3.12.1 — is pinned to an exact version and signed with `integrity` + `crossorigin="anonymous"`. Pinning always precedes signing: a floating range plus a hash breaks the site on the first upstream patch.
 - **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables both analytics and the contact form.
 - **Privacy-First Analytics:** consent-gated and, as it stands, entirely local — no analytics endpoint is configured, so events are buffered in `localStorage` (last 50) and dropped. No personal data is collected and nothing is shared with a third party.
@@ -136,6 +137,7 @@ clecart.fr/
 │   │   │   ├── dark-mode-toggle.css  # Light/dark theme toggle
 │   │   │   ├── forms.css             # Forms with validation states
 │   │   │   ├── gdpr.css              # GDPR consent banner
+│   │   │   ├── icons.css             # Sprite icon metrics (size, baseline)
 │   │   │   └── notifications.css     # Notification system
 │   │   ├── layout/
 │   │   │   ├── footer.css            # Responsive footer
@@ -183,7 +185,7 @@ clecart.fr/
 ├── 📦 Assets
 │   ├── documents/
 │   │   └── CV_Christophe_Lecart.pdf  # Professional resume
-│   ├── icons/                        # Favicons + PWA icons
+│   ├── icons/                        # Favicons, PWA icons, sprite.svg (UI icons)
 │   ├── images/                       # profile.webp, posters/Konekt.webp
 │   ├── manifest/                     # site.webmanifest, browserconfig.xml
 │   └── videos/                       # Project demos (.mp4 + .en.vtt captions)
@@ -398,7 +400,7 @@ There is no `/health` endpoint: the health checks in `Dockerfile`, `docker-compo
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** Font Awesome and the EmailJS SDK are version-pinned and SRI-signed. The Google Fonts stylesheet cannot be signed (its CSS varies by user agent), and the skill icons are unpinned `<img>` SVGs from jsDelivr — images cannot carry SRI, and the CSP restricts `img-src` accordingly.
+- **Supply chain:** the EmailJS SDK is version-pinned and SRI-signed. The UI icons are not a third-party resource: the 21 Font Awesome Free 6.4.0 icons the pages draw are copied into `assets/icons/sprite.svg` and served with the site. The Google Fonts stylesheet cannot be signed (its CSS varies by user agent), and the skill icons are unpinned `<img>` SVGs from jsDelivr — images cannot carry SRI, and the CSP restricts `img-src` accordingly.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
 - **Container Security** with non-root user and health checks
@@ -488,7 +490,7 @@ The third-party dependencies listed below keep their own licenses.
 
 ### Technologies Used
 
-- **Icons:** [FontAwesome](https://fontawesome.com/) (UI icons) and [Devicon](https://devicon.dev/) (skill logos)
+- **Icons:** [Font Awesome Free](https://fontawesome.com/) 6.4.0 (UI icons, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — copied into `assets/icons/sprite.svg` with their attribution) and [Devicon](https://devicon.dev/) (skill logos)
 - **Fonts:** [Google Fonts](https://fonts.google.com/) (Poppins)
 - **Email Service:** [EmailJS](https://emailjs.com/)
 - **Hosting:** [GitHub Pages](https://pages.github.com/)

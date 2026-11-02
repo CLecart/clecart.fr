@@ -492,7 +492,6 @@
                     srclang="en"
                     label="English captions"
                     src="assets/videos/Groupie-Tracker.en.vtt"
-                    default
                   />
                   Your browser does not support video playback.
                 </video>
@@ -544,7 +543,6 @@
                     srclang="en"
                     label="English captions"
                     src="assets/videos/BombermanDX.en.vtt"
-                    default
                   />
                   Your browser does not support video playback.
                 </video>
@@ -882,7 +880,7 @@
                 </div>
                 <input type="hidden" name="to_name" value="Christophe" />
                 <button type="submit" class="btn">Send Message</button>
-                <div class="form-status" role="status"></div>
+                <output class="form-status"></output>
               </form>
             </div>
           </div>
@@ -902,8 +900,9 @@
     <div id="gdpr-banner" class="gdpr-banner hidden">
       <div class="gdpr-content">
         <p>
-          This site uses third-party services to process the contact form. By
-          continuing, you accept our
+          Accepting lets the contact form send your message through EmailJS, and
+          turns on usage counts that never leave your browser. Until then, both
+          stay off. Details in the
           <a href="privacy-policy.html">privacy policy</a>.
         </p>
         <div class="gdpr-buttons">

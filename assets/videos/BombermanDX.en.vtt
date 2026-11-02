@@ -1,1 +1,22 @@
 WEBVTT
+
+00:00.000 --> 00:07.000
+BombermanDX: title screen.
+
+00:07.000 --> 00:19.000
+Story intro: Bomberman must cross the enchanted forest of Eldoria and defeat the monsters living in it.
+
+00:19.000 --> 00:23.000
+Stage 1, Ancient Forest. Ready? Go!
+
+00:23.000 --> 00:45.000
+Bombs clear the crates of the grid while enemies roam; the top bar shows score, lives, time and frame rate.
+
+00:45.000 --> 01:05.000
+The score climbs while the lives run out; the frame rate holds around 60 FPS.
+
+01:05.000 --> 01:10.000
+Out of lives: game over.
+
+01:10.000 --> 01:20.700
+Back to the title screen.

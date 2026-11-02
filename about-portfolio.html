@@ -158,7 +158,8 @@
                 <h3>Accessibility</h3>
                 <p>
                   WCAG 2.1 AA as the working target: keyboard navigation,
-                  captions on every video, reduced-motion support
+                  captions describing every (silent) demo video, reduced-motion
+                  support
                 </p>
               </div>
               <div class="tech-item">
@@ -243,7 +244,7 @@ clecart.fr/
 │   │   └── favicon*.png|ico
 │   ├── images/                  # Site images
 │   │   ├── profile.webp
-│   │   └── Konekt.png
+│   │   └── posters/Konekt.webp
 │   ├── manifest/                # PWA Configuration
 │   │   ├── site.webmanifest
 │   │   └── browserconfig.xml
@@ -277,6 +278,7 @@ clecart.fr/
 │   │   ├── performance.js
 │   │   ├── sw-register.js
 │   │   └── webvitals.js
+│   ├── cv.js                    # Entry point of cv/index.html
 │   └── main.js                  # Entry point
 ├── service-worker.js            # Must stay at root: scope = its own directory
 ├── cv/
@@ -288,7 +290,9 @@ clecart.fr/
 ├── .gitignore                   # Git exclusions
 ├── docker-compose.yml           # Orchestration
 ├── Dockerfile                   # Containerization
+├── .dockerignore                # What the image may serve
 ├── package.json                 # npm scripts
+├── package-lock.json            # Pinned dev dependency tree
 ├── deploy.sh                    # Deployment (Docker)
 ├── nginx.conf                   # Container server configuration
 ├── nginx-security-headers.conf  # Security headers (container only)

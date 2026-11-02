@@ -51,7 +51,7 @@ This tooling exists and works, but it is **not what serves clecart.fr** — see 
 ### 🎯 **Technical Specializations**
 
 - **Responsive Design:** Mobile-first, Progressive Enhancement
-- **Accessibility:** WCAG 2.1 AA as the working target, keyboard navigation, captions on every demo video
+- **Accessibility:** WCAG 2.1 AA as the working target, keyboard navigation, a timed text description on every demo video
 - **UX/UI:** Adaptive theme system, micro-interactions, performant animation
 - **SEO:** Semantic HTML, descriptive metadata, `sitemap.xml` and `robots.txt`
 
@@ -68,7 +68,7 @@ no server-side code at all.
 - **Adaptive Theme:** the system preference is honored until the visitor toggles the theme; from then on their explicit choice is persisted in `localStorage` and wins. An inline bootstrap in `<head>` applies it before first paint to avoid a flash of wrong theme.
 - **Micro-interactions** and animations driven by the Intersection Observer API
 - **Responsive Design** with mobile-first breakpoints
-- **Accessibility:** keyboard navigation, `<track kind="captions">` on every video, `prefers-reduced-motion` honored globally in `css/utils/animations.css`
+- **Accessibility:** keyboard navigation, `<track kind="captions">` on every video — the six demos are silent, so the cues describe what is on screen rather than transcribe speech — `prefers-reduced-motion` honored globally in `css/utils/animations.css`
 
 ### ⚡ **Performance and Optimization**
 
@@ -98,7 +98,7 @@ no server-side code at all.
 
 ## Featured Projects
 
-Each project lives in its own repository; the portfolio showcases each one with a captioned demo video.
+Each project lives in its own repository; the portfolio showcases each one with a silent demo video, captioned with a description of what it shows.
 
 - **Groupie-Tracker:** Go web application visualizing music artist data from a REST API, with search and filtering by name, dates or concert location
 - **BombermanDX:** browser game inspired by the classic Bomberman, built with JavaScript and DOM manipulation — progressive levels, enemy AI, power-ups

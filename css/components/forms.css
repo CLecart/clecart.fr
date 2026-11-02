@@ -114,6 +114,11 @@
   transition: all var(--duration-normal) var(--ease-smooth);
 }
 
+.form-status a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .form-status.success {
   background-color: var(--status-success-bg);
   color: var(--status-success-color);

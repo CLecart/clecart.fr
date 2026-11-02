@@ -1,5 +1,8 @@
+/* Text-carrying tones are set for WCAG AA with a 4.6 floor: --primary and
+   the status colours carry text on white, --light and their own tints; the
+   gradients carry white text from end to end. */
 :root {
-  --primary: #6c63ff;
+  --primary: #594fff;
   --primary-dark: #5a52d9;
   --primary-light: rgba(108, 99, 255, 0.1);
   --primary-light-15: rgba(108, 99, 255, 0.15);
@@ -9,6 +12,7 @@
   --btn-view-live-bg: #d6113c;
   --secondary: #4ecdc4;
   --accent: #ff6b6b;
+  --accent-text: #d04242;
   --accent-light: rgba(255, 107, 107, 0.2);
   --accent-opacity: rgba(255, 107, 107, 0.3);
   --dark: #1a1a2e;
@@ -38,7 +42,7 @@
   --black-opacity-50: rgba(0, 0, 0, 0.5);
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
-  --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
+  --gradient-1: linear-gradient(135deg, #594fff, #237a74);
   --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
   --gradient-1-light: linear-gradient(
     135deg,
@@ -167,13 +171,13 @@
   --icon-size-medium: 1.5rem;
   --icon-size-large: 2.5rem;
   --status-success-bg: rgba(76, 175, 80, 0.15);
-  --status-success-color: #2e7d32;
+  --status-success-color: #2b742f;
   --status-success-border: rgba(76, 175, 80, 0.3);
   --status-error-bg: rgba(244, 67, 54, 0.15);
-  --status-error-color: #d32f2f;
+  --status-error-color: #ba2727;
   --status-error-border: rgba(244, 67, 54, 0.3);
   --status-info-bg: rgba(3, 169, 244, 0.15);
-  --status-info-color: #0288d1;
+  --status-info-color: #026aa4;
   --status-info-border: rgba(3, 169, 244, 0.3);
   --neon-shadow: 0 0 24px 4px var(--primary);
   --neon-shadow-dark: 0 0 32px 6px var(--primary);
@@ -186,4 +190,13 @@
 .dark-mode body {
   --text-color: var(--text-dark);
   --focus-ring-color: var(--secondary);
+}
+
+/* On <html> rather than body: the tokens composed in :root from --primary
+   (card icons, hover glows) are computed there, and must follow it too. */
+.dark-mode {
+  --primary: #9c96ff;
+  --status-success-color: #4dbd52;
+  --status-error-color: #e58585;
+  --status-info-color: #25b1fd;
 }

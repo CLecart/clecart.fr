@@ -41,13 +41,15 @@ footer p {
 
 footer a {
   color: var(--white);
-  text-decoration: none;
+  text-decoration: underline;
   position: relative;
   transition: var(--transition);
 }
 
+/* Restated so reset.css's a:hover colour cannot reach it: in light mode that
+   colour is all but the footer's own background (1.34:1). */
 footer a:hover {
-  color: var(--primary-dark);
+  color: var(--white);
 }
 
 footer a::after {
@@ -67,10 +69,6 @@ footer a:hover::after {
 
 footer a[href="privacy-policy.html"]::after {
   display: none;
-}
-
-footer a[href="privacy-policy.html"]:hover {
-  color: var(--primary-dark);
 }
 
 .dark-mode body footer {

@@ -60,8 +60,10 @@ header::after {
   margin-top: 2px;
 }
 
+/* Restated so reset.css's a:hover colour cannot reach the header: on its
+   gradient, no colour but white stays legible. */
 .logo:hover {
-  color: var(--primary-dark);
+  color: var(--white);
 }
 
 .right-content {
@@ -98,8 +100,11 @@ nav ul li a {
   transition: var(--transition);
 }
 
+/* On the header's gradient no colour but white stays legible, so hover
+   underlines instead of recolouring. */
 nav ul li a:hover {
-  color: var(--primary-dark);
+  color: var(--white);
+  text-decoration: underline;
 }
 
 nav ul li a.active {
@@ -217,7 +222,7 @@ nav ul li a.cv-link .icon {
 
   nav ul li a:hover {
     background-color: var(--primary-light);
-    color: var(--primary-dark);
+    color: var(--primary);
   }
 
   nav ul li a.cv-link {

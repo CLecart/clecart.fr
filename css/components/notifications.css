@@ -57,9 +57,5 @@
 
 .dark-mode body .app-update-notification button {
   background: var(--primary);
-  color: var(--white);
-}
-
-.dark-mode body .app-update-notification button:hover {
-  background: var(--primary-dark);
+  color: var(--dark);
 }

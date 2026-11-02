@@ -58,10 +58,6 @@
   word-break: break-word;
 }
 
-.contact-text a:hover {
-  color: var(--primary-dark);
-}
-
 .contact-text a::after {
   bottom: -2px;
   height: var(--accent-line-thickness);

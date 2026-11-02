@@ -51,7 +51,7 @@
 }
 
 #privacy .privacy-link {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
   text-decoration: underline;
   transition: color var(--duration-normal) var(--ease-standard);

@@ -72,6 +72,14 @@
   box-shadow: var(--btn-secondary-shadow-hover);
 }
 
+/* White on the coral-to-orange gradient measures 2.3 to 2.8; dark text, 6.2
+   at worst. Two classes, to outrank `.btn:hover` and the dark theme's link
+   colour. */
+.btn.btn-secondary,
+.btn.btn-secondary:hover {
+  color: var(--dark);
+}
+
 .btn-view-live {
   background: var(--btn-view-live-bg);
   box-shadow: var(--btn-secondary-shadow);

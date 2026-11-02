@@ -91,6 +91,11 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      `@keyframes`, sans exception.
    - **Toute `var(--x)` doit être définie.** Une variable CSS absente rend la
      déclaration invalide et le navigateur l'ignore **en silence**.
+   - **Zéro `!important`, partout** : feuilles CSS, attributs `style`, styles
+     injectés par JavaScript. Pas d'exception pour `prefers-reduced-motion` :
+     sous `@media (prefers-reduced-motion: reduce)`, on redéfinit à ~0 les
+     tokens de durée et de délai, et tout ce qui les lit suit. Aucun commentaire
+     de suppression non plus (`NOSONAR`, `stylelint-disable`…).
    - **Zéro warning toléré :** `npm run lint` sort 0 erreur et 0 warning,
      `npm run format:check` passe. Aucun `eslint-disable` de confort. Prettier
      possède le formatage, ESLint la correctness, `eslint-plugin-jsdoc` la
@@ -176,10 +181,11 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
    - **Une `<video>` se diffère par `loading="lazy"` + `poster`, les deux
      ensemble.** Mesuré (Chrome, 2026-07-17) : le poster seul ne suffit pas — le
      navigateur charge la vidéo pour en tirer une première image ; `loading`
-     seul non plus. La paire donne 0 octet au chargement. `loading` sur `<video>`
-     n'est **pas** dans la spec HTML : Chrome l'honore, les autres moteurs
-     probablement pas (non vérifié ici). Le `poster` reste donc le garde-fou
-     portable.
+     seul non plus. La paire donne 0 octet au chargement. `loading` figure
+     parmi les attributs de contenu de `<video>` dans la spec WHATWG (lu sur
+     html.spec.whatwg.org le 2026-11-02 : attribut de chargement différé
+     commun aux éléments média, qui diffère aussi le poster). Chrome l'honore ;
+     les autres moteurs n'ont pas été mesurés ici.
    - **Ne pas généraliser ce réglage sans mesurer.** Appliqué aux six vidéos, il
      les a rendues muettes : elles se téléchargeaient (18 Mo) puis restaient
      figées sur la première image, `currentTime` bloqué à 0. Autoplay et « ne

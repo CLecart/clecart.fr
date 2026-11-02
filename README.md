@@ -296,6 +296,13 @@ free — deliberately not enabled, since it would hand Google a data point on
 every visitor of a site that claims to share nothing with third parties. That
 trade is not worth making at the current volume.
 
+The page itself turns away scripted submissions: a browser under automation
+(`navigator.webdriver`) or a filled-in off-screen trap field gets the usual
+success message, and nothing is sent. That guards the form, not the key — a
+script calling the EmailJS API directly with the public identifiers never runs
+it. Spam that keeps arriving with the trap in place takes that path, and
+reCAPTCHA is the only check the free plan offers against it.
+
 A real secret would not belong here at all: with no backend, anything the page
 can read, a visitor can read.
 

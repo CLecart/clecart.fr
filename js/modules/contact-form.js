@@ -172,7 +172,9 @@ function setupFormSubmissionHandling(form, statusElement) {
         emailjs.init(emailCfg.user);
       }
 
-      await emailjs.send(serviceId, templateId, templateParams);
+      if (!isAutomatedSubmission(formData)) {
+        await emailjs.send(serviceId, templateId, templateParams);
+      }
 
       setFormState(
         form,
@@ -260,6 +262,19 @@ function validateContactFormData(formData) {
   }
 
   return "";
+}
+
+/**
+ * Tell a scripted submission apart from a person's
+ * @function isAutomatedSubmission
+ * @description Two signals no visitor produces: navigator.webdriver, which a browser under automation reports unless the script switches it off, and the off-screen trap field, which nobody can see or tab into. A positive result is answered with the usual success and no send, so the script gets no error to adapt to. This filters the page, not the key: a script that calls the EmailJS API directly with the public identifiers never runs this code.
+ * @param {FormData} formData - Submitted form values
+ * @returns {boolean} True when the submission comes from a script
+ */
+function isAutomatedSubmission(formData) {
+  return (
+    navigator.webdriver === true || readTextField(formData, "website") !== ""
+  );
 }
 
 /**

@@ -135,6 +135,13 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      Google une donnée sur chaque visiteur d'un site qui affirme ne rien
      partager avec des tiers. À activer si le quota grimpe sans raison, pas
      avant.
+   - **Le piège du formulaire filtre la page, pas la clé.** Un navigateur
+     automatisé (`navigator.webdriver`) ou le champ hors écran `website` rempli
+     reçoit le succès habituel, et rien ne part. Mesuré (Chrome, 2026-11-02) :
+     un Puppeteer par défaut envoyait avant, plus après ; un envoi humain passe
+     toujours. Un script qui appelle l'API EmailJS directement ne le traverse
+     pas : si le spam continue malgré le piège, c'est ce chemin, et reCAPTCHA
+     redevient la question. Le champ caché n'est pas du code mort.
    - **Un vrai secret n'a pas sa place ici** et impliquerait d'abord un serveur.
    - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité : une
      signature SRI qui casse le formulaire de contact est un échec, pas une

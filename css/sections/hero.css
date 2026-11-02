@@ -46,7 +46,7 @@
   color: var(--text-color);
 }
 
-#typewriter {
+.typewriter-text {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--primary);
@@ -90,7 +90,7 @@ body.dark-mode .hero-content {
   }
 
   .hero-content p,
-  #typewriter {
+  .typewriter-text {
     font-size: 1.3rem;
   }
 

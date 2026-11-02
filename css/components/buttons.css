@@ -130,13 +130,14 @@
   display: inline-block;
 }
 
-@media (max-width: 360px) {
-  .project-btn,
-  .github-btn {
+@media (max-width: 404px) {
+  .project-btn {
     font-size: 0.95rem;
   }
+}
 
-  .project-btn {
-    min-width: auto;
+@media (max-width: 360px) {
+  .github-btn {
+    font-size: 0.95rem;
   }
 }

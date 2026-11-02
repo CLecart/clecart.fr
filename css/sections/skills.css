@@ -14,6 +14,13 @@
   min-height: 310px;
 }
 
+@media (max-width: 480px) {
+  #skills .skill-card {
+    height: auto;
+    min-height: 250px;
+  }
+}
+
 .skill-level {
   display: none;
 }

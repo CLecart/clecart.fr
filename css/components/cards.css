@@ -268,6 +268,7 @@ body.dark-mode .portfolio-section:hover {
     margin-left: 0;
     margin-right: 0;
     max-width: 100%;
+    padding: 15px;
   }
 
   .project-card,
@@ -276,9 +277,23 @@ body.dark-mode .portfolio-section:hover {
     max-width: 100%;
   }
 
+  .project-card {
+    min-height: auto;
+  }
+
   .language-card {
     width: 80px;
     height: 80px;
     padding: 10px 8px;
+  }
+}
+
+@media (max-width: 404px) {
+  .project-content {
+    padding-bottom: 15px;
+  }
+
+  .project-content p {
+    margin-bottom: 15px;
   }
 }

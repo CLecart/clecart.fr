@@ -33,13 +33,33 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Le déploiement et le rollback démarrent le conteneur par cette seule fonction :
+# un conteneur restauré sans --restart ne survivrait pas au redémarrage de l'hôte.
+start_container() {
+    docker run -d \
+        -p "$PORT:80" \
+        --name "$CONTAINER_NAME" \
+        --restart unless-stopped \
+        "$1"
+}
+
+# `docker ps` ne liste que les conteneurs en marche ; un conteneur arrêté garde
+# pourtant son nom, et `docker run --name` échoue alors sur le conflit.
+# `docker container inspect` voit les deux.
+remove_container() {
+    if docker container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
+        log_info "Arrêt graceful du conteneur existant..."
+        docker stop --time=30 "$CONTAINER_NAME" >/dev/null || true
+        docker rm -f "$CONTAINER_NAME" >/dev/null
+    fi
+}
+
 # Fonction de rollback
 rollback() {
     log_warning "Rollback en cours..."
     if docker image inspect "${IMAGE_NAME}:${BACKUP_TAG}" >/dev/null 2>&1; then
-        docker stop $CONTAINER_NAME || true
-        docker rm $CONTAINER_NAME || true
-        docker run -d -p $PORT:80 --name $CONTAINER_NAME "${IMAGE_NAME}:${BACKUP_TAG}"
+        remove_container
+        start_container "${IMAGE_NAME}:${BACKUP_TAG}"
         log_success "Rollback terminé avec succès"
     else
         log_error "Impossible de rollback - pas de backup disponible"
@@ -80,24 +100,12 @@ if ! docker image inspect $IMAGE_NAME >/dev/null 2>&1; then
     exit 1
 fi
 
-# Arrêter le conteneur existant en douceur
-if docker ps -q -f name=$CONTAINER_NAME | grep -q .; then
-    log_info "Arrêt graceful du conteneur existant..."
-    docker stop $CONTAINER_NAME --time=30 || true
-    docker rm $CONTAINER_NAME || true
-fi
+# Arrêter le conteneur existant en douceur, qu'il tourne ou non
+remove_container
 
 # Démarrer le nouveau conteneur
 log_info "🚀 Démarrage du nouveau conteneur..."
-docker run -d \
-    -p $PORT:80 \
-    --name $CONTAINER_NAME \
-    --restart unless-stopped \
-    --health-cmd="curl -f http://localhost:80/ || exit 1" \
-    --health-interval=30s \
-    --health-timeout=10s \
-    --health-retries=3 \
-    $IMAGE_NAME
+start_container "$IMAGE_NAME"
 
 # Attendre que le conteneur soit prêt
 log_info "⏳ Vérification de la santé du conteneur..."
@@ -105,7 +113,7 @@ timeout=60
 counter=0
 
 while [ $counter -lt $timeout ]; do
-    if docker ps -q -f name=$CONTAINER_NAME | grep -q . && \
+    if [ "$(docker container inspect -f '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)" = true ] && \
        curl -sf http://localhost:$PORT >/dev/null 2>&1; then
         break
     fi
@@ -130,8 +138,10 @@ if ! curl -sf http://localhost:$PORT >/dev/null; then
     rollback
 fi
 
-# Vérifier les headers de sécurité
-security_headers=$(curl -sI http://localhost:$PORT | grep -E "(X-Content-Type-Options|X-Frame-Options|X-XSS-Protection)" | wc -l)
+# Vérifier les headers de sécurité. grep sort en 1 quand rien ne correspond :
+# sous pipefail, sans `|| true`, ce constat déclencherait le rollback au lieu
+# de l'avertissement.
+security_headers=$(curl -sI http://localhost:$PORT | grep -ciE "^(X-Content-Type-Options|X-Frame-Options|X-XSS-Protection):" || true)
 if [ "$security_headers" -lt 3 ]; then
     log_warning "Certains headers de sécurité sont manquants"
 fi

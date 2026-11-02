@@ -8,9 +8,24 @@
   padding: 40px 30px;
 }
 
-#privacy h2 {
+/* The page title is its only top-level heading, so it is the h1; it keeps the
+   h2 scale this page has always been set in. */
+#privacy h1 {
   color: var(--primary);
   margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+@media (max-width: 992px) {
+  #privacy h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #privacy h1 {
+    font-size: 1.75rem;
+  }
 }
 
 #privacy h3 {
@@ -28,7 +43,7 @@
   margin-bottom: 10px;
 }
 
-body.dark-mode #privacy h2,
+body.dark-mode #privacy h1,
 body.dark-mode #privacy h3 {
   color: var(--primary);
 }

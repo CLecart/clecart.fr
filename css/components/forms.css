@@ -73,31 +73,31 @@
   background-color: transparent;
 }
 
-body.dark-mode .form-group label {
+.dark-mode body .form-group label {
   color: var(--text-dark);
 }
 
-body.dark-mode .form-group input,
-body.dark-mode .form-group textarea {
+.dark-mode body .form-group input,
+.dark-mode body .form-group textarea {
   background-color: var(--form-bg-dark);
   border-color: var(--form-border-dark);
   color: var(--text-dark);
   box-shadow: var(--shadow-dark);
 }
 
-body.dark-mode .form-group input:focus,
-body.dark-mode .form-group textarea:focus,
-body.dark-mode .form-group input:not(:placeholder-shown),
-body.dark-mode .form-group textarea:not(:placeholder-shown) {
+.dark-mode body .form-group input:focus,
+.dark-mode body .form-group textarea:focus,
+.dark-mode body .form-group input:not(:placeholder-shown),
+.dark-mode body .form-group textarea:not(:placeholder-shown) {
   box-shadow: var(--input-focus-shadow-dark);
   background-color: var(--input-focus-bg-dark);
   border-color: var(--primary);
 }
 
-body.dark-mode .form-group input:-webkit-autofill,
-body.dark-mode .form-group input:-webkit-autofill:hover,
-body.dark-mode .form-group input:-webkit-autofill:focus,
-body.dark-mode .form-group input:-webkit-autofill:active {
+.dark-mode body .form-group input:-webkit-autofill,
+.dark-mode body .form-group input:-webkit-autofill:hover,
+.dark-mode body .form-group input:-webkit-autofill:focus,
+.dark-mode body .form-group input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
   -webkit-text-fill-color: var(--text-dark);
   transition: background-color 5000s ease-in-out 0s;

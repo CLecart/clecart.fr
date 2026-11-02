@@ -92,26 +92,26 @@ body:not(.homepage) .description {
   transform: translateY(-5px);
 }
 
-body.dark-mode #projects .project-content p {
+.dark-mode body #projects .project-content p {
   color: var(--text-gray-dark);
 }
 
-body.dark-mode #projects .project-content h3 {
+.dark-mode body #projects .project-content h3 {
   color: var(--text-dark);
 }
 
-body.dark-mode .description {
+.dark-mode body .description {
   background-color: var(--dark);
   color: var(--text-dark);
   border: 1px solid var(--border-dark);
 }
 
-body.dark-mode .description h2,
-body.dark-mode .description h3 {
+.dark-mode body .description h2,
+.dark-mode body .description h3 {
   color: var(--primary);
 }
 
-body.dark-mode .project-navigation {
+.dark-mode body .project-navigation {
   border-bottom: 1px solid var(--form-border-dark);
 }
 

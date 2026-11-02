@@ -166,7 +166,7 @@
   --input-focus-shadow-dark: 0 5px 15px rgba(108, 99, 255, 0.2);
 }
 
-body.dark-mode {
+.dark-mode body {
   --input-bg: var(--form-bg-dark);
   --input-focus-bg: var(--input-focus-bg-dark);
   --input-color: var(--text-dark);

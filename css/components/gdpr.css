@@ -124,35 +124,35 @@
   min-width: 130px;
 }
 
-body.dark-mode .gdpr-banner {
+.dark-mode body .gdpr-banner {
   background: transparent;
 }
 
-body.dark-mode .gdpr-content {
+.dark-mode body .gdpr-content {
   background: var(--card-dark);
   border-color: rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-up-dark);
 }
 
-body.dark-mode .gdpr-content p {
+.dark-mode body .gdpr-content p {
   color: var(--text-dark);
 }
 
-body.dark-mode .gdpr-message {
+.dark-mode body .gdpr-message {
   background-color: var(--gdpr-message-bg-dark);
   border-color: var(--secondary);
   color: var(--text-dark);
 }
 
-body.dark-mode .gdpr-message a {
+.dark-mode body .gdpr-message a {
   color: var(--secondary);
 }
 
-body.dark-mode .gdpr-message a:hover {
+.dark-mode body .gdpr-message a:hover {
   color: var(--primary);
 }
 
-body.dark-mode .gdpr-refusal-notice-card {
+.dark-mode body .gdpr-refusal-notice-card {
   background: var(--card-dark);
   color: var(--text-dark);
   box-shadow: var(--shadow-up-dark);

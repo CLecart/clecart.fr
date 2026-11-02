@@ -47,12 +47,12 @@
   border: 1px solid var(--primary);
 }
 
-body.dark-mode .portfolio-section.card-base {
+.dark-mode body .portfolio-section.card-base {
   background: var(--card-dark);
   border: 1px solid var(--border-dark);
 }
 
-body.dark-mode .portfolio-section.card-base:hover {
+.dark-mode body .portfolio-section.card-base:hover {
   border: 1px solid var(--primary);
 }
 
@@ -91,7 +91,7 @@ body.dark-mode .portfolio-section.card-base:hover {
   opacity: 1;
 }
 
-body.dark-mode .tech-item {
+.dark-mode body .tech-item {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
 }
@@ -157,7 +157,7 @@ body.dark-mode .tech-item {
   animation: var(--card-hover-pulse);
 }
 
-body.dark-mode .features-list li {
+.dark-mode body .features-list li {
   color: var(--text-dark);
 }
 
@@ -250,12 +250,12 @@ body.dark-mode .features-list li {
   border: 1px solid var(--primary);
 }
 
-body.dark-mode .approach-item.card-base {
+.dark-mode body .approach-item.card-base {
   background: var(--card-dark);
   border: 1px solid var(--border-dark);
 }
 
-body.dark-mode .approach-item.card-base:hover {
+.dark-mode body .approach-item.card-base:hover {
   border: 1px solid var(--primary);
 }
 
@@ -313,11 +313,11 @@ body.dark-mode .approach-item.card-base:hover {
   }
 }
 
-body.dark-mode .portfolio-section {
+.dark-mode body .portfolio-section {
   background-color: var(--card-dark);
 }
 
-body.dark-mode .code-block {
+.dark-mode body .code-block {
   background-color: var(--darker);
 }
 
@@ -442,7 +442,7 @@ body.dark-mode .code-block {
   transition: var(--card-icon-transition);
 }
 
-body.dark-mode .outcomes-list li {
+.dark-mode body .outcomes-list li {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
 }
@@ -567,9 +567,9 @@ body.dark-mode .outcomes-list li {
   animation-delay: calc(var(--stagger-step) * 10);
 }
 
-body.dark-mode .tech-item,
-body.dark-mode .approach-item,
-body.dark-mode .outcomes-list li {
+.dark-mode body .tech-item,
+.dark-mode body .approach-item,
+.dark-mode body .outcomes-list li {
   background-color: var(--primary-light-15);
   box-shadow: var(--shadow-dark);
 }

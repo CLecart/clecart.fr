@@ -73,15 +73,15 @@
   color: var(--text-color);
 }
 
-body.dark-mode .contact-info h3,
-body.dark-mode .contact-form h3 {
+.dark-mode body .contact-info h3,
+.dark-mode body .contact-form h3 {
   color: var(--text-dark);
 }
 
-body.dark-mode .contact-method,
-body.dark-mode .contact-text,
-body.dark-mode .contact-text h4,
-body.dark-mode .contact-text a {
+.dark-mode body .contact-method,
+.dark-mode body .contact-text,
+.dark-mode body .contact-text h4,
+.dark-mode body .contact-text a {
   background: transparent;
 }
 

@@ -33,15 +33,13 @@
   }
 }
 
-.dark-mode-toggle i,
 .dark-mode-toggle span {
   font-size: 1rem;
   display: block;
   color: var(--white);
 }
 
-.dark-mode-toggle .moon-icon,
-.dark-mode-toggle .sun-icon {
+.dark-mode-toggle .moon-icon {
   font-size: 1.1rem;
   line-height: 1;
   color: inherit;
@@ -57,7 +55,6 @@
   color: var(--primary-dark);
 }
 
-.dark-mode .dark-mode-toggle i,
 .dark-mode .dark-mode-toggle span {
   color: var(--white);
 }

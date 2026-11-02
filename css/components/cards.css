@@ -13,7 +13,7 @@
   overflow: hidden;
 }
 
-body.dark-mode .card-base {
+.dark-mode body .card-base {
   background-color: var(--card-bg-dark);
   color: var(--card-color-dark);
   border: var(--card-border-dark);
@@ -122,11 +122,11 @@ body.dark-mode .card-base {
   justify-content: center;
 }
 
-body.dark-mode .project-content h3 {
+.dark-mode body .project-content h3 {
   color: var(--card-color-dark);
 }
 
-body.dark-mode .project-content p {
+.dark-mode body .project-content p {
   color: var(--text-gray-dark);
 }
 
@@ -165,11 +165,11 @@ body.dark-mode .project-content p {
   margin: 0;
 }
 
-body.dark-mode .language-card span {
+.dark-mode body .language-card span {
   color: var(--card-color-dark);
 }
 
-body.dark-mode .language-icon img {
+.dark-mode body .language-icon img {
   filter: brightness(1.1);
 }
 
@@ -205,17 +205,17 @@ body.dark-mode .language-icon img {
   z-index: 1;
 }
 
-body.dark-mode .card-base:hover,
-body.dark-mode .project-card:hover,
-body.dark-mode .skill-card:hover,
-body.dark-mode .language-card:hover,
-body.dark-mode .tech-item:hover,
-body.dark-mode .approach-item:hover,
-body.dark-mode .outcomes-list li:hover,
-body.dark-mode .portfolio-section:hover {
+.dark-mode body .card-base:hover,
+.dark-mode body .project-card:hover,
+.dark-mode body .skill-card:hover,
+.dark-mode body .language-card:hover,
+.dark-mode body .tech-item:hover,
+.dark-mode body .approach-item:hover,
+.dark-mode body .outcomes-list li:hover,
+.dark-mode body .portfolio-section:hover {
   box-shadow: var(--card-hover-shadow-dark);
   /* Repeated from the light rule, not inherited from it: the resting
-     `body.dark-mode .card-base` sets the `border` shorthand at a higher
+     `.dark-mode body .card-base` sets the `border` shorthand at a higher
      specificity, so it resets the colour the hover asked for. */
   border-color: var(--primary);
 }

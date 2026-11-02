@@ -43,8 +43,8 @@
   margin-bottom: 10px;
 }
 
-body.dark-mode #privacy h1,
-body.dark-mode #privacy h3 {
+.dark-mode body #privacy h1,
+.dark-mode body #privacy h3 {
   color: var(--primary);
 }
 
@@ -59,11 +59,11 @@ body.dark-mode #privacy h3 {
   color: var(--primary-dark);
 }
 
-body.dark-mode #privacy .privacy-link {
+.dark-mode body #privacy .privacy-link {
   color: var(--secondary);
 }
 
-body.dark-mode #privacy .privacy-link:hover {
+.dark-mode body #privacy .privacy-link:hover {
   color: var(--primary);
 }
 

@@ -69,11 +69,11 @@
   background-color: var(--accent);
 }
 
-body.dark-mode .modal-content {
+.dark-mode body .modal-content {
   background-color: var(--card-dark);
 }
 
-body.dark-mode .modal-close {
+.dark-mode body .modal-close {
   background-color: var(--primary-dark);
 }
 

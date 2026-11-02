@@ -49,17 +49,17 @@
   }
 }
 
-body.dark-mode .app-update-notification {
+.dark-mode body .app-update-notification {
   background-color: var(--card-dark);
   box-shadow: var(--shadow-dark);
   border: 1px solid var(--primary);
 }
 
-body.dark-mode .app-update-notification button {
+.dark-mode body .app-update-notification button {
   background: var(--primary);
   color: white;
 }
 
-body.dark-mode .app-update-notification button:hover {
+.dark-mode body .app-update-notification button:hover {
   background: var(--primary-dark);
 }

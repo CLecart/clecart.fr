@@ -73,7 +73,7 @@ footer a[href="privacy-policy.html"]:hover {
   color: var(--primary-dark);
 }
 
-body.dark-mode footer {
+.dark-mode body footer {
   background-color: var(--darker);
 }
 

@@ -271,6 +271,6 @@ nav ul li a.cv-link i {
   }
 }
 
-body.dark-mode header::after {
+.dark-mode body header::after {
   opacity: 0.8;
 }

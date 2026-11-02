@@ -106,7 +106,6 @@
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="//api.emailjs.com" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -163,19 +162,17 @@
       referrerpolicy="no-referrer"
     />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdn.emailjs.com" />
 
     <!-- Version is pinned exactly: SRI breaks on any floating range (@3) the
          moment upstream publishes a patch, which would silently kill the form. -->
     <script
-      type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.1/dist/email.min.js"
       integrity="sha384-VDbnsk/qjpIVHPQMkJiROI+vW/7cw0k8TFYVLUabm7EWoLEDwcXh09XQ6gQ86Y0B"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
       defer
     ></script>
-    <script type="module" src="js/main.js" defer></script>
+    <script type="module" src="js/main.js"></script>
   </head>
   <body class="homepage">
     <header>
@@ -197,7 +194,7 @@
                   href="assets/documents/CV_Christophe_Lecart.pdf"
                   class="cv-link"
                   download
-                  ><i class="fas fa-file-download"></i> CV</a
+                  ><i class="fas fa-file-download" aria-hidden="true"></i> CV</a
                 >
               </li>
             </ul>
@@ -209,7 +206,7 @@
           </div>
           <button
             class="nav-toggle"
-            aria-label="Ouvrir le menu de navigation"
+            aria-label="Open navigation menu"
             aria-expanded="false"
             aria-controls="main-navigation"
           >
@@ -219,664 +216,679 @@
       </div>
     </header>
 
-    <section id="hero">
-      <div class="container hero-content">
-        <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
-        <p class="slide-left">
-          I'm a <span class="typewriter-text">Software Engineer</span>
-        </p>
-        <div class="fade-in hero-buttons">
-          <a href="#projects" class="btn">View My Work</a>
-          <a href="#contact" class="btn btn-secondary">Contact Me</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2>About Me</h2>
-        </div>
-        <div class="about-content">
-          <div class="slide-right">
-            <img
-              src="assets/images/profile.webp"
-              alt="Christophe Lecart - Software Engineer | Green IT Lead"
-              class="profile-img"
-              width="300"
-              height="300"
-              loading="lazy"
-            />
-          </div>
-          <div class="about-text slide-left">
-            <p>
-              Starting my career as an Electro-Mechanical Compliance Expert, I
-              developed strict rigor and a strong culture of quality. I later
-              successfully transitioned into software development, earning a
-              Level 6 degree as an Application Developer.
-            </p>
-            <p>
-              Today, I am pursuing a Level 7 (Master's equivalent) degree in
-              Software Engineering with a specialization as a Green IT Lead,
-              combining my industrial technical expertise with the design of
-              sustainable and high-performance software architectures.
-            </p>
-            <div class="about-buttons">
-              <a href="#contact" class="btn">Get In Touch</a>
-              <a
-                href="about-portfolio.html"
-                class="btn btn-secondary project-btn"
-                >For Recruiters <i class="fas fa-briefcase"></i
-              ></a>
-            </div>
+    <main>
+      <section id="hero">
+        <div class="container hero-content">
+          <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
+          <p class="slide-left">
+            I'm a <span class="typewriter-text">Software Engineer</span>
+          </p>
+          <div class="fade-in hero-buttons">
+            <a href="#projects" class="btn">View My Work</a>
+            <a href="#contact" class="btn btn-secondary">Contact Me</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="languages">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2>Programming Languages</h2>
-          <p>Currently Learning</p>
-        </div>
-        <div class="languages-grid">
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
+      <section id="about">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2>About Me</h2>
+          </div>
+          <div class="about-content">
+            <div class="slide-right">
               <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
-                alt="Go"
-              />
-            </div>
-            <span>Go</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <i class="fab fa-rust rust-icon"></i>
-            </div>
-            <span>Rust</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                alt="Python"
-              />
-            </div>
-            <span>Python</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
-                alt="Java"
-              />
-            </div>
-            <span>Java</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                alt="JavaScript"
-              />
-            </div>
-            <span>JavaScript</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                alt="HTML5"
-              />
-            </div>
-            <span>HTML5</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                alt="CSS3"
-              />
-            </div>
-            <span>CSS3</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
-                alt="SQLite"
-              />
-            </div>
-            <span>SQLite</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                alt="Docker"
-              />
-            </div>
-            <span>Docker</span>
-          </div>
-          <div class="language-card card-base fade-in">
-            <div class="language-icon">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
-                alt="Git"
-              />
-            </div>
-            <span>Git</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2>Skills</h2>
-        </div>
-        <div class="skills-container">
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-code skill-icon"></i>
-            <h3 class="skill-name">Web Development</h3>
-            <p>
-              HTML, CSS, JavaScript, and modern frameworks to create responsive
-              web applications.
-            </p>
-            <div class="skill-level" data-level="90"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-mobile-alt skill-icon"></i>
-            <h3 class="skill-name">Mobile Development</h3>
-            <p>
-              Building native and cross-platform mobile applications for iOS and
-              Android.
-            </p>
-            <div class="skill-level" data-level="85"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-server skill-icon"></i>
-            <h3 class="skill-name">Backend Development</h3>
-            <p>
-              Go & Node.js for creating robust server-side applications and
-              APIs.
-            </p>
-            <div class="skill-level" data-level="88"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-database skill-icon"></i>
-            <h3 class="skill-name">Algorithm Design</h3>
-            <p>
-              Creating efficient algorithms for complex problem-solving
-              scenarios.
-            </p>
-            <div class="skill-level" data-level="80"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-shield-alt skill-icon"></i>
-            <h3 class="skill-name">Security</h3>
-            <p>
-              Implementing secure coding practices and system security
-              fundamentals.
-            </p>
-            <div class="skill-level" data-level="75"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-network-wired skill-icon"></i>
-            <h3 class="skill-name">Network Architecture</h3>
-            <p>Designing and implementing efficient network solutions.</p>
-            <div class="skill-level" data-level="78"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-database skill-icon"></i>
-            <h3 class="skill-name">Database Management</h3>
-            <p>
-              Design, optimization and management of relational databases with
-              SQLite.
-            </p>
-            <div class="skill-level" data-level="82"></div>
-          </div>
-
-          <div class="skill-card card-base fade-in">
-            <i class="fas fa-cloud skill-icon"></i>
-            <h3 class="skill-name">DevOps & CI/CD</h3>
-            <p>
-              Implementation of pipelines with Docker, Kubernetes, GitHub
-              Actions or GitLab CI/CD for continuous deployment.
-            </p>
-            <div class="skill-level" data-level="80"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2>Projects</h2>
-        </div>
-        <div class="projects-grid">
-          <div class="project-card card-base fade-in">
-            <div class="project-thumb">
-              <video
-                autoplay
-                loop
-                muted
-                controls
+                src="assets/images/profile.webp"
+                alt="Christophe Lecart - Software Engineer | Green IT Lead"
+                class="profile-img"
+                width="300"
+                height="300"
                 loading="lazy"
-                width="400"
-                height="225"
-                poster=""
-              >
-                <source
-                  src="assets/videos/Groupie-Tracker.mp4"
-                  type="video/mp4"
-                />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/Groupie-Tracker.en.vtt"
-                  default
-                />
-                Your browser does not support video playback.
-              </video>
+              />
             </div>
-            <div class="project-content">
-              <h3>Groupie-Tracker</h3>
+            <div class="about-text slide-left">
               <p>
-                A Go web application that visualizes music artist data from a
-                REST API. It allows searching and filtering groups by name,
-                dates, or concert locations with an optimized interactive
-                interface.
+                Starting my career as an Electro-Mechanical Compliance Expert, I
+                developed strict rigor and a strong culture of quality. I later
+                successfully transitioned into software development, earning a
+                Level 6 degree as an Application Developer.
               </p>
-              <div class="project-buttons">
-                <a
-                  href="descriptions-projects.html#project1"
-                  class="project-btn"
-                  >View Details</a
-                >
-                <a
-                  href="https://github.com/CLecart/groupie-tracker"
-                  class="github-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View on GitHub"
-                  ><i class="fab fa-github"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card card-base fade-in">
-            <div class="project-thumb">
-              <video
-                autoplay
-                loop
-                muted
-                controls
-                loading="lazy"
-                width="400"
-                height="225"
-                poster=""
-              >
-                <source src="assets/videos/BombermanDX.mp4" type="video/mp4" />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/BombermanDX.en.vtt"
-                  default
-                />
-                Your browser does not support video playback.
-              </video>
-            </div>
-            <div class="project-content">
-              <h3>BombermanDX</h3>
               <p>
-                A browser game inspired by the classic Bomberman, developed with
-                JavaScript and DOM manipulation. Includes progressive levels,
-                different AI enemies, and power-ups, all with optimized
-                performance management.
+                Today, I am pursuing a Level 7 (Master's equivalent) degree in
+                Software Engineering with a specialization as a Green IT Lead,
+                combining my industrial technical expertise with the design of
+                sustainable and high-performance software architectures.
               </p>
-              <div class="project-buttons">
+              <div class="about-buttons">
+                <a href="#contact" class="btn">Get In Touch</a>
                 <a
-                  href="descriptions-projects.html#project2"
-                  class="project-btn"
-                  >View Details</a
-                >
-                <a
-                  href="https://github.com/SpauriRosso/bomberman-dx"
-                  class="github-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View on GitHub"
-                  ><i class="fab fa-github"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card card-base fade-in">
-            <div class="project-thumb" title="Pochet du Courval Live Preview">
-              <video
-                autoplay
-                loop
-                muted
-                controls
-                loading="lazy"
-                width="400"
-                height="225"
-                poster=""
-              >
-                <source
-                  src="assets/videos/pochet-du-courval-preview.mp4"
-                  type="video/mp4"
-                />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/pochet-du-courval-preview.en.vtt"
-                />
-              </video>
-            </div>
-            <div class="project-content">
-              <h3>Pochet du Courval Showcase</h3>
-              <p>
-                Brand showcase for a luxury glassmaking craft featuring an
-                interactive 3D perfume bottle hero with modular marketing
-                sections. Built with Vite, React + TypeScript, Tailwind CSS,
-                Framer Motion and @react-three/fiber.
-              </p>
-              <div class="project-buttons">
-                <a
-                  href="descriptions-projects.html#project4"
-                  class="project-btn"
-                >
-                  View Details
-                </a>
-                <a
-                  href="https://pochet-du-courval-showcase.vercel.app/"
-                  class="btn btn-view-live"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View Live"
-                  aria-label="View Live"
-                >
-                  <i class="fas fa-external-link-alt"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card card-base fade-in project-card--hidden">
-            <div class="project-thumb">
-              <video
-                class="project-video"
-                controls
-                autoplay
-                muted
-                loop
-                playsinline
-                loading="lazy"
-                poster="assets/images/posters/Konekt.webp"
-              >
-                <source src="assets/videos/Konekt.mp4" type="video/mp4" />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/Konekt.en.vtt"
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-
-            <div class="project-content">
-              <h3>Social Network</h3>
-              <p>
-                Full-stack social network built with Next.js, React, Prisma,
-                PostgreSQL, and Redis. It includes protected APIs, real-time
-                chat with WebSocket support, stories, groups, and event RSVP
-                flows in one codebase.
-              </p>
-
-              <div class="project-buttons">
-                <a
-                  href="descriptions-projects.html#project3"
-                  class="project-btn"
-                >
-                  View Details
-                </a>
-
-                <a
-                  href="https://github.com/arocchet/social-network"
-                  class="github-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View on GitHub"
-                >
-                  <i class="fab fa-github"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card card-base fade-in project-card--hidden">
-            <div class="project-thumb" title="PartiQ Live Preview">
-              <video
-                autoplay
-                loop
-                muted
-                controls
-                loading="lazy"
-                width="400"
-                height="225"
-                poster=""
-              >
-                <source src="assets/videos/PartiQ.mp4" type="video/mp4" />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/PartiQ.en.vtt"
-                />
-                Your browser does not support video playback.
-              </video>
-            </div>
-            <div class="project-content">
-              <h3>PartiQ</h3>
-              <p>
-                A modern product and ticket management platform with secure
-                authentication, advanced catalogue, ticket workflows, document
-                handling, and real-time updates — powered by PostgreSQL and a
-                learning chatbot.
-              </p>
-              <div class="project-buttons">
-                <a
-                  href="descriptions-projects.html#project5"
-                  class="project-btn"
-                  >View Details</a
-                >
-                <a
-                  href="https://github.com/CLecart/PartiQ.git"
-                  class="github-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View on GitHub"
-                  ><i class="fab fa-github"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-card card-base fade-in project-card--hidden">
-            <div class="project-thumb" title="AbrisCraft Live Preview">
-              <video
-                autoplay
-                loop
-                muted
-                controls
-                loading="lazy"
-                width="400"
-                height="225"
-                poster=""
-              >
-                <source src="assets/videos/AbrisCraft.mp4" type="video/mp4" />
-                <track
-                  kind="captions"
-                  srclang="en"
-                  label="English captions"
-                  src="assets/videos/AbrisCraft.en.vtt"
-                />
-                Your browser does not support video playback.
-              </video>
-            </div>
-            <div class="project-content">
-              <h3>AbrisCraft</h3>
-              <p>
-                Interactive 3D garden shed configurator with real-time material
-                and hardware estimation, built with Next.js, React + TypeScript,
-                Tailwind CSS, React Three Fiber/Three.js, Prisma/PostgreSQL, and
-                a backend API architecture.
-              </p>
-              <div class="project-buttons">
-                <a
-                  href="descriptions-projects.html#project6"
-                  class="project-btn"
-                  >View Details</a
-                >
-                <a
-                  href="https://github.com/CLecart/AbrisCraft.git"
-                  class="github-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="View on GitHub"
-                  ><i class="fab fa-github"></i
+                  href="about-portfolio.html"
+                  class="btn btn-secondary project-btn"
+                  >For Recruiters
+                  <i class="fas fa-briefcase" aria-hidden="true"></i
                 ></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="projects-footer">
-          <button id="view-more-btn" class="btn btn-secondary">
-            View More Projects
-          </button>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="contact">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2>Get In Touch</h2>
+      <section id="languages">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2>Programming Languages</h2>
+            <p>Currently Learning</p>
+          </div>
+          <div class="languages-grid">
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>Go</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <i class="fab fa-rust rust-icon" aria-hidden="true"></i>
+              </div>
+              <span>Rust</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>Python</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>Java</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>JavaScript</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>HTML5</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>CSS3</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>SQLite</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>Docker</span>
+            </div>
+            <div class="language-card card-base fade-in">
+              <div class="language-icon">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <span>Git</span>
+            </div>
+          </div>
         </div>
-        <div class="contact-container">
-          <div class="contact-info card-base slide-right">
-            <h3>Contact Information</h3>
-            <div class="contact-method">
-              <div class="contact-icon">
-                <i class="fas fa-envelope"></i>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2>Skills</h2>
+          </div>
+          <div class="skills-container">
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-code skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Web Development</h3>
+              <p>
+                HTML, CSS, JavaScript, and modern frameworks to create
+                responsive web applications.
+              </p>
+              <div class="skill-level" data-level="90"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-mobile-alt skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Mobile Development</h3>
+              <p>
+                Building native and cross-platform mobile applications for iOS
+                and Android.
+              </p>
+              <div class="skill-level" data-level="85"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-server skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Backend Development</h3>
+              <p>
+                Go & Node.js for creating robust server-side applications and
+                APIs.
+              </p>
+              <div class="skill-level" data-level="88"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-database skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Algorithm Design</h3>
+              <p>
+                Creating efficient algorithms for complex problem-solving
+                scenarios.
+              </p>
+              <div class="skill-level" data-level="80"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-shield-alt skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Security</h3>
+              <p>
+                Implementing secure coding practices and system security
+                fundamentals.
+              </p>
+              <div class="skill-level" data-level="75"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-network-wired skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Network Architecture</h3>
+              <p>Designing and implementing efficient network solutions.</p>
+              <div class="skill-level" data-level="78"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-database skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">Database Management</h3>
+              <p>
+                Design, optimization and management of relational databases with
+                SQLite.
+              </p>
+              <div class="skill-level" data-level="82"></div>
+            </div>
+
+            <div class="skill-card card-base fade-in">
+              <i class="fas fa-cloud skill-icon" aria-hidden="true"></i>
+              <h3 class="skill-name">DevOps & CI/CD</h3>
+              <p>
+                Implementation of pipelines with Docker, Kubernetes, GitHub
+                Actions or GitLab CI/CD for continuous deployment.
+              </p>
+              <div class="skill-level" data-level="80"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2>Projects</h2>
+          </div>
+          <div class="projects-grid">
+            <div class="project-card card-base fade-in">
+              <div class="project-thumb">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  controls
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                >
+                  <source
+                    src="assets/videos/Groupie-Tracker.mp4"
+                    type="video/mp4"
+                  />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/Groupie-Tracker.en.vtt"
+                    default
+                  />
+                  Your browser does not support video playback.
+                </video>
               </div>
-              <div class="contact-text">
-                <h4>Email</h4>
-                <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>
+              <div class="project-content">
+                <h3>Groupie-Tracker</h3>
+                <p>
+                  A Go web application that visualizes music artist data from a
+                  REST API. It allows searching and filtering groups by name,
+                  dates, or concert locations with an optimized interactive
+                  interface.
+                </p>
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project1"
+                    class="project-btn"
+                    >View Details</a
+                  >
+                  <a
+                    href="https://github.com/CLecart/groupie-tracker"
+                    class="github-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    aria-label="View Groupie-Tracker on GitHub"
+                    ><i class="fab fa-github" aria-hidden="true"></i
+                  ></a>
+                </div>
               </div>
             </div>
-            <div class="contact-method">
-              <div class="contact-icon">
-                <i class="fab fa-github"></i>
-              </div>
-              <div class="contact-text">
-                <h4>GitHub</h4>
-                <a
-                  href="https://github.com/CLecart"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >github.com/CLecart</a
+
+            <div class="project-card card-base fade-in">
+              <div class="project-thumb">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  controls
+                  loading="lazy"
+                  width="400"
+                  height="225"
                 >
+                  <source
+                    src="assets/videos/BombermanDX.mp4"
+                    type="video/mp4"
+                  />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/BombermanDX.en.vtt"
+                    default
+                  />
+                  Your browser does not support video playback.
+                </video>
+              </div>
+              <div class="project-content">
+                <h3>BombermanDX</h3>
+                <p>
+                  A browser game inspired by the classic Bomberman, developed
+                  with JavaScript and DOM manipulation. Includes progressive
+                  levels, different AI enemies, and power-ups, all with
+                  optimized performance management.
+                </p>
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project2"
+                    class="project-btn"
+                    >View Details</a
+                  >
+                  <a
+                    href="https://github.com/SpauriRosso/bomberman-dx"
+                    class="github-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    aria-label="View BombermanDX on GitHub"
+                    ><i class="fab fa-github" aria-hidden="true"></i
+                  ></a>
+                </div>
               </div>
             </div>
-            <div class="contact-method">
-              <div class="contact-icon">
-                <i class="fab fa-linkedin"></i>
-              </div>
-              <div class="contact-text">
-                <h4>LinkedIn</h4>
-                <a
-                  href="https://www.linkedin.com/in/christophe-lecart/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >linkedin.com/in/christophe-lecart</a
+
+            <div class="project-card card-base fade-in">
+              <div class="project-thumb" title="Pochet du Courval Live Preview">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  controls
+                  loading="lazy"
+                  width="400"
+                  height="225"
                 >
+                  <source
+                    src="assets/videos/pochet-du-courval-preview.mp4"
+                    type="video/mp4"
+                  />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/pochet-du-courval-preview.en.vtt"
+                  />
+                </video>
+              </div>
+              <div class="project-content">
+                <h3>Pochet du Courval Showcase</h3>
+                <p>
+                  Brand showcase for a luxury glassmaking craft featuring an
+                  interactive 3D perfume bottle hero with modular marketing
+                  sections. Built with Vite, React + TypeScript, Tailwind CSS,
+                  Framer Motion and @react-three/fiber.
+                </p>
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project4"
+                    class="project-btn"
+                  >
+                    View Details
+                  </a>
+                  <a
+                    href="https://pochet-du-courval-showcase.vercel.app/"
+                    class="btn btn-view-live"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Live"
+                    aria-label="View Live"
+                  >
+                    <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card card-base fade-in project-card--hidden">
+              <div class="project-thumb">
+                <video
+                  class="project-video"
+                  controls
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  loading="lazy"
+                  poster="assets/images/posters/Konekt.webp"
+                >
+                  <source src="assets/videos/Konekt.mp4" type="video/mp4" />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/Konekt.en.vtt"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class="project-content">
+                <h3>Social Network</h3>
+                <p>
+                  Full-stack social network built with Next.js, React, Prisma,
+                  PostgreSQL, and Redis. It includes protected APIs, real-time
+                  chat with WebSocket support, stories, groups, and event RSVP
+                  flows in one codebase.
+                </p>
+
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project3"
+                    class="project-btn"
+                  >
+                    View Details
+                  </a>
+
+                  <a
+                    href="https://github.com/arocchet/social-network"
+                    class="github-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    aria-label="View Social Network on GitHub"
+                  >
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card card-base fade-in project-card--hidden">
+              <div class="project-thumb" title="PartiQ Live Preview">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  controls
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                >
+                  <source src="assets/videos/PartiQ.mp4" type="video/mp4" />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/PartiQ.en.vtt"
+                  />
+                  Your browser does not support video playback.
+                </video>
+              </div>
+              <div class="project-content">
+                <h3>PartiQ</h3>
+                <p>
+                  A modern product and ticket management platform with secure
+                  authentication, advanced catalogue, ticket workflows, document
+                  handling, and real-time updates — powered by PostgreSQL and a
+                  learning chatbot.
+                </p>
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project5"
+                    class="project-btn"
+                    >View Details</a
+                  >
+                  <a
+                    href="https://github.com/CLecart/PartiQ.git"
+                    class="github-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    aria-label="View PartiQ on GitHub"
+                    ><i class="fab fa-github" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card card-base fade-in project-card--hidden">
+              <div class="project-thumb" title="AbrisCraft Live Preview">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  controls
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                >
+                  <source src="assets/videos/AbrisCraft.mp4" type="video/mp4" />
+                  <track
+                    kind="captions"
+                    srclang="en"
+                    label="English captions"
+                    src="assets/videos/AbrisCraft.en.vtt"
+                  />
+                  Your browser does not support video playback.
+                </video>
+              </div>
+              <div class="project-content">
+                <h3>AbrisCraft</h3>
+                <p>
+                  Interactive 3D garden shed configurator with real-time
+                  material and hardware estimation, built with Next.js, React +
+                  TypeScript, Tailwind CSS, React Three Fiber/Three.js,
+                  Prisma/PostgreSQL, and a backend API architecture.
+                </p>
+                <div class="project-buttons">
+                  <a
+                    href="descriptions-projects.html#project6"
+                    class="project-btn"
+                    >View Details</a
+                  >
+                  <a
+                    href="https://github.com/CLecart/AbrisCraft.git"
+                    class="github-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on GitHub"
+                    aria-label="View AbrisCraft on GitHub"
+                    ><i class="fab fa-github" aria-hidden="true"></i
+                  ></a>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="contact-form card-base contact-form--stable">
-            <h3>Send Me a Message</h3>
-            <form id="contact-form">
-              <div class="form-group">
-                <label for="name">Your Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder=" "
-                  autocomplete="name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email">Your Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder=" "
-                  autocomplete="email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="message">Your Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  placeholder=" "
-                  autocomplete="off"
-                  minlength="10"
-                  required
-                ></textarea>
-              </div>
-              <div class="form-trap" aria-hidden="true">
-                <label for="website">Leave this field empty</label>
-                <input
-                  type="text"
-                  id="website"
-                  name="website"
-                  tabindex="-1"
-                  autocomplete="off"
-                />
-              </div>
-              <input type="hidden" name="to_name" value="Christophe" />
-              <button type="submit" class="btn">Send Message</button>
-              <div class="form-status"></div>
-            </form>
+          <div class="projects-footer">
+            <button id="view-more-btn" class="btn btn-secondary">
+              View More Projects
+            </button>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2>Get In Touch</h2>
+          </div>
+          <div class="contact-container">
+            <div class="contact-info card-base slide-right">
+              <h3>Contact Information</h3>
+              <div class="contact-method">
+                <div class="contact-icon">
+                  <i class="fas fa-envelope" aria-hidden="true"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Email</h4>
+                  <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>
+                </div>
+              </div>
+              <div class="contact-method">
+                <div class="contact-icon">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>GitHub</h4>
+                  <a
+                    href="https://github.com/CLecart"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >github.com/CLecart</a
+                  >
+                </div>
+              </div>
+              <div class="contact-method">
+                <div class="contact-icon">
+                  <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>LinkedIn</h4>
+                  <a
+                    href="https://www.linkedin.com/in/christophe-lecart/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >linkedin.com/in/christophe-lecart</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form card-base contact-form--stable">
+              <h3>Send Me a Message</h3>
+              <form id="contact-form">
+                <div class="form-group">
+                  <label for="name">Your Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder=" "
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">Your Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder=" "
+                    autocomplete="email"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="message">Your Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder=" "
+                    autocomplete="off"
+                    minlength="10"
+                    required
+                  ></textarea>
+                </div>
+                <div class="form-trap" aria-hidden="true">
+                  <label for="website">Leave this field empty</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    tabindex="-1"
+                    autocomplete="off"
+                  />
+                </div>
+                <input type="hidden" name="to_name" value="Christophe" />
+                <button type="submit" class="btn">Send Message</button>
+                <div class="form-status" role="status"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer>
       <div class="container">

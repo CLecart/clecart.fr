@@ -47,7 +47,7 @@
     "puppeteer": "^24.40.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^22.13.0 || >=24"
   },
   "browserslist": [
     "> 1%",

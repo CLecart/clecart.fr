@@ -77,7 +77,7 @@ no server-side code at all.
 - **Resource Hints:** `dns-prefetch`, `preconnect`, and a `preload` on `profile.webp` with `fetchpriority="high"`
 - **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for images and video, plus an in-worker SVG placeholder when an image cannot be fetched offline. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
 - **WebP** for the profile image; the container also negotiates a `.webp` sibling when the client advertises support
-- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~41 MB of demo footage on disk. Browsers already defer an autoplay video they cannot show; the only thing that broke that was one stray `preload="auto"`, on a card hidden behind "View More Projects", which pulled 2.5 MB nobody had asked for. `videoHandler.js` also carries a `data-src` deferred-load path that never runs, since the markup uses plain `<source src>` — dead, but harmless now that the browser's own deferral is not being overridden.
+- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~41 MB of demo footage on disk (Chrome, 2026-11-02). Browsers already defer an autoplay video they cannot show; the only thing that broke that was one stray `preload="auto"`, on a card hidden behind "View More Projects", which pulled 2.5 MB nobody had asked for. `videoHandler.js` also carries a `data-src` deferred-load path that never runs, since the markup uses plain `<source src>` — dead, but harmless now that the browser's own deferral is not being overridden.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
 
 ### 🛡️ **Security and Compliance**
@@ -121,6 +121,7 @@ clecart.fr/
 │   ├── deploy.sh                     # Deployment script with rollback
 │   ├── nginx.conf                    # Container server configuration
 │   ├── nginx-security-headers.conf   # Security headers (container only)
+│   ├── .dockerignore                 # Allowlist of what the image may serve
 │   ├── package.json                  # npm scripts and metadata
 │   └── package-lock.json             # Pinned dev dependency tree
 │
@@ -173,6 +174,7 @@ clecart.fr/
 │   │   │   ├── sw-register.js        # Service Worker registration
 │   │   │   └── webvitals.js          # Core Web Vitals monitoring
 │   │   │
+│   │   ├── cv.js                     # Entry point of cv/index.html
 │   │   └── main.js                   # Application entry point
 │   │
 │   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
@@ -182,7 +184,7 @@ clecart.fr/
 │   ├── documents/
 │   │   └── CV_Christophe_Lecart.pdf  # Professional resume
 │   ├── icons/                        # Favicons + PWA icons
-│   ├── images/                       # profile.webp, Konekt.png
+│   ├── images/                       # profile.webp, posters/Konekt.webp
 │   ├── manifest/                     # site.webmanifest, browserconfig.xml
 │   └── videos/                       # Project demos (.mp4 + .en.vtt captions)
 │
@@ -244,7 +246,7 @@ needed for the linting and audit tooling below.
 #### Prerequisites
 
 - **Python 3** — `npm start` is a thin wrapper around `python3 -m http.server`
-- **Node.js and npm** — only for ESLint, Prettier and Lighthouse (`package.json` declares `node >=16`)
+- **Node.js `^22.13.0 || >=24` and npm** — only for the tooling: ESLint, Prettier, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 63; ESLint 10 alone would accept `^20.19.0`
 - **Docker and Docker Compose** — optional, for the containerized flow
 
 #### Available Scripts
@@ -410,7 +412,7 @@ Measured on the repository sources (2026-07-17):
 
 - **HTML + CSS + JS:** 184 KB uncompressed, ~37 KB gzipped
 - **Profile image:** `profile.webp`, 352 KB, preloaded with `fetchpriority="high"`
-- **Demo videos:** ~41 MB across six files on disk, but browsers range-request them: **2.5 MB is actually transferred on load**, measured in Chrome on 2026-07-17, identically on desktop and under an iPhone user agent. The files are still fetched without waiting for the viewport (see the `[CIBLE]` above); the eager cost is 2.5 MB, not 41.
+- **Demo videos:** ~41 MB across six files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
 - **CSS delivery:** 23 requests in 2 waves (the barrel, then its 22 imports in parallel) — one extra discovery round-trip. Measured in Chrome on 2026-07-16 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight.
 
 **[CIBLE] Lighthouse scores and field Core Web Vitals:** not measured. No report is committed and
@@ -453,7 +455,7 @@ docker logs clecart-portfolio-container -f
 ### 👨‍💻 **Professional Contact**
 
 - **Email:** [djlike@hotmail.fr](mailto:djlike@hotmail.fr)
-- **LinkedIn:** [christophe-lecart-cl15121981](https://www.linkedin.com/in/christophe-lecart-cl15121981/)
+- **LinkedIn:** [christophe-lecart](https://www.linkedin.com/in/christophe-lecart/)
 - **GitHub:** [github.com/CLecart](https://github.com/CLecart)
 - **Portfolio:** [clecart.fr](https://clecart.fr)
 
@@ -461,7 +463,7 @@ docker logs clecart-portfolio-container -f
 
 1. **GitHub Issues** for technical bugs
 2. **Security Issues** -> private email only
-3. **Improvement Suggestions** -> GitHub Discussions
+3. **Improvement Suggestions** -> GitHub Issues as well (Discussions are not enabled)
 
 ### 📚 **Technical Documentation**
 

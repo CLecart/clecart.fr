@@ -6,63 +6,57 @@
 /**
  * Turn the project anchors into a hash-driven tab switcher
  * @function initProjectNavigation
- * @description A deep link opens the project named by the URL hash; an unmatched or absent hash falls back to the first project, so the page is never left showing nothing. Every project is reset to inactive up front, which makes the function safe to run over markup already in an arbitrary state.
+ * @description A deep link opens a project only when the URL hash equals one of the tabs' own fragments. The hash is compared, never turned into a selector: "#1" is not valid CSS, and querySelector threw on it before any project was shown. Any other hash falls back to the first project, so the page is never left showing nothing.
  * @returns {void}
  */
 export function initProjectNavigation() {
-  const navButtons = document.querySelectorAll(".nav-btn");
+  const navButtons = [...document.querySelectorAll(".nav-btn")];
   const projects = document.querySelectorAll(".project");
 
   if (!navButtons.length || !projects.length) {
     return;
   }
 
-  projects.forEach((project) => {
-    project.classList.remove("active");
-    project.style.display = "none";
-  });
-  navButtons.forEach((btn) => btn.classList.remove("active"));
+  /**
+   * Show one project and mark its tab, hiding every other project
+   * @function activate
+   * @param {HTMLElement} project - Project to show
+   * @param {HTMLElement} button - Tab to mark as active
+   * @returns {void}
+   */
+  function activate(project, button) {
+    projects.forEach((other) => {
+      other.classList.remove("active");
+      other.style.display = "none";
+    });
+    navButtons.forEach((btn) => btn.classList.remove("active"));
 
-  const hash = globalThis.location.hash;
-  let activeProject = null;
-  let activeButton = null;
-
-  if (hash) {
-    activeProject = document.querySelector(hash);
-    activeButton = document.querySelector(`a[href="${hash}"]`);
+    project.classList.add("active");
+    project.style.display = "block";
+    button.classList.add("active");
   }
 
-  if (!activeProject) {
-    activeProject = projects[0];
-    activeButton = navButtons[0];
-  }
+  const projectOf = (button) =>
+    document.getElementById(button.getAttribute("href").slice(1));
 
-  if (activeProject) {
-    activeProject.classList.add("active");
-    activeProject.style.display = "block";
-  }
-  if (activeButton) {
-    activeButton.classList.add("active");
+  const linkedButton = navButtons.find(
+    (button) => button.hash === globalThis.location.hash
+  );
+  const linkedProject = linkedButton ? projectOf(linkedButton) : null;
+
+  if (linkedProject) {
+    activate(linkedProject, linkedButton);
+  } else {
+    activate(projects[0], navButtons[0]);
   }
 
   navButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const targetId = button.getAttribute("href");
-      const targetProject = document.querySelector(targetId);
-
+      const targetProject = projectOf(button);
       if (targetProject) {
-        projects.forEach((project) => {
-          project.classList.remove("active");
-          project.style.display = "none";
-        });
-
-        navButtons.forEach((btn) => btn.classList.remove("active"));
-
-        targetProject.classList.add("active");
-        targetProject.style.display = "block";
-        button.classList.add("active");
+        activate(targetProject, button);
       }
     });
   });

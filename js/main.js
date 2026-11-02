@@ -183,11 +183,9 @@ function reportLoadPerformance() {
       ttfb: Math.round(navigation.responseStart - navigation.requestStart),
       download: Math.round(navigation.responseEnd - navigation.responseStart),
       domReady: Math.round(
-        navigation.domContentLoadedEventEnd - navigation.navigationStart
+        navigation.domContentLoadedEventEnd - navigation.startTime
       ),
-      windowLoad: Math.round(
-        navigation.loadEventEnd - navigation.navigationStart
-      ),
+      windowLoad: Math.round(navigation.loadEventEnd - navigation.startTime),
     };
 
     globalThis.analytics?.trackEvent(

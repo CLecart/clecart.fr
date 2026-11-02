@@ -1,13 +1,12 @@
 /**
- * Core Web Vitals monitoring and optimization system
- * @file Real-time web performance metrics monitoring with automatic optimizations
+ * Core Web Vitals observation
  * @author Christophe Lecart
  */
 
 /**
- * Initializes Core Web Vitals monitoring with automatic optimizations
+ * Observe LCP, FID, CLS and FCP, read TTFB, and hand them to analytics after load
  * @function initWebVitals
- * @description Configures LCP, FID, CLS, FCP, TTFB monitoring with optimization triggers
+ * @description Every observer is buffered: they start at DOMContentLoaded, and a paint that lands before that would otherwise never reach them, leaving LCP and FCP null. The report waits a second past load because LCP and CLS keep updating after it.
  * @returns {void}
  */
 export function initWebVitals() {
@@ -27,23 +26,15 @@ export function initWebVitals() {
     const entries = list.getEntries();
     const lastEntry = entries[entries.length - 1];
     vitalsData.lcp = Math.round(lastEntry.startTime);
-
-    if (vitalsData.lcp > 2500) {
-      optimizeLCP();
-    }
   });
-  lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
+  lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
 
   const fidObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       vitalsData.fid = Math.round(entry.processingStart - entry.startTime);
-
-      if (vitalsData.fid > 100) {
-        optimizeFID();
-      }
     }
   });
-  fidObserver.observe({ entryTypes: ["first-input"] });
+  fidObserver.observe({ type: "first-input", buffered: true });
 
   let clsValue = 0;
   const clsObserver = new PerformanceObserver((list) => {
@@ -53,21 +44,17 @@ export function initWebVitals() {
         vitalsData.cls = Math.round(clsValue * 1000) / 1000;
       }
     }
-
-    if (vitalsData.cls > 0.1) {
-      optimizeCLS();
-    }
   });
-  clsObserver.observe({ entryTypes: ["layout-shift"] });
+  clsObserver.observe({ type: "layout-shift", buffered: true });
 
-  const navigationObserver = new PerformanceObserver((list) => {
+  const paintObserver = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.name === "first-contentful-paint") {
         vitalsData.fcp = Math.round(entry.startTime);
       }
     }
   });
-  navigationObserver.observe({ entryTypes: ["paint"] });
+  paintObserver.observe({ type: "paint", buffered: true });
 
   const navTiming = performance.getEntriesByType("navigation")[0];
   if (navTiming) {
@@ -76,10 +63,6 @@ export function initWebVitals() {
     );
   }
 
-  /**
-   * Final Web Vitals report generation after complete loading
-   * @description 1s delay to ensure all metrics are captured
-   */
   globalThis.addEventListener("load", () => {
     setTimeout(() => {
       reportVitals(vitalsData);
@@ -88,103 +71,14 @@ export function initWebVitals() {
 }
 
 /**
- * Optimizes Largest Contentful Paint (LCP)
- * @function optimizeLCP
- * @description Applies loading optimizations to improve LCP
- * @returns {void}
- */
-function optimizeLCP() {
-  const images = document.querySelectorAll(
-    'img[loading="lazy"]:not([data-optimized])'
-  );
-  images.forEach((img, index) => {
-    if (index < 2) {
-      img.loading = "eager";
-      img.setAttribute("data-optimized", "true");
-    }
-  });
-
-  const stylesheets = document.querySelectorAll(
-    'link[rel="stylesheet"]:not([data-critical])'
-  );
-  stylesheets.forEach((link) => {
-    if (!link.media || link.media === "all") {
-      link.media = "print";
-      link.onload = function () {
-        this.media = "all";
-      };
-    }
-  });
-}
-
-/**
- * Optimizes First Input Delay (FID)
- * @function optimizeFID
- * @description Improves responsiveness by deferring heavy JavaScript tasks
- * @returns {void}
- */
-function optimizeFID() {
-  if ("scheduler" in globalThis) {
-    globalThis.scheduler.postTask(
-      () => {
-        optimizeAnimations();
-      },
-      { priority: "background" }
-    );
-  } else {
-    setTimeout(optimizeAnimations, 0);
-  }
-}
-
-/**
- * Reduces Cumulative Layout Shift (CLS)
- * @description Lets images without explicit dimensions size themselves from
- * their intrinsic ratio rather than reflowing the page on decode
- * @returns {void}
- */
-function optimizeCLS() {
-  const images = document.querySelectorAll("img:not([width]):not([height])");
-  images.forEach((img) => {
-    img.style.aspectRatio = "auto";
-    img.style.width = "auto";
-    img.style.height = "auto";
-  });
-}
-
-/**
- * Hints the compositor about elements that are about to animate
- * @description Sets will-change on entrance-animated elements and clears it on
- * animationend, since a permanent will-change keeps layers alive for nothing
- * @returns {void}
- */
-function optimizeAnimations() {
-  const animatedElements = document.querySelectorAll(
-    '[class*="fade"], [class*="slide"]'
-  );
-  animatedElements.forEach((el) => {
-    el.style.willChange = "transform, opacity";
-
-    el.addEventListener(
-      "animationend",
-      () => {
-        el.style.willChange = "auto";
-      },
-      { once: true }
-    );
-  });
-}
-
-/**
- * Forwards the collected vitals to the analytics module, when present
+ * Store the vitals as one analytics event, which is a no-op without consent
  * @param {object} vitals - Collected LCP, FID, CLS, FCP and TTFB values
  * @returns {void}
  */
 function reportVitals(vitals) {
-  if (globalThis.analytics) {
-    globalThis.analytics.trackEvent(
-      "Performance",
-      "WebVitals",
-      JSON.stringify(vitals)
-    );
-  }
+  globalThis.analytics?.trackEvent(
+    "Performance",
+    "WebVitals",
+    JSON.stringify(vitals)
+  );
 }

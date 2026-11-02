@@ -12,7 +12,7 @@
 /* Bump on any change to urlsToCache or to a caching strategy: activate() drops
    every cache whose name differs, which is the only way a stale entry ever
    leaves a visitor's browser. */
-const CACHE_NAME = "portfolio-cache-v3";
+const CACHE_NAME = "portfolio-cache-v4";
 
 const urlsToCache = [
   "/",
@@ -21,10 +21,6 @@ const urlsToCache = [
   "/js/main.js",
   "/assets/images/profile.webp",
   "/assets/icons/favicon.ico",
-  "/assets/icons/apple-touch-icon.png",
-  "/assets/icons/android-chrome-192x192.png",
-  "/assets/icons/android-chrome-512x512.png",
-  "/assets/manifest/site.webmanifest",
 ];
 
 /**
@@ -49,21 +45,15 @@ function offlineImageResponse() {
   });
 }
 
-/**
- * Service Worker installation event
- * @event install
- * @description Caches static resources and activates immediately
- */
+/* A failed precache must fail the install: swallowing the error lets the
+   worker activate with an empty cache, and activate() then deletes the
+   previous, complete one. */
 globalThis.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
-      try {
-        const cache = await caches.open(CACHE_NAME);
-        await cache.addAll(urlsToCache);
-        await globalThis.skipWaiting();
-      } catch (error) {
-        console.error("Cache installation failed:", error);
-      }
+      const cache = await caches.open(CACHE_NAME);
+      await cache.addAll(urlsToCache);
+      await globalThis.skipWaiting();
     })()
   );
 });
@@ -91,11 +81,6 @@ globalThis.addEventListener("activate", (event) => {
   );
 });
 
-/**
- * Fetch handler with intelligent cache strategies
- * @event fetch
- * @description Implements Network-First for HTML/JSON and Cache-First for assets
- */
 globalThis.addEventListener("fetch", (event) => {
   if (!event.request.url.startsWith(globalThis.location.origin)) {
     return;

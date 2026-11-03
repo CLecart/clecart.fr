@@ -16,8 +16,17 @@ updates:
     schedule:
       interval: weekly
 
-  # Moves the nginx base image's tag and digest in the Dockerfile.
+  # Moves the nginx base image's tag and digest in the Dockerfile, within its
+  # release branch only. nginx numbers its stable branches with an even minor
+  # (1.30) and its mainline with an odd one (1.31): Dependabot cannot tell them
+  # apart, so it proposes patches alone, and a new stable branch is a
+  # deliberate bump.
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: nginxinc/nginx-unprivileged
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major

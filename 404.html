@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
 
     <script>
-      const stored = localStorage.getItem("dark-mode");
+      let stored = null;
+      try {
+        stored = localStorage.getItem("dark-mode");
+      } catch {
+        // Site data blocked: follow the system preference.
+      }
       if (
         stored === "enabled" ||
         (stored !== "disabled" &&
@@ -61,7 +66,7 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="/styles.css?v=2025108" />
+    <link rel="stylesheet" href="/styles.css" />
 
     <script type="module" src="/js/main.js"></script>
   </head>
@@ -100,7 +105,7 @@
             </ul>
           </nav>
           <div class="header-buttons">
-            <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+            <button class="dark-mode-toggle" aria-label="Dark mode">
               <span class="moon-icon">🌙</span>
             </button>
           </div>

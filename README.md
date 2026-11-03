@@ -33,9 +33,9 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 ### 🚀 **Core Technical Stack**
 
 - **Frontend:** Semantic HTML5, CSS3 (Flexbox, Grid, Custom Properties), JavaScript ES2021 modules
-- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 22 `@import`
-- **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker with precaching and per-destination cache strategies
-- **Performance:** Client-side Core Web Vitals instrumentation, preloads for the profile image and the fonts, WebP profile image, offscreen video pausing
+- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 23 `@import`
+- **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker that keeps what passes through it, with per-destination cache strategies and no precache list
+- **Performance:** preloads for the profile image and the fonts, WebP profile image, offscreen video pausing
 - **Security:** No third-party resource — font, icons, logos and the EmailJS SDK are served by the site itself, at pinned versions — no backend, security headers on the container deployment
 
 ### 🏗️ **DevOps and Infrastructure**
@@ -45,13 +45,13 @@ This tooling exists and works, but it is **not what serves clecart.fr** — see 
 - **Containerization:** `nginxinc/nginx-unprivileged:1.30.6-alpine`, pinned; nginx runs as uid 101 on port 8080 over a site owned by root, with a `HEALTHCHECK`
 - **Orchestration:** Docker Compose v2 (`docker compose`) with Traefik labels; the image's `HEALTHCHECK` is the only health check
 - **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts, polls the site for up to 60 seconds, and rolls back automatically on error
-- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`), Prettier
-- **[CIBLE] Continuous Integration:** none. No workflow exists in this repository — lint, Lighthouse and any security scan are run **manually** or not at all.
+- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`, `eslint-plugin-sonarjs` recommended rules with cognitive complexity capped at 15), Stylelint (`stylelint-config-standard`, `!important` forbidden), Prettier, the Nu Html Checker (`vnu-jar`) on every page and stylesheet, warnings included, and `npm audit` — all five behind `npm run check`
+- **Continuous Integration:** `.github/workflows/check.yml` runs `npm run check` on every push and pull request, its actions pinned by commit SHA. Lighthouse, axe and the browser checks are still run **manually**.
 
 ### 🎯 **Technical Specializations**
 
 - **Responsive Design:** Mobile-first, Progressive Enhancement
-- **Accessibility:** WCAG 2.1 AA as the working target, keyboard navigation, a timed text description on every demo video
+- **Accessibility:** WCAG 2.1 AA as the working target, a skip link and one visible focus ring on every page, keyboard navigation, a timed text description on every demo video
 - **UX/UI:** Adaptive theme system, micro-interactions, performant animation
 - **SEO:** Semantic HTML, descriptive metadata, `sitemap.xml` and `robots.txt`
 
@@ -68,17 +68,16 @@ no server-side code at all.
 - **Adaptive Theme:** the system preference is honored until the visitor toggles the theme; from then on their explicit choice is persisted in `localStorage` and wins. An inline bootstrap in `<head>` applies it before first paint to avoid a flash of wrong theme.
 - **Micro-interactions** and animations driven by the Intersection Observer API
 - **Responsive Design** with mobile-first breakpoints
-- **Accessibility:** keyboard navigation, `<track kind="captions">` on every video — the six demos are silent, so the cues describe what is on screen rather than transcribe speech — `prefers-reduced-motion` honored globally in `css/utils/animations.css`
+- **Accessibility:** keyboard navigation, `<track kind="captions">` on every video — the six demos are silent, so the cues describe what is on screen rather than transcribe speech — `prefers-reduced-motion` honored globally: `css/utils/animations.css` zeroes the duration tokens every animation reads, and the typewriter, driven by JavaScript timers, shows its first title and stops
 
 ### ⚡ **Performance and Optimization**
 
-- **Core Web Vitals** observed in the browser (`js/utils/webvitals.js`): LCP, FID, CLS and FCP via `PerformanceObserver`, TTFB from Navigation Timing. A second after `load` they are stored as one analytics event — only with consent, and like every analytics event they never leave the browser. Nothing on the page reacts to them.
 - **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen. On mobile, `videoHandler.js` strips `autoplay` and caps `preload` at `metadata`, so a visitor on cellular data never pays for a video they did not ask to watch.
 - **Preloads:** `profile.webp` with `fetchpriority="high"`, and the Poppins faces each page's first viewport draws (400 and 700 everywhere, 600 on the home page). There is no `dns-prefetch` or `preconnect` left: no page loads anything from another host.
 - **Self-hosted font:** Poppins latin 400/600/700 in `assets/fonts/` (23.7 KB of woff2), byte-identical to the files Google Fonts served, declared in `css/base/fonts.css` with Google's own `unicode-range`. Measured in Chrome on 2026-11-02 on a local HTTP/2 server throttled to 150 ms / 1.6 Mbps: with the preloads the fonts arrive before first paint in 7 runs out of 7 (0/7 without), and CLS falls from 0.032 to 0.003 on the home page.
 - **Skill logos:** the nine devicon 2.18.0 SVGs live in `assets/icons/devicon/` (23.0 KB, 9.2 KB gzipped), instead of an unpinned jsDelivr URL.
 - **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page transfers 14.9 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a reload takes the sprite from Chrome's memory cache, 0 bytes.
-- **Service Worker:** precached shell, network-first for navigation **and for CSS/JS**, cache-first for same-origin images, plus an in-worker SVG placeholder when an image cannot be fetched offline. Everything else — fonts, videos, captions, the icon sprite (fetched as type _other_) and the EmailJS call — is not intercepted and goes to the network and the browser's HTTP cache. CSS and JS change on every deployment and nothing fingerprints their URLs, so serving them from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it. The cache is an offline fallback for them, never a shortcut.
+- **Service Worker:** no precache list to keep in step with the site — each same-origin response is stored as it passes, and the page that installs the worker sends it the URLs it already loaded. Pages, CSS, JS, fonts and the icon sprite are network-first: whatever the network answers is served, a 404 included, and the copy is used only when the fetch fails offline. Same-origin images are cache-first, with an in-worker SVG placeholder when one cannot be fetched offline. Videos, captions and the EmailJS call are not intercepted. Nothing fingerprints the URLs, so serving pages, CSS or JS from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it.
 - **WebP** for the profile image and the Konekt video poster
 - **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
@@ -88,8 +87,8 @@ no server-side code at all.
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
 - **No third-party resource:** the EmailJS SDK 5.0.3 is served by the site itself from `js/vendor/`, byte-identical to the file in the npm tarball (whose `integrity` npm checks against the registry), with its BSD-3-Clause licence beside it; the font, the UI icons and the skill logos are local too. A pinned, same-origin file needs no Subresource Integrity, and a CDN outage or compromise can no longer reach the page. Measured in Chrome on 2026-11-02: none of the four pages contacts any host but its own on load; `api.emailjs.com` is contacted only when the form is sent.
 - **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
-- **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables both analytics and the contact form.
-- **Privacy-First Analytics:** consent-gated and, as it stands, entirely local — no analytics endpoint is configured, so events are buffered in `localStorage` (last 50) and dropped. No personal data is collected and nothing is shared with a third party.
+- **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables the contact form.
+- **No analytics:** the site measures nothing about a visit. The usage buffer an earlier version kept in `localStorage`, consent-gated and never sent anywhere, is erased on the visitor's next visit.
 - **Container Security:** nginx runs as uid 101; the site and the nginx configuration belong to root and are read-only to it; health check
 
 ### 🚀 **DevOps and Production**
@@ -97,7 +96,7 @@ no server-side code at all.
 - **Infrastructure as Code** with Docker and Docker Compose
 - **Automatic rollback:** `deploy.sh` tags the previous image before rebuilding and restores it through an `ERR` trap if anything fails. The old container is stopped before the new one starts, so a **brief interruption is expected** — this is not a zero-downtime setup.
 - **Image retention:** the three most recent images are kept, older ones are pruned
-- **[CIBLE] Uptime monitoring, alerting, error reporting and automated security scanning:** none of these exist today.
+- **[CIBLE] Uptime monitoring, alerting, error reporting and security scanning beyond `npm audit`:** none of these exist today.
 
 ## Featured Projects
 
@@ -142,7 +141,8 @@ clecart.fr/
 │   │   │   ├── forms.css             # Form fields, status messages, trap field
 │   │   │   ├── gdpr.css              # GDPR consent banner
 │   │   │   ├── icons.css             # Sprite icon metrics (size, baseline)
-│   │   │   └── notifications.css     # Service worker update notice
+│   │   │   ├── notifications.css     # Service worker update notice
+│   │   │   └── skip-link.css         # Skip link, shown on keyboard focus
 │   │   ├── layout/
 │   │   │   ├── footer.css            # Responsive footer
 │   │   │   ├── header.css            # Main navigation
@@ -170,11 +170,10 @@ clecart.fr/
 │   │   │   └── videoHandler.js       # Video playback, offscreen pausing
 │   │   │
 │   │   ├── utils/                    # Technical utilities
-│   │   │   ├── analytics.js          # Privacy-first, consent-gated tracking
 │   │   │   ├── config.js             # EmailJS public identifiers
 │   │   │   ├── gdpr.js               # Consent banner and enforcement
-│   │   │   ├── sw-register.js        # Service Worker registration
-│   │   │   └── webvitals.js          # Core Web Vitals observation
+│   │   │   ├── storage.js            # localStorage access that never throws
+│   │   │   └── sw-register.js        # Service Worker registration
 │   │   │
 │   │   ├── vendor/                   # Third-party code, served by the site
 │   │   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
@@ -184,7 +183,7 @@ clecart.fr/
 │   │   └── main.js                   # Application entry point
 │   │
 │   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
-│   └── styles.css                    # Barrel importing the 22 CSS modules
+│   └── styles.css                    # Barrel importing the 23 CSS modules
 │
 ├── 📦 Assets
 │   └── assets/
@@ -247,7 +246,9 @@ clecart.fr/
 │   └── sitemap.xml                   # Structured sitemap
 │
 ├── ⚙️ Development Configuration
-│   ├── eslint.config.js              # ESLint flat config
+│   ├── eslint.config.js              # ESLint flat config, with sonarjs
+│   ├── stylelint.config.mjs          # Stylelint: standard config, no !important
+│   ├── .github/workflows/check.yml   # CI: npm run check on every push
 │   ├── .prettierrc.json              # Prettier configuration
 │   ├── .prettierignore               # Keeps Prettier out of js/vendor/
 │   ├── .gitignore                    # Git exclusions
@@ -296,7 +297,8 @@ needed for the linting and audit tooling below.
 #### Prerequisites
 
 - **Python 3** — `npm start` is a thin wrapper around `python3 -m http.server`
-- **Node.js `^22.22.2 || >=24.15.0` and npm** — only for the tooling: ESLint, Prettier, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 65; ESLint 10 alone would accept `^20.19.0`
+- **Node.js `^22.22.2 || >=24.15.0` and npm** — only for the tooling: ESLint, Stylelint, Prettier, the Nu Html Checker, Puppeteer and Lighthouse. The floor comes from `eslint-plugin-jsdoc` 65; ESLint 10 alone would accept `^20.19.0`
+- **Java 11 or later** — only for `npm run validate`: the Nu Html Checker is a Java program
 - **Docker with Compose v2** (`docker compose`) — optional, for the containerized flow
 
 #### Available Scripts
@@ -309,9 +311,12 @@ npm run docker:run           # Run local container on :8080
 npm run docker:logs          # Tail container logs
 
 # Validation and quality
-npm run lint                 # ESLint (flat config; every rule is an error)
+npm run check                # Everything below except lint:fix, format and lighthouse; what CI runs
+npm run lint                 # ESLint (flat config with jsdoc and sonarjs; every rule is an error)
 npm run lint:fix             # ESLint with autofix
-npm run format               # Prettier over js/ (not js/vendor/), css/, styles.css, service-worker.js, eslint.config.js
+npm run lint:css             # Stylelint (standard config, no !important)
+npm run validate             # Nu Html Checker on every page and stylesheet, warnings fail too
+npm run format               # Prettier over js/ (not js/vendor/), css/, styles.css, service-worker.js, the pages, the lint configs
 npm run format:check         # Fail if anything is unformatted
 npm run lighthouse           # Lighthouse audit of localhost:8000 (run npm start first)
 
@@ -322,9 +327,10 @@ npm run docker:stop          # Stop container and clean up
 
 These are the only scripts defined in `package.json`.
 
-HTML and CSS validation are done through the W3C services directly:
-[validator.w3.org](https://validator.w3.org/) and
-[jigsaw.w3.org/css-validator](https://jigsaw.w3.org/css-validator/).
+`npm run validate` runs the same Nu Html Checker as
+[validator.w3.org/nu](https://validator.w3.org/nu/), offline, from the `vnu-jar`
+package. Its only filtered message is an _info_ about the `/>` Prettier writes on
+void elements, harmless here since every attribute value is quoted.
 
 ### EmailJS identifiers
 
@@ -360,28 +366,26 @@ can read, a visitor can read.
 
 ### 🔧 **IDE Configuration**
 
-`.vscode/` is gitignored, so a clone ships no editor configuration — any editor works. The two
+`.vscode/` is gitignored, so a clone ships no editor configuration — any editor works. The three
 extensions worth installing are the ones that mirror the enforced tooling:
 
 - **ESLint** (`dbaeumer.vscode-eslint`) — correctness
+- **Stylelint** (`stylelint.vscode-stylelint`) — CSS conformance
 - **Prettier** (`esbenp.prettier-vscode`) — formatting
 
 ### 🧪 **Tests and Validation**
 
-There is **no automated test suite** in this repository, and no CI to run one. The checks that
-exist are manual:
+There is **no automated test suite** in this repository. CI runs the static checks on every
+push; the rest is manual:
 
 ```bash
-# Lint and formatting (must pass before committing)
-npm run lint
-npm run format:check
+# Lint, formatting, validation and audit: what CI runs (must pass before committing)
+npm run check
 
 # Performance audit (start the server first)
 npm start &
 npm run lighthouse           # writes ./lighthouse-report.html
 
-# Dependency vulnerabilities
-npm audit
 ```
 
 Security headers can only be checked against the container, which is the only place they are
@@ -468,35 +472,40 @@ done.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
 - **Container Security:** unprivileged nginx (uid 101) serving a site it cannot rewrite
-- **Privacy-First Analytics** without invasive tracking
+- **No analytics**, so no tracking to consent to
 - **[CIBLE] TLS grading and OWASP Top 10 conformance:** no SSL Labs test, no OWASP audit and no penetration test has been run against this site. TLS on clecart.fr is GitHub Pages' own configuration, not this repository's.
 - **Full documentation** -> [SECURITY.md](./SECURITY.md)
 
 ### ⚡ **Performance**
 
-Measured on the repository sources (2026-11-02):
+Measured on the repository sources (2026-11-03):
 
-- **HTML + CSS + JS:** the four pages, `styles.css` and its 22 imports, `main.js` with the 11 modules it imports, the vendored EmailJS SDK and the service worker — 230 KB uncompressed, 64 KB gzipped file by file
+- **HTML + CSS + JS:** the four pages, `styles.css` and its 23 imports, `main.js` with the 10 modules it imports, the vendored EmailJS SDK and the service worker — 218 KB uncompressed, 63 KB gzipped file by file
 - **Fonts:** three Poppins woff2 files, 23.7 KB in all (woff2 is already compressed), preloaded
 - **Third parties on load:** none. First visit at 375 px scrolled to the bottom, measured in Chrome on 2026-11-02 against a local HTTP/2 server with gzip: 56 requests on the home page and 42 on each other page, every one same-origin — the same counts as before the font and the logos moved in, which had sent 13 of the home page's requests (36.7 KB) and 4 of every other page's (24.8 KB) to Google and jsDelivr.
 - **Profile image:** `profile.webp`, 31 KB (500×500 lossy WebP for a slot of 250 CSS px at most), preloaded with `fetchpriority="high"`
 - **Demo videos:** ~5 MB across six 480p files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
-- **CSS delivery:** 23 requests in 2 waves (the barrel, then its 22 imports, all sent within 3 ms of each other) — one extra discovery round-trip. Measured in Chrome on 2026-11-02 and deliberately kept: with no CI to regenerate a concatenated bundle, a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
+- **CSS delivery:** 24 requests in 2 waves (the barrel, then its 23 imports) — one extra discovery round-trip. Deliberately kept: GitHub Pages serves the repository as committed, with no build step to regenerate a concatenated bundle, so a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
 
-**[CIBLE] Lighthouse scores and field Core Web Vitals:** not measured. No report is committed and
-no audit runs automatically. `js/utils/webvitals.js` observes LCP, FID, CLS, FCP and TTFB **in the
-visitor's browser** and keeps them there, in the consent-gated analytics buffer; it reports
-nowhere, so there is no historical data to quote.
+**Lighthouse, lab only (2026-11-03):** Lighthouse 13.6.0 in headless Chrome with its default
+simulated throttling, against `npm start` — Python's server, uncompressed HTTP/1.1, not
+production. On all five pages: performance 95–98 on mobile and 100 on desktop, accessibility and
+best practices 100. SEO is 100 except on the privacy policy and the 404 page, which carry
+`noindex` on purpose and lose exactly that audit. axe-core 4.14.0, on the same five
+pages in both themes at 375 and 1280 px: 0 violations. Run by hand; no report is committed.
+
+**[CIBLE] Field Core Web Vitals:** not collected. The site measures nothing about its visitors, so
+there is no real-user data to quote.
 
 ### 📱 **Progressive Web App**
 
 - **Installable** on mobile and desktop (standalone display, 192/512 icons: full-bleed for `any`, separate safe-zone PNGs for `maskable`, Contact and Projects shortcuts)
-- **Offline Support:** precached shell, network-first navigation falling back to the cache, network-first CSS/JS with the cache as an offline fallback, cache-first images, in-worker SVG placeholder for unavailable images
+- **Offline Support:** every page already visited, with its CSS, JS, fonts and images: network-first with the cache as the offline fallback, cache-first images, in-worker SVG placeholder for an image never loaded
 - **[CIBLE] Background Sync and Push Notifications:** not implemented — the Service Worker handles `install`, `activate` and `fetch` only
 
 ## Maintenance
 
-Maintenance is **manual**. There is no scheduled job, no alerting and no automated scan.
+Maintenance is **manual**, apart from the static checks CI runs on every push. There is no scheduled job and no alerting.
 
 ### 🔄 **Updating the container**
 
@@ -514,9 +523,8 @@ docker logs clecart-portfolio-container -f
 ### 📈 **What is actually tracked**
 
 - **Availability:** GitHub Pages' own uptime — not monitored by this project, no SLA is claimed
-- **Client-side vitals:** observed in the browser by `js/utils/webvitals.js`, not collected anywhere
-- **Dependencies:** `npm audit`, run manually
-- **[CIBLE] Performance budget, error reporting and uptime alerting:** would require a CI or an external monitor; neither exists.
+- **Code conformance and dependencies:** `npm run check` — ESLint, Stylelint, Prettier, the Nu Html Checker and `npm audit` — on every push, in CI
+- **[CIBLE] Performance budget, error reporting and uptime alerting:** would require browser checks in CI or an external monitor; neither exists.
 
 ## Contact and Support
 
@@ -538,7 +546,6 @@ docker logs clecart-portfolio-container -f
 - [Detailed Architecture](./about-portfolio.html)
 - [Security and Audit](./SECURITY.md)
 - [Engineering Manifesto](./.agents/AGENTS.md)
-- [Performance Monitoring](./js/utils/webvitals.js)
 - [Docker Configuration](./Dockerfile)
 
 ---

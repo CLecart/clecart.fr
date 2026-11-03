@@ -168,21 +168,21 @@ curl -sI http://localhost:8080/ | grep -icE "content-security|x-frame|x-xss|x-co
 
 ## Vérifications
 
-Il n'existe **ni suite de tests automatisés, ni CI**. Tout se lance à la main,
-et seulement quand quelqu'un le lance :
+Il n'existe **pas de suite de tests automatisés**. La CI
+(`.github/workflows/check.yml`) lance `npm run check` à chaque push : ESLint,
+Stylelint, Prettier, le Nu Html Checker et `npm audit`. Ses actions sont
+épinglées par SHA de commit, et elle ne reçoit qu'un jeton en lecture seule.
+Le reste se lance à la main :
 
-Dernier `npm audit` (2026-11-02, outils à leur dernière version) : 0 haute,
-8 modérées, toutes issues d'un seul avis — `minimatch` < 11.0.1 (déni de
-service sur des motifs de fichiers piégés), embarqué par ESLint 10.14 lui-même.
-Aucune version corrigée d'ESLint n'existe encore ; le seul « correctif » que
-propose npm est de redescendre à ESLint 4. Exposition nulle ici : les motifs
-viennent de notre propre configuration, et rien de ces outils n'est servi au
-visiteur. À relancer à chaque mise à jour d'ESLint.
+Dernier `npm audit` (2026-11-03) : **0 vulnérabilité**. Le seul avis restant la
+veille, `minimatch` < 11.0.1 (GHSA-g3hv-75wg-m249, déni de service sur des
+motifs de fichiers piégés), venait d'ESLint 10.14 lui-même, sans version
+corrigée d'ESLint. `package.json` impose `minimatch` 11.0.4 par `overrides` ;
+ESLint lint exactement les mêmes 14 fichiers qu'avant, vérifié. À retirer quand
+ESLint embarquera une version corrigée.
 
 ```bash
-npm audit                   # vulnérabilités des dépendances de développement
-npm run lint                # ESLint, 0 erreur et 0 warning attendus
-npm run format:check
+npm run check               # ce que lance la CI, 0 erreur et 0 warning attendus
 
 # En-têtes : uniquement sur le conteneur, seul endroit où ils existent.
 npm run docker:build && npm run docker:run
@@ -196,7 +196,7 @@ de ce dépôt.
 ## Surveillance
 
 **Il n'y en a pas.** Aucune erreur JavaScript n'est collectée, aucune mesure de
-performance ne quitte le navigateur du visiteur, aucune alerte n'existe — ni sur
+performance n'est prise, aucune alerte n'existe — ni sur
 GitHub Pages, ni sur le conteneur.
 
 - **GitHub Pages** : aucun accès aux journaux.

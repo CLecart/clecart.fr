@@ -93,13 +93,22 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      déclaration invalide et le navigateur l'ignore **en silence**.
    - **Zéro `!important`, partout** : feuilles CSS, attributs `style`, styles
      injectés par JavaScript. Pas d'exception pour `prefers-reduced-motion` :
-     sous `@media (prefers-reduced-motion: reduce)`, on redéfinit à ~0 les
+     sous `@media (prefers-reduced-motion: reduce)`, on redéfinit à `0s` les
      tokens de durée et de délai, et tout ce qui les lit suit. Aucun commentaire
      de suppression non plus (`NOSONAR`, `stylelint-disable`…).
-   - **Zéro warning toléré :** `npm run lint` sort 0 erreur et 0 warning,
-     `npm run format:check` passe. Aucun `eslint-disable` de confort. Prettier
-     possède le formatage, ESLint la correctness, `eslint-plugin-jsdoc` la
-     documentation. `console.log` banni ; `console.warn`/`console.error`
+   - **Zéro warning toléré :** `npm run check` passe — ESLint, Stylelint,
+     Prettier, le Nu Html Checker (warnings compris) et `npm audit`. Aucun
+     `eslint-disable` de confort. Prettier possède le formatage, ESLint la
+     correctness, `eslint-plugin-jsdoc` la documentation, `eslint-plugin-sonarjs`
+     la complexité (règle 3), Stylelint le CSS (`stylelint-config-standard`,
+     `!important` interdit). Deux options de Stylelint sont des choix de
+     compatibilité, à ne pas « moderniser » : media queries en notation préfixe
+     (la notation range exige Safari 16.4) et couleurs en notation legacy (une
+     seule couleur `rgb(0 0 0 / 10%)` fait interpoler tout un dégradé en Oklab
+     au lieu de sRGB : 235 000 pixels changés sur l'accueil, mesuré le
+     2026-11-03). Toute règle qui vise un même élément s'écrit par spécificité
+     croissante (`no-descending-specificity`) : l'ordre du fichier ne tranche
+     alors jamais entre deux règles. `console.log` banni ; `console.warn`/`console.error`
      autorisés — un échec silencieux est pire qu'une trace.
 
 6. **Traçabilité.**
@@ -107,9 +116,10 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      `CHANGELOG.md` : ils dupliqueraient l'historique puis dériveraient de lui.
      En contrepartie, le message de commit porte le raisonnement : ce qui a été
      mesuré, ce qui a été écarté, pourquoi.
-   - **[CIBLE] Aucune CI.** Lint, Lighthouse et SonarQube ne tournent
-     automatiquement à aucun moment. Toute vérification est manuelle et doit
-     être explicitement rapportée, jamais supposée.
+   - **CI : `npm run check` à chaque push** (`.github/workflows/check.yml`,
+     actions épinglées par SHA). **[CIBLE]** Lighthouse, axe et les contrôles
+     en navigateur ne tournent pas en CI : ils restent manuels et doivent être
+     explicitement rapportés, jamais supposés.
 
 ---
 
@@ -163,10 +173,13 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      n'est hérité que si le niveau courant n'en déclare aucun ; chaque `location`
      doit inclure le fichier explicitement.
 
-8. **RGPD.** Le site traite des données via le formulaire de contact et
-   l'analytics.
-   - **Consentement préalable réel :** aucun traçage avant acceptation explicite
-     (`js/utils/gdpr.js`).
+8. **RGPD.** Le site ne traite de données que par le formulaire de contact :
+   aucune mesure d'audience.
+   - **Consentement préalable réel :** rien ne part vers EmailJS avant
+     acceptation explicite (`js/utils/gdpr.js`).
+   - **Ce qui n'est plus collecté s'efface chez le visiteur**, il ne reste pas
+     en souffrance : le tampon `analytics_events` d'une version antérieure est
+     supprimé à la visite suivante.
    - **Le retrait est aussi simple que le don** : tout contrôle
      `[data-gdpr-reopen]` réaffiche la bannière et efface la décision. C'est une
      obligation, pas un confort.
@@ -191,18 +204,21 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      figées sur la première image, `currentTime` bloqué à 0. Autoplay et « ne
      rien charger » sont contradictoires — une vidéo visible doit charger pour
      jouer. Le réglage n'est légitime que sur une vidéo **masquée au départ**.
-   - Ne jamais précacher dans le Service Worker une ressource que le site ne
-     charge pas.
+   - **Le Service Worker ne précache rien** : il garde ce qui passe par lui.
+     Aucune liste de fichiers à tenir à jour, donc aucune qui dérive. Si une
+     liste de précache revient un jour, elle ne contient que ce que le site
+     charge.
    - **CSS/JS en network-first**, cache en filet hors-ligne uniquement. Sans
      build ni hash d'URL, le cache-first figerait chaque visiteur sur la version
      découverte en premier : tout déploiement futur invisible, définitivement.
-     `CACHE_NAME` se bumpe à chaque changement de liste ou de stratégie.
-   - `styles.css` est un baril de 22 `@import`. **Mesuré** (Chrome, 2026-11-02) :
-     23 requêtes en **2 vagues** — le baril, puis ses 22 imports en parallèle.
-     Le coût est **un** aller-retour de découverte, pas 22. Concaténer
-     l'économiserait, mais sans CI un bundle commité dériverait de ses sources au
-     premier oubli. **Le baril reste la bonne solution tant qu'aucune CI ne le
-     régénère.** Ne pas « optimiser » sans mesure préalable.
+     `CACHE_NAME` se bumpe à chaque changement de stratégie.
+   - `styles.css` est un baril de 23 `@import`. **Mesuré** (Chrome, 2026-11-02,
+     alors 22 imports) : **2 vagues** de requêtes — le baril, puis ses imports
+     en parallèle. Le coût est **un** aller-retour de découverte, pas un par
+     import. Concaténer l'économiserait, mais GitHub Pages publie le dépôt tel
+     quel : sans étape de build, un bundle commité dériverait de ses sources au
+     premier oubli. **Le baril reste la bonne solution tant qu'aucun build ne le
+     régénère avant publication.** Ne pas « optimiser » sans mesure préalable.
    - **Poppins est préchargée, graisse par graisse.** Sans `preload`, la police
      n'est découverte qu'après les imports du baril et arrive après le premier
      rendu : bascule de police et décalage (CLS 0,032 sur l'accueil, mesuré
@@ -212,12 +228,21 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
 
 10. **Accessibilité (RGAA / WCAG).**
     - Navigation clavier complète, contrastes conformes en thème clair **et**
-      sombre.
+      sombre. Un seul indicateur de focus, `:focus-visible` dans
+      `css/base/reset.css`, tracé hors de l'élément : un conteneur en
+      `overflow: hidden` le rogne, donc on arrondit l'enfant plutôt que de
+      rogner le parent.
+    - **Chaque page commence par un lien d'évitement** vers
+      `<main id="main-content">`. Le défilement JS des ancres
+      (`navigation.js`) l'exclut : seule la navigation native vers le fragment
+      déplace le focus clavier dans `<main>`.
+    - Une zone qui défile au clavier (`<pre>` large) prend `tabindex="0"`, un
+      rôle `region` et un nom (axe : scrollable-region-focusable).
     - Toute `<video>` porte un `<track kind="captions">` (SonarQube Web:S4084).
       Toute image porte un `alt` signifiant.
     - `prefers-reduced-motion` est honoré globalement dans
-      `css/utils/animations.css` (WCAG 2.3.3). Les durées y sont écrasées à ~0,
-      **jamais à `none`** : les animations d'entrée démarrent à `opacity: 0` et
+      `css/utils/animations.css` (WCAG 2.3.3). Les jetons de durée y passent à
+      `0s`, **jamais à `none`** : les animations d'entrée démarrent à `opacity: 0` et
       comptent sur l'application de l'état final. Toute animation pilotée en JS
       (typewriter) doit tester la media query elle-même.
     - Un élément `position: fixed` transparent **n'est pas traversable** : sans

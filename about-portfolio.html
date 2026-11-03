@@ -181,9 +181,9 @@
               <div class="tech-item">
                 <h3>Accessibility</h3>
                 <p>
-                  WCAG 2.1 AA as the working target: keyboard navigation,
-                  captions describing every (silent) demo video, reduced-motion
-                  support
+                  WCAG 2.1 AA as the working target: a skip link and a visible
+                  focus ring on every page, keyboard navigation, captions
+                  describing every (silent) demo video, reduced-motion support
                 </p>
               </div>
               <div class="tech-item">
@@ -194,7 +194,7 @@
               </div>
               <div class="tech-item">
                 <h3>Tools</h3>
-                <p>EmailJS API, Git, ESLint, Prettier, Docker</p>
+                <p>EmailJS API, Git, ESLint, Stylelint, Prettier, Docker</p>
               </div>
               <div class="tech-item">
                 <h3>JavaScript Architecture</h3>
@@ -203,9 +203,10 @@
               <div class="tech-item">
                 <h3>Testing & Quality</h3>
                 <p>
-                  ESLint and Prettier as enforced gates, W3C validators for
-                  HTML/CSS. All checks are run manually: the project has no CI
-                  and no automated test suite.
+                  ESLint with sonarjs, Stylelint, Prettier, the Nu Html Checker
+                  and npm audit, run by CI on every push. There is no automated
+                  test suite: accessibility and performance audits are run by
+                  hand.
                 </p>
               </div>
             </div>
@@ -389,7 +390,8 @@ clecart.fr/
 │   │   ├── forms.css            # Form fields, status messages, trap field
 │   │   ├── gdpr.css             # GDPR consent banner
 │   │   ├── icons.css            # Sprite icon metrics (size, baseline)
-│   │   └── notifications.css    # Service worker update notice
+│   │   ├── notifications.css    # Service worker update notice
+│   │   └── skip-link.css        # Skip link, shown on keyboard focus
 │   ├── layout/
 │   │   ├── footer.css           # Responsive footer
 │   │   ├── header.css           # Main navigation
@@ -415,11 +417,10 @@ clecart.fr/
 │   │   ├── project-navigation.js # Project tabs, deep links
 │   │   └── videoHandler.js      # Video playback, offscreen pausing
 │   ├── utils/                   # Technical utilities
-│   │   ├── analytics.js         # Privacy-first, consent-gated tracking
 │   │   ├── config.js            # EmailJS public identifiers
 │   │   ├── gdpr.js              # Consent banner and enforcement
-│   │   ├── sw-register.js       # Service Worker registration
-│   │   └── webvitals.js         # Core Web Vitals observation
+│   │   ├── storage.js           # localStorage access that never throws
+│   │   └── sw-register.js       # Service Worker registration
 │   ├── vendor/                  # Third-party code, served by the site
 │   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
 │   │   └── LICENSE-emailjs-browser.txt # Its BSD-3-Clause licence
@@ -430,7 +431,11 @@ clecart.fr/
 │   └── index.html               # /cv download redirect
 ├── .agents/
 │   └── AGENTS.md                # Engineering manifesto
-├── eslint.config.js             # Code quality
+├── .github/
+│   └── workflows/
+│       └── check.yml            # CI: npm run check on every push
+├── eslint.config.js             # Code quality, with sonarjs
+├── stylelint.config.mjs         # CSS lint, no !important
 ├── .prettierrc.json             # Formatting
 ├── .prettierignore              # Prettier skips js/vendor/
 ├── .gitignore                   # Git exclusions
@@ -446,7 +451,7 @@ clecart.fr/
 ├── robots.txt                   # SEO directives
 ├── sitemap.xml                  # Sitemap
 ├── CNAME                        # Custom domain (GitHub Pages)
-├── styles.css                   # Barrel importing the 22 CSS modules
+├── styles.css                   # Barrel importing the 23 CSS modules
 ├── index.html                   # Main page
 ├── about-portfolio.html         # Technical documentation
 ├── descriptions-projects.html   # Project details

@@ -151,11 +151,13 @@
 .code-block {
   background-color: var(--dark);
   border-radius: 10px;
-  overflow: hidden;
   margin: 20px 0;
 }
 
+/* The tree scrolls sideways, so it takes keyboard focus; rounding the pre
+   rather than clipping the block keeps the focus ring visible around it. */
 .code-block pre {
+  border-radius: inherit;
   margin: 0;
   padding: 20px;
   overflow-x: auto;

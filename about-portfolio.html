@@ -310,7 +310,7 @@
           </div>
 
           <div class="portfolio-section card-base fade-in">
-            <h2>
+            <h2 id="project-structure-title">
               <svg
                 class="icon"
                 viewBox="0 0 576 512"
@@ -322,7 +322,11 @@
               Project Structure
             </h2>
             <div class="code-block">
-              <pre><code>
+              <pre
+                tabindex="0"
+                role="region"
+                aria-labelledby="project-structure-title"
+              ><code>
 clecart.fr/
 ├── assets/
 │   ├── documents/

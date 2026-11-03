@@ -3,7 +3,7 @@
 # commit ship different servers. Dependabot proposes the bumps.
 # The unprivileged variant of that release runs master and workers as uid 101,
 # hence port 8080: ports below 1024 belong to root.
-FROM nginxinc/nginx-unprivileged:1.30.6-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03
+FROM nginxinc/nginx-unprivileged:1.31.7-alpine@sha256:b5047b9b76845eac124358373c6852377c52e4b05834a47647e955dd91cb8f1e
 
 LABEL org.opencontainers.image.title="clecart.fr" \
       org.opencontainers.image.description="Portfolio of Christophe Lecart, Software Engineer & Green IT Lead" \

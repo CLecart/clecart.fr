@@ -41,7 +41,8 @@
   --black-opacity-50: rgba(0, 0, 0, 0.5);
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
-  --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
+  --brand-violet: #6c63ff;
+  --gradient-1: linear-gradient(135deg, var(--brand-violet), var(--secondary));
   --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
   --gradient-1-light: linear-gradient(
     135deg,

@@ -16,9 +16,9 @@ footer::after {
   background: linear-gradient(
     90deg,
     var(--accent),
-    var(--primary),
+    var(--brand-violet),
     var(--secondary),
-    var(--primary),
+    var(--brand-violet),
     var(--accent)
   );
   background-size: 200% 100%;

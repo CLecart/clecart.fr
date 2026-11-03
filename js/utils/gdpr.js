@@ -112,6 +112,12 @@ function notifyConsentChange(status) {
  * @returns {void}
  */
 export function initGDPRBanner() {
+  /* The site no longer measures usage. A visitor who accepted while it did
+     still holds that buffer: erased here, not left behind in the browser. */
+  if (readStored("analytics_events") !== null) {
+    removeStored("analytics_events");
+  }
+
   const { banner, acceptBtn, declineBtn } = buildBanner();
 
   if (!getConsentStatus()) {

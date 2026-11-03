@@ -4,7 +4,6 @@
 .nav-btn {
   background: var(--gradient-1);
   color: var(--white);
-  text-shadow: var(--on-gradient-shadow);
   border-radius: var(--btn-radius);
   font-weight: var(--btn-font-weight);
   box-shadow: var(--btn-shadow);
@@ -110,7 +109,6 @@
 .btn.btn-secondary,
 .btn.btn-secondary:hover {
   color: var(--dark);
-  text-shadow: none;
 }
 
 .btn-view-live {
@@ -139,11 +137,6 @@
   100% {
     box-shadow: 0 0 0 0 transparent;
   }
-}
-
-/* The one icon on a --gradient-1 button, About's "Download CV". */
-.btn-primary .icon {
-  filter: var(--on-gradient-icon-shadow);
 }
 
 @media (max-width: 404px) {

@@ -83,7 +83,6 @@ body:not(.homepage) .description {
 .nav-btn.active {
   background: var(--gradient-2);
   color: var(--dark);
-  text-shadow: none;
   box-shadow: var(--btn-shadow-hover);
   transform: translateY(-5px);
 }

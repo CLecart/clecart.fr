@@ -1,10 +1,5 @@
 /* Text-carrying tones are set for WCAG AA with a 4.6 floor: --primary and
-   the status colours carry text on white, --light and their own tints.
-   White text and icons on --gradient-1 are ringed by a dark halo,
-   --on-gradient-shadow and --on-gradient-icon-shadow: WCAG's Understanding
-   SC 1.4.3 counts a halo as the text's background, and white on --dark is
-   17:1. Measured on 2026-11-03: 95% of the pixels ringing the glyphs at 4.5:1
-   or better on a 2x screen, median 8:1. A thinner halo did not reach it. */
+   the status colours carry text on white, --light and their own tints. */
 :root {
   --primary: #594fff;
   --primary-dark: #5a52d9;
@@ -47,11 +42,6 @@
   --border-light: rgba(0, 0, 0, 0.05);
   --border-dark: rgba(255, 255, 255, 0.05);
   --gradient-1: linear-gradient(135deg, #6c63ff, #4ecdc4);
-  --on-gradient-shadow:
-    0 0 1px var(--dark), 0 0 2px var(--dark), 0 0 2px var(--dark),
-    0 0 3px var(--dark), 0 0 3px var(--dark), 0 0 4px var(--dark);
-  --on-gradient-icon-shadow: drop-shadow(0 0 1px var(--dark))
-    drop-shadow(0 0 2px var(--dark)) drop-shadow(0 0 2px var(--dark));
   --gradient-2: linear-gradient(135deg, #ff6b6b, #ff8e53);
   --gradient-1-light: linear-gradient(
     135deg,

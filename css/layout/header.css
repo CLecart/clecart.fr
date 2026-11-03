@@ -41,7 +41,6 @@ header::after {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--white);
-  text-shadow: var(--on-gradient-shadow);
   transition: var(--transition);
   display: flex;
   flex-direction: column;
@@ -94,7 +93,6 @@ header nav ul li a::after {
 
 nav ul li a {
   color: var(--white);
-  text-shadow: var(--on-gradient-shadow);
   font-weight: 500;
   position: relative;
   padding: 5px 0;
@@ -146,12 +144,10 @@ nav ul li a.cv-link {
 .nav-toggle .icon {
   font-size: 1.5rem;
   color: var(--white);
-  filter: var(--on-gradient-icon-shadow);
 }
 
 nav ul li a.cv-link .icon {
   font-size: 0.9rem;
-  filter: var(--on-gradient-icon-shadow);
 }
 
 @media (max-width: 768px) {
@@ -210,7 +206,6 @@ nav ul li a.cv-link .icon {
 
   nav ul li a {
     color: var(--primary);
-    text-shadow: none;
     padding: 12px 15px;
     font-weight: 600;
     width: 100%;
@@ -235,10 +230,6 @@ nav ul li a.cv-link .icon {
     align-items: center;
     justify-content: center;
     gap: 8px;
-  }
-
-  nav ul li a.cv-link .icon {
-    filter: none;
   }
 
   .right-content {

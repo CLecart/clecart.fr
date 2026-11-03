@@ -32,7 +32,7 @@ body {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: Poppins, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--light);
@@ -78,14 +78,14 @@ a {
   position: relative;
 }
 
-a:hover {
-  color: var(--primary-dark);
-}
-
 /* A link inside a sentence is underlined: its colour alone sits under 3:1
    against the text around it, in both themes. */
 p a {
   text-decoration: underline;
+}
+
+a:hover {
+  color: var(--primary-dark);
 }
 
 a::after {

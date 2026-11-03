@@ -102,7 +102,7 @@
 }
 
 .features-list {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
   list-style: none;
 }
@@ -131,23 +131,6 @@
     transform var(--duration-normal) var(--ease-standard);
 }
 
-.features-list li:hover {
-  transform: none;
-  border-color: transparent;
-  box-shadow: none;
-  z-index: auto;
-}
-
-.features-list li:hover .icon {
-  --card-pulse-scale: var(--card-pulse-scale-sm);
-  color: var(--card-icon-hover-color);
-  animation: var(--card-hover-pulse);
-}
-
-.dark-mode body .features-list li {
-  color: var(--text-dark);
-}
-
 .code-block {
   background-color: var(--dark);
   border-radius: 10px;
@@ -165,7 +148,7 @@
 
 .code-block code {
   color: var(--text-dark);
-  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-family: Consolas, Monaco, "Courier New", monospace;
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -174,7 +157,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
-  margin: 30px 0 0 0;
+  margin: 30px 0 0;
 }
 
 .approach-item {
@@ -213,7 +196,7 @@
 }
 
 .cta-section {
-  margin: 40px 0 0 0;
+  margin: 40px 0 0;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -286,6 +269,7 @@
   .portfolio-section.card-base {
     padding: 20px 10px;
   }
+
   .approach-grid {
     gap: 15px;
   }
@@ -332,7 +316,7 @@
 }
 
 .outcomes-list {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
   list-style: none;
   display: grid;
@@ -360,6 +344,24 @@
   color: var(--primary);
   font-size: var(--icon-size-small);
   transition: var(--card-icon-transition);
+}
+
+.features-list li:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  z-index: auto;
+}
+
+.features-list li:hover .icon {
+  --card-pulse-scale: var(--card-pulse-scale-sm);
+
+  color: var(--card-icon-hover-color);
+  animation: var(--card-hover-pulse);
+}
+
+.dark-mode body .features-list li {
+  color: var(--text-dark);
 }
 
 @media (max-width: 768px) {
@@ -465,30 +467,37 @@
   > :nth-child(2) {
   --stagger-order: 2;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(3) {
   --stagger-order: 3;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(4) {
   --stagger-order: 4;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(5) {
   --stagger-order: 5;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(6) {
   --stagger-order: 6;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(7) {
   --stagger-order: 7;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(8) {
   --stagger-order: 8;
 }
+
 :is(.tech-grid, .approach-grid, .features-list, .outcomes-list)
   > :nth-child(9) {
   --stagger-order: 9;

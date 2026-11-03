@@ -8,9 +8,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  align-items: stretch;
+  place-items: stretch center;
   justify-content: center;
-  justify-items: center;
 }
 
 .description {
@@ -88,14 +87,6 @@ body:not(.homepage) .description {
   transform: translateY(-5px);
 }
 
-.dark-mode body #projects .project-content p {
-  color: var(--text-gray-dark);
-}
-
-.dark-mode body #projects .project-content h3 {
-  color: var(--text-dark);
-}
-
 .dark-mode body .description {
   background-color: var(--dark);
   color: var(--text-dark);
@@ -107,11 +98,19 @@ body:not(.homepage) .description {
   color: var(--primary);
 }
 
+.dark-mode body #projects .project-content p {
+  color: var(--text-gray-dark);
+}
+
+.dark-mode body #projects .project-content h3 {
+  color: var(--text-dark);
+}
+
 .dark-mode body .project-navigation {
   border-bottom: 1px solid var(--form-border-dark);
 }
 
-.project-card--hidden {
+.project-card-hidden {
   display: none;
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-in-out);

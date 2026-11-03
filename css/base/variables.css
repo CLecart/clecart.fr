@@ -20,10 +20,10 @@
   --card-dark: #2a2a42;
   --form-bg-dark: #2a2a3a;
   --form-border-dark: #3e3e50;
-  --white: #ffffff;
+  --white: #fff;
   --light: #f8f9fa;
   --light-gray: #f0f0f0;
-  --black: #000000;
+  --black: #000;
   --github-icon-color: #15191f;
   --gdpr-message-bg-dark: var(--white-opacity-08);
   --rust-logo-color: #ce422b;
@@ -90,12 +90,10 @@
   --card-color-dark: var(--text-dark);
   --card-border-dark: 1px solid var(--border-dark);
   --accent-line-thickness: 2px;
-
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-standard: ease;
   --ease-in-out: ease-in-out;
   --ease-linear: linear;
-
   --duration-fast: 0.2s;
   --duration-normal: 0.3s;
   --duration-slow: 0.5s;
@@ -106,10 +104,10 @@
   --duration-instant: 0s;
   --stagger-step: 0.05s;
   --iterations-loop: infinite;
+
   /* Not motion, so reduced motion leaves it alone: it holds Chrome's autofill
      colour off for longer than any visit (forms.css). */
   --duration-autofill-hold: 5000s;
-
   --transition: all var(--duration-normal) var(--ease-smooth);
   --hover-y-tiny: translateY(-2px);
 
@@ -147,6 +145,7 @@
   --card-pulse-scale-sm: calc(1 + var(--card-pulse-travel) / 17.6); /* 1.1rem */
   --card-pulse-scale-md: calc(1 + var(--card-pulse-travel) / 24); /* 1.5rem */
   --card-pulse-scale-lg: calc(1 + var(--card-pulse-travel) / 40); /* 2.5rem */
+
   /* Headings are wide and short: matching their travel to an icon's would make
      the factor invisible. Chosen by eye, not derived. */
   --card-title-pulse-scale: 1.05;

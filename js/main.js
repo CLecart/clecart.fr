@@ -56,9 +56,9 @@ function initViewMoreProjects() {
       allCards.length
     );
     allCards.forEach((card, i) => {
-      card.classList.remove("project-card--hidden");
+      card.classList.remove("project-card-hidden");
       if (i >= toShow) {
-        card.classList.add("project-card--hidden");
+        card.classList.add("project-card-hidden");
       }
     });
     btn.style.display = toShow >= allCards.length ? "none" : "";
@@ -72,7 +72,7 @@ function initViewMoreProjects() {
     expanded = !expanded;
     if (expanded) {
       allCards.forEach((card) => {
-        card.classList.remove("project-card--hidden");
+        card.classList.remove("project-card-hidden");
       });
       btn.textContent = "View Less Projects";
     } else {

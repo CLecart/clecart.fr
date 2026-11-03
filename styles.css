@@ -1,29 +1,25 @@
-@import "./css/base/fonts.css";
-@import "./css/base/variables.css";
-@import "./css/base/reset.css";
-
-@import "./css/utils/animations.css";
-
-@import "./css/components/icons.css";
-@import "./css/components/buttons.css";
-@import "./css/components/cards.css";
-@import "./css/components/forms.css";
-@import "./css/components/gdpr.css";
-@import "./css/components/dark-mode-toggle.css";
-@import "./css/components/notifications.css";
-@import "./css/components/skip-link.css";
-
-@import "./css/layout/header.css";
-@import "./css/layout/footer.css";
-@import "./css/layout/section.css";
-
-@import "./css/sections/hero.css";
-@import "./css/sections/about.css";
-@import "./css/sections/skills.css";
-@import "./css/sections/projects.css";
-@import "./css/sections/contact.css";
-@import "./css/sections/privacy.css";
-@import "./css/sections/portfolio-details.css";
+@import url("./css/base/fonts.css");
+@import url("./css/base/variables.css");
+@import url("./css/base/reset.css");
+@import url("./css/utils/animations.css");
+@import url("./css/components/icons.css");
+@import url("./css/components/buttons.css");
+@import url("./css/components/cards.css");
+@import url("./css/components/forms.css");
+@import url("./css/components/gdpr.css");
+@import url("./css/components/dark-mode-toggle.css");
+@import url("./css/components/notifications.css");
+@import url("./css/components/skip-link.css");
+@import url("./css/layout/header.css");
+@import url("./css/layout/footer.css");
+@import url("./css/layout/section.css");
+@import url("./css/sections/hero.css");
+@import url("./css/sections/about.css");
+@import url("./css/sections/skills.css");
+@import url("./css/sections/projects.css");
+@import url("./css/sections/contact.css");
+@import url("./css/sections/privacy.css");
+@import url("./css/sections/portfolio-details.css");
 
 /* Theme imports - always last to override styles if necessary */
-@import "./css/theme/darkmode.css";
+@import url("./css/theme/darkmode.css");

@@ -30,6 +30,16 @@
   appearance: none;
 }
 
+/* Light mode lets #contact's tinted gradient through the card and its empty
+   fields, where .card-base, --input-bg and .gdpr-message would paint them
+   opaque. Dark mode keeps its colours: the rules below outrank this one. */
+.contact-form,
+.contact-form input,
+.contact-form textarea,
+.contact-form .gdpr-message {
+  background-color: transparent;
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
@@ -44,26 +54,24 @@
   background-color: var(--input-focus-bg);
 }
 
-/* Chrome autofill: the inset shadow masks the UA's forced yellow background,
-   and a transition longer than any real session defers its repaint.
-   Repeated below for dark mode. */
-.form-group input:-webkit-autofill,
-.form-group input:-webkit-autofill:hover,
-.form-group input:-webkit-autofill:focus,
-.form-group input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset;
-  -webkit-text-fill-color: var(--input-color);
-  transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
+/* Stable variant used by the contact window to avoid extension icon visual conflicts. */
+.contact-form-stable .form-group input,
+.contact-form-stable .form-group textarea {
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
 }
 
-/* Light mode lets #contact's tinted gradient through the card and its empty
-   fields, where .card-base, --input-bg and .gdpr-message would paint them
-   opaque. Dark mode keeps its colours: the rules below outrank this one. */
-.contact-form,
-.contact-form input,
-.contact-form textarea,
-.contact-form .gdpr-message {
-  background-color: transparent;
+/* Chrome autofill: the inset shadow masks the UA's forced yellow background,
+   and a transition longer than any real session defers its repaint. After
+   the stable form's transition, which would otherwise replace this one, and
+   after :focus, so a focused field keeps the mask. Repeated below for dark
+   mode. */
+.form-group input:-webkit-autofill {
+  box-shadow: 0 0 0 30px var(--input-bg) inset;
+  -webkit-text-fill-color: var(--input-color);
+  transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
 .dark-mode body .form-group label {
@@ -76,6 +84,13 @@
   border-color: var(--form-border-dark);
   color: var(--text-dark);
   box-shadow: var(--shadow-dark);
+}
+
+/* After the dark base rule: every rule on these fields runs in ascending
+   specificity, so the order never decides between two of them. */
+.contact-form-stable .form-group input:focus,
+.contact-form-stable .form-group textarea:focus {
+  transform: none;
 }
 
 /* Filled and focused share the border and the tint; only focus adds the glow,
@@ -93,11 +108,8 @@
   box-shadow: var(--input-focus-shadow-dark);
 }
 
-.dark-mode body .form-group input:-webkit-autofill,
-.dark-mode body .form-group input:-webkit-autofill:hover,
-.dark-mode body .form-group input:-webkit-autofill:focus,
-.dark-mode body .form-group input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
+.dark-mode body .form-group input:-webkit-autofill {
+  box-shadow: 0 0 0 30px var(--form-bg-dark) inset;
   -webkit-text-fill-color: var(--text-dark);
   transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
@@ -165,21 +177,7 @@
   overflow: hidden;
 }
 
-/* Stable variant used by the contact window to avoid extension icon visual conflicts. */
-.contact-form--stable .form-group input,
-.contact-form--stable .form-group textarea {
-  transition:
-    border-color var(--duration-fast) var(--ease-standard),
-    box-shadow var(--duration-fast) var(--ease-standard),
-    background-color var(--duration-fast) var(--ease-standard);
-}
-
-.contact-form--stable .form-group input:focus,
-.contact-form--stable .form-group textarea:focus {
-  transform: none;
-}
-
-.contact-form--stable .form-status {
+.contact-form-stable .form-status {
   transition: none;
   transform: none;
 }

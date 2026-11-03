@@ -9,13 +9,6 @@
   overflow: hidden;
 }
 
-.dark-mode body .card-base {
-  background-color: var(--card-bg-dark);
-  color: var(--card-color-dark);
-  border: var(--card-border-dark);
-  box-shadow: var(--card-box-shadow-dark);
-}
-
 .skill-card {
   position: relative;
   display: flex;
@@ -121,14 +114,6 @@
   justify-content: center;
 }
 
-.dark-mode body .project-content h3 {
-  color: var(--card-color-dark);
-}
-
-.dark-mode body .project-content p {
-  color: var(--text-gray-dark);
-}
-
 .language-card {
   flex: 0 0 auto;
   width: 90px;
@@ -204,6 +189,13 @@
   z-index: 1;
 }
 
+.dark-mode body .card-base {
+  background-color: var(--card-bg-dark);
+  color: var(--card-color-dark);
+  border: var(--card-border-dark);
+  box-shadow: var(--card-box-shadow-dark);
+}
+
 .dark-mode body .card-base:hover,
 .dark-mode body .project-card:hover,
 .dark-mode body .skill-card:hover,
@@ -213,6 +205,7 @@
 .dark-mode body .outcomes-list li:hover,
 .dark-mode body .portfolio-section:hover {
   box-shadow: var(--card-hover-shadow-dark);
+
   /* Repeated from the light rule, not inherited from it: the resting
      `.dark-mode body .card-base` sets the `border` shorthand at a higher
      specificity, so it resets the colour the hover asked for. */
@@ -229,6 +222,21 @@
    distance. */
 .skill-card:hover .skill-icon {
   --card-pulse-scale: var(--card-pulse-scale-lg);
+
+  animation: var(--card-hover-pulse);
+  color: var(--card-icon-hover-color);
+}
+
+.portfolio-section:hover h2 .icon {
+  --card-pulse-scale: var(--card-pulse-scale-md);
+
+  animation: var(--card-hover-pulse);
+  color: var(--card-icon-hover-color);
+}
+
+.outcomes-list li:hover .icon {
+  --card-pulse-scale: var(--card-pulse-scale-xs);
+
   animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);
 }
@@ -240,26 +248,24 @@
 .language-card:hover .language-icon img,
 .language-card:hover .language-icon .icon {
   --card-pulse-scale: var(--card-pulse-scale-lg);
-  animation: var(--card-hover-pulse);
-}
 
-.portfolio-section:hover h2 .icon {
-  --card-pulse-scale: var(--card-pulse-scale-md);
   animation: var(--card-hover-pulse);
-  color: var(--card-icon-hover-color);
-}
-
-.outcomes-list li:hover .icon {
-  --card-pulse-scale: var(--card-pulse-scale-xs);
-  animation: var(--card-hover-pulse);
-  color: var(--card-icon-hover-color);
 }
 
 .tech-item:hover h3,
 .approach-item:hover h3 {
   --card-pulse-scale: var(--card-title-pulse-scale);
+
   animation: var(--card-hover-pulse);
   color: var(--card-icon-hover-color);
+}
+
+.dark-mode body .project-content h3 {
+  color: var(--card-color-dark);
+}
+
+.dark-mode body .project-content p {
+  color: var(--text-gray-dark);
 }
 
 @media (max-width: 480px) {

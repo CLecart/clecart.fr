@@ -7,13 +7,6 @@
     transform var(--duration-slow) var(--ease-smooth);
 }
 
-.no-js .fade-in,
-.no-js .slide-left,
-.no-js .slide-right {
-  opacity: 1;
-  transform: none;
-}
-
 .fade-in {
   transform: translateY(20px);
 }
@@ -24,6 +17,13 @@
 
 .slide-right {
   transform: translateX(50px);
+}
+
+.no-js .fade-in,
+.no-js .slide-left,
+.no-js .slide-right {
+  opacity: 1;
+  transform: none;
 }
 
 .fade-in.appear,
@@ -37,6 +37,7 @@
   0% {
     text-shadow: 0 0 2px transparent;
   }
+
   100% {
     text-shadow: 0 0 8px var(--primary-light-40);
   }
@@ -84,6 +85,7 @@ section.section-active .section-header {
     opacity: 0.8;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -95,6 +97,7 @@ section.section-active .section-header {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -106,6 +109,7 @@ section.section-active .section-header {
     opacity: 0;
     transform: translateY(25px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -122,6 +126,7 @@ section.section-active .section-header {
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(var(--card-pulse-scale, 1.2));
   }
@@ -131,9 +136,11 @@ section.section-active .section-header {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }

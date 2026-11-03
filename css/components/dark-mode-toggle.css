@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 500;
+
   /* Chrome composites a transform transition only while it runs, and draws the
      emoji differently on and off a layer: without a permanent layer the icon
      visibly changes the instant the hover lift ends. */
@@ -79,6 +80,7 @@
     background-color: var(--white-opacity-10);
     font-size: 1.2rem;
   }
+
   .dark-mode-toggle span {
     font-size: 1.2rem;
     margin: 0 auto;

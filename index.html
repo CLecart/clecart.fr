@@ -2,6 +2,10 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'sha256-w7cn94Y+/0Pp7IFYZNHIQ4PPivuVZGKRrnULb1rAOS8='; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
 
     <script>
       let stored = null;
@@ -54,29 +58,26 @@
     <meta property="og:image:width" content="500" />
     <meta property="og:image:height" content="500" />
     <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:alt" content="Portrait of Christophe Lecart" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Christophe Lecart Portfolio" />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://clecart.fr/" />
+    <meta name="twitter:card" content="summary" />
     <meta
-      property="twitter:title"
+      name="twitter:title"
       content="Christophe Lecart - Software Engineer | Green IT Lead"
     />
     <meta
-      property="twitter:description"
+      name="twitter:description"
       content="From electromechanical compliance to software engineering. Completing a Master's, specialising in Green IT. Lean architectures in Go and JavaScript."
     />
     <meta
-      property="twitter:image"
+      name="twitter:image"
       content="https://clecart.fr/assets/images/profile.webp"
     />
-    <meta
-      property="twitter:image:alt"
-      content="Christophe Lecart - Software Engineer | Green IT Lead"
-    />
-    <meta property="twitter:creator" content="@clecart" />
-    <meta property="twitter:site" content="@clecart" />
+    <meta name="twitter:image:alt" content="Portrait of Christophe Lecart" />
+    <meta name="twitter:creator" content="@clecart" />
+    <meta name="twitter:site" content="@clecart" />
 
     <title>Christophe Lecart - Software Engineer | Green IT Lead</title>
 
@@ -156,7 +157,6 @@
     />
     <link rel="stylesheet" href="styles.css" />
 
-    <script src="js/vendor/emailjs-browser-5.0.3.min.js" defer></script>
     <script type="module" src="js/main.js"></script>
   </head>
   <body class="homepage">
@@ -227,7 +227,13 @@
         <div class="container hero-content">
           <h1 class="slide-right">Hello, I'm <span>Christophe Lecart</span></h1>
           <p class="slide-left">
-            I'm a <span class="typewriter-text">Software Engineer</span>
+            I'm a
+            <span class="typewriter-text" aria-hidden="true"
+              >Software Engineer</span
+            ><span class="visually-hidden"
+              >Software Engineer, Green IT Lead, Go Developer, Sustainable
+              Architectures</span
+            >
           </p>
           <div class="fade-in hero-buttons">
             <a href="#projects" class="btn">View My Work</a>
@@ -245,6 +251,11 @@
             <div class="slide-right">
               <img
                 src="assets/images/profile.webp"
+                srcset="
+                  assets/images/profile-300.webp 300w,
+                  assets/images/profile.webp     500w
+                "
+                sizes="(max-width: 480px) 150px, (max-width: 768px) 200px, 250px"
                 alt="Christophe Lecart - Software Engineer | Green IT Lead"
                 class="profile-img"
                 width="300"
@@ -563,6 +574,7 @@
                   autoplay
                   loop
                   muted
+                  data-poster="assets/images/posters/Groupie-Tracker.webp"
                   controls
                   loading="lazy"
                   width="400"
@@ -593,7 +605,9 @@
                   <a
                     href="descriptions-projects.html#project1"
                     class="project-btn"
-                    >View Details</a
+                    >View Details<span class="visually-hidden">
+                      of Groupie-Tracker</span
+                    ></a
                   >
                   <a
                     href="https://github.com/CLecart/groupie-tracker"
@@ -620,6 +634,7 @@
                   autoplay
                   loop
                   muted
+                  data-poster="assets/images/posters/BombermanDX.webp"
                   controls
                   loading="lazy"
                   width="400"
@@ -650,7 +665,9 @@
                   <a
                     href="descriptions-projects.html#project2"
                     class="project-btn"
-                    >View Details</a
+                    >View Details<span class="visually-hidden">
+                      of BombermanDX</span
+                    ></a
                   >
                   <a
                     href="https://github.com/SpauriRosso/bomberman-dx"
@@ -677,6 +694,7 @@
                   autoplay
                   loop
                   muted
+                  data-poster="assets/images/posters/pochet-du-courval-preview.webp"
                   controls
                   loading="lazy"
                   width="400"
@@ -707,7 +725,9 @@
                     href="descriptions-projects.html#project4"
                     class="project-btn"
                   >
-                    View Details
+                    View Details<span class="visually-hidden">
+                      of Pochet du Courval</span
+                    >
                   </a>
                   <a
                     href="https://pochet-du-courval-showcase.vercel.app/"
@@ -715,7 +735,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     title="View Live"
-                    aria-label="View Live"
+                    aria-label="View the Pochet du Courval site live"
                   >
                     <svg
                       class="icon"
@@ -768,7 +788,9 @@
                     href="descriptions-projects.html#project3"
                     class="project-btn"
                   >
-                    View Details
+                    View Details<span class="visually-hidden">
+                      of Social Network</span
+                    >
                   </a>
 
                   <a
@@ -798,6 +820,7 @@
                   autoplay
                   loop
                   muted
+                  data-poster="assets/images/posters/PartiQ.webp"
                   controls
                   loading="lazy"
                   width="400"
@@ -825,10 +848,12 @@
                   <a
                     href="descriptions-projects.html#project5"
                     class="project-btn"
-                    >View Details</a
+                    >View Details<span class="visually-hidden">
+                      of PartiQ</span
+                    ></a
                   >
                   <a
-                    href="https://github.com/CLecart/PartiQ.git"
+                    href="https://github.com/CLecart/PartiQ"
                     class="github-btn"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -852,6 +877,7 @@
                   autoplay
                   loop
                   muted
+                  data-poster="assets/images/posters/AbrisCraft.webp"
                   controls
                   loading="lazy"
                   width="400"
@@ -879,10 +905,12 @@
                   <a
                     href="descriptions-projects.html#project6"
                     class="project-btn"
-                    >View Details</a
+                    >View Details<span class="visually-hidden">
+                      of AbrisCraft</span
+                    ></a
                   >
                   <a
-                    href="https://github.com/CLecart/AbrisCraft.git"
+                    href="https://github.com/CLecart/AbrisCraft"
                     class="github-btn"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -978,7 +1006,11 @@
 
             <div class="contact-form card-base contact-form-stable">
               <h3>Send Me a Message</h3>
-              <form id="contact-form">
+              <p class="contact-no-js gdpr-message">
+                The form needs JavaScript. You can write to me directly at
+                <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.
+              </p>
+              <form id="contact-form" method="post">
                 <div class="form-group">
                   <label for="name">Your Name</label>
                   <input

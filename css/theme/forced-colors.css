@@ -1,0 +1,30 @@
+/* Windows High Contrast and every forced-colours mode replace the site's
+   colours with the system's. What survives is what these rules restore. */
+@media (forced-colors: active) {
+  /* An svg keeps an explicit colour under forced colours: white on a light
+     canvas, near-black on a dark one. Inheriting takes the forced one. */
+  .icon {
+    color: currentcolor;
+  }
+
+  /* Buttons drawn by background alone become bare text. */
+  .btn,
+  .project-btn,
+  .github-btn,
+  .nav-btn,
+  .nav-toggle,
+  .dark-mode-toggle {
+    border: 1px solid ButtonText;
+  }
+
+  /* The shown project's tab differs by colour and a 5px lift otherwise. */
+  .nav-btn.active {
+    border: 3px solid Highlight;
+  }
+}
+
+@media (forced-colors: active) and (max-width: 768px) {
+  nav ul {
+    border: 1px solid CanvasText;
+  }
+}

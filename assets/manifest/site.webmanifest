@@ -1,7 +1,8 @@
 {
-  "name": "Christophe Lecart - Portfolio Professionnel",
+  "id": "/",
+  "name": "Christophe Lecart - Portfolio",
   "short_name": "CL Portfolio",
-  "description": "Professional Portfolio of Christophe Lecart - Full Stack Developer specialized in JavaScript, Go and modern web technologies",
+  "description": "Portfolio of Christophe Lecart, Software Engineer and Green IT Lead: projects, skills and contact.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -62,6 +63,5 @@
         }
       ]
     }
-  ],
-  "screenshots": []
+  ]
 }

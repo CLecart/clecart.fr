@@ -51,10 +51,11 @@ export function registerServiceWorker() {
  * List what this page loaded, so a worker that did not see it load can store it
  * @function loadedUrls
  * @description The worker caches responses as they pass, but the visit that installs it, or a reload that bypasses it, went straight to the network. Resource Timing already holds the answer — the page itself, every stylesheet import, module, font and icon it fetched — so no hand-kept list has to follow the site's files.
- * @returns {string[]} The page's own URL, without its fragment, then each resource it fetched
+ * @returns {string[]} The page's own URL, without its query or fragment, then each resource it fetched
  */
 function loadedUrls() {
-  const page = globalThis.location.href.split("#")[0];
+  const { origin, pathname } = globalThis.location;
+  const page = `${origin}${pathname}`;
   const resources = performance
     .getEntriesByType("resource")
     .filter((entry) => !NOT_CACHED.has(entry.initiatorType))
@@ -65,20 +66,29 @@ function loadedUrls() {
 /**
  * Offer a reload once a newer worker has installed over a controlled page
  * @function showUpdateNotification
- * @description The worker skips waiting on install, so by the time the visitor clicks it already controls the page: the button only reloads, there is no waiting worker left to promote.
+ * @description The worker skips waiting on install, so by the time the visitor clicks it already controls the page: the button only reloads, there is no waiting worker left to promote. One notice at most: a second update while the first is still shown changes nothing it says.
  * @returns {void}
  */
 function showUpdateNotification() {
+  if (document.querySelector(".app-update-notification")) {
+    return;
+  }
+
   const notification = document.createElement("div");
   notification.className = "app-update-notification";
-  notification.innerHTML = `
-    <p>New version available!</p>
-    <button type="button" id="update-app">Update</button>
-  `;
+  notification.setAttribute("role", "status");
   document.body.appendChild(notification);
 
-  document.getElementById("update-app").addEventListener("click", () => {
-    notification.remove();
-    globalThis.location.reload();
+  /* Filled once the live region is in the page: a region inserted with its
+     text already inside is not announced by every screen reader. */
+  requestAnimationFrame(() => {
+    notification.innerHTML = `
+      <p>New version available!</p>
+      <button type="button">Update</button>
+    `;
+    notification.querySelector("button").addEventListener("click", () => {
+      notification.remove();
+      globalThis.location.reload();
+    });
   });
 }

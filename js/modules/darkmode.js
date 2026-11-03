@@ -3,12 +3,12 @@
  * @author Christophe Lecart
  */
 
-import { writeStored } from "../utils/storage.js";
+import { readStored, writeStored } from "../utils/storage.js";
 
 /**
  * Wire the theme toggle to the theme the head bootstrap already applied
  * @function initDarkMode
- * @description The bootstrap in each page's <head> puts the class and color-scheme on <html> before the first paint, from the stored choice or, failing one, the system preference; this module only reads that state and flips it. The theme lives on <html> because <body> does not exist yet when the bootstrap runs. Nothing is stored until the visitor clicks, so a visitor who never chooses keeps following the system preference.
+ * @description The bootstrap in each page's <head> puts the class and color-scheme on <html> before the first paint, from the stored choice or, failing one, the system preference; this module only reads that state and flips it. The theme lives on <html> because <body> does not exist yet when the bootstrap runs. Nothing is stored until the visitor clicks, so a visitor who never chooses keeps following the system preference, live: switching the system theme during the visit switches the page too.
  * @returns {void}
  */
 export function initDarkMode() {
@@ -32,12 +32,31 @@ export function initDarkMode() {
     darkModeToggle.setAttribute("aria-pressed", String(isDark));
   }
 
+  /**
+   * Put the page in one theme and show it on the toggle
+   * @function applyTheme
+   * @param {boolean} isDark - Theme to apply
+   * @returns {void}
+   */
+  function applyTheme(isDark) {
+    root.classList.toggle("dark-mode", isDark);
+    root.style.colorScheme = isDark ? "dark" : "light";
+    showTheme(isDark);
+  }
+
   showTheme(root.classList.contains("dark-mode"));
 
   darkModeToggle.addEventListener("click", () => {
-    const isDark = root.classList.toggle("dark-mode");
-    root.style.colorScheme = isDark ? "dark" : "light";
-    showTheme(isDark);
+    const isDark = !root.classList.contains("dark-mode");
+    applyTheme(isDark);
     writeStored("dark-mode", isDark ? "enabled" : "disabled");
   });
+
+  globalThis
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (event) => {
+      if (readStored("dark-mode") === null) {
+        applyTheme(event.matches);
+      }
+    });
 }

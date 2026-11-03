@@ -35,9 +35,26 @@ export function scrollToSection(targetId) {
 }
 
 /**
+ * Move keyboard focus to the section an in-page link scrolled to
+ * @function focusSection
+ * @description The scroll alone left focus on the link, so the next Tab went back into the header. A section is not a control: tabindex="-1" lets it take focus without joining the tab order, and reset.css draws no ring around it.
+ * @param {HTMLElement|null} section - The link's target; nothing happens when it is missing
+ * @returns {void}
+ */
+function focusSection(section) {
+  if (!section) {
+    return;
+  }
+  if (!section.hasAttribute("tabindex")) {
+    section.setAttribute("tabindex", "-1");
+  }
+  section.focus({ preventScroll: true });
+}
+
+/**
  * Wire the burger menu, its dismissal paths, and anchor scrolling
  * @function initNavigation
- * @description Only the active class and aria-expanded change here. header.css owns every state of the menu, its slide included, and holds visibility back with a transition delay until the slide-out has played, so a closed menu leaves the accessibility tree without a timer copying the CSS duration. Project tabs are left to project-navigation.js: they switch the project shown in place, and scrolling to their target would move the page under the visitor. The skip link keeps the native jump: only a real fragment navigation moves keyboard focus into <main>, and this scroll would leave it on the link.
+ * @description Only the active class, aria-expanded and focus change here. header.css owns every state of the menu, its slide included, and holds visibility back with a transition delay until the slide-out has played, so a closed menu leaves the accessibility tree without a timer copying the CSS duration. Project tabs are left to project-navigation.js: they switch the project shown in place, and scrolling to their target would move the page under the visitor. The skip link keeps the native jump: only a real fragment navigation moves keyboard focus into <main>, and this scroll would leave it on the link.
  * @returns {void}
  */
 export function initNavigation() {
@@ -63,8 +80,32 @@ export function initNavigation() {
     navToggle.setAttribute("aria-expanded", String(open));
   }
 
+  /* The toggle follows the menu in the markup, so an opened menu would sit
+     behind the focus: its first link takes it. A pointer click does not show
+     the focus ring, so only a keyboard user sees the move. */
   navToggle.addEventListener("click", () => {
-    setMenuOpen(!navMenu.classList.contains("active"));
+    const open = !navMenu.classList.contains("active");
+    setMenuOpen(open);
+    if (open) {
+      requestAnimationFrame(() => navMenu.querySelector("a")?.focus());
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navMenu.classList.contains("active")) {
+      setMenuOpen(false);
+      navToggle.focus();
+    }
+  });
+
+  navMenu.addEventListener("focusout", (e) => {
+    if (
+      navMenu.classList.contains("active") &&
+      !navMenu.contains(e.relatedTarget) &&
+      e.relatedTarget !== navToggle
+    ) {
+      setMenuOpen(false);
+    }
   });
 
   document.querySelectorAll("nav ul li a").forEach((link) => {
@@ -88,7 +129,9 @@ export function initNavigation() {
     .forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
-        scrollToSection(this.getAttribute("href"));
+        const targetId = this.getAttribute("href");
+        scrollToSection(targetId);
+        focusSection(document.querySelector(targetId));
       });
     });
 }

@@ -1,0 +1,5 @@
+# GitHub Pages builds this repository with Jekyll, which skips every path that
+# starts with a dot. security.txt has to live in /.well-known/ (RFC 9116).
+# Nothing else is added: .agents/ and .github/ stay unpublished.
+include:
+  - .well-known

@@ -429,13 +429,6 @@
     position: static;
   }
 
-  .features-list li strong ~ * {
-    margin-left: 32px;
-    color: var(--text-light);
-    line-height: 1.6;
-    font-size: 0.9rem;
-  }
-
   .portfolio-section h2 {
     font-size: 1.8rem;
     margin-bottom: 25px;

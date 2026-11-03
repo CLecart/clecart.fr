@@ -2,14 +2,23 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
     <title>CV - Christophe Lecart</title>
     <script type="module" src="/js/cv.js"></script>
   </head>
   <body>
-    <p>
-      Téléchargement du CV en cours...
-      <a href="/assets/documents/CV_Christophe_Lecart.pdf">Cliquez ici</a> si ça
-      ne démarre pas.
-    </p>
+    <main>
+      <h1>CV de Christophe Lecart</h1>
+      <p>
+        Téléchargement du CV en cours...
+        <a href="/assets/documents/CV_Christophe_Lecart.pdf">Cliquez ici</a> si
+        ça ne démarre pas.
+      </p>
+    </main>
   </body>
 </html>

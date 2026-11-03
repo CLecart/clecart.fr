@@ -9,7 +9,6 @@ import { getConsentStatus } from "../utils/gdpr.js";
 /**
  * Wire the contact form, or replace it with a mailto notice after a refusal
  * @function initContactForm
- * @description EmailJS is initialised here, once. Its SDK is a deferred classic script placed before main.js, so by now it has either run or failed to load for good.
  * @returns {void}
  */
 export function initContactForm() {
@@ -36,10 +35,6 @@ export function initContactForm() {
       showStatus(formStatus, "", "");
     }
   });
-
-  if (typeof emailjs !== "undefined") {
-    emailjs.init({ publicKey: EMAILJS.user });
-  }
 
   setupFormSubmissionHandling(contactForm, formStatus);
 }
@@ -120,17 +115,6 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      if (typeof emailjs === "undefined") {
-        setFormState(
-          form,
-          submitButton,
-          statusElement,
-          "error",
-          'Email service unavailable right now. Please contact me at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
-        );
-        return;
-      }
-
       if (!isAutomatedSubmission(formData)) {
         await sendMessage(formData);
       }
@@ -156,7 +140,7 @@ function setupFormSubmissionHandling(form, statusElement) {
       setTimeout(() => {
         form.classList.remove("sending");
         if (submitButton) {
-          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-disabled");
         }
       }, 3000);
     }
@@ -224,29 +208,45 @@ function isAutomatedSubmission(formData) {
 }
 
 /**
- * Send the validated message through EmailJS
+ * Send the validated message through the EmailJS REST API
  * @function sendMessage
- * @description The keys are the live EmailJS template's contract, not this form's, which is why the name and the address each go out twice. Rename or drop one only together with the template.
+ * @description A plain fetch to the endpoint EmailJS's own SDK calls, with the body it sends. The SDK is not used: it read localStorage while loading, so a browser that blocks site data broke it before any message could leave. The keys of template_params are the live EmailJS template's contract, not this form's, which is why the name and the address each go out twice. Rename or drop one only together with the template.
  * @param {FormData} formData - Submitted form values, already validated
- * @returns {Promise<object>} EmailJS response; rejects with its status object, or throws a string
+ * @returns {Promise<void>} Resolves once EmailJS has accepted the message; rejects with its status and reply otherwise
  */
-function sendMessage(formData) {
-  const senderName = formData.get("name");
-  const senderEmail = formData.get("email");
+async function sendMessage(formData) {
+  const senderName = readTextField(formData, "name");
+  const senderEmail = readTextField(formData, "email");
 
-  return emailjs.send(EMAILJS.service, EMAILJS.template, {
-    from_name: senderName,
-    user_name: senderName,
-    email: senderEmail,
-    user_email: senderEmail,
-    message: formData.get("message"),
-    to_name: "Christophe",
+  const response = await fetch(EMAILJS.endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      service_id: EMAILJS.service,
+      template_id: EMAILJS.template,
+      user_id: EMAILJS.user,
+      template_params: {
+        from_name: senderName,
+        user_name: senderName,
+        email: senderEmail,
+        user_email: senderEmail,
+        message: readTextField(formData, "message"),
+        to_name: "Christophe",
+      },
+    }),
   });
+
+  if (!response.ok) {
+    throw new Error(
+      `EmailJS answered ${response.status}: ${await response.text()}`
+    );
+  }
 }
 
 /**
  * Lock the form and show a status; only the submit handler's finally unlocks it
  * @function setFormState
+ * @description The lock is the form's sending class, which the submit handler checks first. The button only says it is locked, through aria-disabled: the disabled property would also drop the keyboard focus it holds, back to the top of the page.
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} button - Submit button
  * @param {HTMLElement} statusElement - Status element
@@ -257,7 +257,7 @@ function sendMessage(formData) {
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");
   if (button) {
-    button.disabled = true;
+    button.setAttribute("aria-disabled", "true");
   }
 
   showStatus(statusElement, state, message);

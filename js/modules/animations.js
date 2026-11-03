@@ -56,6 +56,7 @@ export function initAnimations() {
 /**
  * Cycle the hero subtitle through the role titles, typing and deleting each
  * @function initTypewriterEffect
+ * @description The animated span is aria-hidden: a screen reader reads the four titles whole from the visually hidden text beside it, never a word cut mid-typing. Typing stops while the hero is off screen or the tab is hidden, and picks up where it left off.
  * @returns {void}
  */
 export function initTypewriterEffect() {
@@ -83,6 +84,22 @@ export function initTypewriterEffect() {
   const typingSpeed = 100;
   const deletingSpeed = 50;
   const pauseDuration = 2000;
+  let inView = true;
+  let stalled = false;
+
+  const resume = () => {
+    if (stalled && inView && !document.hidden) {
+      stalled = false;
+      typeEffect();
+    }
+  };
+  document.addEventListener("visibilitychange", resume);
+  if ("IntersectionObserver" in globalThis) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      resume();
+    }).observe(typewriterElement);
+  }
 
   /**
    * Type or delete a single character, then schedule the next step
@@ -91,6 +108,11 @@ export function initTypewriterEffect() {
    * @returns {void}
    */
   function typeEffect() {
+    if (!inView || document.hidden) {
+      stalled = true;
+      return;
+    }
+
     const currentText = texts[currentTextIndex];
 
     if (!isDeleting) {

@@ -5,13 +5,13 @@ import sonarjs from "eslint-plugin-sonarjs";
 
 export default [
   {
-    ignores: ["node_modules/**", "docs/**", "coverage/**", "js/vendor/**"],
+    ignores: ["node_modules/**", "docs/**", "coverage/**"],
   },
 
   js.configs.recommended,
 
   {
-    files: ["js/**/*.js", "service-worker.js"],
+    files: ["js/**/*.js", "service-worker.js", "scripts/**/*.mjs"],
     ...sonarjs.configs.recommended,
     rules: {
       ...sonarjs.configs.recommended.rules,
@@ -26,7 +26,6 @@ export default [
       sourceType: "module",
       globals: {
         ...globals.browser,
-        emailjs: "readonly",
       },
     },
     plugins: { jsdoc },
@@ -66,6 +65,30 @@ export default [
       "jsdoc/require-returns": ["error", { forceRequireReturn: true }],
       "jsdoc/require-returns-type": "error",
       "jsdoc/require-param-name": "error",
+      "jsdoc/valid-types": "error",
+    },
+  },
+
+  {
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: { ...globals.node },
+    },
+    plugins: { jsdoc },
+    rules: {
+      "no-unused-vars": "error",
+      "prefer-const": "error",
+      curly: ["error", "all"],
+      eqeqeq: ["error", "always"],
+      "jsdoc/require-jsdoc": [
+        "error",
+        { require: { FunctionDeclaration: true } },
+      ],
+      "jsdoc/require-param": "error",
+      "jsdoc/require-returns": ["error", { forceRequireReturn: true }],
+      "jsdoc/check-tag-names": "error",
       "jsdoc/valid-types": "error",
     },
   },

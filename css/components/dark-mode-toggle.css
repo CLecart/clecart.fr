@@ -23,7 +23,6 @@
 @media (hover: hover) {
   .dark-mode-toggle:hover {
     background: var(--white-opacity-20);
-    color: var(--primary-dark);
     transform: translateY(-1px);
   }
 }
@@ -53,7 +52,6 @@
 
 .dark-mode .dark-mode-toggle:hover {
   background: var(--white-opacity-20);
-  color: var(--primary-dark);
 }
 
 .dark-mode .dark-mode-toggle span {

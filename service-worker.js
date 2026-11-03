@@ -15,7 +15,7 @@
 /* Bump on any change to a caching strategy: activate() drops every cache whose
    name differs, which is the only way a stale entry ever leaves a visitor's
    browser. */
-const CACHE_NAME = "portfolio-cache-v5";
+const CACHE_NAME = "portfolio-cache-v6";
 
 /* Media are streamed in ranges and weigh megabytes: the browser handles them
    untouched, and a partial response could not be stored anyway. */
@@ -107,14 +107,14 @@ globalThis.addEventListener("fetch", (event) => {
   const { request } = event;
   if (
     request.method !== "GET" ||
-    !request.url.startsWith(globalThis.location.origin) ||
+    new URL(request.url).origin !== globalThis.location.origin ||
     PASS_THROUGH.has(request.destination)
   ) {
     return;
   }
 
   if (request.destination === "image") {
-    event.respondWith(cacheFirst(event));
+    event.respondWith(staleWhileRevalidate(event));
   } else {
     event.respondWith(networkFirst(event));
   }
@@ -129,18 +129,22 @@ globalThis.addEventListener("fetch", (event) => {
  * they first loaded, with no event able to invalidate it, so a deployment
  * would simply never reach anyone who had already visited. Whatever the
  * network answers is returned as is, a 404 included: only a fetch that throws,
- * the mark of being offline, falls back to the copy.
+ * the mark of being offline, falls back to the copy. A page is kept and looked
+ * up without its query string: /?utm_source=… is the same page as /, and
+ * storing each variant would grow the cache with every tracking link.
  * @param {FetchEvent} event - Any same-origin GET that is neither an image nor media
  * @returns {Promise<Response>} The network response, else the cached copy, else a network error
  */
 async function networkFirst(event) {
   const { request } = event;
+  const isPage = request.mode === "navigate";
+  const key = isPage ? new URL(request.url).pathname : request;
   try {
     const networkResponse = await fetch(request);
-    event.waitUntil(store(request, networkResponse.clone()));
+    event.waitUntil(store(key, networkResponse.clone()));
     return networkResponse;
   } catch (error) {
-    const cachedResponse = await caches.match(request);
+    const cachedResponse = await caches.match(key, { ignoreSearch: isPage });
     if (cachedResponse) {
       return cachedResponse;
     }
@@ -150,22 +154,27 @@ async function networkFirst(event) {
 }
 
 /**
- * Serve an image from the cache first, else the network, else a placeholder
- * @function cacheFirst
+ * Serve an image from the cache at once, and refresh that copy from the network
+ * @function staleWhileRevalidate
+ * @description An image is the one thing served from the cache before the network, for speed; nothing fingerprints its URL either, so every hit also fetches it again in the background. An image replaced on the site reaches a returning visitor one visit later instead of never. Offline and uncached, the in-worker placeholder stands in.
  * @param {FetchEvent} event - Image request
  * @returns {Promise<Response>} Response from cache, network or fallback
  */
-async function cacheFirst(event) {
+async function staleWhileRevalidate(event) {
   const { request } = event;
+  const refresh = fetch(request).then(async (networkResponse) => {
+    await store(request, networkResponse.clone());
+    return networkResponse;
+  });
+
   const cachedResponse = await caches.match(request);
   if (cachedResponse) {
+    event.waitUntil(refresh.catch(() => undefined));
     return cachedResponse;
   }
 
   try {
-    const networkResponse = await fetch(request);
-    event.waitUntil(store(request, networkResponse.clone()));
-    return networkResponse;
+    return await refresh;
   } catch (error) {
     console.warn("Image request failed, serving offline fallback:", error);
     return offlineImageResponse();

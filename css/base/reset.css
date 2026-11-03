@@ -31,6 +31,23 @@ body {
   outline-offset: var(--focus-ring-offset);
 }
 
+/* Read by screen readers, drawn nowhere: for text that the eye gets from
+   its context, such as which project a "View Details" link opens. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A section or <main> given focus by script to move the reading point is not
+   a control, and a ring around a whole section points at nothing. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
 body {
   font-family: Poppins, sans-serif;
   line-height: 1.6;

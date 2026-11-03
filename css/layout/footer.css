@@ -67,7 +67,7 @@ footer a:hover::after {
   width: 100%;
 }
 
-footer a[href="privacy-policy.html"]::after {
+footer a[href$="privacy-policy.html"]::after {
   display: none;
 }
 

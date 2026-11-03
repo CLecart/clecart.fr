@@ -116,16 +116,35 @@
   transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
+/* Without JavaScript the form could only reload the page: the mailto line
+   takes its place. */
+.contact-no-js,
+.no-js .contact-form form {
+  display: none;
+}
+
+.no-js .contact-no-js {
+  display: block;
+}
+
+/* Always rendered, empty and boxless until a state arrives: an <output>
+   hidden with display: none is no live region at all, and its first message
+   could go unannounced. */
 .form-status {
-  margin-top: 20px;
-  padding: 12px 15px;
-  border-radius: 8px;
   font-weight: 500;
   text-align: center;
   opacity: 0;
   transform: translateY(10px);
-  display: none;
   transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.form-status.success,
+.form-status.error,
+.form-status.sending,
+.form-status.info {
+  margin-top: 20px;
+  padding: 12px 15px;
+  border-radius: 8px;
 }
 
 .form-status a {

@@ -18,7 +18,7 @@ export function getConsentStatus() {
 /**
  * Build the consent banner and append it to the page
  * @function buildBanner
- * @description Built here rather than written into each page, so every page shows the same wording and none can ship without it. An aside with a name, so the banner is a landmark of its own instead of loose content outside every region. The link is root-absolute because 404.html is served at any depth, where a relative one would point under the missing path.
+ * @description Built here rather than written into each page, so every page shows the same wording and none can ship without it. An aside with a name, so the banner is a landmark of its own instead of loose content outside every region. It is fixed to the bottom of the screen but placed right after the skip link in the markup, so the keyboard reaches its choice second, not after the whole page. The link is root-absolute because 404.html is served at any depth, where a relative one would point under the missing path.
  * @returns {{banner: HTMLElement, acceptBtn: HTMLElement, declineBtn: HTMLElement}} The banner and its two action buttons
  */
 function buildBanner() {
@@ -39,13 +39,52 @@ function buildBanner() {
       </div>
     </div>
   `;
-  document.body.appendChild(banner);
+  const skipLink = document.querySelector(".skip-link");
+  if (skipLink) {
+    skipLink.after(banner);
+  } else {
+    document.body.prepend(banner);
+  }
 
   return {
     banner,
     acceptBtn: banner.querySelector("#gdpr-accept"),
     declineBtn: banner.querySelector("#gdpr-decline"),
   };
+}
+
+/**
+ * Hand keyboard focus to the page's main content
+ * @function focusMain
+ * @description The control that held focus vanishes with the banner or the dialog, and focus would fall back to the top of the document. <main> takes it without joining the tab order; reset.css draws no ring around it.
+ * @returns {void}
+ */
+function focusMain() {
+  const main = document.querySelector("main");
+  if (!main) {
+    return;
+  }
+  if (!main.hasAttribute("tabindex")) {
+    main.setAttribute("tabindex", "-1");
+  }
+  main.focus({ preventScroll: true });
+}
+
+/**
+ * Keep --gdpr-banner-height equal to the banner's height while it is shown
+ * @function trackBannerHeight
+ * @description gdpr.css turns the height into scroll padding, so focus is never scrolled under the banner. A ResizeObserver follows the wrapping text across widths; a hidden banner measures 0, which clears the padding.
+ * @param {HTMLElement} banner - The consent banner
+ * @returns {void}
+ */
+function trackBannerHeight(banner) {
+  const root = document.documentElement;
+  const update = () =>
+    root.style.setProperty("--gdpr-banner-height", `${banner.offsetHeight}px`);
+  if ("ResizeObserver" in globalThis) {
+    new ResizeObserver(update).observe(banner);
+  }
+  update();
 }
 
 /**
@@ -76,7 +115,10 @@ function showRefusalNotice() {
     </div>
   `;
 
-  notice.addEventListener("close", () => notice.remove());
+  notice.addEventListener("close", () => {
+    notice.remove();
+    focusMain();
+  });
   notice.addEventListener("click", (event) => {
     if (event.target === notice) {
       notice.close();
@@ -151,7 +193,12 @@ export function initGDPRBanner() {
     banner.classList.remove("hidden");
   }
 
-  acceptBtn?.addEventListener("click", () => decide("accepted"));
+  trackBannerHeight(banner);
+
+  acceptBtn?.addEventListener("click", () => {
+    decide("accepted");
+    focusMain();
+  });
   declineBtn?.addEventListener("click", () => {
     decide("declined");
     showRefusalNotice();

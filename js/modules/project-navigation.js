@@ -20,17 +20,21 @@ export function initProjectNavigation() {
   /**
    * Show one project and mark its tab, hiding every other project
    * @function activate
-   * @description The active class is the whole switch: projects.css shows .project.active and hides every other .project.
+   * @description The active class is the whole switch: projects.css shows .project.active and hides every other .project. aria-current tells a screen reader which tab is the shown one, the class alone being visual.
    * @param {HTMLElement} project - Project to show
    * @param {HTMLElement} button - Tab to mark as active
    * @returns {void}
    */
   function activate(project, button) {
     projects.forEach((other) => other.classList.remove("active"));
-    navButtons.forEach((btn) => btn.classList.remove("active"));
+    navButtons.forEach((btn) => {
+      btn.classList.remove("active");
+      btn.removeAttribute("aria-current");
+    });
 
     project.classList.add("active");
     button.classList.add("active");
+    button.setAttribute("aria-current", "true");
   }
 
   const projectOf = (button) =>
@@ -54,6 +58,9 @@ export function initProjectNavigation() {
       const targetProject = projectOf(button);
       if (targetProject) {
         activate(targetProject, button);
+        /* Replaced, not pushed: the address follows the project shown, so a
+           reload or a shared link opens it, and Back still leaves the page. */
+        history.replaceState(null, "", button.hash);
       }
     });
   });

@@ -21,5 +21,6 @@
 @import url("./css/sections/privacy.css");
 @import url("./css/sections/portfolio-details.css");
 
-/* Last, so the dark theme follows every rule it restyles. */
+/* Themes last, so they follow every rule they restyle. */
 @import url("./css/theme/darkmode.css");
+@import url("./css/theme/forced-colors.css");

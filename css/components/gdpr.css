@@ -20,6 +20,12 @@
   display: none;
 }
 
+/* While the banner is up, a field or link the keyboard reaches is scrolled
+   clear of it instead of landing underneath; gdpr.js keeps the height. */
+html {
+  scroll-padding-bottom: var(--gdpr-banner-height, 0);
+}
+
 .gdpr-content {
   pointer-events: auto;
   padding: 20px 24px;

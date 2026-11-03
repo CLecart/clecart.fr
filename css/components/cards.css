@@ -55,7 +55,6 @@
   cursor: pointer;
 }
 
-.project-thumb img,
 .project-thumb video {
   position: absolute;
   top: 0;
@@ -64,6 +63,12 @@
   height: 100%;
   object-fit: cover;
   transition: var(--card-transition);
+}
+
+/* The thumbnail clips its overflow, which would clip a ring drawn outside
+   the video: drawn inside instead. */
+.project-thumb video:focus-visible {
+  outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
 .project-content {

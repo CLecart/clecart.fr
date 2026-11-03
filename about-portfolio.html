@@ -2,6 +2,10 @@
 <html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'sha256-w7cn94Y+/0Pp7IFYZNHIQ4PPivuVZGKRrnULb1rAOS8='; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
 
     <script>
       let stored = null;
@@ -28,7 +32,7 @@
     />
     <meta
       name="description"
-      content="Portfolio details - Christophe Lecart - Information for recruiters and hiring managers"
+      content="How this portfolio is built: a static site with no framework or third-party resource, its accessibility and Green IT choices, and its project structure."
     />
     <meta
       name="keywords"
@@ -36,6 +40,41 @@
     />
     <meta name="author" content="Christophe Lecart" />
     <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://clecart.fr/about-portfolio.html" />
+    <meta property="og:title" content="Portfolio Details - Christophe Lecart" />
+    <meta
+      property="og:description"
+      content="How this portfolio is built: a static site with no framework or third-party resource, its accessibility and Green IT choices, and its project structure."
+    />
+    <meta
+      property="og:image"
+      content="https://clecart.fr/assets/images/profile.webp"
+    />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="500" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:alt" content="Portrait of Christophe Lecart" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Christophe Lecart Portfolio" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Portfolio Details - Christophe Lecart"
+    />
+    <meta
+      name="twitter:description"
+      content="How this portfolio is built: a static site with no framework or third-party resource, its accessibility and Green IT choices, and its project structure."
+    />
+    <meta
+      name="twitter:image"
+      content="https://clecart.fr/assets/images/profile.webp"
+    />
+    <meta name="twitter:image:alt" content="Portrait of Christophe Lecart" />
+    <meta name="twitter:creator" content="@clecart" />
+    <meta name="twitter:site" content="@clecart" />
 
     <title>Portfolio Details - Christophe Lecart</title>
 
@@ -168,7 +207,7 @@
                 <h3>Frontend</h3>
                 <p>
                   Semantic HTML5, CSS3 (Flexbox, Grid, CSS variables),
-                  JavaScript ES6+
+                  JavaScript ES2021
                 </p>
               </div>
               <div class="tech-item">
@@ -203,7 +242,7 @@
               </div>
               <div class="tech-item">
                 <h3>JavaScript Architecture</h3>
-                <p>ES6 modules, Intersection Observer API, event handling</p>
+                <p>ES2021 modules, Intersection Observer API, event handling</p>
               </div>
               <div class="tech-item">
                 <h3>Testing & Quality</h3>
@@ -366,7 +405,13 @@ clecart.fr/
 │   │   └── sprite.svg           # Font Awesome Free 7.3.1, 21 UI icons
 │   ├── images/
 │   │   ├── posters/
-│   │   │   └── Konekt.webp      # Poster for the Konekt demo
+│   │   │   ├── AbrisCraft.webp
+│   │   │   ├── BombermanDX.webp
+│   │   │   ├── Groupie-Tracker.webp
+│   │   │   ├── Konekt.webp
+│   │   │   ├── PartiQ.webp
+│   │   │   └── pochet-du-courval-preview.webp
+│   │   ├── profile-300.webp
 │   │   └── profile.webp
 │   ├── manifest/
 │   │   └── site.webmanifest
@@ -410,7 +455,8 @@ clecart.fr/
 │   │   ├── projects.css         # Projects gallery
 │   │   └── skills.css           # Technical skills
 │   ├── theme/
-│   │   └── darkmode.css         # Full dark theme
+│   │   ├── darkmode.css         # Full dark theme
+│   │   └── forced-colors.css    # Windows High Contrast and other forced colours
 │   └── utils/
 │       └── animations.css       # Animations + prefers-reduced-motion
 ├── js/                          # Modular JavaScript
@@ -420,15 +466,13 @@ clecart.fr/
 │   │   ├── darkmode.js          # System-aware adaptive theme
 │   │   ├── navigation.js        # Responsive menu, smooth scroll
 │   │   ├── project-navigation.js # Project tabs, deep links
-│   │   └── videoHandler.js      # Video playback, offscreen pausing
+│   │   ├── video-handler.js     # Video playback, offscreen pausing
+│   │   └── view-more.js         # Project grid's View More toggle
 │   ├── utils/                   # Technical utilities
 │   │   ├── config.js            # EmailJS public identifiers
 │   │   ├── gdpr.js              # Consent banner and enforcement
 │   │   ├── storage.js           # localStorage access that never throws
 │   │   └── sw-register.js       # Service Worker registration
-│   ├── vendor/                  # Third-party code, served by the site
-│   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
-│   │   └── LICENSE-emailjs-browser.txt # Its BSD-3-Clause licence
 │   ├── cv.js                    # Entry point of cv/index.html
 │   └── main.js                  # Application entry point
 ├── service-worker.js            # Must stay at root: scope = its own directory
@@ -437,12 +481,17 @@ clecart.fr/
 ├── .agents/
 │   └── AGENTS.md                # Engineering manifesto
 ├── .github/
+│   ├── dependabot.yml           # Weekly update proposals
 │   └── workflows/
-│       └── check.yml            # CI: npm run check on every push
+│       └── check.yml            # CI: npm run check on every push to main
+├── .well-known/
+│   └── security.txt             # Where to report a vulnerability
+├── scripts/
+│   └── check-csp.mjs            # CSP hashes match the inline scripts
+├── _config.yml                  # Lets GitHub Pages publish .well-known/
 ├── eslint.config.js             # Code quality, with sonarjs
 ├── stylelint.config.mjs         # CSS lint, no !important
 ├── .prettierrc.json             # Formatting
-├── .prettierignore              # Prettier skips js/vendor/
 ├── .gitignore                   # Git exclusions
 ├── docker-compose.yml           # Orchestration
 ├── Dockerfile                   # Containerization
@@ -456,7 +505,7 @@ clecart.fr/
 ├── robots.txt                   # SEO directives
 ├── sitemap.xml                  # Sitemap
 ├── CNAME                        # Custom domain (GitHub Pages)
-├── styles.css                   # Barrel importing the 23 CSS modules
+├── styles.css                   # Barrel importing the 24 CSS modules
 ├── index.html                   # Main page
 ├── about-portfolio.html         # Technical documentation
 ├── descriptions-projects.html   # Project details

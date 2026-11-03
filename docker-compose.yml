@@ -1,20 +1,19 @@
+# Local run of the container: `docker compose up --build`, then
+# http://localhost:8080. clecart.fr itself is served by GitHub Pages.
 services:
   portfolio:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: clecart-portfolio
+    build: .
+    # The name deploy.sh uses: the two cannot run side by side on one port.
+    container_name: clecart-portfolio-container
+    # Loopback only: Docker's published ports bypass the host firewall.
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     restart: unless-stopped
-    networks:
-      - portfolio-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portfolio.rule=Host(`clecart.fr`)"
-      - "traefik.http.routers.portfolio.tls=true"
-      - "traefik.http.routers.portfolio.tls.certresolver=letsencrypt"
-
-networks:
-  portfolio-network:
-    driver: bridge
+    # nginx writes only to /tmp; nothing else in the container needs to change.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

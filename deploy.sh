@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# Script de déploiement amélioré avec vérifications et rollback
-set -euo pipefail
+# Déploiement du conteneur, avec vérifications et retour arrière automatique.
+# -E : le piège ERR vaut aussi dans les fonctions ; sans lui, un `docker run`
+# raté dans start_container laissait le site arrêté sans retour arrière.
+set -Eeuo pipefail
+
+# Le build lit le dossier courant : on se place dans celui du script.
+cd "$(dirname "$0")"
 
 # Configuration
 PROJECT_NAME="clecart-portfolio"
@@ -35,11 +40,17 @@ log_error() {
 
 # Le déploiement et le rollback démarrent le conteneur par cette seule fonction :
 # un conteneur restauré sans --restart ne survivrait pas au redémarrage de l'hôte.
+# Système de fichiers en lecture seule (nginx n'écrit que dans /tmp), aucune
+# capacité Linux, aucune élévation de privilège.
 start_container() {
     docker run -d \
         -p "$PORT:8080" \
         --name "$CONTAINER_NAME" \
         --restart unless-stopped \
+        --read-only \
+        --tmpfs /tmp \
+        --cap-drop ALL \
+        --security-opt no-new-privileges \
         "$1"
 }
 
@@ -56,9 +67,14 @@ remove_container() {
 
 # Fonction de rollback
 rollback() {
+    # Un échec pendant la restauration ne doit pas relancer la restauration.
+    trap - ERR
     log_warning "Rollback en cours..."
     if docker image inspect "${IMAGE_NAME}:${BACKUP_TAG}" >/dev/null 2>&1; then
         remove_container
+        # :latest désigne de nouveau l'image qui marche, sinon le prochain
+        # déploiement sauvegarderait l'image cassée.
+        docker tag "${IMAGE_NAME}:${BACKUP_TAG}" "$IMAGE_NAME"
         start_container "${IMAGE_NAME}:${BACKUP_TAG}"
         log_success "Rollback terminé avec succès"
     else
@@ -66,9 +82,6 @@ rollback() {
     fi
     exit 1
 }
-
-# Trap pour rollback en cas d'erreur
-trap rollback ERR
 
 log_info "🚀 Début du déploiement de $PROJECT_NAME"
 
@@ -99,6 +112,10 @@ if ! docker image inspect $IMAGE_NAME >/dev/null 2>&1; then
     log_error "Échec de la construction de l'image"
     exit 1
 fi
+
+# Le retour arrière n'est armé qu'ici : avant, l'ancien conteneur tourne
+# encore, et un échec (build compris) doit simplement arrêter le script.
+trap rollback ERR
 
 # Arrêter le conteneur existant en douceur, qu'il tourne ou non
 remove_container

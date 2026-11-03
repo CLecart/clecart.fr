@@ -1,8 +1,9 @@
-# Pinned to an exact release of the stable branch: a floating tag would let two
-# builds of the same commit ship different servers. Bump deliberately.
+# Pinned to an exact release of the stable branch, and to its image digest:
+# neither a floating tag nor a re-pushed one can make two builds of the same
+# commit ship different servers. Dependabot proposes the bumps.
 # The unprivileged variant of that release runs master and workers as uid 101,
 # hence port 8080: ports below 1024 belong to root.
-FROM nginxinc/nginx-unprivileged:1.30.6-alpine
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03
 
 LABEL org.opencontainers.image.title="clecart.fr" \
       org.opencontainers.image.description="Portfolio of Christophe Lecart, Software Engineer & Green IT Lead" \
@@ -28,6 +29,7 @@ COPY --chmod=u=rwX,go=rX css /usr/share/nginx/html/css
 COPY --chmod=u=rwX,go=rX js /usr/share/nginx/html/js
 COPY --chmod=u=rwX,go=rX assets /usr/share/nginx/html/assets
 COPY --chmod=u=rwX,go=rX cv /usr/share/nginx/html/cv
+COPY --chmod=u=rwX,go=rX .well-known /usr/share/nginx/html/.well-known
 
 USER 101
 

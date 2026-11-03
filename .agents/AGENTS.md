@@ -131,11 +131,15 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      à une version exacte** puis signé (`integrity` + `crossorigin="anonymous"`).
      Le pin précède toujours la signature : signer une plage flottante (`@3`)
      casse le site au premier patch amont.
-   - **Aujourd'hui, aucune ressource tierce** (mesuré, Chrome, 2026-11-02) :
-     police, icônes, logos et SDK EmailJS sont servis par le site, épinglés ;
-     seul `api.emailjs.com` est contacté, et seulement à l'envoi du formulaire.
-     En réintroduire une, c'est aussi l'ajouter à `privacy-policy.html` et à
-     la CSP.
+   - **Aujourd'hui, aucune ressource ni aucun script tiers** (mesuré, Chrome,
+     2026-11-03) : police, icônes et logos sont servis par le site, épinglés ;
+     le formulaire appelle l'API EmailJS par `fetch`, sans SDK, et
+     `api.emailjs.com` n'est contacté qu'à l'envoi. En réintroduire une, c'est
+     aussi l'ajouter à `privacy-policy.html` et à la CSP.
+   - **CSP dans chaque page** (`<meta http-equiv>`, avant le script inline),
+     le script inline autorisé par son empreinte. `npm run check:csp` vérifie
+     que pages et `nginx-security-headers.conf` listent exactement les
+     empreintes des scripts inline : jamais de `'unsafe-inline'`.
    - Injection de contenu par `textContent`, jamais `innerHTML` sur une donnée
      non maîtrisée.
    - **Savoir ce qui est un secret.** Les identifiants EmailJS sont **publics
@@ -211,8 +215,15 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
    - **CSS/JS en network-first**, cache en filet hors-ligne uniquement. Sans
      build ni hash d'URL, le cache-first figerait chaque visiteur sur la version
      découverte en premier : tout déploiement futur invisible, définitivement.
-     `CACHE_NAME` se bumpe à chaque changement de stratégie.
-   - `styles.css` est un baril de 23 `@import`. **Mesuré** (Chrome, 2026-11-02,
+     Les images en stale-while-revalidate : servies du cache, rafraîchies
+     derrière. Les pages rangées sans leur query string. `CACHE_NAME` se bumpe à
+     chaque changement de stratégie.
+   - **Vidéo : la pause du visiteur est respectée**, l'observateur ne reprend
+     que ce qu'il a lui-même mis en pause. Sur mobile et sous
+     `prefers-reduced-motion`, pas d'`autoplay`, `preload="none"` et l'affiche
+     (`data-poster`, posée par le script seulement, pour qu'un ordinateur qui
+     lit la vidéo à l'arrivée ne la télécharge pas).
+   - `styles.css` est un baril de 24 `@import`. **Mesuré** (Chrome, 2026-11-02,
      alors 22 imports) : **2 vagues** de requêtes — le baril, puis ses imports
      en parallèle. Le coût est **un** aller-retour de découverte, pas un par
      import. Concaténer l'économiserait, mais GitHub Pages publie le dépôt tel
@@ -232,10 +243,19 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
       `css/base/reset.css`, tracé hors de l'élément : un conteneur en
       `overflow: hidden` le rogne, donc on arrondit l'enfant plutôt que de
       rogner le parent.
-    - **Chaque page commence par un lien d'évitement** vers
+    - **Chaque page à en-tête commence par un lien d'évitement** vers
       `<main id="main-content">`. Le défilement JS des ancres
       (`navigation.js`) l'exclut : seule la navigation native vers le fragment
       déplace le focus clavier dans `<main>`.
+    - **Le focus ne se perd jamais.** Une section atteinte par une ancre, ou
+      `<main>` après un choix dans la bannière, reçoit le focus par script
+      (`tabindex="-1"`, sans anneau). Le menu mobile : focus sur son premier
+      lien à l'ouverture, Échap le ferme et rend le focus au bouton, il se
+      ferme quand le focus le quitte. Un bouton occupé est `aria-disabled`,
+      jamais `disabled` : `disabled` éjecte le focus.
+    - **Mode contraste élevé (`forced-colors`)** : `css/theme/forced-colors.css`
+      rend aux icônes la couleur imposée et aux boutons leur bordure. Tout
+      composant nouveau s'y vérifie.
     - Une zone qui défile au clavier (`<pre>` large) prend `tabindex="0"`, un
       rôle `region` et un nom (axe : scrollable-region-focusable).
     - Toute `<video>` porte un `<track kind="captions">` (SonarQube Web:S4084).

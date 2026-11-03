@@ -1,0 +1,23 @@
+# Weekly update proposals, one pull request per ecosystem and week. Each one
+# runs the Check workflow before anything can be merged.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-tooling:
+        patterns: ["*"]
+
+  # Moves the commit SHA each action is pinned to, and its version comment.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Moves the nginx base image's tag and digest in the Dockerfile.
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly

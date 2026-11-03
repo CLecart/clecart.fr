@@ -33,20 +33,20 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 ### 🚀 **Core Technical Stack**
 
 - **Frontend:** Semantic HTML5, CSS3 (Flexbox, Grid, Custom Properties), JavaScript ES2021 modules
-- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 23 `@import`
+- **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 24 `@import`
 - **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker that keeps what passes through it, with per-destination cache strategies and no precache list
-- **Performance:** preloads for the profile image and the fonts, WebP profile image, offscreen video pausing
-- **Security:** No third-party resource — font, icons, logos and the EmailJS SDK are served by the site itself, at pinned versions — no backend, security headers on the container deployment
+- **Performance:** font preloads, a WebP profile photo in two sizes, demo videos paused offscreen and not loaded on phones until played
+- **Security:** No third-party resource — font, icons and logos are served by the site itself, at pinned versions, and the contact form calls the EmailJS API without its SDK — no backend, a Content-Security-Policy in every page, security headers on the container deployment
 
 ### 🏗️ **DevOps and Infrastructure**
 
 This tooling exists and works, but it is **not what serves clecart.fr** — see [Deployment](#deployment).
 
 - **Containerization:** `nginxinc/nginx-unprivileged:1.30.6-alpine`, pinned; nginx runs as uid 101 on port 8080 over a site owned by root, with a `HEALTHCHECK`
-- **Orchestration:** Docker Compose v2 (`docker compose`) with Traefik labels; the image's `HEALTHCHECK` is the only health check
-- **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts, polls the site for up to 60 seconds, and rolls back automatically on error
-- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`, `eslint-plugin-sonarjs` recommended rules with cognitive complexity capped at 15), Stylelint (`stylelint-config-standard`, `!important` forbidden), Prettier, the Nu Html Checker (`vnu-jar`) on every page and stylesheet, warnings included, and `npm audit` — all five behind `npm run check`
-- **Continuous Integration:** `.github/workflows/check.yml` runs `npm run check` on every push and pull request, its actions pinned by commit SHA. Lighthouse, axe and the browser checks are still run **manually**.
+- **Orchestration:** Docker Compose v2 (`docker compose`) for a local run on `127.0.0.1:8080`, read-only, without Linux capabilities; the image's `HEALTHCHECK` is the only health check
+- **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts a read-only container without Linux capabilities, polls the site for up to 60 seconds, and rolls back automatically if starting or answering fails
+- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`, `eslint-plugin-sonarjs` recommended rules with cognitive complexity capped at 15), Stylelint (`stylelint-config-standard`, `!important` forbidden), Prettier, the Nu Html Checker (`vnu-jar`) on every page and stylesheet, warnings included, a check that every Content-Security-Policy lists the hash of each inline script, and `npm audit` — all six behind `npm run check`
+- **Continuous Integration:** `.github/workflows/check.yml` runs `npm run check` on every push to `main`, on every pull request and weekly, its actions pinned by commit SHA; `.github/dependabot.yml` proposes npm, GitHub Actions and Docker updates every week. Lighthouse, axe and the browser checks are still run **manually**.
 
 ### 🎯 **Technical Specializations**
 
@@ -72,21 +72,21 @@ no server-side code at all.
 
 ### ⚡ **Performance and Optimization**
 
-- **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen. On mobile, `videoHandler.js` strips `autoplay` and caps `preload` at `metadata`, so a visitor on cellular data never pays for a video they did not ask to watch.
+- **Video playback:** an Intersection Observer pauses each demo video when it leaves the viewport and resumes it on the way back, so nothing decodes offscreen; a video the visitor paused stays paused. On a phone, and under `prefers-reduced-motion`, `video-handler.js` removes `autoplay` and sets `preload="none"` with a poster, a still of the demo as a small WebP: nothing of the video loads until it is played. The posters are set by the script only, so a desktop visitor whose videos play on arrival never fetches them.
 - **Preloads:** only the Poppins faces each page's first viewport draws (400 and 700 everywhere, 600 on the home page). The profile photo is not preloaded: it sits below the first screen at 375, 1280 and 1920 px wide, where the largest paint is the hero's heading, so it loads lazily (measured in Chrome on 2026-11-03). There is no `dns-prefetch` or `preconnect` left: no page loads anything from another host.
 - **Self-hosted font:** Poppins latin 400/600/700 in `assets/fonts/` (23.7 KB of woff2), byte-identical to the files Google Fonts served, declared in `css/base/fonts.css` with Google's own `unicode-range`. Measured in Chrome on 2026-11-02 on a local HTTP/2 server throttled to 150 ms / 1.6 Mbps: with the preloads the fonts arrive before first paint in 7 runs out of 7 (0/7 without), and CLS falls from 0.032 to 0.003 on the home page.
 - **Skill logos:** the nine devicon 2.18.0 SVGs live in `assets/icons/devicon/` (23.0 KB, 9.2 KB gzipped), instead of an unpinned jsDelivr URL.
-- **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page transfers 14.9 KB in one same-origin request instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a reload takes the sprite from Chrome's memory cache, 0 bytes.
-- **Service Worker:** no precache list to keep in step with the site — each same-origin response is stored as it passes, and the page that installs the worker sends it the URLs it already loaded. Pages, CSS, JS, fonts and the icon sprite are network-first: whatever the network answers is served, a 404 included, and the copy is used only when the fetch fails offline. Same-origin images are cache-first, with an in-worker SVG placeholder when one cannot be fetched offline. Videos, captions and the EmailJS call are not intercepted. Nothing fingerprints the URLs, so serving pages, CSS or JS from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it.
-- **WebP** for the profile image and the Konekt video poster
-- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 308 CSS px. Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
+- **UI icons from one local sprite:** the 21 Font Awesome Free 7.3.1 icons the pages draw are `<symbol>`s in `assets/icons/sprite.svg` (14.7 KB, 5.6 KB gzipped), drawn with `<use>` in `currentColor`. Measured in Chrome on 2026-11-02 against the Font Awesome 6.4.0 webfont the sprite replaced: a first visit to the home page fetches the sprite in one same-origin request, 5.7 KB gzipped on the wire, instead of 279 KB in three requests to cdnjs (19 KB of CSS, 151 KB and 109 KB of woff2); a reload takes the sprite from Chrome's memory cache, 0 bytes.
+- **Service Worker:** no precache list to keep in step with the site — each same-origin response is stored as it passes, and the page that installs the worker sends it the URLs it already loaded. Pages, CSS, JS, fonts and the icon sprite are network-first: whatever the network answers is served, a 404 included, and the copy is used only when the fetch fails offline. A page is cached and looked up without its query string, so tracking links do not grow the cache. Same-origin images are served from the cache at once and refreshed from the network behind it (stale-while-revalidate), so a replaced image reaches a returning visitor one visit later; an in-worker SVG placeholder stands in for one that cannot be fetched offline. Videos, captions and the EmailJS call are not intercepted. Nothing fingerprints the URLs, so serving pages, CSS or JS from cache would pin a returning visitor to the version they first loaded, with no event able to invalidate it.
+- **WebP** for the profile photo (300 and 500 px, chosen by `srcset`) and the video posters
+- **Video weight:** measured at **0 bytes fetched on load**, desktop and mobile alike, for ~5 MB of demo footage on disk (Chrome, 2026-11-02). The six demos are 480p H.264 with no audio track: they are silent, and no card shows them wider than 357 CSS px (measured on a 430 px wide phone). Browsers already defer an autoplay video they cannot show; the only thing that ever broke that was one stray `preload="auto"` on a card hidden behind "View More Projects", since removed.
 - **No minification or bundling:** sources ship as committed. Compression is the host's job — gzip is configured in `nginx.conf` for the container, and GitHub Pages compresses on its own.
 
 ### 🛡️ **Security and Compliance**
 
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
-- **No third-party resource:** the EmailJS SDK 5.0.3 is served by the site itself from `js/vendor/`, byte-identical to the file in the npm tarball (whose `integrity` npm checks against the registry), with its BSD-3-Clause licence beside it; the font, the UI icons and the skill logos are local too. A pinned, same-origin file needs no Subresource Integrity, and a CDN outage or compromise can no longer reach the page. Measured in Chrome on 2026-11-02: none of the four pages contacts any host but its own on load; `api.emailjs.com` is contacted only when the form is sent.
-- **Content Security Policy and security headers** (`nginx-security-headers.conf`): **container deployment only.** GitHub Pages cannot serve custom headers, so these are **not active on clecart.fr** — full scope and rationale in [SECURITY.md](./SECURITY.md).
+- **No third-party resource:** the font, the UI icons and the skill logos are served by the site itself. The contact form posts to the EmailJS REST API with `fetch`, the same request EmailJS's SDK makes, so no third-party script runs in the page at all. Measured in Chrome on 2026-11-03: none of the five pages contacts any host but its own on load; `api.emailjs.com` is contacted only when the form is sent.
+- **Content Security Policy:** every page carries one in a `<meta>` tag, so it applies on clecart.fr too: same-origin resources only, the one inline script allowed by its hash, EmailJS as the only other host the page may call. `npm run check:csp` fails if an inline script and its hash drift apart. The other security headers (`nginx-security-headers.conf`) exist only on the container: GitHub Pages cannot send custom headers — full scope in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables the contact form.
 - **No analytics:** the site measures nothing about a visit. The usage buffer an earlier version kept in `localStorage`, consent-gated and never sent anywhere, is erased on the visitor's next visit.
 - **Container Security:** nginx runs as uid 101; the site and the nginx configuration belong to root and are read-only to it; health check
@@ -156,7 +156,8 @@ clecart.fr/
 │   │   │   ├── projects.css          # Projects gallery
 │   │   │   └── skills.css            # Technical skills
 │   │   ├── theme/
-│   │   │   └── darkmode.css          # Full dark theme
+│   │   │   ├── darkmode.css          # Full dark theme
+│   │   │   └── forced-colors.css     # Windows High Contrast and other forced colours
 │   │   └── utils/
 │   │       └── animations.css        # Animations + prefers-reduced-motion
 │   │
@@ -167,7 +168,8 @@ clecart.fr/
 │   │   │   ├── darkmode.js           # System-aware adaptive theme
 │   │   │   ├── navigation.js         # Responsive menu, smooth scroll
 │   │   │   ├── project-navigation.js # Project tabs, deep links
-│   │   │   └── videoHandler.js       # Video playback, offscreen pausing
+│   │   │   ├── video-handler.js      # Video playback, offscreen pausing
+│   │   │   └── view-more.js          # Project grid's View More toggle
 │   │   │
 │   │   ├── utils/                    # Technical utilities
 │   │   │   ├── config.js             # EmailJS public identifiers
@@ -175,15 +177,11 @@ clecart.fr/
 │   │   │   ├── storage.js            # localStorage access that never throws
 │   │   │   └── sw-register.js        # Service Worker registration
 │   │   │
-│   │   ├── vendor/                   # Third-party code, served by the site
-│   │   │   ├── emailjs-browser-5.0.3.min.js # EmailJS SDK
-│   │   │   └── LICENSE-emailjs-browser.txt # Its BSD-3-Clause licence
-│   │   │
 │   │   ├── cv.js                     # Entry point of cv/index.html
 │   │   └── main.js                   # Application entry point
 │   │
 │   ├── service-worker.js             # Root-scoped: a worker only controls its own directory
-│   └── styles.css                    # Barrel importing the 23 CSS modules
+│   └── styles.css                    # Barrel importing the 24 CSS modules
 │
 ├── 📦 Assets
 │   └── assets/
@@ -216,8 +214,14 @@ clecart.fr/
 │       │   ├── favicon.ico
 │       │   └── sprite.svg            # Font Awesome Free 7.3.1, 21 UI icons
 │       ├── images/
-│       │   ├── posters/
-│       │   │   └── Konekt.webp       # Poster for the Konekt demo
+│       │   ├── posters/              # A still of each demo, shown before it plays
+│       │   │   ├── AbrisCraft.webp
+│       │   │   ├── BombermanDX.webp
+│       │   │   ├── Groupie-Tracker.webp
+│       │   │   ├── Konekt.webp
+│       │   │   ├── PartiQ.webp
+│       │   │   └── pochet-du-courval-preview.webp
+│       │   ├── profile-300.webp      # Profile photo for slots up to 300 device px
 │       │   └── profile.webp
 │       ├── manifest/
 │       │   └── site.webmanifest
@@ -243,20 +247,23 @@ clecart.fr/
 │   ├── 404.html                      # Page for any missing path
 │   ├── cv/index.html                 # /cv download redirect
 │   ├── robots.txt                    # SEO crawling directives
-│   └── sitemap.xml                   # Structured sitemap
+│   ├── sitemap.xml                   # Structured sitemap
+│   └── .well-known/security.txt      # Where to report a vulnerability (RFC 9116)
 │
 ├── ⚙️ Development Configuration
 │   ├── eslint.config.js              # ESLint flat config, with sonarjs
 │   ├── stylelint.config.mjs          # Stylelint: standard config, no !important
-│   ├── .github/workflows/check.yml   # CI: npm run check on every push
+│   ├── .github/workflows/check.yml   # CI: npm run check on every push to main
+│   ├── .github/dependabot.yml        # Weekly update proposals: npm, actions, Docker
+│   ├── scripts/check-csp.mjs         # CSP hashes match the inline scripts
 │   ├── .prettierrc.json              # Prettier configuration
-│   ├── .prettierignore               # Keeps Prettier out of js/vendor/
 │   ├── .gitignore                    # Git exclusions
 │   └── .agents/AGENTS.md             # Project engineering manifesto
 │
 └── 📚 Documentation and Hosting
     ├── README.md                     # This file
     ├── SECURITY.md                   # Security scope and audit notes
+    ├── _config.yml                   # Lets GitHub Pages publish .well-known/
     └── CNAME                         # Custom domain for GitHub Pages
 ```
 
@@ -308,7 +315,7 @@ needed for the linting and audit tooling below.
 npm start                    # Python development server on :8000
 npm run docker:build         # Build Docker image
 npm run docker:run           # Run local container on :8080
-npm run docker:logs          # Tail container logs
+npm run docker:logs          # Show container logs
 
 # Validation and quality
 npm run check                # Everything below except lint:fix, format and lighthouse; what CI runs
@@ -316,7 +323,8 @@ npm run lint                 # ESLint (flat config with jsdoc and sonarjs; every
 npm run lint:fix             # ESLint with autofix
 npm run lint:css             # Stylelint (standard config, no !important)
 npm run validate             # Nu Html Checker on every page and stylesheet, warnings fail too
-npm run format               # Prettier over js/ (not js/vendor/), css/, styles.css, service-worker.js, the pages, the lint configs
+npm run check:csp            # Every CSP lists the hash of each inline script
+npm run format               # Prettier over js/, css/, styles.css, service-worker.js, scripts/, the pages, the lint configs
 npm run format:check         # Fail if anything is unformatted
 npm run lighthouse           # Lighthouse audit of localhost:8000 (run npm start first)
 
@@ -329,8 +337,11 @@ These are the only scripts defined in `package.json`.
 
 `npm run validate` runs the same Nu Html Checker as
 [validator.w3.org/nu](https://validator.w3.org/nu/), offline, from the `vnu-jar`
-package. Its only filtered message is an _info_ about the `/>` Prettier writes on
-void elements, harmless here since every attribute value is quoted.
+package. Two messages are filtered: an _info_ about the `/>` Prettier writes on
+void elements, harmless here since every attribute value is quoted, and the
+checker's own Content-Security-Policy warnings — it reads the pages from disk,
+where `'self'` matches no `file:` URL and hashes are not computed, so it flags
+every resource. `npm run check:csp` and the browser checks cover the policy.
 
 ### EmailJS identifiers
 
@@ -437,8 +448,7 @@ What the container sends, from `nginx.conf`:
 
 - **Caching:** `no-cache` for HTML, CSS, JS, the web manifest, the captions and the icon sprite —
   none of their URLs carries a version, so each use revalidates and an unchanged file costs a 304;
-  one week (`max-age=604800`) for images, fonts and videos; a year with `immutable` only for
-  `js/vendor/<name>-X.Y.Z.min.js`, whose release is in the file name.
+  one week (`max-age=604800`) for images, fonts and videos.
 - **Types:** `.vtt` as `text/vtt` and `.webmanifest` as `application/manifest+json`, which nginx's
   stock `mime.types` does not know.
 - **Missing paths:** a 404 status with `404.html`. GitHub Pages serves the same file for any missing
@@ -468,9 +478,9 @@ done.
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** nothing is fetched from a third party. The EmailJS SDK is vendored at an exact version (`js/vendor/emailjs-browser-5.0.3.min.js`); the 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
+- **Supply chain:** nothing is fetched from a third party, and no third-party script runs: the contact form calls the EmailJS API with `fetch`. The 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
-- **Strict Content Security Policy** — **container deployment only**, inactive on GitHub Pages
+- **Strict Content Security Policy** in every page, inline script allowed by hash only; the other security headers on the container only
 - **Container Security:** unprivileged nginx (uid 101) serving a site it cannot rewrite
 - **No analytics**, so no tracking to consent to
 - **[CIBLE] TLS grading and OWASP Top 10 conformance:** no SSL Labs test, no OWASP audit and no penetration test has been run against this site. TLS on clecart.fr is GitHub Pages' own configuration, not this repository's.
@@ -480,12 +490,12 @@ done.
 
 Measured on the repository sources (2026-11-03):
 
-- **HTML + CSS + JS:** the four pages, `styles.css` and its 23 imports, `main.js` with the 10 modules it imports, the vendored EmailJS SDK and the service worker — 218 KB uncompressed, 63 KB gzipped file by file
+- **HTML + CSS + JS:** the five pages, `styles.css` and its 24 imports, `main.js` with the 11 modules it imports, and the service worker — 235 KB uncompressed, 69 KB gzipped file by file
 - **Fonts:** three Poppins woff2 files, 23.7 KB in all (woff2 is already compressed), preloaded
 - **Third parties on load:** none. First visit at 375 px scrolled to the bottom, measured in Chrome on 2026-11-02 against a local HTTP/2 server with gzip: 56 requests on the home page and 42 on each other page, every one same-origin — the same counts as before the font and the logos moved in, which had sent 13 of the home page's requests (36.7 KB) and 4 of every other page's (24.8 KB) to Google and jsDelivr.
-- **Profile image:** `profile.webp`, 31 KB (500×500 lossy WebP for a slot of 250 CSS px at most), loaded lazily below the first screen
+- **Profile image:** `profile.webp`, 31 KB (500×500), and `profile-300.webp`, 14 KB, chosen by `srcset` for a slot of 150 to 250 CSS px; loaded lazily below the first screen
 - **Demo videos:** ~5 MB across six 480p files on disk, **0 bytes transferred on load** — measured in Chrome on 2026-11-02 at 1280×800 and under iPhone 13 emulation. On desktop, the visible ones start downloading once the projects section scrolls into view.
-- **CSS delivery:** 24 requests in 2 waves (the barrel, then its 23 imports) — one extra discovery round-trip. Deliberately kept: GitHub Pages serves the repository as committed, with no build step to regenerate a concatenated bundle, so a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
+- **CSS delivery:** 25 requests in 2 waves (the barrel, then its 24 imports) — one extra discovery round-trip. Deliberately kept: GitHub Pages serves the repository as committed, with no build step to regenerate a concatenated bundle, so a committed bundle would drift from its sources at the first oversight. The font preloads leave in the first wave, beside the barrel.
 
 **Lighthouse, lab only (2026-11-03):** Lighthouse 13.6.0 in headless Chrome with its default
 simulated throttling, against `npm start` — Python's server, uncompressed HTTP/1.1, not
@@ -500,8 +510,8 @@ there is no real-user data to quote.
 ### 📱 **Progressive Web App**
 
 - **Installable** on mobile and desktop (standalone display, 192/512 icons: full-bleed for `any`, separate safe-zone PNGs for `maskable`, Contact and Projects shortcuts)
-- **Offline Support:** every page already visited, with its CSS, JS, fonts and images: network-first with the cache as the offline fallback, cache-first images, in-worker SVG placeholder for an image never loaded
-- **[CIBLE] Background Sync and Push Notifications:** not implemented — the Service Worker handles `install`, `activate` and `fetch` only
+- **Offline Support:** every page already visited, with its CSS, JS, fonts and images: network-first with the cache as the offline fallback, stale-while-revalidate images, in-worker SVG placeholder for an image never loaded
+- **[CIBLE] Background Sync and Push Notifications:** not implemented — the Service Worker handles `install`, `activate`, `fetch`, and `message` for the URLs the installing page sends
 
 ## Maintenance
 
@@ -560,7 +570,7 @@ declares `UNLICENSED` and `private` to say the same thing to tooling, and there
 is deliberately no LICENSE file at its root — adding one would grant rights.
 
 The third-party files listed below keep their own licenses; the licence files
-in `assets/fonts/`, `assets/icons/devicon/` and `js/vendor/` are theirs.
+in `assets/fonts/` and `assets/icons/devicon/` are theirs.
 
 ### Technologies Used
 

@@ -16,6 +16,7 @@
 !service-worker.js
 !robots.txt
 !sitemap.xml
+!.well-known
 
 !nginx.conf
 !nginx-security-headers.conf

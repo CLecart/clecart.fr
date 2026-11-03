@@ -1,10 +1,22 @@
 WEBVTT
 
-00:00.000 --> 00:05.000
-AbrisCraft: interactive 3D garden shed configurator preview.
+00:00.000 --> 00:08.000
+AbrisCraft: a 3D garden shed configurator. The width, length and wall height sliders resize the shed, and the material list recounts its parts.
 
-00:05.000 --> 00:10.000
-Customize materials, hardware, and layout in real time.
+00:08.000 --> 00:12.000
+Style tab: the roof type, gable or single pitch, then a double door instead of a single one.
 
-00:10.000 --> 00:15.000
-Built with Next.js, React, TypeScript, Tailwind CSS, and React Three Fiber.
+00:12.000 --> 00:19.000
+Options tab: four windows, then gutters; the list gains the openings and the drainage parts.
+
+00:19.000 --> 00:22.000
+The exploded view pulls the floor, walls, roof and door apart.
+
+00:22.000 --> 00:25.000
+Hardware tab: screws, nails, brackets and door fittings, each with its quantity.
+
+00:25.000 --> 00:28.000
+A 3.5 × 45 mm wood screw opens on its product sheet: diameter, length, head, material and weight.
+
+00:28.000 --> 00:31.560
+The shed assembles again and the camera moves in close on the roof and the door.

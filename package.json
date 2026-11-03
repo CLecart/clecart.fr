@@ -12,8 +12,11 @@
     "lighthouse": "npx lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
     "lint": "eslint js service-worker.js",
     "lint:fix": "eslint js service-worker.js --fix",
-    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js eslint.config.js",
-    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js eslint.config.js",
+    "lint:css": "stylelint \"**/*.css\"",
+    "validate": "vnu --Werror --filterpattern \".*Trailing slash on void elements.*\" --skip-non-html *.html cv/index.html && vnu --Werror --also-check-css --skip-non-css styles.css css",
+    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js \"*.html\" cv/index.html eslint.config.js stylelint.config.mjs",
+    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js \"*.html\" cv/index.html eslint.config.js stylelint.config.mjs",
+    "check": "npm run lint && npm run lint:css && npm run format:check && npm run validate && npm audit",
     "deploy": "./deploy.sh"
   },
   "repository": {
@@ -41,11 +44,18 @@
     "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
     "eslint-plugin-jsdoc": "^65.4.2",
+    "eslint-plugin-sonarjs": "^4.2.2",
     "globals": "^17.14.0",
     "prettier": "^3.9.10",
-    "puppeteer": "^25.16.0"
+    "puppeteer": "^25.16.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0",
+    "vnu-jar": "^26.10.12"
   },
   "engines": {
     "node": "^22.22.2 || >=24.15.0"
+  },
+  "overrides": {
+    "minimatch": "^11.0.4"
   }
 }

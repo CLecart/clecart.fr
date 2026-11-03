@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import globals from "globals";
 import jsdoc from "eslint-plugin-jsdoc";
+import sonarjs from "eslint-plugin-sonarjs";
 
 export default [
   {
@@ -8,6 +9,15 @@ export default [
   },
 
   js.configs.recommended,
+
+  {
+    files: ["js/**/*.js", "service-worker.js"],
+    ...sonarjs.configs.recommended,
+    rules: {
+      ...sonarjs.configs.recommended.rules,
+      "sonarjs/cognitive-complexity": ["error", 15],
+    },
+  },
 
   {
     files: ["js/**/*.js"],

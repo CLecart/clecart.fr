@@ -20,7 +20,7 @@
   display: block;
 }
 
-/* Fixed header pages compensation */
+/* Every page but the home page opens below the fixed header. */
 body:not(.homepage) .description {
   margin-top: calc(var(--header-height) + 40px);
 }

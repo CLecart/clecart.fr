@@ -21,5 +21,5 @@
 @import url("./css/sections/privacy.css");
 @import url("./css/sections/portfolio-details.css");
 
-/* Theme imports - always last to override styles if necessary */
+/* Last, so the dark theme follows every rule it restyles. */
 @import url("./css/theme/darkmode.css");

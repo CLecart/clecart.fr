@@ -22,9 +22,10 @@ const CACHE_NAME = "portfolio-cache-v5";
 const PASS_THROUGH = new Set(["video", "audio", "track"]);
 
 /**
- * Builds the placeholder served when an image cannot be fetched offline
+ * Build the placeholder served when an image cannot be fetched offline
+ * @function offlineImageResponse
  * @description Generated in-worker rather than fetched from disk: a cached
- * asset that goes missing turns the fallback itself into a failed request
+ * asset that goes missing turns the fallback itself into a failed request.
  * @returns {Response} An inline SVG placeholder
  */
 function offlineImageResponse() {
@@ -45,6 +46,7 @@ function offlineImageResponse() {
 
 /**
  * Keep a copy of a response that can serve the same request again
+ * @function store
  * @description Only a complete 200: an error page or a 206 range must never
  * stand in for the resource later.
  * @param {Request|string} request - What was asked for
@@ -120,6 +122,7 @@ globalThis.addEventListener("fetch", (event) => {
 
 /**
  * Serve from the network whenever it answers, from the cache only offline
+ * @function networkFirst
  * @description Pages, CSS, JS, fonts and the icon sprite change with every
  * deployment, and nothing here fingerprints their URLs — no build step, no
  * content hash. Served cache-first they would pin a visitor to the version
@@ -148,6 +151,7 @@ async function networkFirst(event) {
 
 /**
  * Serve an image from the cache first, else the network, else a placeholder
+ * @function cacheFirst
  * @param {FetchEvent} event - Image request
  * @returns {Promise<Response>} Response from cache, network or fallback
  */

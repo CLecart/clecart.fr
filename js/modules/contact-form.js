@@ -46,7 +46,9 @@ export function initContactForm() {
 
 /**
  * Swap the form's fields for a mailto link, so a refusal is never a dead end
+ * @function renderContactAlternative
  * @param {HTMLElement} form - Form element
+ * @returns {void}
  */
 function renderContactAlternative(form) {
   form.innerHTML = `
@@ -77,8 +79,10 @@ function showStatus(statusElement, state, message) {
 
 /**
  * Gate each submission on consent and validation, then hand it to EmailJS
+ * @function setupFormSubmissionHandling
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
+ * @returns {void}
  */
 function setupFormSubmissionHandling(form, statusElement) {
   form.addEventListener("submit", async function (event) {
@@ -242,11 +246,13 @@ function sendMessage(formData) {
 
 /**
  * Lock the form and show a status; only the submit handler's finally unlocks it
+ * @function setFormState
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} button - Submit button
  * @param {HTMLElement} statusElement - Status element
- * @param {string} state - State name
- * @param {string} message - Status message
+ * @param {string} state - "success", "error", "sending" or "info"
+ * @param {string} message - Markup to display
+ * @returns {void}
  */
 function setFormState(form, button, statusElement, state, message) {
   form.classList.add("sending");

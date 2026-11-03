@@ -36,8 +36,10 @@ function observeVideoVisibility(video) {
 
 /**
  * On mobile, keep videos paused until tapped, and let a tap toggle playback
- * @param {HTMLVideoElement} video - Video element to setup
+ * @function setupTouchInteractions
+ * @param {HTMLVideoElement} video - Video element to set up
  * @param {boolean} isMobile - Whether the device is mobile
+ * @returns {void}
  */
 function setupTouchInteractions(video, isMobile) {
   if (!isMobile) {

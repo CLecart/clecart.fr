@@ -54,7 +54,9 @@
   background-color: var(--input-focus-bg);
 }
 
-/* Stable variant used by the contact window to avoid extension icon visual conflicts. */
+/* The contact form keeps its fields still: browser extensions such as
+   password managers draw icons over them, and a field that lifts on focus
+   leaves its icon behind. Only the colours transition. */
 .contact-form-stable .form-group input,
 .contact-form-stable .form-group textarea {
   transition:

@@ -17,7 +17,9 @@ import { registerServiceWorker } from "./utils/sw-register.js";
 
 /**
  * Collapse the project grid to whole rows behind a View More toggle
+ * @function initViewMoreProjects
  * @description While collapsed, the visible count is recomputed on resize; an expanded grid is left alone.
+ * @returns {void}
  */
 function initViewMoreProjects() {
   const btn = document.getElementById("view-more-btn");

@@ -1,0 +1,17 @@
+/* The first tab stop on every page: clipped to nothing until focused, it then
+   shows at the top left and jumps past the header to the main content. */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  padding: 12px 20px;
+  background-color: var(--dark);
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:not(:focus) {
+  clip-path: inset(50%);
+}

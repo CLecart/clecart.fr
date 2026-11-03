@@ -11,6 +11,7 @@
 @import "./css/components/gdpr.css";
 @import "./css/components/dark-mode-toggle.css";
 @import "./css/components/notifications.css";
+@import "./css/components/skip-link.css";
 
 @import "./css/layout/header.css";
 @import "./css/layout/footer.css";

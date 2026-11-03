@@ -37,7 +37,7 @@ export function scrollToSection(targetId) {
 /**
  * Wire the burger menu, its dismissal paths, and anchor scrolling
  * @function initNavigation
- * @description Only the active class and aria-expanded change here. header.css owns every state of the menu, its slide included, and holds visibility back with a transition delay until the slide-out has played, so a closed menu leaves the accessibility tree without a timer copying the CSS duration. Project tabs are left to project-navigation.js: they switch the project shown in place, and scrolling to their target would move the page under the visitor.
+ * @description Only the active class and aria-expanded change here. header.css owns every state of the menu, its slide included, and holds visibility back with a transition delay until the slide-out has played, so a closed menu leaves the accessibility tree without a timer copying the CSS duration. Project tabs are left to project-navigation.js: they switch the project shown in place, and scrolling to their target would move the page under the visitor. The skip link keeps the native jump: only a real fragment navigation moves keyboard focus into <main>, and this scroll would leave it on the link.
  * @returns {void}
  */
 export function initNavigation() {
@@ -82,7 +82,9 @@ export function initNavigation() {
   });
 
   document
-    .querySelectorAll('a[href^="#"]:not([href="#"]):not(.nav-btn)')
+    .querySelectorAll(
+      'a[href^="#"]:not([href="#"]):not(.nav-btn):not(.skip-link)'
+    )
     .forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();

@@ -34,8 +34,8 @@ function buildBanner() {
         <a href="/privacy-policy.html">privacy policy</a>.
       </p>
       <div class="gdpr-buttons">
-        <button id="gdpr-accept" class="btn">Accept</button>
-        <button id="gdpr-decline" class="btn btn-secondary">Decline</button>
+        <button type="button" id="gdpr-accept" class="btn">Accept</button>
+        <button type="button" id="gdpr-decline" class="btn btn-secondary">Decline</button>
       </div>
     </div>
   `;

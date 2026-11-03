@@ -135,13 +135,6 @@
 
     <link
       rel="preload"
-      href="assets/images/profile.webp"
-      as="image"
-      fetchpriority="high"
-    />
-
-    <link
-      rel="preload"
       href="assets/fonts/poppins-latin-400.woff2"
       as="font"
       type="font/woff2"
@@ -201,11 +194,16 @@
             </ul>
           </nav>
           <div class="header-buttons">
-            <button class="dark-mode-toggle" aria-label="Dark mode">
+            <button
+              type="button"
+              class="dark-mode-toggle"
+              aria-label="Dark mode"
+            >
               <span class="moon-icon">🌙</span>
             </button>
           </div>
           <button
+            type="button"
             class="nav-toggle"
             aria-label="Navigation menu"
             aria-expanded="false"
@@ -254,7 +252,7 @@
                 loading="lazy"
               />
             </div>
-            <div class="about-text slide-left">
+            <div class="slide-left">
               <p>
                 Starting my career as an Electro-Mechanical Compliance Expert, I
                 developed strict rigor and a strong culture of quality. I later
@@ -299,6 +297,8 @@
                 <img
                   src="assets/icons/devicon/go-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -322,6 +322,8 @@
                 <img
                   src="assets/icons/devicon/python-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -332,6 +334,8 @@
                 <img
                   src="assets/icons/devicon/java-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -342,6 +346,8 @@
                 <img
                   src="assets/icons/devicon/javascript-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -352,6 +358,8 @@
                 <img
                   src="assets/icons/devicon/html5-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -362,6 +370,8 @@
                 <img
                   src="assets/icons/devicon/css3-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -372,6 +382,8 @@
                 <img
                   src="assets/icons/devicon/sqlite-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -382,6 +394,8 @@
                 <img
                   src="assets/icons/devicon/docker-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -392,6 +406,8 @@
                 <img
                   src="assets/icons/devicon/git-original.svg"
                   alt=""
+                  width="40"
+                  height="40"
                   loading="lazy"
                 />
               </div>
@@ -719,7 +735,6 @@
             <div class="project-card card-base fade-in project-card-hidden">
               <div class="project-thumb">
                 <video
-                  class="project-video"
                   controls
                   autoplay
                   muted
@@ -886,7 +901,7 @@
             </div>
           </div>
           <div class="projects-footer">
-            <button id="view-more-btn" class="btn btn-secondary">
+            <button type="button" id="view-more-btn" class="btn btn-secondary">
               View More Projects
             </button>
           </div>

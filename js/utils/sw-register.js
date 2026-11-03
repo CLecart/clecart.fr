@@ -73,7 +73,7 @@ function showUpdateNotification() {
   notification.className = "app-update-notification";
   notification.innerHTML = `
     <p>New version available!</p>
-    <button id="update-app">Update</button>
+    <button type="button" id="update-app">Update</button>
   `;
   document.body.appendChild(notification);
 

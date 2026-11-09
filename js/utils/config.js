@@ -12,11 +12,10 @@ export const EMAILJS = {
 
 /**
  * Google reCAPTCHA v2, the one check EmailJS itself verifies before sending.
- * The site key is public by design; its secret lives in the EmailJS template
- * settings. Google's test key always passes and its widget says so: it is
- * here until the site's own key replaces it.
+ * The site key is public by design and valid on clecart.fr only; its secret
+ * lives in the EmailJS template settings.
  */
 export const RECAPTCHA = {
   script: "https://www.google.com/recaptcha/api.js?render=explicit&hl=en",
-  siteKey: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+  siteKey: "6LdJwxcuAAAAAOrveI6i6zE_AMtLFqqpbM_IXhpj",
 };

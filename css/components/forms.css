@@ -161,6 +161,12 @@
   text-decoration: underline;
 }
 
+/* The mention stays plain: its links keep their underline and drop the
+   site's coral hover line, which drew a second rule under small text. */
+.form-captcha-note a::after {
+  display: none;
+}
+
 /* On a phone the mention wraps under the button: aligned with it, not with
    the card's far edge. */
 @media (max-width: 480px) {

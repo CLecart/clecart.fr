@@ -137,10 +137,13 @@
   line-height: 1.125;
 }
 
-/* Sent: the button turns green; its label says so too, so colour is never
-   the only sign. White on this green measures 5.7:1. */
+/* Sent: the button takes the success message's own colours, its label saying
+   so too, so colour is never the only sign. The border is an inset shadow,
+   which adds no size: the button does not move. */
 .form-actions .btn.sent {
-  background: var(--success);
+  background: var(--status-success-bg);
+  color: var(--status-success-color);
+  box-shadow: inset 0 0 0 1px var(--status-success-border);
 }
 
 .form-captcha-note {

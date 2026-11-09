@@ -169,7 +169,9 @@
   --icon-size-small: 0.9rem;
   --icon-size-medium: 1.5rem;
   --icon-size-large: 2.5rem;
-  --success: #2b742f;
+  --status-success-bg: rgba(76, 175, 80, 0.15);
+  --status-success-color: #2b742f;
+  --status-success-border: rgba(76, 175, 80, 0.3);
   --status-error-bg: rgba(244, 67, 54, 0.15);
   --status-error-color: #ba2727;
   --status-error-border: rgba(244, 67, 54, 0.3);
@@ -193,6 +195,7 @@
    (card icons, hover glows) are computed there, and must follow it too. */
 .dark-mode {
   --primary: #9c96ff;
+  --status-success-color: #4dbd52;
   --status-error-color: #e58585;
   --status-info-color: #25b1fd;
 }

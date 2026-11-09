@@ -87,7 +87,7 @@ function showStatus(statusElement, state, message) {
 /**
  * Gate each submission on consent, validation and the reCAPTCHA, then hand it to EmailJS
  * @function setupFormSubmissionHandling
- * @description "Sending…" shows on the button at the click, before the reCAPTCHA check, which can take seconds while Google loads or a challenge is solved. A submission the trap marks as automated still gets the usual success and no send, without any reCAPTCHA: the script learns nothing to adapt to. Success shows on the button too, in green, so nothing on the page moves; it stays until the visitor writes again, never on a timer.
+ * @description "Sending…" shows on the button at the click, before the reCAPTCHA check, which can take seconds while Google loads or a challenge is solved. A submission the trap marks as automated still gets the usual success and no send, without any reCAPTCHA: the script learns nothing to adapt to. Success shows on the button too, in the success message's green, so nothing on the page moves; the button turns back after a few seconds, or at once when the visitor writes again, while the status line has already announced it to screen readers.
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
  * @param {HTMLElement} captchaBox - Container of the reCAPTCHA badge
@@ -97,12 +97,15 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
   const submitButton = form.querySelector('button[type="submit"]');
   const label = submitButton?.textContent.trim() ?? "";
 
-  form.addEventListener("input", () => {
+  let sentTimer;
+  const clearSent = () => {
+    clearTimeout(sentTimer);
     if (submitButton?.textContent === SENT_LABEL) {
       showOnButton(submitButton, label);
       submitButton.classList.remove("sent");
     }
-  });
+  };
+  form.addEventListener("input", clearSent);
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -137,8 +140,8 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
       "sending",
       "Sending your message..."
     );
+    clearSent();
     showOnButton(submitButton, "Sending…");
-    submitButton?.classList.remove("sent");
 
     try {
       if (!automated) {
@@ -155,6 +158,7 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
       );
       showOnButton(submitButton, SENT_LABEL);
       submitButton?.classList.add("sent");
+      sentTimer = setTimeout(clearSent, SENT_SHOWN_MS);
       form.reset();
     } catch (error) {
       console.error("Sending error:", error);
@@ -278,6 +282,9 @@ async function sendMessage(formData, token) {
 }
 
 const SENT_LABEL = "Message sent ✓";
+/* Long enough to read two words at leisure; the status line announced the
+   success to screen readers the moment it happened. */
+const SENT_SHOWN_MS = 6000;
 
 /**
  * Write the sending state on the submit button

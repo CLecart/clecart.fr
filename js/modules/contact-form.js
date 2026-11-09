@@ -5,6 +5,7 @@
 
 import { EMAILJS } from "../utils/config.js";
 import { getConsentStatus } from "../utils/gdpr.js";
+import { captchaToken, loadCaptcha, resetCaptcha } from "./captcha.js";
 
 /**
  * Wire the contact form, or replace it with a mailto notice after a refusal
@@ -36,7 +37,16 @@ export function initContactForm() {
     }
   });
 
-  setupFormSubmissionHandling(contactForm, formStatus);
+  /* The first field a visitor enters, once the banner is accepted, loads the
+     checkbox: by the time the message is written it is there. */
+  const captchaBox = contactForm.querySelector(".form-captcha");
+  contactForm.addEventListener("focusin", () => {
+    if (captchaBox && getConsentStatus() === "accepted") {
+      loadCaptcha(captchaBox).catch((error) => console.warn(error));
+    }
+  });
+
+  setupFormSubmissionHandling(contactForm, formStatus, captchaBox);
 }
 
 /**
@@ -57,7 +67,7 @@ function renderContactAlternative(form) {
 /**
  * Write the form's status line, the one place that does
  * @function showStatus
- * @description The state class alone shows or hides the line: forms.css displays .form-status only with a state, so an empty state collapses it and leaves no gap in the form layout. Messages are this module's own constants, some carrying a mailto link, never visitor input.
+ * @description The state class alone draws the line: forms.css gives .form-status its box only with a state, so an empty state leaves an empty, boxless live region and no gap in the form layout. Messages are this module's own constants, some carrying a mailto link, never visitor input.
  * @param {HTMLElement} statusElement - Status container; a missing element makes this a no-op
  * @param {string} state - "success", "error", "sending" or "info"; empty to hide the line
  * @param {string} message - Markup to display
@@ -73,13 +83,15 @@ function showStatus(statusElement, state, message) {
 }
 
 /**
- * Gate each submission on consent and validation, then hand it to EmailJS
+ * Gate each submission on consent, validation and the reCAPTCHA, then hand it to EmailJS
  * @function setupFormSubmissionHandling
+ * @description A submission the trap marks as automated still gets the usual success and no send, before any CAPTCHA is asked: the script learns nothing to adapt to.
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
+ * @param {HTMLElement} captchaBox - Container of the reCAPTCHA checkbox
  * @returns {void}
  */
-function setupFormSubmissionHandling(form, statusElement) {
+function setupFormSubmissionHandling(form, statusElement, captchaBox) {
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -105,6 +117,14 @@ function setupFormSubmissionHandling(form, statusElement) {
       return;
     }
 
+    const automated = isAutomatedSubmission(formData);
+    const token = automated
+      ? ""
+      : await requireCaptcha(captchaBox, statusElement);
+    if (token === null) {
+      return;
+    }
+
     const submitButton = form.querySelector('button[type="submit"]');
     setFormState(
       form,
@@ -115,8 +135,8 @@ function setupFormSubmissionHandling(form, statusElement) {
     );
 
     try {
-      if (!isAutomatedSubmission(formData)) {
-        await sendMessage(formData);
+      if (!automated) {
+        await sendMessage(formData, token);
       }
 
       setFormState(
@@ -137,6 +157,7 @@ function setupFormSubmissionHandling(form, statusElement) {
         `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
       );
     } finally {
+      resetCaptcha();
       setTimeout(() => {
         form.classList.remove("sending");
         if (submitButton) {
@@ -145,6 +166,40 @@ function setupFormSubmissionHandling(form, statusElement) {
       }, 3000);
     }
   });
+}
+
+/**
+ * Return the ticked reCAPTCHA's token, or say what is missing
+ * @function requireCaptcha
+ * @description A box not yet drawn is loaded here too, for a visitor who reached the button without entering a field. When Google's script cannot load at all, blocked by an extension or a network, the mailto route is offered rather than a dead end.
+ * @param {HTMLElement} container - Container of the reCAPTCHA checkbox
+ * @param {HTMLElement} statusElement - Status display element
+ * @returns {Promise<string|null>} The token, or null once the visitor has been told what to do
+ */
+async function requireCaptcha(container, statusElement) {
+  const token = captchaToken();
+  if (token) {
+    return token;
+  }
+
+  try {
+    await loadCaptcha(container);
+  } catch (error) {
+    console.warn(error);
+    showStatus(
+      statusElement,
+      "error",
+      'The anti-spam check could not load. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
+    );
+    return null;
+  }
+
+  showStatus(
+    statusElement,
+    "info",
+    "Please tick “I'm not a robot” above the button, then send your message."
+  );
+  return null;
 }
 
 /**
@@ -212,9 +267,10 @@ function isAutomatedSubmission(formData) {
  * @function sendMessage
  * @description A plain fetch to the endpoint EmailJS's own SDK calls, with the body it sends. The SDK is not used: it read localStorage while loading, so a browser that blocks site data broke it before any message could leave. The keys of template_params are the live EmailJS template's contract, not this form's, which is why the name and the address each go out twice. Rename or drop one only together with the template.
  * @param {FormData} formData - Submitted form values, already validated
+ * @param {string} token - Solved reCAPTCHA token, which EmailJS verifies with Google before sending
  * @returns {Promise<void>} Resolves once EmailJS has accepted the message; rejects with its status and reply otherwise
  */
-async function sendMessage(formData) {
+async function sendMessage(formData, token) {
   const senderName = readTextField(formData, "name");
   const senderEmail = readTextField(formData, "email");
 
@@ -232,6 +288,7 @@ async function sendMessage(formData) {
         user_email: senderEmail,
         message: readTextField(formData, "message"),
         to_name: "Christophe",
+        "g-recaptcha-response": token,
       },
     }),
   });

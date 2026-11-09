@@ -131,8 +131,10 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      à une version exacte** puis signé (`integrity` + `crossorigin="anonymous"`).
      Le pin précède toujours la signature : signer une plage flottante (`@3`)
      casse le site au premier patch amont.
-   - **Aujourd'hui, aucune ressource ni aucun script tiers** (mesuré, Chrome,
-     2026-11-03) : police, icônes et logos sont servis par le site, épinglés ;
+   - **Au chargement, aucune ressource ni aucun script tiers** (mesuré,
+     Chrome, 2026-11-09) ; seule exception, Google reCAPTCHA, au premier clic
+     dans un champ du formulaire. Police, icônes et logos sont servis par le
+     site, épinglés ;
      le formulaire appelle l'API EmailJS par `fetch`, sans SDK, et
      `api.emailjs.com` n'est contacté qu'à l'envoi. En réintroduire une, c'est
      aussi l'ajouter à `privacy-policy.html` et à la CSP.
@@ -157,15 +159,17 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      domaines qui y figurent sont **inertes**. reCAPTCHA v2, vérifié côté
      EmailJS, rendrait la clé inutilisable et serait gratuit, mais livrerait à
      Google une donnée sur chaque visiteur d'un site qui affirme ne rien
-     partager avec des tiers. À activer si le quota grimpe sans raison, pas
-     avant.
+     partager avec des tiers. **Activé le 2026-11-09** sur décision de
+     Christophe, l'hameçonnage passant le piège : chargé au premier clic dans
+     un champ, après acceptation de la bannière, jamais au chargement.
    - **Le piège du formulaire filtre la page, pas la clé.** Un navigateur
      automatisé (`navigator.webdriver`) ou le champ hors écran `website` rempli
      reçoit le succès habituel, et rien ne part. Mesuré (Chrome, 2026-11-02) :
      un Puppeteer par défaut envoyait avant, plus après ; un envoi humain passe
      toujours. Un script qui appelle l'API EmailJS directement ne le traverse
-     pas : si le spam continue malgré le piège, c'est ce chemin, et reCAPTCHA
-     redevient la question. Le champ caché n'est pas du code mort.
+     pas : c'est ce chemin que reCAPTCHA ferme. Un envoi que le piège juge
+     automatisé reçoit le succès factice **avant** toute case à cocher. Le
+     champ caché n'est pas du code mort.
    - **Un vrai secret n'a pas sa place ici** et impliquerait d'abord un serveur.
    - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité : une
      signature SRI qui casse le formulaire de contact est un échec, pas une

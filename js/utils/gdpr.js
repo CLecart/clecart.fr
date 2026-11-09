@@ -29,8 +29,8 @@ function buildBanner() {
   banner.innerHTML = `
     <div class="gdpr-content">
       <p>
-        Accepting lets the contact form send your message through EmailJS.
-        Until then, the form sends nothing. Details in the
+        Accepting lets the contact form send your message through EmailJS,
+        after a Google reCAPTCHA check. Until then, the form sends nothing. Details in the
         <a href="/privacy-policy.html">privacy policy</a>.
       </p>
       <div class="gdpr-buttons">

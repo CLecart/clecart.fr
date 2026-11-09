@@ -15,9 +15,11 @@ balise `<meta>` ne peut pas porter.
 
 Ce qui protège réellement le site public :
 
-- l'absence de toute ressource et de tout script tiers : police, icônes et
-  logos sont servis par le site lui-même, à des versions épinglées, et le
-  formulaire appelle l'API EmailJS par `fetch`, sans son SDK ;
+- l'absence de toute ressource tierce au chargement : police, icônes et logos
+  sont servis par le site lui-même, à des versions épinglées, et le formulaire
+  appelle l'API EmailJS par `fetch`, sans son SDK ; le seul script tiers,
+  Google reCAPTCHA, ne se charge qu'au premier clic dans un champ du
+  formulaire, après acceptation de la bannière ;
 - la CSP de chaque page, qui n'autorise que l'origine du site, le seul script
   inline par son empreinte, et `api.emailjs.com` pour l'envoi ;
 - l'absence de toute valeur saisie par un visiteur réinjectée dans le DOM ;
@@ -25,7 +27,12 @@ Ce qui protège réellement le site public :
 
 ## Chaîne d'approvisionnement
 
-- **Aucun script tiers ne s'exécute.** Le formulaire envoie par `fetch`, vers
+- **Un seul script tiers, et pas au chargement : Google reCAPTCHA v2**
+  (`js/modules/captcha.js`), chargé au premier clic dans un champ du formulaire
+  par un visiteur qui a accepté la bannière. La CSP de l'accueil autorise ses
+  seuls chemins (`www.google.com/recaptcha/`, `www.gstatic.com/recaptcha/`,
+  `recaptcha.google.com/recaptcha/`), celle des autres pages aucun.
+- Le formulaire envoie par `fetch`, vers
   l'API REST d'EmailJS, la requête que le SDK EmailJS enverrait. Le SDK a été
   retiré le 2026-11-03 : il lisait `localStorage` dès son chargement et
   plantait quand le navigateur bloque les données de site, ce qui rendait le
@@ -96,10 +103,13 @@ gratuit, donc les domaines qui y figurent sont **inertes**.
   appel direct portant les en-têtes `Origin` et `User-Agent` d'un navigateur est
   passé (mesuré le 2026-11-02).
 - **La seule vérification côté serveur du plan gratuit est reCAPTCHA v2**,
-  contrôlé par EmailJS. Elle rendrait la clé inutilisable hors de la page, mais
-  livrerait à Google une donnée sur chaque visiteur d'un site qui affirme ne
-  rien partager avec des tiers. **Décision documentée dans `.agents/AGENTS.md`**
-  : ne l'activer que si le quota grimpe sans raison malgré le piège.
+  contrôlée par EmailJS : un message sans jeton résolu est refusé, qu'il vienne
+  de la page ou d'un appel direct. **Activée le 2026-11-09** (décision de
+  Christophe), la campagne d'hameçonnage ayant continué malgré le piège. Pour
+  ne pas livrer à Google chaque visiteur, la case ne se charge qu'au premier
+  clic dans un champ, après acceptation de la bannière. La clé secrète vit dans
+  les réglages du template EmailJS ; la clé de site, publique, dans
+  `js/utils/config.js`.
 
 ## Content Security Policy — chaque page, et le conteneur
 

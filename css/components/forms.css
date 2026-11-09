@@ -116,6 +116,20 @@
   transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
+/* Google draws the checkbox here once a visitor starts writing; empty until
+   then, it takes no room. */
+.form-captcha:not(:empty) {
+  margin-bottom: 20px;
+}
+
+/* Google's frame is a light document even when it draws the dark widget.
+   Under the dark theme's color-scheme the browser would back it with an
+   opaque white canvas, a white rim around the dark box: matching its scheme
+   keeps the frame transparent. */
+.form-captcha iframe {
+  color-scheme: light;
+}
+
 /* Without JavaScript the form could only reload the page: the mailto line
    takes its place. */
 .contact-no-js,

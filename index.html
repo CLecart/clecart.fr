@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'sha256-w7cn94Y+/0Pp7IFYZNHIQ4PPivuVZGKRrnULb1rAOS8='; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+      content="default-src 'self'; script-src 'self' 'sha256-w7cn94Y+/0Pp7IFYZNHIQ4PPivuVZGKRrnULb1rAOS8=' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; connect-src 'self' https://api.emailjs.com https://www.google.com/recaptcha/; object-src 'none'; base-uri 'self'; form-action 'self'"
     />
 
     <script>
@@ -1053,6 +1053,7 @@
                     autocomplete="off"
                   />
                 </div>
+                <div class="form-captcha"></div>
                 <button type="submit" class="btn">Send Message</button>
                 <output class="form-status"></output>
               </form>

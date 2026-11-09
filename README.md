@@ -36,7 +36,7 @@ It is deliberately a **static site with no framework, no bundler, no build step 
 - **CSS Architecture:** SMACSS-inspired folders (`base` / `components` / `layout` / `sections` / `theme` / `utils`), assembled by `styles.css`, a barrel of 24 `@import`
 - **PWA:** Web App Manifest (standalone display, maskable icons, app shortcuts) and a Service Worker that keeps what passes through it, with per-destination cache strategies and no precache list
 - **Performance:** font preloads, a WebP profile photo in two sizes, demo videos paused offscreen and not loaded on phones until played
-- **Security:** No third-party resource — font, icons and logos are served by the site itself, at pinned versions, and the contact form calls the EmailJS API without its SDK — no backend, a Content-Security-Policy in every page, security headers on the container deployment
+- **Security:** No third-party resource on load — font, icons and logos are served by the site itself, at pinned versions; the contact form calls the EmailJS API without its SDK, and loads Google reCAPTCHA only once a visitor who accepted the banner starts writing — no backend, a Content-Security-Policy in every page, security headers on the container deployment
 
 ### 🏗️ **DevOps and Infrastructure**
 
@@ -85,7 +85,7 @@ no server-side code at all.
 ### 🛡️ **Security and Compliance**
 
 - **No backend, no database, no server-side session:** nothing the site owns processes a request, so there is no SQL injection surface and no server-side state to steal. Anything the page can read, a visitor can read — which is why no real secret lives here.
-- **No third-party resource:** the font, the UI icons and the skill logos are served by the site itself. The contact form posts to the EmailJS REST API with `fetch`, the same request EmailJS's SDK makes, so no third-party script runs in the page at all. Measured in Chrome on 2026-11-03: none of the five pages contacts any host but its own on load; `api.emailjs.com` is contacted only when the form is sent.
+- **No third-party resource on load:** the font, the UI icons and the skill logos are served by the site itself. The contact form posts to the EmailJS REST API with `fetch`, the same request EmailJS's SDK makes. Google reCAPTCHA, the anti-spam checkbox, is the only third-party script, and it loads only once a visitor who accepted the banner clicks into a field of the form. Measured in Chrome on 2026-11-09: no page contacts any host but its own on load; Google is contacted only on that first click, `api.emailjs.com` only when the form is sent.
 - **Content Security Policy:** every page carries one in a `<meta>` tag, so it applies on clecart.fr too: same-origin resources only, the one inline script allowed by its hash, EmailJS as the only other host the page may call. `npm run check:csp` fails if an inline script and its hash drift apart. The other security headers (`nginx-security-headers.conf`) exist only on the container: GitHub Pages cannot send custom headers — full scope in [SECURITY.md](./SECURITY.md).
 - **GDPR:** a single accept/decline banner (`js/utils/gdpr.js`), stored in `localStorage` rather than cookies. Declining is one click, is remembered, and disables the contact form.
 - **No analytics:** the site measures nothing about a visit. The usage buffer an earlier version kept in `localStorage`, consent-gated and never sent anywhere, is erased on the visitor's next visit.
@@ -164,6 +164,7 @@ clecart.fr/
 │   ├── js/                           # Modular JavaScript architecture
 │   │   ├── modules/                  # Business features
 │   │   │   ├── animations.js         # Intersection Observer, transitions
+│   │   │   ├── captcha.js            # Google reCAPTCHA, loaded on the form's first field
 │   │   │   ├── contact-form.js       # Validation, EmailJS integration
 │   │   │   ├── darkmode.js           # System-aware adaptive theme
 │   │   │   ├── navigation.js         # Responsive menu, smooth scroll
@@ -361,16 +362,18 @@ readable, no third party is reachable.
 EmailJS's domain allowlist would filter by origin, but it is a paid feature and
 this account is on the free plan: the domains listed there are inert. reCAPTCHA
 v2, which EmailJS verifies server-side, would neutralise the key outright and is
-free — deliberately not enabled, since it would hand Google a data point on
-every visitor of a site that claims to share nothing with third parties. That
-trade is not worth making at the current volume.
+free. It was held back while it would have handed Google a data point on
+every visitor; it is enabled since 2026-11-09, when the phishing campaign kept
+coming past the trap, and it loads only when a visitor who accepted the banner
+clicks into a field of the form — Google never sees the others.
 
 The page itself turns away scripted submissions: a browser under automation
 (`navigator.webdriver`) or a filled-in off-screen trap field gets the usual
 success message, and nothing is sent. That guards the form, not the key — a
 script calling the EmailJS API directly with the public identifiers never runs
-it. Spam that keeps arriving with the trap in place takes that path, and
-reCAPTCHA is the only check the free plan offers against it.
+it. Spam that keeps arriving with the trap in place takes that path, which
+reCAPTCHA closes: EmailJS refuses any message without a solved token, page or
+no page (`js/modules/captcha.js`).
 
 A real secret would not belong here at all: with no backend, anything the page
 can read, a visitor can read.
@@ -478,7 +481,7 @@ done.
 ### 🛡️ **Security**
 
 - **No backend, no database, no uploads** — the attack surface is the front-end supply chain and DOM injection, not a server
-- **Supply chain:** nothing is fetched from a third party, and no third-party script runs: the contact form calls the EmailJS API with `fetch`. The 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
+- **Supply chain:** nothing is fetched from a third party on load. The contact form calls the EmailJS API with `fetch`; the one third-party script, Google reCAPTCHA, loads only when a visitor who accepted the banner starts writing a message, and the home page's CSP allows Google's reCAPTCHA paths and nothing else of Google's. The 21 Font Awesome Free 7.3.1 icons the pages draw are copied into `assets/icons/sprite.svg`; Poppins is in `assets/fonts/` (the files Google Fonts served, sha256-checked); the nine skill logos are devicon 2.18.0, in `assets/icons/devicon/`. Each carries its licence: in the sprite's header comment for Font Awesome, in a file beside the others.
 - **DOM injection:** no user-submitted value is ever interpolated into the DOM — the contact form's status and validation messages are fixed, developer-authored strings
 - **Strict Content Security Policy** in every page, inline script allowed by hash only; the other security headers on the container only
 - **Container Security:** unprivileged nginx (uid 101) serving a site it cannot rewrite
@@ -488,9 +491,9 @@ done.
 
 ### ⚡ **Performance**
 
-Measured on the repository sources (2026-11-03):
+Measured on the repository sources (2026-11-09):
 
-- **HTML + CSS + JS:** the five pages, `styles.css` and its 24 imports, `main.js` with the 11 modules it imports, and the service worker — 235 KB uncompressed, 69 KB gzipped file by file
+- **HTML + CSS + JS:** the five pages, `styles.css` and its 24 imports, `main.js` with the 12 modules it imports, and the service worker — 242 KB uncompressed, 71 KB gzipped file by file
 - **Fonts:** three Poppins woff2 files, 23.7 KB in all (woff2 is already compressed), preloaded
 - **Third parties on load:** none. First visit at 375 px scrolled to the bottom, measured in Chrome on 2026-11-02 against a local HTTP/2 server with gzip: 56 requests on the home page and 42 on each other page, every one same-origin — the same counts as before the font and the logos moved in, which had sent 13 of the home page's requests (36.7 KB) and 4 of every other page's (24.8 KB) to Google and jsDelivr.
 - **Profile image:** `profile.webp`, 31 KB (500×500), and `profile-300.webp`, 14 KB, chosen by `srcset` for a slot of 150 to 250 CSS px; loaded lazily below the first screen

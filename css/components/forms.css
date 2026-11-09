@@ -116,13 +116,26 @@
   transition: background-color var(--duration-autofill-hold) var(--ease-in-out);
 }
 
-/* Google draws the checkbox here once a visitor starts writing; empty until
-   then, it takes no room. */
-.form-captcha:not(:empty) {
-  margin-bottom: 20px;
+/* The send button and, to its right, the reCAPTCHA badge Google draws once a
+   visitor starts writing. The badge's own size, 256 by 60px, is reserved
+   from the start, so nothing moves when it appears. It keeps to the card's
+   right edge, beside the button or, where the card is too narrow for both,
+   under it. */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-/* Google's frame is a light document even when it draws the dark widget.
+.form-captcha {
+  width: 256px;
+  height: 60px;
+  margin-left: auto;
+}
+
+/* Google's frame is a light document even when it draws the dark badge.
    Under the dark theme's color-scheme the browser would back it with an
    opaque white canvas, a white rim around the dark box: matching its scheme
    keeps the frame transparent. */

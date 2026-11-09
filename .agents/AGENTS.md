@@ -168,7 +168,7 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      un Puppeteer par défaut envoyait avant, plus après ; un envoi humain passe
      toujours. Un script qui appelle l'API EmailJS directement ne le traverse
      pas : c'est ce chemin que reCAPTCHA ferme. Un envoi que le piège juge
-     automatisé reçoit le succès factice **avant** toute case à cocher. Le
+     automatisé reçoit le succès factice **avant** tout reCAPTCHA. Le
      champ caché n'est pas du code mort.
    - **Un vrai secret n'a pas sa place ici** et impliquerait d'abord un serveur.
    - Un correctif de sécurité ne doit jamais dégrader une fonctionnalité : une

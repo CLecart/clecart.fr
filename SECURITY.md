@@ -106,7 +106,7 @@ gratuit, donc les domaines qui y figurent sont **inertes**.
   contrôlée par EmailJS : un message sans jeton résolu est refusé, qu'il vienne
   de la page ou d'un appel direct. **Activée le 2026-11-09** (décision de
   Christophe), la campagne d'hameçonnage ayant continué malgré le piège. Pour
-  ne pas livrer à Google chaque visiteur, la case ne se charge qu'au premier
+  ne pas livrer à Google chaque visiteur, le badge invisible ne se charge qu'au premier
   clic dans un champ, après acceptation de la bannière. La clé secrète vit dans
   les réglages du template EmailJS ; la clé de site, publique, dans
   `js/utils/config.js`.

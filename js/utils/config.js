@@ -11,11 +11,11 @@ export const EMAILJS = {
 };
 
 /**
- * Google reCAPTCHA v2, the one check EmailJS itself verifies before sending.
- * The site key is public by design and valid on clecart.fr only; its secret
- * lives in the EmailJS template settings.
+ * Google's invisible reCAPTCHA v2, the one check EmailJS itself verifies
+ * before sending. The site key is public by design and valid on clecart.fr
+ * only; its secret lives in the EmailJS template settings.
  */
 export const RECAPTCHA = {
   script: "https://www.google.com/recaptcha/api.js?render=explicit&hl=en",
-  siteKey: "6LdJwxcuAAAAAOrveI6i6zE_AMtLFqqpbM_IXhpj",
+  siteKey: "6LchyhcuAAAAAJMfi9F-95l3Y6jOCOi5qgn5Hl1O",
 };

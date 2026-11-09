@@ -5,7 +5,7 @@
 
 import { EMAILJS } from "../utils/config.js";
 import { getConsentStatus } from "../utils/gdpr.js";
-import { captchaToken, loadCaptcha, resetCaptcha } from "./captcha.js";
+import { getCaptchaToken, loadCaptcha, resetCaptcha } from "./captcha.js";
 
 /**
  * Wire the contact form, or replace it with a mailto notice after a refusal
@@ -38,7 +38,7 @@ export function initContactForm() {
   });
 
   /* The first field a visitor enters, once the banner is accepted, loads the
-     checkbox: by the time the message is written it is there. */
+     badge: by the time the message is written the check is ready. */
   const captchaBox = contactForm.querySelector(".form-captcha");
   contactForm.addEventListener("focusin", () => {
     if (captchaBox && getConsentStatus() === "accepted") {
@@ -85,10 +85,10 @@ function showStatus(statusElement, state, message) {
 /**
  * Gate each submission on consent, validation and the reCAPTCHA, then hand it to EmailJS
  * @function setupFormSubmissionHandling
- * @description A submission the trap marks as automated still gets the usual success and no send, before any CAPTCHA is asked: the script learns nothing to adapt to.
+ * @description A submission the trap marks as automated still gets the usual success and no send, before any reCAPTCHA is run: the script learns nothing to adapt to.
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
- * @param {HTMLElement} captchaBox - Container of the reCAPTCHA checkbox
+ * @param {HTMLElement} captchaBox - Container of the reCAPTCHA badge
  * @returns {void}
  */
 function setupFormSubmissionHandling(form, statusElement, captchaBox) {
@@ -169,37 +169,25 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
 }
 
 /**
- * Return the ticked reCAPTCHA's token, or say what is missing
+ * Run the invisible reCAPTCHA and return its token, or say what went wrong
  * @function requireCaptcha
- * @description A box not yet drawn is loaded here too, for a visitor who reached the button without entering a field. When Google's script cannot load at all, blocked by an extension or a network, the mailto route is offered rather than a dead end.
- * @param {HTMLElement} container - Container of the reCAPTCHA checkbox
+ * @description When Google's script cannot load at all, blocked by an extension or a network, or Google reports an error, the mailto route is offered rather than a dead end.
+ * @param {HTMLElement} container - Container of the reCAPTCHA badge
  * @param {HTMLElement} statusElement - Status display element
  * @returns {Promise<string|null>} The token, or null once the visitor has been told what to do
  */
 async function requireCaptcha(container, statusElement) {
-  const token = captchaToken();
-  if (token) {
-    return token;
-  }
-
   try {
-    await loadCaptcha(container);
+    return await getCaptchaToken(container);
   } catch (error) {
     console.warn(error);
     showStatus(
       statusElement,
       "error",
-      'The anti-spam check could not load. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
+      'The anti-spam check could not run. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
     );
     return null;
   }
-
-  showStatus(
-    statusElement,
-    "info",
-    "Please tick “I'm not a robot” above the button, then send your message."
-  );
-  return null;
 }
 
 /**

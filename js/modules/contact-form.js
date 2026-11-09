@@ -7,6 +7,8 @@ import { EMAILJS } from "../utils/config.js";
 import { getConsentStatus } from "../utils/gdpr.js";
 import { getCaptchaToken, loadCaptcha, resetCaptcha } from "./captcha.js";
 
+const MAILTO = '<a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>';
+
 /**
  * Wire the contact form, or replace it with a mailto notice after a refusal
  * @function initContactForm
@@ -85,7 +87,7 @@ function showStatus(statusElement, state, message) {
 /**
  * Gate each submission on consent, validation and the reCAPTCHA, then hand it to EmailJS
  * @function setupFormSubmissionHandling
- * @description A submission the trap marks as automated still gets the usual success and no send, before any reCAPTCHA is run: the script learns nothing to adapt to. Sending and success are shown on the button itself, so nothing on the page moves; the button keeps "Message sent ✓" until the visitor writes again, never on a timer.
+ * @description "Sending…" shows on the button at the click, before the reCAPTCHA check, which can take seconds while Google loads or a challenge is solved. A submission the trap marks as automated still gets the usual success and no send, without any reCAPTCHA: the script learns nothing to adapt to. Success shows on the button too, in green, so nothing on the page moves; it stays until the visitor writes again, never on a timer.
  * @param {HTMLElement} form - Form element
  * @param {HTMLElement} statusElement - Status display element
  * @param {HTMLElement} captchaBox - Container of the reCAPTCHA badge
@@ -98,6 +100,7 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
   form.addEventListener("input", () => {
     if (submitButton?.textContent === SENT_LABEL) {
       showOnButton(submitButton, label);
+      submitButton.classList.remove("sent");
     }
   });
 
@@ -127,13 +130,6 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
     }
 
     const automated = isAutomatedSubmission(formData);
-    const token = automated
-      ? ""
-      : await requireCaptcha(captchaBox, statusElement);
-    if (token === null) {
-      return;
-    }
-
     setFormState(
       form,
       submitButton,
@@ -142,9 +138,11 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
       "Sending your message..."
     );
     showOnButton(submitButton, "Sending…");
+    submitButton?.classList.remove("sent");
 
     try {
       if (!automated) {
+        const token = await getCaptchaToken(captchaBox);
         await sendMessage(formData, token);
       }
 
@@ -156,6 +154,7 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
         "Message sent successfully!"
       );
       showOnButton(submitButton, SENT_LABEL);
+      submitButton?.classList.add("sent");
       form.reset();
     } catch (error) {
       console.error("Sending error:", error);
@@ -164,41 +163,20 @@ function setupFormSubmissionHandling(form, statusElement, captchaBox) {
         submitButton,
         statusElement,
         "error",
-        `Sending error. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>`
+        error.name === "CaptchaError"
+          ? `The anti-spam check could not run. Please contact me directly at ${MAILTO}.`
+          : `Sending error. Please contact me directly at ${MAILTO}.`
       );
       showOnButton(submitButton, label);
     } finally {
+      /* Unlocked as soon as the attempt ends: a success empties the fields,
+         so nothing can go twice, and a visitor who writes again at once is
+         not turned away in silence. */
       resetCaptcha();
-      setTimeout(() => {
-        form.classList.remove("sending");
-        if (submitButton) {
-          submitButton.removeAttribute("aria-disabled");
-        }
-      }, 3000);
+      form.classList.remove("sending");
+      submitButton?.removeAttribute("aria-disabled");
     }
   });
-}
-
-/**
- * Run the invisible reCAPTCHA and return its token, or say what went wrong
- * @function requireCaptcha
- * @description When Google's script cannot load at all, blocked by an extension or a network, or Google reports an error, the mailto route is offered rather than a dead end.
- * @param {HTMLElement} container - Container of the reCAPTCHA badge
- * @param {HTMLElement} statusElement - Status display element
- * @returns {Promise<string|null>} The token, or null once the visitor has been told what to do
- */
-async function requireCaptcha(container, statusElement) {
-  try {
-    return await getCaptchaToken(container);
-  } catch (error) {
-    console.warn(error);
-    showStatus(
-      statusElement,
-      "error",
-      'The anti-spam check could not run. Please contact me directly at <a href="mailto:djlike@hotmail.fr">djlike@hotmail.fr</a>.'
-    );
-    return null;
-  }
 }
 
 /**

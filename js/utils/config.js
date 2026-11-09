@@ -7,7 +7,7 @@ export const EMAILJS = {
   endpoint: "https://api.emailjs.com/api/v1.0/email/send",
   user: "wCnIBsLz_IoHaoFDx",
   service: "service_lokewrs",
-  template: "template_2ov9l9i",
+  template: "template_l5er7kr",
 };
 
 /**

@@ -15,9 +15,10 @@
     "lint:css": "stylelint \"**/*.css\"",
     "validate": "vnu --Werror --filterpattern \".*(Trailing slash on void elements|violates Content Security Policy \\\\(meta tag\\\\)).*\" --skip-non-html *.html cv/index.html && vnu --Werror --also-check-css --skip-non-css styles.css css",
     "check:csp": "node scripts/check-csp.mjs",
+    "check:audit": "node scripts/check-audit.mjs",
     "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js \"scripts/**/*.mjs\" \"*.html\" cv/index.html eslint.config.js stylelint.config.mjs",
     "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" styles.css service-worker.js \"scripts/**/*.mjs\" \"*.html\" cv/index.html eslint.config.js stylelint.config.mjs",
-    "check": "npm run lint && npm run lint:css && npm run format:check && npm run validate && npm run check:csp && npm audit",
+    "check": "npm run lint && npm run lint:css && npm run format:check && npm run validate && npm run check:csp && npm run check:audit",
     "deploy": "./deploy.sh"
   },
   "repository": {

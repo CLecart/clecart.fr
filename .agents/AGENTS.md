@@ -110,6 +110,13 @@ vide). Un comportement se constate dans un navigateur, il ne se déduit pas.
      croissante (`no-descending-specificity`) : l'ordre du fichier ne tranche
      alors jamais entre deux règles. `console.log` banni ; `console.warn`/`console.error`
      autorisés — un échec silencieux est pire qu'une trace.
+   - **Un avis de sécurité se corrige, il ne se tait pas.** Une version
+     corrigée s'installe, par `overrides` si une dépendance intermédiaire la
+     retient. Un avis qu'aucune version ne corrige encore s'accepte par son
+     nom, avec son paquet et son motif, dans `scripts/audit-exceptions.json` :
+     `npm run check:audit` refuse tout autre avis, une exception que plus aucun
+     avis ne justifie, et un avis accepté que `npm audit fix` sait désormais
+     corriger sans mise à jour majeure.
 
 6. **Traçabilité.**
    - **Le `git log` est le journal de bord.** Ni `JOURNAL_DE_BORD.md`, ni

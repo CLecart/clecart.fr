@@ -204,18 +204,30 @@ curl -sI http://localhost:8080/ | grep -icE "content-security|x-frame|x-xss|x-co
 Il n'existe **pas de suite de tests automatisés**. La CI
 (`.github/workflows/check.yml`) lance `npm run check` à chaque push sur `main`,
 à chaque pull request et chaque semaine : ESLint, Stylelint, Prettier, le Nu
-Html Checker, le contrôle des empreintes CSP et `npm audit`. Ses actions sont
-épinglées par SHA de commit, et elle ne reçoit qu'un jeton en lecture seule.
+Html Checker, le contrôle des empreintes CSP et `npm audit` (par
+`npm run check:audit`). Ses actions sont épinglées par SHA de commit, et elle
+ne reçoit qu'un jeton en lecture seule.
 Dependabot (`.github/dependabot.yml`) propose chaque semaine les mises à jour
 npm, GitHub Actions et de l'image nginx.
 Le reste se lance à la main :
 
-Dernier `npm audit` (2026-11-03) : **0 vulnérabilité**. Le seul avis restant la
-veille, `minimatch` < 11.0.1 (GHSA-g3hv-75wg-m249, déni de service sur des
-motifs de fichiers piégés), venait d'ESLint 10.14 lui-même, sans version
-corrigée d'ESLint. `package.json` impose `minimatch` 11.0.4 par `overrides` ;
-ESLint lint exactement les mêmes fichiers qu'avant, vérifié. À retirer quand
-ESLint embarquera une version corrigée.
+Dernier `npm audit` (2026-11-18) : **un seul avis, accepté par son nom**.
+`picomatch` jusqu'à 4.0.7, la dernière version publiée (GHSA-fc5q-39xc-vjpf,
+déni de service sur des motifs de fichiers piégés), vient de Stylelint et
+d'`eslint-plugin-jsdoc`. Aucune version ne le corrige, donc aucun `overrides`
+ne peut l'écarter. L'attaque suppose que l'attaquant fournisse le motif : ici,
+`picomatch` ne lit que ceux que le dépôt écrit pour Stylelint et ESLint, sur le
+poste et en CI, et aucune page du site ne le charge. `npm run check:audit`
+tient la garde à la place de `npm audit` : il refuse tout autre avis, une
+exception que plus aucun avis ne justifie, et un avis accepté que
+`npm audit fix` sait désormais corriger sans mise à jour majeure. Chaque
+exception figure, avec son motif, dans `scripts/audit-exceptions.json`.
+
+`minimatch` < 11.0.1 (GHSA-g3hv-75wg-m249, déni de service sur des motifs de
+fichiers piégés) venait d'ESLint 10.14 lui-même, sans version corrigée
+d'ESLint. `package.json` impose `minimatch` 11.0.4 par `overrides` ; ESLint
+lint exactement les mêmes fichiers qu'avant, vérifié. À retirer quand ESLint
+embarquera une version corrigée.
 
 ```bash
 npm run check               # ce que lance la CI, 0 erreur et 0 warning attendus

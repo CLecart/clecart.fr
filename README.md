@@ -45,7 +45,7 @@ This tooling exists and works, but it is **not what serves clecart.fr** — see 
 - **Containerization:** `nginxinc/nginx-unprivileged:1.30.6-alpine`, pinned; nginx runs as uid 101 on port 8080 over a site owned by root, with a `HEALTHCHECK`
 - **Orchestration:** Docker Compose v2 (`docker compose`) for a local run on `127.0.0.1:8080`, read-only, without Linux capabilities; the image's `HEALTHCHECK` is the only health check
 - **Deployment script:** `deploy.sh` — tags a backup image, rebuilds, restarts a read-only container without Linux capabilities, polls the site for up to 60 seconds, and rolls back automatically if starting or answering fails
-- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`, `eslint-plugin-sonarjs` recommended rules with cognitive complexity capped at 15), Stylelint (`stylelint-config-standard`, `!important` forbidden), Prettier, the Nu Html Checker (`vnu-jar`) on every page and stylesheet, warnings included, a check that every Content-Security-Policy lists the hash of each inline script, and `npm audit` — all six behind `npm run check`
+- **Code Quality:** ESLint flat config (every rule at `error`, JSDoc enforced by `eslint-plugin-jsdoc`, `eslint-plugin-sonarjs` recommended rules with cognitive complexity capped at 15), Stylelint (`stylelint-config-standard`, `!important` forbidden), Prettier, the Nu Html Checker (`vnu-jar`) on every page and stylesheet, warnings included, a check that every Content-Security-Policy lists the hash of each inline script, and `npm audit`, where only an advisory accepted by name, with its reason, in `scripts/audit-exceptions.json` may pass — all six behind `npm run check`
 - **Continuous Integration:** `.github/workflows/check.yml` runs `npm run check` on every push to `main`, on every pull request and weekly, its actions pinned by commit SHA; `.github/dependabot.yml` proposes npm, GitHub Actions and Docker updates every week. Lighthouse, axe and the browser checks are still run **manually**.
 
 ### 🎯 **Technical Specializations**
@@ -257,6 +257,8 @@ clecart.fr/
 │   ├── .github/workflows/check.yml   # CI: npm run check on every push to main
 │   ├── .github/dependabot.yml        # Weekly update proposals: npm, actions, Docker
 │   ├── scripts/check-csp.mjs         # CSP hashes match the inline scripts
+│   ├── scripts/check-audit.mjs       # npm audit, the advisories accepted by name aside
+│   ├── scripts/audit-exceptions.json # Accepted advisories, each with its reason
 │   ├── .prettierrc.json              # Prettier configuration
 │   ├── .gitignore                    # Git exclusions
 │   └── .agents/AGENTS.md             # Project engineering manifesto
@@ -325,6 +327,7 @@ npm run lint:fix             # ESLint with autofix
 npm run lint:css             # Stylelint (standard config, no !important)
 npm run validate             # Nu Html Checker on every page and stylesheet, warnings fail too
 npm run check:csp            # Every CSP lists the hash of each inline script
+npm run check:audit          # npm audit; only the advisories named in scripts/audit-exceptions.json pass
 npm run format               # Prettier over js/, css/, styles.css, service-worker.js, scripts/, the pages, the lint configs
 npm run format:check         # Fail if anything is unformatted
 npm run lighthouse           # Lighthouse audit of localhost:8000 (run npm start first)

@@ -1,0 +1,7 @@
+[
+  {
+    "advisory": "GHSA-fc5q-39xc-vjpf",
+    "package": "picomatch",
+    "reason": "No release fixes it: every picomatch up to 4.0.7, the latest, is affected, so no override can set it aside. The denial of service needs the attacker to supply the glob; here picomatch only matches the patterns this repository writes for Stylelint and ESLint, on the developer's machine and in CI, and no page of the site loads it."
+  }
+]

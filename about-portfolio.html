@@ -486,6 +486,8 @@ clecart.fr/
 ├── .well-known/
 │   └── security.txt             # Where to report a vulnerability
 ├── scripts/
+│   ├── audit-exceptions.json    # Accepted advisories, each with its reason
+│   ├── check-audit.mjs          # npm audit, the advisories accepted by name aside
 │   └── check-csp.mjs            # CSP hashes match the inline scripts
 ├── _config.yml                  # Lets GitHub Pages publish .well-known/
 ├── eslint.config.js             # Code quality, with sonarjs
